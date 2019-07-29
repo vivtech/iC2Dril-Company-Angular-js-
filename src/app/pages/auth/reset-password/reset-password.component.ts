@@ -67,10 +67,8 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
             this.submitted = false;
             return false;
         }
-
-        this.authenticationService.resetPasword(
-            this.f.token.value, this.f.email.value, this.f.password.value, this.f.passwordConfirmation.value
-        )
+        const fieldValues = this.resetPasswordForm.getRawValue();
+        this.authenticationService.resetPasword(fieldValues)
             .pipe(first())
             .subscribe(
                 data => {

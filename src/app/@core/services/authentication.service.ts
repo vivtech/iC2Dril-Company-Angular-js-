@@ -77,8 +77,8 @@ export class AuthenticationService {
             }));
     }
 
-    resetPasword(token: string, email: string, password: string, confirmPassword: string) {
-        return this.http.post<any>(`${environment.apiUrl}/reset-password`, { email })
+    resetPasword(dataValues) {
+        return this.http.post<any>(`${environment.apiUrl}/reset-password`, dataValues)
             .pipe(map(response => {
                 console.log(response);
                 return response;

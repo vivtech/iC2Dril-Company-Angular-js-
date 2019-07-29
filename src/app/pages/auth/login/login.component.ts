@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
         this.loginForm = this.formBuilder.group({
             username: ['', [Validators.required, Validators.email]],
             password: ['', [Validators.required, Validators.minLength(this.validator.password.min)]],
-            remember: [true]
+            // remember: [true]
         }, {
                 //validator: MustMatch('password', 'confirmPassword')
             });
