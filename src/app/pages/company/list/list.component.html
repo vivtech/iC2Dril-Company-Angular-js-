@@ -1,0 +1,278 @@
+<div class="page-inner">
+    <div class="page-header">
+        <h4 class="page-title">{{title}}</h4>
+        <ul class="breadcrumbs">
+            <li class="nav-home">
+                <a href="#">
+                    <i class="flaticon-home"></i>
+                </a>
+            </li>
+            <li class="separator">
+                <i class="flaticon-right-arrow"></i>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/dashboard">Dashboard</a>
+            </li>
+            <li class="separator">
+                <i class="flaticon-right-arrow"></i>
+            </li>
+            <li class="nav-item">
+                <a href="#">{{ title }}</a>
+            </li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex align-items-center">
+                        <button class="btn btn-primary btn-round ml-auto" id="addModalOpen" (click)="createData(editModal)">
+                            <i class="fa fa-plus"></i>
+                            Add Company
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row p-2 filter-cont mb-4">
+
+                        <div class="col-md-3 pl-0">
+                            <div class="form-group pt-0">
+                                <label>Status</label>
+                                <ng-select (change)="refreshTable()" class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [(ngModel)]="statusFilter" [items]="statusFilterData" bindLabel="name" bindValue="id"></ng-select>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="table-responsive">
+                        <table id="record-table" [dtOptions]="dtOptions" datatable class="display table table-striped table-hover w-100 table-head-bg-primary" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Customer ID</th>
+                                    <th>Company Name</th>
+                                    <th>Contact Name</th>
+                                    <th>Email</th>
+                                    <th>Mobile</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="companyList?.length != 0">
+                                <tr *ngFor="let data of companyList ">
+                                    <td>{{ data.customerId }}</td>
+                                    <td>{{ data.name }}</td>
+                                    <td>{{ data.contactName }}</td>
+                                    <td>{{ data.email }}</td>
+                                    <td>{{ data.phone }}</td>
+                                    <td>
+                                        <span class="badge badge-pill badge-success" *ngIf="data.active == 1">Active</span>
+                                        <span class="badge badge-pill badge-warning" *ngIf="data.active == 0">Inactive</span>
+
+                                    </td>
+                                    <td>
+                                        <div class="btn-group datatable-dropdown">
+                                            <button type="button" class="btn btn-primary" (click)="viewDetail(viewModal,data._id)">View</button>
+                                            <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
+                                                <button class="btn btn-primary dropdown-toggle-split" ngbDropdownToggle></button>
+                                                <div class="dropdown-menu" ngbDropdownMenu>
+                                                    <a ngbDropdownItem [routerLink]="['../license-history/'+data._id]" target="_blank">License History</a>
+                                                    <button ngbDropdownItem (click)="editDetail(editModal,data._id)">Edit</button>
+                                                    <button ngbDropdownItem (click)="deleteConfirmation(data._id)">Delete</button>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tbody *ngIf="companyList?.length == 0">
+                                <tr>
+                                    <td colspan="6" class="no-data-available text-center">No matching records found</td>
+                                </tr>
+                                <tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+
+<ng-template #viewModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Company Detail</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body view-data">
+        <div class="row" *ngIf="requestDetail">
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group form-group-default">
+                            <label class="text-primary">Customer ID</label>
+                            <span class="form-control text-muted">{{ requestDetail.customerId }}</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group form-group-default">
+                            <label class="text-primary">Organisation Name</label>
+                            <span class="form-control text-muted">{{ requestDetail.name }}</span>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group form-group-default">
+                            <label class="text-primary">Contact Name</label>
+                            <span class="form-control text-muted">{{ requestDetail.contactName }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default">
+                            <label class="text-primary">Contact Email</label>
+                            <span class="form-control text-muted">{{ requestDetail.email }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default">
+                            <label class="text-primary">Contact Number</label>
+                            <span class="form-control text-muted">{{ requestDetail.phone }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default">
+                            <label class="text-primary">Country</label>
+                            <span class="form-control text-muted">{{ requestDetail.country.name }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default">
+                            <label class="text-primary">Subscribed Package</label>
+                            <span class="form-control text-muted">{{ requestDetail.package.name }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default">
+                            <label class="text-primary">Subscribed User Count</label>
+                            <span class="form-control text-muted">{{ requestDetail.userCount }}</span>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default">
+                            <label class="text-primary">Expiry Date</label>
+                            <span class="form-control text-muted">{{ requestDetail.expireAt | date :'mediumDate' }}</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+    </div>
+</ng-template>
+
+
+<!-- Edit Modal -->
+<ng-template #editModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">{{ editing ? "Edit" : "Add" }} Company</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form class="row form" *ngIf="editDetail" id="editForm" [formGroup]="editForm" (ngSubmit)="updateRequest()">
+            <input type="hidden" formControlName="data" [attr.maxlength]="validator.name.max" class="form-control">
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group form-group-default">
+                            <label class="text-primary">Contact Name</label>
+                            <input type="text" formControlName="name" [attr.maxlength]="validator.name.max" class="form-control" placeholder="Contact Name">
+                            <error-label [control]="f.name"></error-label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group form-group-default">
+                            <label class="text-primary">Organisation Name</label>
+                            <input type="text" formControlName="companyName" [attr.maxlength]="validator.company.max" class="form-control" placeholder="Organisation Name">
+                            <error-label [control]="f.companyName"></error-label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default">
+                            <label class="text-primary">Contact Email</label>
+                            <input type="email" formControlName="email" [attr.maxlength]="validator.email.max" class="form-control" placeholder="Contact Email">
+                            <error-label [control]="f.email"></error-label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default">
+                            <label class="text-primary">Contact Number</label>
+                            <input type="text" digitOnly formControlName="phone" [attr.maxlength]="validator.phone.max" class="form-control" placeholder="Contact Number">
+                            <error-label [control]="f.phone"></error-label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default dropdown">
+                            <label class="text-primary">Country</label>
+                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="country" [items]="countryList| async" bindLabel="name" bindValue="_id" [class.filled]="f.country.value"></ng-select>
+                            <error-label [control]="f.country"></error-label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default dropdown">
+                            <label class="text-primary">License Package</label>
+                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="package" [items]="packageList | async" bindLabel="name" bindValue="_id" [class.filled]="f.package.value"></ng-select>
+                            <error-label [control]="f.package"></error-label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default">
+                            <label class="text-primary">Licensed User Count</label>
+                            <input type="text" digitOnly formControlName="userCount" [attr.maxlength]="validator.userCount.max" class="form-control" placeholder="User Count">
+                            <error-label [control]="f.userCount"></error-label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default dropdown">
+                            <label class="text-primary">License Date</label>
+                            <div class="input-group">
+                                <input class="form-control date-readonly" placeholder="yyyy-mm-dd" formControlName="licenseDate" readonly [minDate]="minDate" ngbDatepicker #d="ngbDatepicker">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+                                </div>
+                            </div>
+                            <error-label [control]="f.licenseDate"></error-label>
+
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default">
+                            <label class="text-primary">Notes</label>
+                            <input type="text" formControlName="notes" [attr.maxlength]="validator.notes.max" class="form-control" placeholder="Notes..">
+                            <error-label [control]="f.notes"></error-label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark btn-rounded" (click)="modal.close('Close click')">Close</button>
+        <app-submit-button [submitted]="submitted" (click)="updateRequest()">{{ editing ? "Update" : "Add" }}
+        </app-submit-button>
+    </div>
+</ng-template>

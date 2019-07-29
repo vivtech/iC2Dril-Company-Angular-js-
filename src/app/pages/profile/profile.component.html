@@ -1,0 +1,137 @@
+<div class="page-inner">
+    <div class="page-header">
+        <h4 class="page-title">{{title}}</h4>
+        <ul class="breadcrumbs">
+            <li class="nav-home">
+                <a href="#">
+                    <i class="flaticon-home"></i>
+                </a>
+            </li>
+            <li class="separator">
+                <i class="flaticon-right-arrow"></i>
+            </li>
+            <li class="nav-item">
+                <a [routerLink]="['/dashboard']">Dashboard</a>
+            </li>
+            <li class="separator">
+                <i class="flaticon-right-arrow"></i>
+            </li>
+            <li class="nav-item">
+                <a href="#">{{ title }}</a>
+            </li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+
+            <div class="card card-with-nav">
+                <div class="card-header">
+                    <div class="row row-nav-line">
+                        <ul class="nav nav-tabs nav-line nav-color-secondary" role="tablist">
+
+                            <li class="nav-item"> <a class="nav-link " [ngClass]="{ active: !passwordVisible,  show: !passwordVisible }" data-toggle="tab" (click)="togglePassword()" role="tab" aria-selected="false">Profile</a> </li>
+                            <li class="nav-item"> <a class="nav-link" [ngClass]="{ active: passwordVisible,  show: passwordVisible }" data-toggle="tab" (click)="togglePassword()" role="tab" aria-selected="false">Change Password</a> </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-body ">
+                    <div class="tab-content">
+                        <div class="tab-pane fade " [ngClass]="{ active: !passwordVisible,  show: !passwordVisible }" id="profile-tab" role="tabpanel" aria-labelledby="pills-home-tab-nobd">
+                            <form class="row" id="profileForm" enctype="multipart/form-data" [formGroup]="profileForm" (ngSubmit)="onProfileSubmit()">
+                                <div class="col-md-5 offset-md-2">
+                                    <div class="row mt-3">
+                                        <div class="col-md-12">
+                                            <div class="form-group form-group-default">
+                                                <label>Name</label>
+                                                <input type="text" [attr.maxlength]="validator.name.max" class="form-control alpha-space" formControlName="name" placeholder="Name">
+                                                <error-label [control]="f.name"></error-label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-md-6">
+                                            <div class="form-group form-group-default">
+                                                <label>Email</label>
+                                                <input type="email" class="form-control" formControlName="email" placeholder="Name" value="" [attr.maxlength]="validator.email.max">
+                                                <error-label [control]="f.email"></error-label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group form-group-default">
+                                                <label>Phone</label>
+                                                <input type="text" [attr.maxlength]="validator.phone.max" digitOnly class="form-control digit-only" value="" formControlName="phone" placeholder="Phone">
+                                                <error-label [control]="f.phone"></error-label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 ">
+                                    <div class="row mt-3">
+                                        <!-- <div class="fileinput fileinput-new" data-provides="fileinput">
+                                            <div class="fileinput-new img-thumbnail" style="width: 166px; height: auto;">
+                                                <img src="{{ empty($profile->profile_pic) ? avatar($profile->name) : asset($profile->profile_pic) }}" data-src="{{ empty($profile->profile_pic) ? avatar($profile->name) : asset($profile->profile_pic) }}" data-trigger="fileinput" alt="Profile Pic">
+                                            </div>
+                                            <div class="fileinput-preview fileinput-exists img-thumbnail" data-trigger="fileinput" style="max-width: 166px; max-height: auto;"></div>
+                                            <div>
+                                                <span class="btn btn-outline-secondary btn-file d-none">
+                                                        {{-- <span class="fileinput-new">Select image</span>
+                                                <span class="fileinput-exists">Change</span> --}}
+                                                <input type="file" name="profile_pic" accept="image/jpeg,image/png,image/webp">
+                                                </span>
+                                                {{-- <a href="#" class="btn btn-outline-secondary fileinput-exists" data-dismiss="fileinput">Remove</a> --}}
+                                            </div>
+                                        </div> -->
+                                    </div>
+
+                                </div>
+                                <div class="col-md-3 offset-md-2">
+                                    <div class="text-right mt-3 mb-3">
+                                        <app-submit-button [submitted]="submitted">Update Profile</app-submit-button>
+                                    </div>
+                                </div>
+                            </form>
+
+                        </div>
+                        <div class="tab-pane fade" [ngClass]="{ active: passwordVisible,  show: passwordVisible }" id="password-tab" role="tabpanel" aria-labelledby="pills-home-tab-nobd">
+                            <div class="row">
+                                <form class="col-md-4 offset-md-4" id="confirmPasswordForm" [formGroup]="confirmPasswordForm" (ngSubmit)="onPasswordSubmit()">
+                                    <div class="row mt-3">
+                                        <div class="col-md-12">
+                                            <div class="form-group form-group-default">
+                                                <label>Current Password</label>
+                                                <input type="password" maxlength="" class="form-control inline-control" formControlName="currentPassword" placeholder="Fill Current Password">
+                                                <error-label [control]="pf.currentPassword"></error-label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group form-group-default">
+                                                <label>New Password</label>
+                                                <input type="password" maxlength="" class="form-control inline-control" id="password" formControlName="password" placeholder="Fill New Password">
+                                                <error-label [control]="pf.password"></error-label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group form-group-default">
+                                                <label>Confirm Password</label>
+                                                <input type="password" maxlength="" class="form-control inline-control" formControlName="confirmPassword" placeholder="Fill Confirm Password">
+                                                <error-label [control]="pf.confirmPassword"></error-label>
+                                            </div>
+                                        </div>
+
+                                        <div class="text-center mt-3 mb-3 col-md-12">
+                                            <app-submit-button [submitted]="submitted">Update Password</app-submit-button>
+
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

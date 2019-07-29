@@ -1,0 +1,3412 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import "~@ng-select/ng-select/themes/material.theme.css";
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400,700,900');
+@-webkit-keyframes spin {
+    0% {
+        transform: rotate(0)
+    }
+    100% {
+        transform: rotate(360deg)
+    }
+}
+
+@-moz-keyframes spin {
+    0% {
+        -moz-transform: rotate(0)
+    }
+    100% {
+        -moz-transform: rotate(360deg)
+    }
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0)
+    }
+    100% {
+        transform: rotate(360deg)
+    }
+}
+
+.spinner {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1003;
+    background: #FFFFFF;
+    overflow: hidden
+}
+
+.spinner div:first-child {
+    display: block;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    width: 150px;
+    height: 150px;
+    margin: -75px 0 0 -75px;
+    border-radius: 50%;
+    box-shadow: 0 3px 3px 0 #810c03;
+    transform: translate3d(0, 0, 0);
+    animation: spin 2s linear infinite
+}
+
+.spinner div:first-child:after,
+.spinner div:first-child:before {
+    content: '';
+    position: absolute;
+    border-radius: 50%
+}
+
+.spinner div:first-child:before {
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+    box-shadow: 0 3px 3px 0 #810c03;
+    -webkit-animation: spin 3s linear infinite;
+    animation: spin 3s linear infinite
+}
+
+.spinner div:first-child:after {
+    top: 15px;
+    left: 15px;
+    right: 15px;
+    bottom: 15px;
+    box-shadow: 0 3px 3px 0 #810c03;
+    animation: spin 1.5s linear infinite
+}
+
+
+/* Sidebar Navigation */
+
+.sidebar .nav .nav-item a[data-toggle=collapse][aria-expanded=true]:before,
+.sidebar .nav .nav-item.active:hover>a:before,
+.sidebar .nav .nav-item.active>a:before,
+.sidebar[data-background-color=white] .nav .nav-item a[data-toggle=collapse][aria-expanded=true]:before,
+.sidebar[data-background-color=white] .nav .nav-item.active:hover>a:before,
+.sidebar[data-background-color=white] .nav .nav-item.active>a:before {
+    opacity: 1!important;
+    position: absolute;
+    z-index: 1;
+    width: 3px;
+    height: 100%;
+    content: '';
+    left: 0;
+    top: 0
+}
+
+.sidebar,
+.sidebar[data-background-color=white] {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 250px;
+    margin-top: 62px;
+    display: block;
+    z-index: 1000;
+    color: #fff;
+    font-weight: 200;
+    background: #fff;
+    -webkit-box-shadow: 4px 4px 10px rgba(69, 65, 78, .06);
+    -moz-box-shadow: 4px 4px 10px rgba(69, 65, 78, .06);
+    box-shadow: 4px 4px 10px rgba(69, 65, 78, .06);
+    transition: all .3s
+}
+
+.sidebar.full-height,
+.sidebar[data-background-color=white].full-height {
+    margin-top: 0
+}
+
+.sidebar .user,
+.sidebar[data-background-color=white] .user {
+    margin-top: 20px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom: 12.5px;
+    border-bottom: 1px solid #f1f1f1;
+    display: block;
+    margin-left: 10px;
+    margin-right: 10px
+}
+
+.sidebar .user .info a,
+.sidebar[data-background-color=white] .user .info a {
+    white-space: nowrap;
+    display: block;
+    position: relative
+}
+
+.sidebar .user .info a:focus,
+.sidebar .user .info a:hover,
+.sidebar[data-background-color=white] .user .info a:focus,
+.sidebar[data-background-color=white] .user .info a:hover {
+    text-decoration: none
+}
+
+.sidebar .user .info a>span,
+.sidebar[data-background-color=white] .user .info a>span {
+    font-size: 14px;
+    font-weight: 400;
+    color: #777;
+    display: flex;
+    flex-direction: column
+}
+
+.sidebar .user .info a>span .user-level,
+.sidebar[data-background-color=white] .user .info a>span .user-level {
+    color: #555;
+    font-weight: 600;
+    font-size: 12px;
+    margin-top: 5px
+}
+
+.sidebar .user .info a .link-collapse,
+.sidebar[data-background-color=white] .user .info a .link-collapse {
+    padding: 7px 0
+}
+
+.sidebar .user .info .caret,
+.sidebar[data-background-color=white] .user .info .caret {
+    position: absolute;
+    top: 17px;
+    right: 0;
+    border-top-color: #777
+}
+
+.sidebar .sidebar-wrapper,
+.sidebar[data-background-color=white] .sidebar-wrapper {
+    position: relative;
+    max-height: calc(100vh - 75px);
+    min-height: 100%;
+    overflow: auto;
+    width: 100%;
+    z-index: 4;
+    padding-bottom: 100px;
+    transition: all .3s
+}
+
+.sidebar .sidebar-wrapper .sidebar-content,
+.sidebar[data-background-color=white] .sidebar-wrapper .sidebar-content {
+    padding-top: 0;
+    padding-bottom: 55px
+}
+
+.sidebar .sidebar-wrapper .scroll-element.scroll-y,
+.sidebar[data-background-color=white] .sidebar-wrapper .scroll-element.scroll-y {
+    top: 5px!important
+}
+
+.sidebar .nav,
+.sidebar[data-background-color=white] .nav {
+    display: block;
+    float: none;
+    margin-top: 20px
+}
+
+.sidebar .nav .nav-section,
+.sidebar[data-background-color=white] .nav .nav-section {
+    margin: 15px 0 0 0
+}
+
+.sidebar .nav .nav-section .sidebar-mini-icon,
+.sidebar[data-background-color=white] .nav .nav-section .sidebar-mini-icon {
+    text-align: center;
+    font-size: 15px;
+    color: #909093;
+    display: none
+}
+
+.sidebar .nav .nav-section .text-section,
+.sidebar[data-background-color=white] .nav .nav-section .text-section {
+    padding: 2px 30px;
+    font-size: 12px;
+    color: #727275;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    margin-bottom: 12px;
+    margin-top: 20px
+}
+
+.sidebar .nav .nav-item,
+.sidebar[data-background-color=white] .nav .nav-item {
+    display: list-item
+}
+
+.sidebar .nav .nav-item.active>a,
+.sidebar[data-background-color=white] .nav .nav-item.active>a {
+    color: #575962!important
+}
+
+.sidebar .nav .nav-item.active>a:before,
+.sidebar[data-background-color=white] .nav .nav-item.active>a:before {
+    background: #1d7af3
+}
+
+.sidebar .nav .nav-item.active>a p,
+.sidebar[data-background-color=white] .nav .nav-item.active>a p {
+    color: #575962!important;
+    font-weight: 600
+}
+
+.sidebar .nav .nav-item.active:hover>a:before,
+.sidebar[data-background-color=white] .nav .nav-item.active:hover>a:before {
+    background: #1d7af3
+}
+
+.sidebar .nav .nav-item.active a i,
+.sidebar[data-background-color=white] .nav .nav-item.active a i {
+    color: #4d7cfe
+}
+
+.sidebar .nav .nav-item.submenu,
+.sidebar[data-background-color=white] .nav .nav-item.submenu {
+    background: rgba(0, 0, 0, .03)
+}
+
+.sidebar .nav .nav-item.submenu>li>a i,
+.sidebar[data-background-color=white] .nav .nav-item.submenu>li>a i {
+    color: rgba(23, 125, 255, .76)
+}
+
+.sidebar .nav .nav-item a:focus,
+.sidebar .nav .nav-item>a:hover,
+.sidebar[data-background-color=white] .nav .nav-item a:focus,
+.sidebar[data-background-color=white] .nav .nav-item>a:hover {
+    background: rgba(0, 0, 0, .03)
+}
+
+.sidebar .nav .nav-item a,
+.sidebar[data-background-color=white] .nav .nav-item a {
+    display: flex;
+    align-items: center;
+    color: #575962;
+    padding: 6px 25px;
+    width: 100%;
+    font-size: 14px;
+    font-weight: 400;
+    position: relative;
+    margin-bottom: 3px
+}
+
+.sidebar .nav .nav-item a:focus,
+.sidebar .nav .nav-item a:hover,
+.sidebar[data-background-color=white] .nav .nav-item a:focus,
+.sidebar[data-background-color=white] .nav .nav-item a:hover {
+    text-decoration: none
+}
+
+.sidebar .nav .nav-item a:focus p,
+.sidebar .nav .nav-item a:hover p,
+.sidebar[data-background-color=white] .nav .nav-item a:focus p,
+.sidebar[data-background-color=white] .nav .nav-item a:hover p {
+    color: #575962!important;
+    font-weight: 600
+}
+
+.sidebar .nav .nav-item a:focus i,
+.sidebar .nav .nav-item a:hover i,
+.sidebar[data-background-color=white] .nav .nav-item a:focus i,
+.sidebar[data-background-color=white] .nav .nav-item a:hover i {
+    color: #4d7cfe!important
+}
+
+.sidebar .nav .nav-item a .letter-icon,
+.sidebar[data-background-color=white] .nav .nav-item a .letter-icon {
+    color: #a1a2a6;
+    margin-right: 15px;
+    width: 25px;
+    text-align: center;
+    vertical-align: middle;
+    float: left;
+    font-size: 20px;
+    font-weight: 200
+}
+
+.sidebar .nav .nav-item a i,
+.sidebar[data-background-color=white] .nav .nav-item a i {
+    color: #8d9498;
+    margin-right: 15px;
+    width: 25px;
+    text-align: center;
+    vertical-align: middle;
+    float: left;
+    font-size: 18px;
+    line-height: 30px
+}
+
+.sidebar .nav .nav-item a i[class^=flaticon-],
+.sidebar[data-background-color=white] .nav .nav-item a i[class^=flaticon-] {
+    font-size: 20px
+}
+
+.sidebar .nav .nav-item a p,
+.sidebar[data-background-color=white] .nav .nav-item a p {
+    font-size: 14px;
+    margin-bottom: 0;
+    margin-right: 5px;
+    white-space: nowrap;
+    color: #8d9498
+}
+
+.sidebar .nav .nav-item a .caret,
+.sidebar[data-background-color=white] .nav .nav-item a .caret {
+    margin-left: auto;
+    margin-right: 10px;
+    transition: all .5s;
+    color: #8d9498
+}
+
+.sidebar .nav .nav-item a[data-toggle=collapse][aria-expanded=true],
+.sidebar[data-background-color=white] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] {
+    background: 0 0
+}
+
+.sidebar .nav .nav-item a[data-toggle=collapse][aria-expanded=true] p,
+.sidebar[data-background-color=white] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] p {
+    color: #575962
+}
+
+.sidebar .nav .nav-item a[data-toggle=collapse][aria-expanded=true] i,
+.sidebar[data-background-color=white] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] i {
+    color: #4d7cfe
+}
+
+.sidebar .nav .nav-item a[data-toggle=collapse][aria-expanded=true] .caret,
+.sidebar[data-background-color=white] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] .caret {
+    -webkit-transform: rotate(-180deg);
+    transform: rotate(-180deg)
+}
+
+.sidebar .nav .nav-item a[data-toggle=collapse][aria-expanded=true]:before,
+.sidebar[data-background-color=white] .nav .nav-item a[data-toggle=collapse][aria-expanded=true]:before {
+    background: #1d7af3
+}
+
+.sidebar .nav.nav-primary>.nav-item a:focus i,
+.sidebar .nav.nav-primary>.nav-item a:hover i,
+.sidebar .nav.nav-primary>.nav-item a[data-toggle=collapse][aria-expanded=true] i,
+.sidebar[data-background-color=white] .nav.nav-primary>.nav-item a:focus i,
+.sidebar[data-background-color=white] .nav.nav-primary>.nav-item a:hover i,
+.sidebar[data-background-color=white] .nav.nav-primary>.nav-item a[data-toggle=collapse][aria-expanded=true] i {
+    color: #1572e8!important
+}
+
+.sidebar .nav.nav-primary>.nav-item a[data-toggle=collapse][aria-expanded=true]:before,
+.sidebar[data-background-color=white] .nav.nav-primary>.nav-item a[data-toggle=collapse][aria-expanded=true]:before {
+    background: #1572e8!important
+}
+
+.sidebar .nav.nav-primary>.nav-item.active a:before,
+.sidebar[data-background-color=white] .nav.nav-primary>.nav-item.active a:before {
+    background: #1572e8!important
+}
+
+.sidebar .nav.nav-primary>.nav-item.active a i,
+.sidebar[data-background-color=white] .nav.nav-primary>.nav-item.active a i {
+    color: #1572e8!important
+}
+
+.sidebar .nav.nav-secondary>.nav-item a:focus i,
+.sidebar .nav.nav-secondary>.nav-item a:hover i,
+.sidebar .nav.nav-secondary>.nav-item a[data-toggle=collapse][aria-expanded=true] i,
+.sidebar[data-background-color=white] .nav.nav-secondary>.nav-item a:focus i,
+.sidebar[data-background-color=white] .nav.nav-secondary>.nav-item a:hover i,
+.sidebar[data-background-color=white] .nav.nav-secondary>.nav-item a[data-toggle=collapse][aria-expanded=true] i {
+    color: #6861ce!important
+}
+
+.sidebar .nav.nav-secondary>.nav-item a[data-toggle=collapse][aria-expanded=true]:before,
+.sidebar[data-background-color=white] .nav.nav-secondary>.nav-item a[data-toggle=collapse][aria-expanded=true]:before {
+    background: #6861ce!important
+}
+
+.sidebar .nav.nav-secondary>.nav-item.active a:before,
+.sidebar[data-background-color=white] .nav.nav-secondary>.nav-item.active a:before {
+    background: #6861ce!important
+}
+
+.sidebar .nav.nav-secondary>.nav-item.active a i,
+.sidebar[data-background-color=white] .nav.nav-secondary>.nav-item.active a i {
+    color: #6861ce!important
+}
+
+.sidebar .nav.nav-info>.nav-item a:focus i,
+.sidebar .nav.nav-info>.nav-item a:hover i,
+.sidebar .nav.nav-info>.nav-item a[data-toggle=collapse][aria-expanded=true] i,
+.sidebar[data-background-color=white] .nav.nav-info>.nav-item a:focus i,
+.sidebar[data-background-color=white] .nav.nav-info>.nav-item a:hover i,
+.sidebar[data-background-color=white] .nav.nav-info>.nav-item a[data-toggle=collapse][aria-expanded=true] i {
+    color: #48abf7!important
+}
+
+.sidebar .nav.nav-info>.nav-item a[data-toggle=collapse][aria-expanded=true]:before,
+.sidebar[data-background-color=white] .nav.nav-info>.nav-item a[data-toggle=collapse][aria-expanded=true]:before {
+    background: #48abf7!important
+}
+
+.sidebar .nav.nav-info>.nav-item.active a:before,
+.sidebar[data-background-color=white] .nav.nav-info>.nav-item.active a:before {
+    background: #48abf7!important
+}
+
+.sidebar .nav.nav-info>.nav-item.active a i,
+.sidebar[data-background-color=white] .nav.nav-info>.nav-item.active a i {
+    color: #48abf7!important
+}
+
+.sidebar .nav.nav-success>.nav-item a:focus i,
+.sidebar .nav.nav-success>.nav-item a:hover i,
+.sidebar .nav.nav-success>.nav-item a[data-toggle=collapse][aria-expanded=true] i,
+.sidebar[data-background-color=white] .nav.nav-success>.nav-item a:focus i,
+.sidebar[data-background-color=white] .nav.nav-success>.nav-item a:hover i,
+.sidebar[data-background-color=white] .nav.nav-success>.nav-item a[data-toggle=collapse][aria-expanded=true] i {
+    color: #31ce36!important
+}
+
+.sidebar .nav.nav-success>.nav-item a[data-toggle=collapse][aria-expanded=true]:before,
+.sidebar[data-background-color=white] .nav.nav-success>.nav-item a[data-toggle=collapse][aria-expanded=true]:before {
+    background: #31ce36!important
+}
+
+.sidebar .nav.nav-success>.nav-item.active a:before,
+.sidebar[data-background-color=white] .nav.nav-success>.nav-item.active a:before {
+    background: #31ce36!important
+}
+
+.sidebar .nav.nav-success>.nav-item.active a i,
+.sidebar[data-background-color=white] .nav.nav-success>.nav-item.active a i {
+    color: #31ce36!important
+}
+
+.sidebar .nav.nav-warning>.nav-item a:focus i,
+.sidebar .nav.nav-warning>.nav-item a:hover i,
+.sidebar .nav.nav-warning>.nav-item a[data-toggle=collapse][aria-expanded=true] i,
+.sidebar[data-background-color=white] .nav.nav-warning>.nav-item a:focus i,
+.sidebar[data-background-color=white] .nav.nav-warning>.nav-item a:hover i,
+.sidebar[data-background-color=white] .nav.nav-warning>.nav-item a[data-toggle=collapse][aria-expanded=true] i {
+    color: #ffad46!important
+}
+
+.sidebar .nav.nav-warning>.nav-item a[data-toggle=collapse][aria-expanded=true]:before,
+.sidebar[data-background-color=white] .nav.nav-warning>.nav-item a[data-toggle=collapse][aria-expanded=true]:before {
+    background: #ffad46!important
+}
+
+.sidebar .nav.nav-warning>.nav-item.active a:before,
+.sidebar[data-background-color=white] .nav.nav-warning>.nav-item.active a:before {
+    background: #ffad46!important
+}
+
+.sidebar .nav.nav-warning>.nav-item.active a i,
+.sidebar[data-background-color=white] .nav.nav-warning>.nav-item.active a i {
+    color: #ffad46!important
+}
+
+.sidebar .nav.nav-danger>.nav-item a:focus i,
+.sidebar .nav.nav-danger>.nav-item a:hover i,
+.sidebar .nav.nav-danger>.nav-item a[data-toggle=collapse][aria-expanded=true] i,
+.sidebar[data-background-color=white] .nav.nav-danger>.nav-item a:focus i,
+.sidebar[data-background-color=white] .nav.nav-danger>.nav-item a:hover i,
+.sidebar[data-background-color=white] .nav.nav-danger>.nav-item a[data-toggle=collapse][aria-expanded=true] i {
+    color: #f25961!important
+}
+
+.sidebar .nav.nav-danger>.nav-item a[data-toggle=collapse][aria-expanded=true]:before,
+.sidebar[data-background-color=white] .nav.nav-danger>.nav-item a[data-toggle=collapse][aria-expanded=true]:before {
+    background: #f25961!important
+}
+
+.sidebar .nav.nav-danger>.nav-item.active a:before,
+.sidebar[data-background-color=white] .nav.nav-danger>.nav-item.active a:before {
+    background: #f25961!important
+}
+
+.sidebar .nav.nav-danger>.nav-item.active a i,
+.sidebar[data-background-color=white] .nav.nav-danger>.nav-item.active a i {
+    color: #f25961!important
+}
+
+.sidebar .nav-collapse,
+.sidebar[data-background-color=white] .nav-collapse {
+    margin-top: 0;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    padding-top: 10px
+}
+
+.sidebar .nav-collapse li.active>a,
+.sidebar[data-background-color=white] .nav-collapse li.active>a {
+    font-weight: 600
+}
+
+.sidebar .nav-collapse li a:before,
+.sidebar .nav-collapse li a:hover:before,
+.sidebar[data-background-color=white] .nav-collapse li a:before,
+.sidebar[data-background-color=white] .nav-collapse li a:hover:before {
+    opacity: 0!important
+}
+
+.sidebar .nav-collapse li a,
+.sidebar[data-background-color=white] .nav-collapse li a {
+    margin-bottom: 3px!important;
+    padding: 10px 25px!important
+}
+
+.sidebar .nav-collapse li a .sub-item,
+.sidebar[data-background-color=white] .nav-collapse li a .sub-item {
+    font-size: 14px;
+    position: relative;
+    margin-left: 25px;
+    opacity: .85
+}
+
+.sidebar .nav-collapse li a .sub-item:before,
+.sidebar[data-background-color=white] .nav-collapse li a .sub-item:before {
+    content: '';
+    height: 4px;
+    width: 4px;
+    background: rgba(131, 132, 138, .89);
+    position: absolute;
+    left: -15px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 100%
+}
+
+.sidebar .nav-collapse li a:hover .sub-item,
+.sidebar[data-background-color=white] .nav-collapse li a:hover .sub-item {
+    opacity: 1
+}
+
+.sidebar .nav-collapse li a .sidebar-mini-icon,
+.sidebar[data-background-color=white] .nav-collapse li a .sidebar-mini-icon {
+    font-size: 18px;
+    color: #c3c5ca;
+    margin-right: 15px;
+    width: 25px;
+    text-align: center;
+    vertical-align: middle;
+    float: left;
+    font-weight: 300!important
+}
+
+.sidebar .nav-collapse.subnav,
+.sidebar[data-background-color=white] .nav-collapse.subnav {
+    padding-bottom: 10px;
+    margin-bottom: 0
+}
+
+.sidebar .nav-collapse.subnav li a,
+.sidebar[data-background-color=white] .nav-collapse.subnav li a {
+    padding-left: 40px!important
+}
+
+.sidebar.sidebar-style-2 .nav .nav-item {
+    padding: 0 15px
+}
+
+.sidebar.sidebar-style-2 .nav .nav-item a {
+    padding: 8px 10px;
+    border-radius: 5px
+}
+
+.sidebar.sidebar-style-2 .nav .nav-item a:focus,
+.sidebar.sidebar-style-2 .nav .nav-item a:hover,
+.sidebar.sidebar-style-2 .nav .nav-item a[data-toggle=collapse][aria-expanded=true] {
+    background: rgba(199, 199, 199, .2)
+}
+
+.sidebar.sidebar-style-2 .nav .nav-item a:focus i,
+.sidebar.sidebar-style-2 .nav .nav-item a:focus p,
+.sidebar.sidebar-style-2 .nav .nav-item a:hover i,
+.sidebar.sidebar-style-2 .nav .nav-item a:hover p,
+.sidebar.sidebar-style-2 .nav .nav-item a[data-toggle=collapse][aria-expanded=true] i,
+.sidebar.sidebar-style-2 .nav .nav-item a[data-toggle=collapse][aria-expanded=true] p {
+    color: #575962!important
+}
+
+.sidebar.sidebar-style-2 .nav .nav-item.active a:before {
+    background: 0 0
+}
+
+.sidebar.sidebar-style-2 .nav .nav-item .active a {
+    background: rgba(199, 199, 199, .2)
+}
+
+.sidebar.sidebar-style-2 .nav .nav-item .active a i,
+.sidebar.sidebar-style-2 .nav .nav-item .active a p {
+    color: #575962!important
+}
+
+.sidebar.sidebar-style-2 .nav .nav-item.submenu {
+    background: 0 0!important
+}
+
+.sidebar.sidebar-style-2 .nav .nav-item a[data-toggle=collapse][aria-expanded=true]:before {
+    background: 0 0!important
+}
+
+.sidebar.sidebar-style-2 .nav.nav-primary>.nav-item.active>a {
+    background: #1572e8!important;
+    box-shadow: 4px 4px 10px 0 rgba(0, 0, 0, .1), 4px 4px 15px -5px rgba(21, 114, 232, .4)!important
+}
+
+.sidebar.sidebar-style-2 .nav.nav-primary>.nav-item.active>a:before {
+    background: 0 0!important
+}
+
+.sidebar.sidebar-style-2 .nav.nav-primary>.nav-item.active>a .caret,
+.sidebar.sidebar-style-2 .nav.nav-primary>.nav-item.active>a i,
+.sidebar.sidebar-style-2 .nav.nav-primary>.nav-item.active>a p,
+.sidebar.sidebar-style-2 .nav.nav-primary>.nav-item.active>a span {
+    color: #fff!important
+}
+
+.sidebar.sidebar-style-2 .nav.nav-primary>.nav-item.active>a[data-toggle=collapse][aria-expanded=true] i {
+    color: #fff!important
+}
+
+.sidebar.sidebar-style-2 .nav.nav-secondary>.nav-item.active>a {
+    background: #6861ce!important;
+    box-shadow: 4px 4px 10px 0 rgba(0, 0, 0, .1), 4px 4px 15px -5px rgba(104, 97, 206, .4)!important
+}
+
+.sidebar.sidebar-style-2 .nav.nav-secondary>.nav-item.active>a:before {
+    background: 0 0!important
+}
+
+.sidebar.sidebar-style-2 .nav.nav-secondary>.nav-item.active>a .caret,
+.sidebar.sidebar-style-2 .nav.nav-secondary>.nav-item.active>a i,
+.sidebar.sidebar-style-2 .nav.nav-secondary>.nav-item.active>a p,
+.sidebar.sidebar-style-2 .nav.nav-secondary>.nav-item.active>a span {
+    color: #fff!important
+}
+
+.sidebar.sidebar-style-2 .nav.nav-secondary>.nav-item.active>a[data-toggle=collapse][aria-expanded=true] i {
+    color: #fff!important
+}
+
+.sidebar.sidebar-style-2 .nav.nav-info>.nav-item.active>a {
+    background: #48abf7!important;
+    box-shadow: 4px 4px 10px 0 rgba(0, 0, 0, .1), 4px 4px 15px -5px rgba(72, 171, 247, .4)!important
+}
+
+.sidebar.sidebar-style-2 .nav.nav-info>.nav-item.active>a:before {
+    background: 0 0!important
+}
+
+.sidebar.sidebar-style-2 .nav.nav-info>.nav-item.active>a .caret,
+.sidebar.sidebar-style-2 .nav.nav-info>.nav-item.active>a i,
+.sidebar.sidebar-style-2 .nav.nav-info>.nav-item.active>a p,
+.sidebar.sidebar-style-2 .nav.nav-info>.nav-item.active>a span {
+    color: #fff!important
+}
+
+.sidebar.sidebar-style-2 .nav.nav-info>.nav-item.active>a[data-toggle=collapse][aria-expanded=true] i {
+    color: #fff!important
+}
+
+.sidebar.sidebar-style-2 .nav.nav-success>.nav-item.active>a {
+    background: #31ce36!important;
+    box-shadow: 4px 4px 10px 0 rgba(0, 0, 0, .1), 4px 4px 15px -5px rgba(49, 206, 54, .4)!important
+}
+
+.sidebar.sidebar-style-2 .nav.nav-success>.nav-item.active>a:before {
+    background: 0 0!important
+}
+
+.sidebar.sidebar-style-2 .nav.nav-success>.nav-item.active>a .caret,
+.sidebar.sidebar-style-2 .nav.nav-success>.nav-item.active>a i,
+.sidebar.sidebar-style-2 .nav.nav-success>.nav-item.active>a p,
+.sidebar.sidebar-style-2 .nav.nav-success>.nav-item.active>a span {
+    color: #fff!important
+}
+
+.sidebar.sidebar-style-2 .nav.nav-success>.nav-item.active>a[data-toggle=collapse][aria-expanded=true] i {
+    color: #fff!important
+}
+
+.sidebar.sidebar-style-2 .nav.nav-warning>.nav-item.active>a {
+    background: #ffad46!important;
+    box-shadow: 4px 4px 10px 0 rgba(0, 0, 0, .1), 4px 4px 15px -5px rgba(255, 173, 70, .4)!important
+}
+
+.sidebar.sidebar-style-2 .nav.nav-warning>.nav-item.active>a:before {
+    background: 0 0!important
+}
+
+.sidebar.sidebar-style-2 .nav.nav-warning>.nav-item.active>a .caret,
+.sidebar.sidebar-style-2 .nav.nav-warning>.nav-item.active>a i,
+.sidebar.sidebar-style-2 .nav.nav-warning>.nav-item.active>a p,
+.sidebar.sidebar-style-2 .nav.nav-warning>.nav-item.active>a span {
+    color: #fff!important
+}
+
+.sidebar.sidebar-style-2 .nav.nav-warning>.nav-item.active>a[data-toggle=collapse][aria-expanded=true] i {
+    color: #fff!important
+}
+
+.sidebar.sidebar-style-2 .nav.nav-danger>.nav-item.active>a {
+    background: #f25961!important;
+    box-shadow: 4px 4px 10px 0 rgba(0, 0, 0, .1), 4px 4px 15px -5px rgba(242, 89, 97, .4)!important
+}
+
+.sidebar.sidebar-style-2 .nav.nav-danger>.nav-item.active>a:before {
+    background: 0 0!important
+}
+
+.sidebar.sidebar-style-2 .nav.nav-danger>.nav-item.active>a .caret,
+.sidebar.sidebar-style-2 .nav.nav-danger>.nav-item.active>a i,
+.sidebar.sidebar-style-2 .nav.nav-danger>.nav-item.active>a p,
+.sidebar.sidebar-style-2 .nav.nav-danger>.nav-item.active>a span {
+    color: #fff!important
+}
+
+.sidebar.sidebar-style-2 .nav.nav-danger>.nav-item.active>a[data-toggle=collapse][aria-expanded=true] i {
+    color: #fff!important
+}
+
+.sidebar.sidebar-style-2[data-background-color=dark2] .nav .nav-item a:focus i,
+.sidebar.sidebar-style-2[data-background-color=dark2] .nav .nav-item a:focus p,
+.sidebar.sidebar-style-2[data-background-color=dark2] .nav .nav-item a:hover i,
+.sidebar.sidebar-style-2[data-background-color=dark2] .nav .nav-item a:hover p,
+.sidebar.sidebar-style-2[data-background-color=dark2] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] i,
+.sidebar.sidebar-style-2[data-background-color=dark2] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] p,
+.sidebar.sidebar-style-2[data-background-color=dark] .nav .nav-item a:focus i,
+.sidebar.sidebar-style-2[data-background-color=dark] .nav .nav-item a:focus p,
+.sidebar.sidebar-style-2[data-background-color=dark] .nav .nav-item a:hover i,
+.sidebar.sidebar-style-2[data-background-color=dark] .nav .nav-item a:hover p,
+.sidebar.sidebar-style-2[data-background-color=dark] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] i,
+.sidebar.sidebar-style-2[data-background-color=dark] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] p {
+    color: #b9babf!important
+}
+
+.sidebar.sidebar-style-2[data-background-color=dark2] .nav .nav-item.active a,
+.sidebar.sidebar-style-2[data-background-color=dark] .nav .nav-item.active a {
+    color: #fff
+}
+
+.sidebar.sidebar-style-2[data-background-color=dark2] .nav .nav-item.active a .caret,
+.sidebar.sidebar-style-2[data-background-color=dark2] .nav .nav-item.active a i,
+.sidebar.sidebar-style-2[data-background-color=dark2] .nav .nav-item.active a p,
+.sidebar.sidebar-style-2[data-background-color=dark2] .nav .nav-item.active a span,
+.sidebar.sidebar-style-2[data-background-color=dark] .nav .nav-item.active a .caret,
+.sidebar.sidebar-style-2[data-background-color=dark] .nav .nav-item.active a i,
+.sidebar.sidebar-style-2[data-background-color=dark] .nav .nav-item.active a p,
+.sidebar.sidebar-style-2[data-background-color=dark] .nav .nav-item.active a span {
+    color: #fff
+}
+
+.sidebar.sidebar-style-2[data-background-color=dark2] .nav .nav-item.active a[data-toggle=collapse][aria-expanded=true] .caret,
+.sidebar.sidebar-style-2[data-background-color=dark2] .nav .nav-item.active a[data-toggle=collapse][aria-expanded=true] i,
+.sidebar.sidebar-style-2[data-background-color=dark2] .nav .nav-item.active a[data-toggle=collapse][aria-expanded=true] p,
+.sidebar.sidebar-style-2[data-background-color=dark2] .nav .nav-item.active a[data-toggle=collapse][aria-expanded=true] span,
+.sidebar.sidebar-style-2[data-background-color=dark] .nav .nav-item.active a[data-toggle=collapse][aria-expanded=true] .caret,
+.sidebar.sidebar-style-2[data-background-color=dark] .nav .nav-item.active a[data-toggle=collapse][aria-expanded=true] i,
+.sidebar.sidebar-style-2[data-background-color=dark] .nav .nav-item.active a[data-toggle=collapse][aria-expanded=true] p,
+.sidebar.sidebar-style-2[data-background-color=dark] .nav .nav-item.active a[data-toggle=collapse][aria-expanded=true] span {
+    color: #fff
+}
+
+.main-panel {
+    position: relative;
+    width: calc(100% - 250px);
+    height: 100vh;
+    min-height: 100%;
+    float: right;
+    transition: all .3s
+}
+
+.main-panel>.content {
+    padding: 0!important;
+    min-height: calc(100% - 123px);
+    margin-top: 62px;
+    overflow: hidden
+}
+
+.main-panel>.content-full {
+    padding: 0!important;
+    min-height: calc(100% - 123px);
+    margin-top: 63px;
+    overflow: hidden
+}
+
+.main-panel .page-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px
+}
+
+.main-panel .page-header .page-title {
+    margin-bottom: 0
+}
+
+.main-panel .page-header .btn-page-header-dropdown {
+    width: 35px;
+    height: 35px;
+    font-size: 14px;
+    padding: 0;
+    color: #6b6b6b;
+    box-shadow: 0 2px 14px 0 rgba(144, 116, 212, .1)!important;
+    border: 0
+}
+
+.main-panel .page-header .btn-page-header-dropdown:after {
+    display: none
+}
+
+.main-panel .page-header .dropdown-menu {
+    margin-top: 15px;
+    top: 0!important
+}
+
+.main-panel .page-header .dropdown-menu:after {
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid #fff;
+    position: absolute;
+    top: -8px;
+    right: 32px;
+    content: ''
+}
+
+.main-panel .page-divider {
+    height: 0;
+    margin: .3rem 0 1rem;
+    overflow: hidden;
+    border-top: 1px solid #ebecec
+}
+
+.page-wrapper {
+    min-height: calc(100vh - 57px);
+    position: relative
+}
+
+.page-wrapper.has-sidebar .page-inner {
+    margin-right: 22.5rem
+}
+
+.page-navs {
+    position: relative;
+    display: block;
+    padding-right: 1rem;
+    padding-left: 1rem;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .07);
+    z-index: 1
+}
+
+.page-navs .nav .nav-link {
+    padding: 1rem!important
+}
+
+.page-navs .nav-line {
+    border: 0!important
+}
+
+.page-navs .nav-line .nav-link {
+    border-bottom-width: 3px!important
+}
+
+.nav-scroller .nav {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    white-space: nowrap
+}
+
+@media (min-width: 992px) {
+    .page-navs {
+        padding-right: 2rem;
+        padding-left: 2rem
+    }
+}
+
+.page-inner {
+    padding: 1.5rem 0
+}
+
+@media (min-width: 576px) {
+    .page-inner {
+        padding-right: 1rem;
+        padding-left: 1rem
+    }
+}
+
+@media (min-width: 992px) {
+    .page-inner {
+        padding-right: 2rem;
+        padding-left: 2rem
+    }
+}
+
+.page-inner-fill {
+    padding: 0;
+    height: calc(100% - 57px);
+    display: flex;
+    flex-direction: column
+}
+
+.page-sidebar {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    max-width: 22.5rem;
+    box-shadow: none;
+    transform: translate3d(100%, 0, 0);
+    overflow: auto;
+    z-index: 999;
+    transition: transform .2s ease-in-out;
+    border-left: 1px solid rgba(61, 70, 79, .125)!important
+}
+
+.page-sidebar .back {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    box-shadow: 0 0 0 1px rgba(61, 70, 79, .05), 0 1px 3px 0 rgba(61, 70, 79, .15);
+    font-size: 15px
+}
+
+.page-sidebar-section {
+    flex: 1;
+    overflow-y: auto
+}
+
+@media (min-width: 1200px) {
+    .page-sidebar {
+        transform: translateZ(0)
+    }
+}
+
+@media (max-width: 1200px) {
+    .page-wrapper.has-sidebar .page-inner {
+        margin-right: 0
+    }
+    .pagesidebar_open .page-sidebar {
+        transform: translate3d(0, 0, 0)!important;
+        max-width: unset
+    }
+}
+
+.page-with-aside {
+    display: flex
+}
+
+.page-with-aside .page-aside {
+    width: 280px;
+    min-height: 100vh;
+    border-right: 1px solid #f1f1f1;
+    padding: 15px 0
+}
+
+.page-with-aside .page-aside .aside-header {
+    padding: 15px 22px
+}
+
+.page-with-aside .page-aside .aside-header .title {
+    font-size: 24px
+}
+
+.page-with-aside .page-aside .aside-header .description {
+    font-size: 12px
+}
+
+.page-with-aside .page-aside .aside-nav .nav {
+    flex-direction: column
+}
+
+.page-with-aside .page-aside .aside-nav .nav>li {
+    padding: 8px 22px;
+    margin-bottom: 5px
+}
+
+.page-with-aside .page-aside .aside-nav .nav>li.active,
+.page-with-aside .page-aside .aside-nav .nav>li:focus,
+.page-with-aside .page-aside .aside-nav .nav>li:hover {
+    background: rgba(51, 51, 51, .08)
+}
+
+.page-with-aside .page-aside .aside-nav .nav>li.active {
+    padding: 12px 22px;
+    font-weight: 600
+}
+
+.page-with-aside .page-aside .aside-nav .nav>li.active>a {
+    color: #575962!important
+}
+
+.page-with-aside .page-aside .aside-nav .nav>li>a {
+    color: #83848a;
+    display: flex;
+    align-items: center;
+    font-size: 12px
+}
+
+.page-with-aside .page-aside .aside-nav .nav>li>a:focus,
+.page-with-aside .page-aside .aside-nav .nav>li>a:hover {
+    text-decoration: none
+}
+
+.page-with-aside .page-aside .aside-nav .nav>li>a i {
+    font-size: 20px;
+    margin-right: 15px;
+    color: #a1a2a6
+}
+
+.page-with-aside .page-aside .aside-nav .label {
+    padding: 5px 22px;
+    margin-top: 22px;
+    margin-bottom: 5px;
+    display: block
+}
+
+.page-with-aside .page-aside .aside-compose {
+    padding: 25px 22px
+}
+
+.page-with-aside .page-content {
+    width: calc(100% - 280px)
+}
+
+.footer {
+    border-top: 1px solid #eee;
+    padding: 15px;
+    background: #fff;
+    position: absolute;
+    width: 100%
+}
+
+.footer .container,
+.footer .container-fluid {
+    display: flex;
+    align-items: center
+}
+
+@media screen and (min-width: 991px) {
+    .sidebar_minimize .main-panel {
+        width: calc(100% - 75px);
+        transition: all .3s
+    }
+    .sidebar_minimize .logo-header {
+        width: 75px;
+        transition: all .3s;
+        padding: 0;
+        text-align: center
+    }
+    .sidebar_minimize .logo-header .big-logo {
+        margin-right: 0
+    }
+    .sidebar_minimize .logo-header .logo {
+        position: absolute;
+        transform: translate3d(25px, 0, 0);
+        opacity: 0
+    }
+    .sidebar_minimize .logo-header .logo img {
+        display: none
+    }
+    .sidebar_minimize .logo-header .nav-toggle {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        height: 100%;
+        right: 0!important
+    }
+    .sidebar_minimize .sidebar {
+        width: 75px;
+        transition: all .3s
+    }
+    .sidebar_minimize .sidebar .sidebar-wrapper {
+        width: 75px;
+        transition: all .3s
+    }
+    .sidebar_minimize .sidebar .sidebar-wrapper .user {
+        padding-left: 0;
+        padding-right: 0
+    }
+    .sidebar_minimize .sidebar .sidebar-wrapper .user [class^=avatar-] {
+        float: none!important;
+        margin: auto
+    }
+    .sidebar_minimize .sidebar .sidebar-wrapper .user .info {
+        display: none
+    }
+    .sidebar_minimize .sidebar .sidebar-wrapper .user .info span {
+        display: none
+    }
+    .sidebar_minimize .sidebar .sidebar-wrapper .nav-item {
+        position: relative
+    }
+    .sidebar_minimize .sidebar .sidebar-wrapper .nav-item a .letter-icon {
+        display: block!important
+    }
+    .sidebar_minimize .sidebar .sidebar-wrapper .nav-item a i {
+        margin-right: unset
+    }
+    .sidebar_minimize .sidebar .sidebar-wrapper .nav-item a .badge,
+    .sidebar_minimize .sidebar .sidebar-wrapper .nav-item a .caret,
+    .sidebar_minimize .sidebar .sidebar-wrapper .nav-item a p,
+    .sidebar_minimize .sidebar .sidebar-wrapper .nav-item a span {
+        display: none;
+        transition: all .3s
+    }
+    .sidebar_minimize .sidebar .sidebar-wrapper .nav-item a .sidebar-mini-icon {
+        display: block!important;
+        margin-right: 0
+    }
+    .sidebar_minimize .sidebar .sidebar-wrapper .nav-item.active .nav-collapse,
+    .sidebar_minimize .sidebar .sidebar-wrapper .nav-item.submenu .nav-collapse {
+        display: none
+    }
+    .sidebar_minimize .sidebar .sidebar-wrapper .nav-section .text-section {
+        display: none
+    }
+    .sidebar_minimize .sidebar .sidebar-wrapper .nav-section .sidebar-mini-icon {
+        display: block
+    }
+    .sidebar_minimize .sidebar:hover {
+        width: 250px
+    }
+    .sidebar_minimize .sidebar:hover .sidebar-wrapper {
+        width: 250px
+    }
+    .sidebar_minimize .sidebar:hover .sidebar-wrapper .user {
+        padding-left: 15px;
+        padding-right: 15px
+    }
+    .sidebar_minimize .sidebar:hover .sidebar-wrapper .user [class^=avatar-] {
+        float: left!important;
+        margin-right: 11px!important
+    }
+    .sidebar_minimize .sidebar:hover .sidebar-wrapper .user .info {
+        display: block
+    }
+    .sidebar_minimize .sidebar:hover .sidebar-wrapper .user .info span {
+        display: block
+    }
+    .sidebar_minimize .sidebar:hover .sidebar-wrapper .nav-item a i {
+        margin-right: 15px
+    }
+    .sidebar_minimize .sidebar:hover .sidebar-wrapper .nav-item a .badge,
+    .sidebar_minimize .sidebar:hover .sidebar-wrapper .nav-item a .caret,
+    .sidebar_minimize .sidebar:hover .sidebar-wrapper .nav-item a p,
+    .sidebar_minimize .sidebar:hover .sidebar-wrapper .nav-item a span {
+        display: block
+    }
+    .sidebar_minimize .sidebar:hover .sidebar-wrapper .nav-item a .sidebar-mini-icon {
+        display: block!important;
+        margin-right: 15px
+    }
+    .sidebar_minimize .sidebar:hover .sidebar-wrapper .nav-item.active .nav-collapse,
+    .sidebar_minimize .sidebar:hover .sidebar-wrapper .nav-item.submenu .nav-collapse {
+        display: block
+    }
+    .sidebar_minimize .sidebar:hover .sidebar-wrapper .nav-section .sidebar-mini-icon {
+        display: none
+    }
+    .sidebar_minimize .sidebar:hover .sidebar-wrapper .nav-section .text-section {
+        display: block
+    }
+    .sidebar_minimize.sidebar_minimize_hover .logo-header {
+        width: 250px;
+        padding-left: 25px;
+        padding-right: 25px;
+        text-align: left
+    }
+    .sidebar_minimize.sidebar_minimize_hover .logo-header .logo {
+        opacity: 1!important;
+        transform: translate3d(0, 0, 0)!important;
+        position: relative!important
+    }
+    .sidebar_minimize.sidebar_minimize_hover .logo-header .logo img {
+        display: inline-block!important
+    }
+    .sidebar_minimize.sidebar_minimize_hover .main-panel {
+        width: calc(100% - 250px)
+    }
+    .sidebar_minimize_hover .logo-header .nav-toggle {
+        right: 18px!important;
+        transform: translateX(0)!important;
+        left: unset
+    }
+}
+
+.overlay-sidebar:not(.is-show) .sidebar {
+    left: -250px
+}
+
+.overlay-sidebar .main-panel {
+    width: 100%!important
+}
+
+@media screen and (min-width: 991px) {
+    .compact-wrapper .main-header .logo-header {
+        width: 175px
+    }
+    .compact-wrapper .sidebar {
+        width: 175px
+    }
+    .compact-wrapper .sidebar .badge {
+        position: absolute;
+        top: 8px;
+        right: 8px
+    }
+    .compact-wrapper .sidebar .text-section {
+        text-align: center
+    }
+    .compact-wrapper .sidebar .nav .nav-item a {
+        flex-direction: column
+    }
+    .compact-wrapper .sidebar .nav .nav-item a i {
+        margin-right: 0
+    }
+    .compact-wrapper .sidebar .nav .nav-item a p {
+        margin-right: 0
+    }
+    .compact-wrapper .sidebar .nav .nav-item a .caret {
+        display: none
+    }
+    .compact-wrapper .sidebar .nav-collapse li a .sub-item {
+        margin-left: 0;
+        text-align: center
+    }
+    .compact-wrapper .sidebar .nav-collapse li a .sub-item:before {
+        display: none
+    }
+    .compact-wrapper .main-panel {
+        width: calc(100% - 175px)
+    }
+}
+
+@media screen and (min-width: 991px) {
+    .classic-wrapper .classic-grid {
+        margin: 93px 40px 30px
+    }
+    .classic-wrapper .main-header {
+        top: 0
+    }
+    .classic-wrapper .main-header .logo-header {
+        padding: 0 40px;
+        width: 290px
+    }
+    .classic-wrapper .sidebar {
+        position: relative;
+        float: left;
+        margin-top: 0
+    }
+    .classic-wrapper .sidebar .sidebar-wrapper {
+        max-height: unset;
+        min-height: 100%
+    }
+    .classic-wrapper .navbar-header {
+        padding-right: 30px
+    }
+    .classic-wrapper .main-panel {
+        height: unset
+    }
+    .classic-wrapper .main-panel .content,
+    .classic-wrapper .main-panel .content-full {
+        margin-top: 0
+    }
+    .classic-wrapper .page-inner {
+        padding-right: 0;
+        padding-top: 5px
+    }
+    .classic-wrapper .board {
+        height: 100%
+    }
+    .sidebar_minimize .classic-wrapper .logo-header .logo {
+        position: relative;
+        transform: unset;
+        opacity: 1
+    }
+    .sidebar_minimize .classic-wrapper .logo-header .logo img {
+        display: inline-block
+    }
+    .sidebar_minimize .classic-wrapper .logo-header .nav-toggle {
+        left: unset;
+        transform: unset;
+        right: 18px!important
+    }
+}
+
+.classic-wrapper {
+    height: unset
+}
+
+.classic-wrapper .main-panel {
+    height: unset
+}
+
+.classic-wrapper .footer {
+    position: unset
+}
+
+.classic-grid {
+    min-height: 100vh;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap
+}
+
+@media screen and (min-width: 991px) {
+    .static-sidebar {
+        height: unset
+    }
+    .static-sidebar .sidebar {
+        position: static;
+        float: left
+    }
+    .static-sidebar .sidebar .sidebar-wrapper {
+        max-height: unset;
+        min-height: 100%
+    }
+    .static-sidebar .main-panel {
+        height: unset
+    }
+    .static-sidebar .main-panel .content {
+        margin-bottom: 60px
+    }
+    .static-sidebar .footer {
+        position: absolute;
+        bottom: 0
+    }
+}
+
+.mail-wrapper .toggle-email-nav {
+    margin-top: 10px;
+    display: none
+}
+
+.mail-wrapper .mail-content .email-head,
+.mail-wrapper .mail-content .inbox-head {
+    padding: 35px 25px 20px
+}
+
+.mail-wrapper .mail-content .email-head h3,
+.mail-wrapper .mail-content .inbox-head h3 {
+    font-size: 22px;
+    font-weight: 300;
+    margin: 0
+}
+
+.mail-wrapper .mail-content .email-head {
+    padding: 35px 25px;
+    border-bottom: 1px solid #f1f1f1
+}
+
+.mail-wrapper .mail-content .email-head .favorite {
+    color: #eee;
+    margin-right: 5px
+}
+
+.mail-wrapper .mail-content .email-head .favorite.active {
+    color: #ffc600
+}
+
+.mail-wrapper .mail-content .email-head .controls {
+    margin-left: auto
+}
+
+.mail-wrapper .mail-content .email-head .controls>a {
+    color: #9c9c9c;
+    font-size: 18px;
+    padding: 0 5px
+}
+
+.mail-wrapper .mail-content .email-head .controls>a:hover {
+    text-decoration: none;
+    opacity: .8
+}
+
+.mail-wrapper .mail-content .email-head .controls>a:last-child {
+    padding-right: 0
+}
+
+.mail-wrapper .mail-content .email-sender {
+    padding: 14px 25px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #f1f1f1
+}
+
+.mail-wrapper .mail-content .email-sender .avatar {
+    padding-right: 12px
+}
+
+.mail-wrapper .mail-content .email-sender .avatar img {
+    max-width: 40px;
+    max-height: 40px;
+    border-radius: 50%
+}
+
+.mail-wrapper .mail-content .email-sender .date {
+    margin-left: auto
+}
+
+.mail-wrapper .mail-content .email-sender .sender .action {
+    display: inline-block
+}
+
+.mail-wrapper .mail-content .email-sender .sender .action>a {
+    cursor: pointer
+}
+
+.mail-wrapper .mail-content .email-body {
+    padding: 30px 28px
+}
+
+.mail-wrapper .mail-content .email-attachments {
+    padding: 25px 28px;
+    border-top: 1px solid #f1f1f1
+}
+
+.mail-wrapper .mail-content .email-attachments .title {
+    font-weight: 400;
+    margin-bottom: 10px
+}
+
+.mail-wrapper .mail-content .email-attachments .title span {
+    font-weight: 400
+}
+
+.mail-wrapper .mail-content .email-attachments ul {
+    padding-left: 0;
+    list-style: none
+}
+
+.mail-wrapper .mail-content .email-attachments ul li {
+    padding: 6px 0
+}
+
+.mail-wrapper .mail-content .email-attachments ul li a {
+    font-weight: 400
+}
+
+.mail-wrapper .mail-content .email-attachments ul li a:hover {
+    text-decoration: none
+}
+
+.mail-wrapper .mail-content .email-attachments ul li a i {
+    font-size: 20px;
+    display: inline-block;
+    vertical-align: middle
+}
+
+.mail-wrapper .mail-content .email-attachments ul li a span {
+    font-weight: 400
+}
+
+.mail-wrapper .mail-content .inbox-body {
+    padding: 20px 0
+}
+
+.mail-wrapper .mail-content .inbox-body .mail-option {
+    padding: 0 20px;
+    margin-bottom: 20px;
+    display: flex
+}
+
+.mail-wrapper .mail-content .inbox-body .mail-option .chk-all {
+    display: inline-block
+}
+
+.mail-wrapper .mail-content .inbox-body .mail-option .btn-option {
+    color: #555!important;
+    border: 1px solid #ebedf2!important;
+    font-weight: 600;
+    background: #fff!important;
+    box-shadow: 2px 2px 3px 0 #f2f1f1!important
+}
+
+.mail-wrapper .mail-content .inbox-body .mail-option .form-check {
+    padding: 0
+}
+
+.mail-wrapper .mail-content .inbox-body .mail-option .form-check .form-check-sign:before {
+    border: 1px solid #eee;
+    background: #eee
+}
+
+.mail-wrapper .mail-content .inbox-body .email-list .email-list-item {
+    padding: 14px 20px;
+    display: table;
+    cursor: pointer;
+    position: relative;
+    font-size: 12px;
+    width: 100%;
+    border-top: 1px solid #f1f1f1
+}
+
+.mail-wrapper .mail-content .inbox-body .email-list .email-list-item:hover {
+    background: #f6f5f5
+}
+
+.mail-wrapper .mail-content .inbox-body .email-list .email-list-item .email-list-actions,
+.mail-wrapper .mail-content .inbox-body .email-list .email-list-item .email-list-detail {
+    vertical-align: top;
+    display: table-cell
+}
+
+.mail-wrapper .mail-content .inbox-body .email-list .email-list-item .email-list-actions {
+    width: 50px
+}
+
+.mail-wrapper .mail-content .inbox-body .email-list .email-list-item .email-list-actions .custom-checkbox {
+    margin-right: 0
+}
+
+.mail-wrapper .mail-content .inbox-body .email-list .email-list-item .email-list-actions .favorite {
+    color: #eee;
+    font-size: 18px
+}
+
+.mail-wrapper .mail-content .inbox-body .email-list .email-list-item .email-list-actions .favorite:hover {
+    text-decoration: none;
+    color: #969696
+}
+
+.mail-wrapper .mail-content .inbox-body .email-list .email-list-item .email-list-actions .favorite.active,
+.mail-wrapper .mail-content .inbox-body .email-list .email-list-item .email-list-actions .favorite.active:hover {
+    color: #ffc600
+}
+
+.mail-wrapper .mail-content .inbox-body .email-list .email-list-item .email-list-detail .msg,
+.mail-wrapper .mail-content .inbox-body .email-list .email-list-item .email-list-detail p {
+    font-size: 12px
+}
+
+.mail-wrapper .mail-content .inbox-body .email-list .email-list-item .email-list-detail .msg {
+    margin-bottom: 0;
+    margin-top: 8px
+}
+
+.mail-wrapper .mail-content .inbox-body .email-list .email-list-item .email-list-detail .from {
+    font-size: 13px
+}
+
+.mail-wrapper .mail-content .inbox-body .email-list .email-list-item .email-list-detail .date {
+    font-size: 12px;
+    display: flex;
+    align-items: center
+}
+
+.mail-wrapper .mail-content .inbox-body .email-list .email-list-item .email-list-detail .date .paperclip {
+    font-size: 16px;
+    padding-right: 4px
+}
+
+.mail-wrapper .mail-content .inbox-body .email-list .email-list-item.unread {
+    font-weight: 400;
+    background: #fbfbfb
+}
+
+.mail-wrapper .mail-content .inbox-body .email-list .email-list-item.unread:after {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 3px;
+    background: #1572e8;
+    top: -1px;
+    left: 0;
+    bottom: -1px;
+    height: calc(100% + 2px)
+}
+
+.mail-wrapper .mail-content .inbox-body .email-list .email-list-item.unread .email-list-detail .from {
+    font-weight: 600
+}
+
+.mail-wrapper .mail-content .email-compose-fields,
+.mail-wrapper .mail-content .email-editor {
+    padding: 20px 25px
+}
+
+.mail-wrapper .mail-content .email-compose-fields {
+    padding: 20px 25px;
+    border-bottom: 1px solid #f1f1f1
+}
+
+.mail-wrapper .mail-content .email-action {
+    text-align: right;
+    margin-bottom: 15px
+}
+
+.mail-wrapper .mail-content .email-action>.btn {
+    margin-right: 7px
+}
+
+.mail-wrapper .mail-content .email-action>.btn:last-child {
+    margin-right: 0
+}
+
+.flex-1 {
+    -ms-flex: 1;
+    flex: 1
+}
+
+.metric {
+    display: flex;
+    padding: 1rem;
+    flex-direction: column
+}
+
+.main-header .navbar-header[data-background-color] .nav-search .input-group {
+    border: 0;
+    background: rgba(0, 0, 0, .14)!important;
+    box-shadow: 3px 3px 6px 0 rgba(0, 0, 0, .07);
+    transition: all .4s
+}
+
+.main-header .navbar-header[data-background-color] .nav-search .input-group .form-control {
+    color: #fff!important
+}
+
+.main-header .navbar-header[data-background-color] .nav-search .input-group .form-control::-webkit-input-placeholder {
+    opacity: 1
+}
+
+.main-header .navbar-header[data-background-color] .nav-search .input-group .form-control::-moz-placeholder {
+    opacity: 1
+}
+
+.main-header .navbar-header[data-background-color] .nav-search .input-group .form-control:-ms-input-placeholder {
+    opacity: 1
+}
+
+.main-header .navbar-header[data-background-color] .nav-search .input-group .form-control:-moz-placeholder {
+    opacity: 1
+}
+
+.main-header .navbar-header[data-background-color] .nav-search .input-group .search-icon {
+    color: #fff!important
+}
+
+.main-header .navbar-header[data-background-color] .nav-search .input-group.focus {
+    background: #fff!important
+}
+
+.main-header .navbar-header[data-background-color] .nav-search .input-group.focus .form-control {
+    color: inherit!important
+}
+
+.main-header .navbar-header[data-background-color] .nav-search .input-group.focus .form-control::-webkit-input-placeholder {
+    color: #bfbfbf!important
+}
+
+.main-header .navbar-header[data-background-color] .nav-search .input-group.focus .form-control::-moz-placeholder {
+    color: #bfbfbf!important
+}
+
+.main-header .navbar-header[data-background-color] .nav-search .input-group.focus .form-control:-ms-input-placeholder {
+    color: #bfbfbf!important
+}
+
+.main-header .navbar-header[data-background-color] .nav-search .input-group.focus .form-control:-moz-placeholder {
+    color: #bfbfbf!important
+}
+
+.main-header .navbar-header[data-background-color] .nav-search .input-group.focus .search-icon {
+    color: #bfbfbf!important
+}
+
+.main-header .navbar-header[data-background-color] .navbar-nav .nav-item .nav-link {
+    color: #fff!important
+}
+
+.main-header .navbar-header[data-background-color] .navbar-nav .nav-item .nav-link:focus,
+.main-header .navbar-header[data-background-color] .navbar-nav .nav-item .nav-link:hover {
+    background: rgba(31, 30, 30, .12)!important
+}
+
+.main-header .navbar-header[data-background-color] .navbar-nav .nav-item.active .nav-link {
+    background: rgba(31, 30, 30, .12)!important
+}
+
+.main-header .navbar-header[data-background-color=dark2] .nav-search .input-group,
+.main-header .navbar-header[data-background-color=dark] .nav-search .input-group {
+    background: rgba(185, 185, 185, .18)!important
+}
+
+.main-header .navbar-header[data-background-color=dark2] .navbar-nav .nav-item .nav-link:focus,
+.main-header .navbar-header[data-background-color=dark2] .navbar-nav .nav-item .nav-link:hover,
+.main-header .navbar-header[data-background-color=dark] .navbar-nav .nav-item .nav-link:focus,
+.main-header .navbar-header[data-background-color=dark] .navbar-nav .nav-item .nav-link:hover {
+    background: rgba(185, 185, 185, .18)!important
+}
+
+.main-header .navbar-header[data-background-color=dark2] .navbar-nav .nav-item.active .nav-link,
+.main-header .navbar-header[data-background-color=dark] .navbar-nav .nav-item.active .nav-link {
+    background: rgba(185, 185, 185, .18)!important
+}
+
+.main-header .navbar-header .navbar-header-transparent .nav-search .input-group,
+.main-header .navbar-header[data-background-color=white] .nav-search .input-group {
+    background: #eee
+}
+
+.main-header .navbar-header .navbar-header-transparent .nav-search .input-group .form-control,
+.main-header .navbar-header[data-background-color=white] .nav-search .input-group .form-control {
+    color: #8d9498!important
+}
+
+.main-header .navbar-header .navbar-header-transparent .nav-search .input-group .search-icon,
+.main-header .navbar-header[data-background-color=white] .nav-search .input-group .search-icon {
+    color: #8d9498!important
+}
+
+.main-header .navbar-header .navbar-header-transparent .navbar-nav .nav-item .nav-link,
+.main-header .navbar-header[data-background-color=white] .navbar-nav .nav-item .nav-link {
+    color: #8d9498!important
+}
+
+.main-header .navbar-header .navbar-header-transparent .navbar-nav .nav-item .nav-link:focus,
+.main-header .navbar-header .navbar-header-transparent .navbar-nav .nav-item .nav-link:hover,
+.main-header .navbar-header[data-background-color=white] .navbar-nav .nav-item .nav-link:focus,
+.main-header .navbar-header[data-background-color=white] .navbar-nav .nav-item .nav-link:hover {
+    background: #eee!important
+}
+
+.main-header .navbar-header .navbar-header-transparent .navbar-nav .nav-item.active .nav-link,
+.main-header .navbar-header[data-background-color=white] .navbar-nav .nav-item.active .nav-link {
+    background: #eee!important
+}
+
+.btn-toggle {
+    color: #fff!important
+}
+
+.logo-header[data-background-color] .navbar-toggler .navbar-toggler-icon {
+    color: #fff!important
+}
+
+.logo-header[data-background-color] .more {
+    color: #fff!important
+}
+
+.logo-header[data-background-color=white] .btn-toggle,
+.logo-header[data-background-color=white] .more,
+.logo-header[data-background-color=white] .navbar-toggler .navbar-toggler-icon {
+    color: #8d9498!important
+}
+
+.logo-header[data-background-color=white] {
+    background: #fff!important
+}
+
+.navbar-header[data-background-color=white] {
+    background: #fff!important
+}
+
+.logo-header[data-background-color=dark] {
+    background: #1a2035!important
+}
+
+.logo-header[data-background-color=dark2] {
+    background: #1f283e!important
+}
+
+.navbar-header[data-background-color=dark] {
+    background: #1a2035!important
+}
+
+.navbar-header[data-background-color=dark2] {
+    background: #1f283e!important
+}
+
+.logo-header[data-background-color=blue] {
+    background: #1572e8!important
+}
+
+.logo-header[data-background-color=blue2] {
+    background: #1269db!important
+}
+
+.navbar-header[data-background-color=blue] {
+    background: #1572e8!important
+}
+
+.navbar-header[data-background-color=blue2] {
+    background: #1269db!important
+}
+
+.logo-header[data-background-color=purple] {
+    background: #6861ce!important
+}
+
+.logo-header[data-background-color=purple2] {
+    background: #5c55bf!important
+}
+
+.navbar-header[data-background-color=purple] {
+    background: #6861ce!important
+}
+
+.navbar-header[data-background-color=purple2] {
+    background: #5c55bf!important
+}
+
+.logo-header[data-background-color=light-blue] {
+    background: #48abf7!important
+}
+
+.logo-header[data-background-color=light-blue2] {
+    background: #3697e1!important
+}
+
+.navbar-header[data-background-color=light-blue] {
+    background: #48abf7!important
+}
+
+.navbar-header[data-background-color=light-blue2] {
+    background: #3697e1!important
+}
+
+.logo-header[data-background-color=green] {
+    background: #31ce36!important
+}
+
+.logo-header[data-background-color=green2] {
+    background: #2bb930!important
+}
+
+.navbar-header[data-background-color=green] {
+    background: #31ce36!important
+}
+
+.navbar-header[data-background-color=green2] {
+    background: #2bb930!important
+}
+
+.logo-header[data-background-color=orange] {
+    background: #ffad46!important
+}
+
+.logo-header[data-background-color=orange2] {
+    background: #ff9e27!important
+}
+
+.navbar-header[data-background-color=orange] {
+    background: #ffad46!important
+}
+
+.navbar-header[data-background-color=orange2] {
+    background: #ff9e27!important
+}
+
+.logo-header[data-background-color=red] {
+    background: #f25961!important
+}
+
+.logo-header[data-background-color=red2] {
+    background: #ea4d56!important
+}
+
+.navbar-header[data-background-color=red] {
+    background: #f25961!important
+}
+
+.navbar-header[data-background-color=red2] {
+    background: #ea4d56!important
+}
+
+.sidebar[data-background-color=dark] {
+    background: #1a2035!important
+}
+
+.sidebar[data-background-color=dark] .user {
+    border-color: rgba(181, 181, 181, .1)!important
+}
+
+.sidebar[data-background-color=dark] .user .info a>span {
+    color: #b9babf
+}
+
+.sidebar[data-background-color=dark] .user .info a>span .user-level {
+    color: #8d9498
+}
+
+.sidebar[data-background-color=dark] .nav .nav-item.active>a p {
+    color: #b9babf!important
+}
+
+.sidebar[data-background-color=dark] .nav .nav-item a {
+    color: #b9babf!important
+}
+
+.sidebar[data-background-color=dark] .nav .nav-item a:focus p,
+.sidebar[data-background-color=dark] .nav .nav-item a:hover p,
+.sidebar[data-background-color=dark] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] p {
+    color: #b9babf!important
+}
+
+.sidebar[data-background-color=dark].sidebar-style-2 .nav .nav-item.active>a,
+.sidebar[data-background-color=dark].sidebar-style-2 .nav .nav-item.active>a:focus,
+.sidebar[data-background-color=dark].sidebar-style-2 .nav .nav-item.active>a:hover,
+.sidebar[data-background-color=dark].sidebar-style-2 .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] {
+    background: #fff!important;
+    color: #1a2035!important
+}
+
+.sidebar[data-background-color=dark].sidebar-style-2 .nav .nav-item.active>a .caret,
+.sidebar[data-background-color=dark].sidebar-style-2 .nav .nav-item.active>a i,
+.sidebar[data-background-color=dark].sidebar-style-2 .nav .nav-item.active>a p,
+.sidebar[data-background-color=dark].sidebar-style-2 .nav .nav-item.active>a:focus .caret,
+.sidebar[data-background-color=dark].sidebar-style-2 .nav .nav-item.active>a:focus i,
+.sidebar[data-background-color=dark].sidebar-style-2 .nav .nav-item.active>a:focus p,
+.sidebar[data-background-color=dark].sidebar-style-2 .nav .nav-item.active>a:hover .caret,
+.sidebar[data-background-color=dark].sidebar-style-2 .nav .nav-item.active>a:hover i,
+.sidebar[data-background-color=dark].sidebar-style-2 .nav .nav-item.active>a:hover p,
+.sidebar[data-background-color=dark].sidebar-style-2 .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] .caret,
+.sidebar[data-background-color=dark].sidebar-style-2 .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] i,
+.sidebar[data-background-color=dark].sidebar-style-2 .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] p {
+    color: #1a2035!important
+}
+
+.sidebar[data-background-color=dark] .scrollbar-inner>.scroll-element .scroll-bar {
+    background-color: #f7f7f7
+}
+
+.sidebar[data-background-color=dark] .scrollbar-inner>.scroll-element.scroll-draggable .scroll-bar,
+.sidebar[data-background-color=dark] .scrollbar-inner>.scroll-element:hover .scroll-bar {
+    background-color: #dcdbdb
+}
+
+.sidebar[data-background-color=dark2] {
+    background: #1f283e!important
+}
+
+.sidebar[data-background-color=dark2] .user {
+    border-color: rgba(181, 181, 181, .1)!important
+}
+
+.sidebar[data-background-color=dark2] .user .info a>span {
+    color: #b9babf
+}
+
+.sidebar[data-background-color=dark2] .user .info a>span .user-level {
+    color: #8d9498
+}
+
+.sidebar[data-background-color=dark2] .nav .nav-item.active>a p {
+    color: #b9babf!important
+}
+
+.sidebar[data-background-color=dark2] .nav .nav-item a {
+    color: #b9babf!important
+}
+
+.sidebar[data-background-color=dark2] .nav .nav-item a:focus p,
+.sidebar[data-background-color=dark2] .nav .nav-item a:hover p,
+.sidebar[data-background-color=dark2] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] p {
+    color: #b9babf!important
+}
+
+.sidebar[data-background-color=dark2].sidebar-style-2 .nav .nav-item.active>a,
+.sidebar[data-background-color=dark2].sidebar-style-2 .nav .nav-item.active>a:focus,
+.sidebar[data-background-color=dark2].sidebar-style-2 .nav .nav-item.active>a:hover,
+.sidebar[data-background-color=dark2].sidebar-style-2 .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] {
+    background: #fff!important;
+    color: #1f283e!important
+}
+
+.sidebar[data-background-color=dark2].sidebar-style-2 .nav .nav-item.active>a .caret,
+.sidebar[data-background-color=dark2].sidebar-style-2 .nav .nav-item.active>a i,
+.sidebar[data-background-color=dark2].sidebar-style-2 .nav .nav-item.active>a p,
+.sidebar[data-background-color=dark2].sidebar-style-2 .nav .nav-item.active>a:focus .caret,
+.sidebar[data-background-color=dark2].sidebar-style-2 .nav .nav-item.active>a:focus i,
+.sidebar[data-background-color=dark2].sidebar-style-2 .nav .nav-item.active>a:focus p,
+.sidebar[data-background-color=dark2].sidebar-style-2 .nav .nav-item.active>a:hover .caret,
+.sidebar[data-background-color=dark2].sidebar-style-2 .nav .nav-item.active>a:hover i,
+.sidebar[data-background-color=dark2].sidebar-style-2 .nav .nav-item.active>a:hover p,
+.sidebar[data-background-color=dark2].sidebar-style-2 .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] .caret,
+.sidebar[data-background-color=dark2].sidebar-style-2 .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] i,
+.sidebar[data-background-color=dark2].sidebar-style-2 .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] p {
+    color: #1f283e!important
+}
+
+.sidebar[data-background-color=dark2] .scrollbar-inner>.scroll-element .scroll-bar {
+    background-color: #f7f7f7
+}
+
+.sidebar[data-background-color=dark2] .scrollbar-inner>.scroll-element.scroll-draggable .scroll-bar,
+.sidebar[data-background-color=dark2] .scrollbar-inner>.scroll-element:hover .scroll-bar {
+    background-color: #dcdbdb
+}
+
+.sidebar[data-background-color=blue] {
+    background: #1572e8!important
+}
+
+.sidebar[data-background-color=blue] .user {
+    margin-top: 0;
+    padding-top: 12.5px;
+    border-top: 1px solid;
+    border-color: rgba(255, 255, 255, .1)!important
+}
+
+.sidebar[data-background-color=blue] .user .info a>span {
+    color: #fff
+}
+
+.sidebar[data-background-color=blue] .user .info a>span .user-level {
+    color: #eaeaea
+}
+
+.sidebar[data-background-color=blue] .user .info .caret {
+    border-top-color: #fff
+}
+
+.sidebar[data-background-color=blue] .nav .nav-item a {
+    color: #eaeaea!important
+}
+
+.sidebar[data-background-color=blue] .nav .nav-item a .caret,
+.sidebar[data-background-color=blue] .nav .nav-item a i,
+.sidebar[data-background-color=blue] .nav .nav-item a p {
+    color: #eaeaea!important
+}
+
+.sidebar[data-background-color=blue] .nav .nav-item a:focus,
+.sidebar[data-background-color=blue] .nav .nav-item a:hover,
+.sidebar[data-background-color=blue] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] {
+    color: #fff!important
+}
+
+.sidebar[data-background-color=blue] .nav .nav-item a:focus .caret,
+.sidebar[data-background-color=blue] .nav .nav-item a:focus i,
+.sidebar[data-background-color=blue] .nav .nav-item a:focus p,
+.sidebar[data-background-color=blue] .nav .nav-item a:hover .caret,
+.sidebar[data-background-color=blue] .nav .nav-item a:hover i,
+.sidebar[data-background-color=blue] .nav .nav-item a:hover p,
+.sidebar[data-background-color=blue] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] .caret,
+.sidebar[data-background-color=blue] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] i,
+.sidebar[data-background-color=blue] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] p {
+    color: #fff!important
+}
+
+.sidebar[data-background-color=blue] .nav .nav-item.active>a,
+.sidebar[data-background-color=blue] .nav .nav-item.active>a:focus,
+.sidebar[data-background-color=blue] .nav .nav-item.active>a:hover,
+.sidebar[data-background-color=blue] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] {
+    background: #fff!important;
+    color: #1572e8!important
+}
+
+.sidebar[data-background-color=blue] .nav .nav-item.active>a .caret,
+.sidebar[data-background-color=blue] .nav .nav-item.active>a i,
+.sidebar[data-background-color=blue] .nav .nav-item.active>a p,
+.sidebar[data-background-color=blue] .nav .nav-item.active>a:focus .caret,
+.sidebar[data-background-color=blue] .nav .nav-item.active>a:focus i,
+.sidebar[data-background-color=blue] .nav .nav-item.active>a:focus p,
+.sidebar[data-background-color=blue] .nav .nav-item.active>a:hover .caret,
+.sidebar[data-background-color=blue] .nav .nav-item.active>a:hover i,
+.sidebar[data-background-color=blue] .nav .nav-item.active>a:hover p,
+.sidebar[data-background-color=blue] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] .caret,
+.sidebar[data-background-color=blue] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] i,
+.sidebar[data-background-color=blue] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] p {
+    color: #1572e8!important
+}
+
+.sidebar[data-background-color=blue] .nav .nav-section .sidebar-mini-icon,
+.sidebar[data-background-color=blue] .nav .nav-section .text-section {
+    color: #eaeaea
+}
+
+.sidebar[data-background-color=blue] .nav .nav-collapse li a .sub-item:before {
+    background: #eaeaea
+}
+
+.sidebar[data-background-color=blue] .scrollbar-inner>.scroll-element .scroll-bar {
+    background-color: #f7f7f7
+}
+
+.sidebar[data-background-color=blue] .scrollbar-inner>.scroll-element.scroll-draggable .scroll-bar,
+.sidebar[data-background-color=blue] .scrollbar-inner>.scroll-element:hover .scroll-bar {
+    background-color: #dcdbdb
+}
+
+.sidebar[data-background-color=blue2] {
+    background: #1269db!important
+}
+
+.sidebar[data-background-color=blue2] .user {
+    margin-top: 0;
+    padding-top: 12.5px;
+    border-top: 1px solid;
+    border-color: rgba(255, 255, 255, .1)!important
+}
+
+.sidebar[data-background-color=blue2] .user .info a>span {
+    color: #fff
+}
+
+.sidebar[data-background-color=blue2] .user .info a>span .user-level {
+    color: #eaeaea
+}
+
+.sidebar[data-background-color=blue2] .user .info .caret {
+    border-top-color: #fff
+}
+
+.sidebar[data-background-color=blue2] .nav .nav-item a {
+    color: #eaeaea!important
+}
+
+.sidebar[data-background-color=blue2] .nav .nav-item a .caret,
+.sidebar[data-background-color=blue2] .nav .nav-item a i,
+.sidebar[data-background-color=blue2] .nav .nav-item a p {
+    color: #eaeaea!important
+}
+
+.sidebar[data-background-color=blue2] .nav .nav-item a:focus,
+.sidebar[data-background-color=blue2] .nav .nav-item a:hover,
+.sidebar[data-background-color=blue2] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] {
+    color: #fff!important
+}
+
+.sidebar[data-background-color=blue2] .nav .nav-item a:focus .caret,
+.sidebar[data-background-color=blue2] .nav .nav-item a:focus i,
+.sidebar[data-background-color=blue2] .nav .nav-item a:focus p,
+.sidebar[data-background-color=blue2] .nav .nav-item a:hover .caret,
+.sidebar[data-background-color=blue2] .nav .nav-item a:hover i,
+.sidebar[data-background-color=blue2] .nav .nav-item a:hover p,
+.sidebar[data-background-color=blue2] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] .caret,
+.sidebar[data-background-color=blue2] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] i,
+.sidebar[data-background-color=blue2] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] p {
+    color: #fff!important
+}
+
+.sidebar[data-background-color=blue2] .nav .nav-item.active>a,
+.sidebar[data-background-color=blue2] .nav .nav-item.active>a:focus,
+.sidebar[data-background-color=blue2] .nav .nav-item.active>a:hover,
+.sidebar[data-background-color=blue2] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] {
+    background: #fff!important;
+    color: #1269db!important
+}
+
+.sidebar[data-background-color=blue2] .nav .nav-item.active>a .caret,
+.sidebar[data-background-color=blue2] .nav .nav-item.active>a i,
+.sidebar[data-background-color=blue2] .nav .nav-item.active>a p,
+.sidebar[data-background-color=blue2] .nav .nav-item.active>a:focus .caret,
+.sidebar[data-background-color=blue2] .nav .nav-item.active>a:focus i,
+.sidebar[data-background-color=blue2] .nav .nav-item.active>a:focus p,
+.sidebar[data-background-color=blue2] .nav .nav-item.active>a:hover .caret,
+.sidebar[data-background-color=blue2] .nav .nav-item.active>a:hover i,
+.sidebar[data-background-color=blue2] .nav .nav-item.active>a:hover p,
+.sidebar[data-background-color=blue2] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] .caret,
+.sidebar[data-background-color=blue2] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] i,
+.sidebar[data-background-color=blue2] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] p {
+    color: #1269db!important
+}
+
+.sidebar[data-background-color=blue2] .nav .nav-section .sidebar-mini-icon,
+.sidebar[data-background-color=blue2] .nav .nav-section .text-section {
+    color: #eaeaea
+}
+
+.sidebar[data-background-color=blue2] .nav .nav-collapse li a .sub-item:before {
+    background: #eaeaea
+}
+
+.sidebar[data-background-color=blue2] .scrollbar-inner>.scroll-element .scroll-bar {
+    background-color: #f7f7f7
+}
+
+.sidebar[data-background-color=blue2] .scrollbar-inner>.scroll-element.scroll-draggable .scroll-bar,
+.sidebar[data-background-color=blue2] .scrollbar-inner>.scroll-element:hover .scroll-bar {
+    background-color: #dcdbdb
+}
+
+.sidebar[data-background-color=purple] {
+    background: #6861ce!important
+}
+
+.sidebar[data-background-color=purple] .user {
+    margin-top: 0;
+    padding-top: 12.5px;
+    border-top: 1px solid;
+    border-color: rgba(255, 255, 255, .1)!important
+}
+
+.sidebar[data-background-color=purple] .user .info a>span {
+    color: #fff
+}
+
+.sidebar[data-background-color=purple] .user .info a>span .user-level {
+    color: #eaeaea
+}
+
+.sidebar[data-background-color=purple] .user .info .caret {
+    border-top-color: #fff
+}
+
+.sidebar[data-background-color=purple] .nav .nav-item a {
+    color: #eaeaea!important
+}
+
+.sidebar[data-background-color=purple] .nav .nav-item a .caret,
+.sidebar[data-background-color=purple] .nav .nav-item a i,
+.sidebar[data-background-color=purple] .nav .nav-item a p {
+    color: #eaeaea!important
+}
+
+.sidebar[data-background-color=purple] .nav .nav-item a:focus,
+.sidebar[data-background-color=purple] .nav .nav-item a:hover,
+.sidebar[data-background-color=purple] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] {
+    color: #fff!important
+}
+
+.sidebar[data-background-color=purple] .nav .nav-item a:focus .caret,
+.sidebar[data-background-color=purple] .nav .nav-item a:focus i,
+.sidebar[data-background-color=purple] .nav .nav-item a:focus p,
+.sidebar[data-background-color=purple] .nav .nav-item a:hover .caret,
+.sidebar[data-background-color=purple] .nav .nav-item a:hover i,
+.sidebar[data-background-color=purple] .nav .nav-item a:hover p,
+.sidebar[data-background-color=purple] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] .caret,
+.sidebar[data-background-color=purple] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] i,
+.sidebar[data-background-color=purple] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] p {
+    color: #fff!important
+}
+
+.sidebar[data-background-color=purple] .nav .nav-item.active>a,
+.sidebar[data-background-color=purple] .nav .nav-item.active>a:focus,
+.sidebar[data-background-color=purple] .nav .nav-item.active>a:hover,
+.sidebar[data-background-color=purple] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] {
+    background: #fff!important;
+    color: #6861ce!important
+}
+
+.sidebar[data-background-color=purple] .nav .nav-item.active>a .caret,
+.sidebar[data-background-color=purple] .nav .nav-item.active>a i,
+.sidebar[data-background-color=purple] .nav .nav-item.active>a p,
+.sidebar[data-background-color=purple] .nav .nav-item.active>a:focus .caret,
+.sidebar[data-background-color=purple] .nav .nav-item.active>a:focus i,
+.sidebar[data-background-color=purple] .nav .nav-item.active>a:focus p,
+.sidebar[data-background-color=purple] .nav .nav-item.active>a:hover .caret,
+.sidebar[data-background-color=purple] .nav .nav-item.active>a:hover i,
+.sidebar[data-background-color=purple] .nav .nav-item.active>a:hover p,
+.sidebar[data-background-color=purple] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] .caret,
+.sidebar[data-background-color=purple] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] i,
+.sidebar[data-background-color=purple] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] p {
+    color: #6861ce!important
+}
+
+.sidebar[data-background-color=purple] .nav .nav-section .sidebar-mini-icon,
+.sidebar[data-background-color=purple] .nav .nav-section .text-section {
+    color: #eaeaea
+}
+
+.sidebar[data-background-color=purple] .nav .nav-collapse li a .sub-item:before {
+    background: #eaeaea
+}
+
+.sidebar[data-background-color=purple] .scrollbar-inner>.scroll-element .scroll-bar {
+    background-color: #f7f7f7
+}
+
+.sidebar[data-background-color=purple] .scrollbar-inner>.scroll-element.scroll-draggable .scroll-bar,
+.sidebar[data-background-color=purple] .scrollbar-inner>.scroll-element:hover .scroll-bar {
+    background-color: #dcdbdb
+}
+
+.sidebar[data-background-color=purple2] {
+    background: #5c55bf!important
+}
+
+.sidebar[data-background-color=purple2] .user {
+    margin-top: 0;
+    padding-top: 12.5px;
+    border-top: 1px solid;
+    border-color: rgba(255, 255, 255, .1)!important
+}
+
+.sidebar[data-background-color=purple2] .user .info a>span {
+    color: #fff
+}
+
+.sidebar[data-background-color=purple2] .user .info a>span .user-level {
+    color: #eaeaea
+}
+
+.sidebar[data-background-color=purple2] .user .info .caret {
+    border-top-color: #fff
+}
+
+.sidebar[data-background-color=purple2] .nav .nav-item a {
+    color: #eaeaea!important
+}
+
+.sidebar[data-background-color=purple2] .nav .nav-item a .caret,
+.sidebar[data-background-color=purple2] .nav .nav-item a i,
+.sidebar[data-background-color=purple2] .nav .nav-item a p {
+    color: #eaeaea!important
+}
+
+.sidebar[data-background-color=purple2] .nav .nav-item a:focus,
+.sidebar[data-background-color=purple2] .nav .nav-item a:hover,
+.sidebar[data-background-color=purple2] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] {
+    color: #fff!important
+}
+
+.sidebar[data-background-color=purple2] .nav .nav-item a:focus .caret,
+.sidebar[data-background-color=purple2] .nav .nav-item a:focus i,
+.sidebar[data-background-color=purple2] .nav .nav-item a:focus p,
+.sidebar[data-background-color=purple2] .nav .nav-item a:hover .caret,
+.sidebar[data-background-color=purple2] .nav .nav-item a:hover i,
+.sidebar[data-background-color=purple2] .nav .nav-item a:hover p,
+.sidebar[data-background-color=purple2] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] .caret,
+.sidebar[data-background-color=purple2] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] i,
+.sidebar[data-background-color=purple2] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] p {
+    color: #fff!important
+}
+
+.sidebar[data-background-color=purple2] .nav .nav-item.active>a,
+.sidebar[data-background-color=purple2] .nav .nav-item.active>a:focus,
+.sidebar[data-background-color=purple2] .nav .nav-item.active>a:hover,
+.sidebar[data-background-color=purple2] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] {
+    background: #fff!important;
+    color: #5c55bf!important
+}
+
+.sidebar[data-background-color=purple2] .nav .nav-item.active>a .caret,
+.sidebar[data-background-color=purple2] .nav .nav-item.active>a i,
+.sidebar[data-background-color=purple2] .nav .nav-item.active>a p,
+.sidebar[data-background-color=purple2] .nav .nav-item.active>a:focus .caret,
+.sidebar[data-background-color=purple2] .nav .nav-item.active>a:focus i,
+.sidebar[data-background-color=purple2] .nav .nav-item.active>a:focus p,
+.sidebar[data-background-color=purple2] .nav .nav-item.active>a:hover .caret,
+.sidebar[data-background-color=purple2] .nav .nav-item.active>a:hover i,
+.sidebar[data-background-color=purple2] .nav .nav-item.active>a:hover p,
+.sidebar[data-background-color=purple2] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] .caret,
+.sidebar[data-background-color=purple2] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] i,
+.sidebar[data-background-color=purple2] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] p {
+    color: #5c55bf!important
+}
+
+.sidebar[data-background-color=purple2] .nav .nav-section .sidebar-mini-icon,
+.sidebar[data-background-color=purple2] .nav .nav-section .text-section {
+    color: #eaeaea
+}
+
+.sidebar[data-background-color=purple2] .nav .nav-collapse li a .sub-item:before {
+    background: #eaeaea
+}
+
+.sidebar[data-background-color=purple2] .scrollbar-inner>.scroll-element .scroll-bar {
+    background-color: #f7f7f7
+}
+
+.sidebar[data-background-color=purple2] .scrollbar-inner>.scroll-element.scroll-draggable .scroll-bar,
+.sidebar[data-background-color=purple2] .scrollbar-inner>.scroll-element:hover .scroll-bar {
+    background-color: #dcdbdb
+}
+
+.sidebar[data-background-color=light-blue] {
+    background: #48abf7!important
+}
+
+.sidebar[data-background-color=light-blue] .user {
+    margin-top: 0;
+    padding-top: 12.5px;
+    border-top: 1px solid;
+    border-color: rgba(255, 255, 255, .1)!important
+}
+
+.sidebar[data-background-color=light-blue] .user .info a>span {
+    color: #fff
+}
+
+.sidebar[data-background-color=light-blue] .user .info a>span .user-level {
+    color: #eaeaea
+}
+
+.sidebar[data-background-color=light-blue] .user .info .caret {
+    border-top-color: #fff
+}
+
+.sidebar[data-background-color=light-blue] .nav .nav-item a {
+    color: #eaeaea!important
+}
+
+.sidebar[data-background-color=light-blue] .nav .nav-item a .caret,
+.sidebar[data-background-color=light-blue] .nav .nav-item a i,
+.sidebar[data-background-color=light-blue] .nav .nav-item a p {
+    color: #eaeaea!important
+}
+
+.sidebar[data-background-color=light-blue] .nav .nav-item a:focus,
+.sidebar[data-background-color=light-blue] .nav .nav-item a:hover,
+.sidebar[data-background-color=light-blue] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] {
+    color: #fff!important
+}
+
+.sidebar[data-background-color=light-blue] .nav .nav-item a:focus .caret,
+.sidebar[data-background-color=light-blue] .nav .nav-item a:focus i,
+.sidebar[data-background-color=light-blue] .nav .nav-item a:focus p,
+.sidebar[data-background-color=light-blue] .nav .nav-item a:hover .caret,
+.sidebar[data-background-color=light-blue] .nav .nav-item a:hover i,
+.sidebar[data-background-color=light-blue] .nav .nav-item a:hover p,
+.sidebar[data-background-color=light-blue] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] .caret,
+.sidebar[data-background-color=light-blue] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] i,
+.sidebar[data-background-color=light-blue] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] p {
+    color: #fff!important
+}
+
+.sidebar[data-background-color=light-blue] .nav .nav-item.active>a,
+.sidebar[data-background-color=light-blue] .nav .nav-item.active>a:focus,
+.sidebar[data-background-color=light-blue] .nav .nav-item.active>a:hover,
+.sidebar[data-background-color=light-blue] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] {
+    background: #fff!important;
+    color: #48abf7!important
+}
+
+.sidebar[data-background-color=light-blue] .nav .nav-item.active>a .caret,
+.sidebar[data-background-color=light-blue] .nav .nav-item.active>a i,
+.sidebar[data-background-color=light-blue] .nav .nav-item.active>a p,
+.sidebar[data-background-color=light-blue] .nav .nav-item.active>a:focus .caret,
+.sidebar[data-background-color=light-blue] .nav .nav-item.active>a:focus i,
+.sidebar[data-background-color=light-blue] .nav .nav-item.active>a:focus p,
+.sidebar[data-background-color=light-blue] .nav .nav-item.active>a:hover .caret,
+.sidebar[data-background-color=light-blue] .nav .nav-item.active>a:hover i,
+.sidebar[data-background-color=light-blue] .nav .nav-item.active>a:hover p,
+.sidebar[data-background-color=light-blue] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] .caret,
+.sidebar[data-background-color=light-blue] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] i,
+.sidebar[data-background-color=light-blue] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] p {
+    color: #48abf7!important
+}
+
+.sidebar[data-background-color=light-blue] .nav .nav-section .sidebar-mini-icon,
+.sidebar[data-background-color=light-blue] .nav .nav-section .text-section {
+    color: #eaeaea
+}
+
+.sidebar[data-background-color=light-blue] .nav .nav-collapse li a .sub-item:before {
+    background: #eaeaea
+}
+
+.sidebar[data-background-color=light-blue] .scrollbar-inner>.scroll-element .scroll-bar {
+    background-color: #f7f7f7
+}
+
+.sidebar[data-background-color=light-blue] .scrollbar-inner>.scroll-element.scroll-draggable .scroll-bar,
+.sidebar[data-background-color=light-blue] .scrollbar-inner>.scroll-element:hover .scroll-bar {
+    background-color: #dcdbdb
+}
+
+.sidebar[data-background-color=light-blue2] {
+    background: #3697e1!important
+}
+
+.sidebar[data-background-color=light-blue2] .user {
+    margin-top: 0;
+    padding-top: 12.5px;
+    border-top: 1px solid;
+    border-color: rgba(255, 255, 255, .1)!important
+}
+
+.sidebar[data-background-color=light-blue2] .user .info a>span {
+    color: #fff
+}
+
+.sidebar[data-background-color=light-blue2] .user .info a>span .user-level {
+    color: #eaeaea
+}
+
+.sidebar[data-background-color=light-blue2] .user .info .caret {
+    border-top-color: #fff
+}
+
+.sidebar[data-background-color=light-blue2] .nav .nav-item a {
+    color: #eaeaea!important
+}
+
+.sidebar[data-background-color=light-blue2] .nav .nav-item a .caret,
+.sidebar[data-background-color=light-blue2] .nav .nav-item a i,
+.sidebar[data-background-color=light-blue2] .nav .nav-item a p {
+    color: #eaeaea!important
+}
+
+.sidebar[data-background-color=light-blue2] .nav .nav-item a:focus,
+.sidebar[data-background-color=light-blue2] .nav .nav-item a:hover,
+.sidebar[data-background-color=light-blue2] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] {
+    color: #fff!important
+}
+
+.sidebar[data-background-color=light-blue2] .nav .nav-item a:focus .caret,
+.sidebar[data-background-color=light-blue2] .nav .nav-item a:focus i,
+.sidebar[data-background-color=light-blue2] .nav .nav-item a:focus p,
+.sidebar[data-background-color=light-blue2] .nav .nav-item a:hover .caret,
+.sidebar[data-background-color=light-blue2] .nav .nav-item a:hover i,
+.sidebar[data-background-color=light-blue2] .nav .nav-item a:hover p,
+.sidebar[data-background-color=light-blue2] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] .caret,
+.sidebar[data-background-color=light-blue2] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] i,
+.sidebar[data-background-color=light-blue2] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] p {
+    color: #fff!important
+}
+
+.sidebar[data-background-color=light-blue2] .nav .nav-item.active>a,
+.sidebar[data-background-color=light-blue2] .nav .nav-item.active>a:focus,
+.sidebar[data-background-color=light-blue2] .nav .nav-item.active>a:hover,
+.sidebar[data-background-color=light-blue2] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] {
+    background: #fff!important;
+    color: #3697e1!important
+}
+
+.sidebar[data-background-color=light-blue2] .nav .nav-item.active>a .caret,
+.sidebar[data-background-color=light-blue2] .nav .nav-item.active>a i,
+.sidebar[data-background-color=light-blue2] .nav .nav-item.active>a p,
+.sidebar[data-background-color=light-blue2] .nav .nav-item.active>a:focus .caret,
+.sidebar[data-background-color=light-blue2] .nav .nav-item.active>a:focus i,
+.sidebar[data-background-color=light-blue2] .nav .nav-item.active>a:focus p,
+.sidebar[data-background-color=light-blue2] .nav .nav-item.active>a:hover .caret,
+.sidebar[data-background-color=light-blue2] .nav .nav-item.active>a:hover i,
+.sidebar[data-background-color=light-blue2] .nav .nav-item.active>a:hover p,
+.sidebar[data-background-color=light-blue2] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] .caret,
+.sidebar[data-background-color=light-blue2] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] i,
+.sidebar[data-background-color=light-blue2] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] p {
+    color: #3697e1!important
+}
+
+.sidebar[data-background-color=light-blue2] .nav .nav-section .sidebar-mini-icon,
+.sidebar[data-background-color=light-blue2] .nav .nav-section .text-section {
+    color: #eaeaea
+}
+
+.sidebar[data-background-color=light-blue2] .nav .nav-collapse li a .sub-item:before {
+    background: #eaeaea
+}
+
+.sidebar[data-background-color=light-blue2] .scrollbar-inner>.scroll-element .scroll-bar {
+    background-color: #f7f7f7
+}
+
+.sidebar[data-background-color=light-blue2] .scrollbar-inner>.scroll-element.scroll-draggable .scroll-bar,
+.sidebar[data-background-color=light-blue2] .scrollbar-inner>.scroll-element:hover .scroll-bar {
+    background-color: #dcdbdb
+}
+
+.sidebar[data-background-color=green] {
+    background: #31ce36!important
+}
+
+.sidebar[data-background-color=green] .user {
+    margin-top: 0;
+    padding-top: 12.5px;
+    border-top: 1px solid;
+    border-color: rgba(255, 255, 255, .1)!important
+}
+
+.sidebar[data-background-color=green] .user .info a>span {
+    color: #fff
+}
+
+.sidebar[data-background-color=green] .user .info a>span .user-level {
+    color: #eaeaea
+}
+
+.sidebar[data-background-color=green] .user .info .caret {
+    border-top-color: #fff
+}
+
+.sidebar[data-background-color=green] .nav .nav-item a {
+    color: #eaeaea!important
+}
+
+.sidebar[data-background-color=green] .nav .nav-item a .caret,
+.sidebar[data-background-color=green] .nav .nav-item a i,
+.sidebar[data-background-color=green] .nav .nav-item a p {
+    color: #eaeaea!important
+}
+
+.sidebar[data-background-color=green] .nav .nav-item a:focus,
+.sidebar[data-background-color=green] .nav .nav-item a:hover,
+.sidebar[data-background-color=green] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] {
+    color: #fff!important
+}
+
+.sidebar[data-background-color=green] .nav .nav-item a:focus .caret,
+.sidebar[data-background-color=green] .nav .nav-item a:focus i,
+.sidebar[data-background-color=green] .nav .nav-item a:focus p,
+.sidebar[data-background-color=green] .nav .nav-item a:hover .caret,
+.sidebar[data-background-color=green] .nav .nav-item a:hover i,
+.sidebar[data-background-color=green] .nav .nav-item a:hover p,
+.sidebar[data-background-color=green] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] .caret,
+.sidebar[data-background-color=green] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] i,
+.sidebar[data-background-color=green] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] p {
+    color: #fff!important
+}
+
+.sidebar[data-background-color=green] .nav .nav-item.active>a,
+.sidebar[data-background-color=green] .nav .nav-item.active>a:focus,
+.sidebar[data-background-color=green] .nav .nav-item.active>a:hover,
+.sidebar[data-background-color=green] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] {
+    background: #fff!important;
+    color: #31ce36!important
+}
+
+.sidebar[data-background-color=green] .nav .nav-item.active>a .caret,
+.sidebar[data-background-color=green] .nav .nav-item.active>a i,
+.sidebar[data-background-color=green] .nav .nav-item.active>a p,
+.sidebar[data-background-color=green] .nav .nav-item.active>a:focus .caret,
+.sidebar[data-background-color=green] .nav .nav-item.active>a:focus i,
+.sidebar[data-background-color=green] .nav .nav-item.active>a:focus p,
+.sidebar[data-background-color=green] .nav .nav-item.active>a:hover .caret,
+.sidebar[data-background-color=green] .nav .nav-item.active>a:hover i,
+.sidebar[data-background-color=green] .nav .nav-item.active>a:hover p,
+.sidebar[data-background-color=green] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] .caret,
+.sidebar[data-background-color=green] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] i,
+.sidebar[data-background-color=green] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] p {
+    color: #31ce36!important
+}
+
+.sidebar[data-background-color=green] .nav .nav-section .sidebar-mini-icon,
+.sidebar[data-background-color=green] .nav .nav-section .text-section {
+    color: #eaeaea
+}
+
+.sidebar[data-background-color=green] .nav .nav-collapse li a .sub-item:before {
+    background: #eaeaea
+}
+
+.sidebar[data-background-color=green] .scrollbar-inner>.scroll-element .scroll-bar {
+    background-color: #f7f7f7
+}
+
+.sidebar[data-background-color=green] .scrollbar-inner>.scroll-element.scroll-draggable .scroll-bar,
+.sidebar[data-background-color=green] .scrollbar-inner>.scroll-element:hover .scroll-bar {
+    background-color: #dcdbdb
+}
+
+.sidebar[data-background-color=green2] {
+    background: #2bb930!important
+}
+
+.sidebar[data-background-color=green2] .user {
+    margin-top: 0;
+    padding-top: 12.5px;
+    border-top: 1px solid;
+    border-color: rgba(255, 255, 255, .1)!important
+}
+
+.sidebar[data-background-color=green2] .user .info a>span {
+    color: #fff
+}
+
+.sidebar[data-background-color=green2] .user .info a>span .user-level {
+    color: #eaeaea
+}
+
+.sidebar[data-background-color=green2] .user .info .caret {
+    border-top-color: #fff
+}
+
+.sidebar[data-background-color=green2] .nav .nav-item a {
+    color: #eaeaea!important
+}
+
+.sidebar[data-background-color=green2] .nav .nav-item a .caret,
+.sidebar[data-background-color=green2] .nav .nav-item a i,
+.sidebar[data-background-color=green2] .nav .nav-item a p {
+    color: #eaeaea!important
+}
+
+.sidebar[data-background-color=green2] .nav .nav-item a:focus,
+.sidebar[data-background-color=green2] .nav .nav-item a:hover,
+.sidebar[data-background-color=green2] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] {
+    color: #fff!important
+}
+
+.sidebar[data-background-color=green2] .nav .nav-item a:focus .caret,
+.sidebar[data-background-color=green2] .nav .nav-item a:focus i,
+.sidebar[data-background-color=green2] .nav .nav-item a:focus p,
+.sidebar[data-background-color=green2] .nav .nav-item a:hover .caret,
+.sidebar[data-background-color=green2] .nav .nav-item a:hover i,
+.sidebar[data-background-color=green2] .nav .nav-item a:hover p,
+.sidebar[data-background-color=green2] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] .caret,
+.sidebar[data-background-color=green2] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] i,
+.sidebar[data-background-color=green2] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] p {
+    color: #fff!important
+}
+
+.sidebar[data-background-color=green2] .nav .nav-item.active>a,
+.sidebar[data-background-color=green2] .nav .nav-item.active>a:focus,
+.sidebar[data-background-color=green2] .nav .nav-item.active>a:hover,
+.sidebar[data-background-color=green2] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] {
+    background: #fff!important;
+    color: #2bb930!important
+}
+
+.sidebar[data-background-color=green2] .nav .nav-item.active>a .caret,
+.sidebar[data-background-color=green2] .nav .nav-item.active>a i,
+.sidebar[data-background-color=green2] .nav .nav-item.active>a p,
+.sidebar[data-background-color=green2] .nav .nav-item.active>a:focus .caret,
+.sidebar[data-background-color=green2] .nav .nav-item.active>a:focus i,
+.sidebar[data-background-color=green2] .nav .nav-item.active>a:focus p,
+.sidebar[data-background-color=green2] .nav .nav-item.active>a:hover .caret,
+.sidebar[data-background-color=green2] .nav .nav-item.active>a:hover i,
+.sidebar[data-background-color=green2] .nav .nav-item.active>a:hover p,
+.sidebar[data-background-color=green2] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] .caret,
+.sidebar[data-background-color=green2] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] i,
+.sidebar[data-background-color=green2] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] p {
+    color: #2bb930!important
+}
+
+.sidebar[data-background-color=green2] .nav .nav-section .sidebar-mini-icon,
+.sidebar[data-background-color=green2] .nav .nav-section .text-section {
+    color: #eaeaea
+}
+
+.sidebar[data-background-color=green2] .nav .nav-collapse li a .sub-item:before {
+    background: #eaeaea
+}
+
+.sidebar[data-background-color=green2] .scrollbar-inner>.scroll-element .scroll-bar {
+    background-color: #f7f7f7
+}
+
+.sidebar[data-background-color=green2] .scrollbar-inner>.scroll-element.scroll-draggable .scroll-bar,
+.sidebar[data-background-color=green2] .scrollbar-inner>.scroll-element:hover .scroll-bar {
+    background-color: #dcdbdb
+}
+
+.sidebar[data-background-color=orange] {
+    background: #ffad46!important
+}
+
+.sidebar[data-background-color=orange] .user {
+    margin-top: 0;
+    padding-top: 12.5px;
+    border-top: 1px solid;
+    border-color: rgba(255, 255, 255, .1)!important
+}
+
+.sidebar[data-background-color=orange] .user .info a>span {
+    color: #fff
+}
+
+.sidebar[data-background-color=orange] .user .info a>span .user-level {
+    color: #eaeaea
+}
+
+.sidebar[data-background-color=orange] .user .info .caret {
+    border-top-color: #fff
+}
+
+.sidebar[data-background-color=orange] .nav .nav-item a {
+    color: #eaeaea!important
+}
+
+.sidebar[data-background-color=orange] .nav .nav-item a .caret,
+.sidebar[data-background-color=orange] .nav .nav-item a i,
+.sidebar[data-background-color=orange] .nav .nav-item a p {
+    color: #eaeaea!important
+}
+
+.sidebar[data-background-color=orange] .nav .nav-item a:focus,
+.sidebar[data-background-color=orange] .nav .nav-item a:hover,
+.sidebar[data-background-color=orange] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] {
+    color: #fff!important
+}
+
+.sidebar[data-background-color=orange] .nav .nav-item a:focus .caret,
+.sidebar[data-background-color=orange] .nav .nav-item a:focus i,
+.sidebar[data-background-color=orange] .nav .nav-item a:focus p,
+.sidebar[data-background-color=orange] .nav .nav-item a:hover .caret,
+.sidebar[data-background-color=orange] .nav .nav-item a:hover i,
+.sidebar[data-background-color=orange] .nav .nav-item a:hover p,
+.sidebar[data-background-color=orange] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] .caret,
+.sidebar[data-background-color=orange] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] i,
+.sidebar[data-background-color=orange] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] p {
+    color: #fff!important
+}
+
+.sidebar[data-background-color=orange] .nav .nav-item.active>a,
+.sidebar[data-background-color=orange] .nav .nav-item.active>a:focus,
+.sidebar[data-background-color=orange] .nav .nav-item.active>a:hover,
+.sidebar[data-background-color=orange] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] {
+    background: #fff!important;
+    color: #ffad46!important
+}
+
+.sidebar[data-background-color=orange] .nav .nav-item.active>a .caret,
+.sidebar[data-background-color=orange] .nav .nav-item.active>a i,
+.sidebar[data-background-color=orange] .nav .nav-item.active>a p,
+.sidebar[data-background-color=orange] .nav .nav-item.active>a:focus .caret,
+.sidebar[data-background-color=orange] .nav .nav-item.active>a:focus i,
+.sidebar[data-background-color=orange] .nav .nav-item.active>a:focus p,
+.sidebar[data-background-color=orange] .nav .nav-item.active>a:hover .caret,
+.sidebar[data-background-color=orange] .nav .nav-item.active>a:hover i,
+.sidebar[data-background-color=orange] .nav .nav-item.active>a:hover p,
+.sidebar[data-background-color=orange] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] .caret,
+.sidebar[data-background-color=orange] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] i,
+.sidebar[data-background-color=orange] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] p {
+    color: #ffad46!important
+}
+
+.sidebar[data-background-color=orange] .nav .nav-section .sidebar-mini-icon,
+.sidebar[data-background-color=orange] .nav .nav-section .text-section {
+    color: #eaeaea
+}
+
+.sidebar[data-background-color=orange] .nav .nav-collapse li a .sub-item:before {
+    background: #eaeaea
+}
+
+.sidebar[data-background-color=orange] .scrollbar-inner>.scroll-element .scroll-bar {
+    background-color: #f7f7f7
+}
+
+.sidebar[data-background-color=orange] .scrollbar-inner>.scroll-element.scroll-draggable .scroll-bar,
+.sidebar[data-background-color=orange] .scrollbar-inner>.scroll-element:hover .scroll-bar {
+    background-color: #dcdbdb
+}
+
+.sidebar[data-background-color=orange2] {
+    background: #ff9e27!important
+}
+
+.sidebar[data-background-color=orange2] .user {
+    margin-top: 0;
+    padding-top: 12.5px;
+    border-top: 1px solid;
+    border-color: rgba(255, 255, 255, .1)!important
+}
+
+.sidebar[data-background-color=orange2] .user .info a>span {
+    color: #fff
+}
+
+.sidebar[data-background-color=orange2] .user .info a>span .user-level {
+    color: #eaeaea
+}
+
+.sidebar[data-background-color=orange2] .user .info .caret {
+    border-top-color: #fff
+}
+
+.sidebar[data-background-color=orange2] .nav .nav-item a {
+    color: #eaeaea!important
+}
+
+.sidebar[data-background-color=orange2] .nav .nav-item a .caret,
+.sidebar[data-background-color=orange2] .nav .nav-item a i,
+.sidebar[data-background-color=orange2] .nav .nav-item a p {
+    color: #eaeaea!important
+}
+
+.sidebar[data-background-color=orange2] .nav .nav-item a:focus,
+.sidebar[data-background-color=orange2] .nav .nav-item a:hover,
+.sidebar[data-background-color=orange2] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] {
+    color: #fff!important
+}
+
+.sidebar[data-background-color=orange2] .nav .nav-item a:focus .caret,
+.sidebar[data-background-color=orange2] .nav .nav-item a:focus i,
+.sidebar[data-background-color=orange2] .nav .nav-item a:focus p,
+.sidebar[data-background-color=orange2] .nav .nav-item a:hover .caret,
+.sidebar[data-background-color=orange2] .nav .nav-item a:hover i,
+.sidebar[data-background-color=orange2] .nav .nav-item a:hover p,
+.sidebar[data-background-color=orange2] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] .caret,
+.sidebar[data-background-color=orange2] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] i,
+.sidebar[data-background-color=orange2] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] p {
+    color: #fff!important
+}
+
+.sidebar[data-background-color=orange2] .nav .nav-item.active>a,
+.sidebar[data-background-color=orange2] .nav .nav-item.active>a:focus,
+.sidebar[data-background-color=orange2] .nav .nav-item.active>a:hover,
+.sidebar[data-background-color=orange2] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] {
+    background: #fff!important;
+    color: #ff9e27!important
+}
+
+.sidebar[data-background-color=orange2] .nav .nav-item.active>a .caret,
+.sidebar[data-background-color=orange2] .nav .nav-item.active>a i,
+.sidebar[data-background-color=orange2] .nav .nav-item.active>a p,
+.sidebar[data-background-color=orange2] .nav .nav-item.active>a:focus .caret,
+.sidebar[data-background-color=orange2] .nav .nav-item.active>a:focus i,
+.sidebar[data-background-color=orange2] .nav .nav-item.active>a:focus p,
+.sidebar[data-background-color=orange2] .nav .nav-item.active>a:hover .caret,
+.sidebar[data-background-color=orange2] .nav .nav-item.active>a:hover i,
+.sidebar[data-background-color=orange2] .nav .nav-item.active>a:hover p,
+.sidebar[data-background-color=orange2] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] .caret,
+.sidebar[data-background-color=orange2] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] i,
+.sidebar[data-background-color=orange2] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] p {
+    color: #ff9e27!important
+}
+
+.sidebar[data-background-color=orange2] .nav .nav-section .sidebar-mini-icon,
+.sidebar[data-background-color=orange2] .nav .nav-section .text-section {
+    color: #eaeaea
+}
+
+.sidebar[data-background-color=orange2] .nav .nav-collapse li a .sub-item:before {
+    background: #eaeaea
+}
+
+.sidebar[data-background-color=orange2] .scrollbar-inner>.scroll-element .scroll-bar {
+    background-color: #f7f7f7
+}
+
+.sidebar[data-background-color=orange2] .scrollbar-inner>.scroll-element.scroll-draggable .scroll-bar,
+.sidebar[data-background-color=orange2] .scrollbar-inner>.scroll-element:hover .scroll-bar {
+    background-color: #dcdbdb
+}
+
+.sidebar[data-background-color=red] {
+    background: #f25961!important
+}
+
+.sidebar[data-background-color=red] .user {
+    margin-top: 0;
+    padding-top: 12.5px;
+    border-top: 1px solid;
+    border-color: rgba(255, 255, 255, .1)!important
+}
+
+.sidebar[data-background-color=red] .user .info a>span {
+    color: #fff
+}
+
+.sidebar[data-background-color=red] .user .info a>span .user-level {
+    color: #eaeaea
+}
+
+.sidebar[data-background-color=red] .user .info .caret {
+    border-top-color: #fff
+}
+
+.sidebar[data-background-color=red] .nav .nav-item a {
+    color: #eaeaea!important
+}
+
+.sidebar[data-background-color=red] .nav .nav-item a .caret,
+.sidebar[data-background-color=red] .nav .nav-item a i,
+.sidebar[data-background-color=red] .nav .nav-item a p {
+    color: #eaeaea!important
+}
+
+.sidebar[data-background-color=red] .nav .nav-item a:focus,
+.sidebar[data-background-color=red] .nav .nav-item a:hover,
+.sidebar[data-background-color=red] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] {
+    color: #fff!important
+}
+
+.sidebar[data-background-color=red] .nav .nav-item a:focus .caret,
+.sidebar[data-background-color=red] .nav .nav-item a:focus i,
+.sidebar[data-background-color=red] .nav .nav-item a:focus p,
+.sidebar[data-background-color=red] .nav .nav-item a:hover .caret,
+.sidebar[data-background-color=red] .nav .nav-item a:hover i,
+.sidebar[data-background-color=red] .nav .nav-item a:hover p,
+.sidebar[data-background-color=red] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] .caret,
+.sidebar[data-background-color=red] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] i,
+.sidebar[data-background-color=red] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] p {
+    color: #fff!important
+}
+
+.sidebar[data-background-color=red] .nav .nav-item.active>a,
+.sidebar[data-background-color=red] .nav .nav-item.active>a:focus,
+.sidebar[data-background-color=red] .nav .nav-item.active>a:hover,
+.sidebar[data-background-color=red] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] {
+    background: #fff!important;
+    color: #f25961!important
+}
+
+.sidebar[data-background-color=red] .nav .nav-item.active>a .caret,
+.sidebar[data-background-color=red] .nav .nav-item.active>a i,
+.sidebar[data-background-color=red] .nav .nav-item.active>a p,
+.sidebar[data-background-color=red] .nav .nav-item.active>a:focus .caret,
+.sidebar[data-background-color=red] .nav .nav-item.active>a:focus i,
+.sidebar[data-background-color=red] .nav .nav-item.active>a:focus p,
+.sidebar[data-background-color=red] .nav .nav-item.active>a:hover .caret,
+.sidebar[data-background-color=red] .nav .nav-item.active>a:hover i,
+.sidebar[data-background-color=red] .nav .nav-item.active>a:hover p,
+.sidebar[data-background-color=red] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] .caret,
+.sidebar[data-background-color=red] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] i,
+.sidebar[data-background-color=red] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] p {
+    color: #f25961!important
+}
+
+.sidebar[data-background-color=red] .nav .nav-section .sidebar-mini-icon,
+.sidebar[data-background-color=red] .nav .nav-section .text-section {
+    color: #eaeaea
+}
+
+.sidebar[data-background-color=red] .nav .nav-collapse li a .sub-item:before {
+    background: #eaeaea
+}
+
+.sidebar[data-background-color=red] .scrollbar-inner>.scroll-element .scroll-bar {
+    background-color: #f7f7f7
+}
+
+.sidebar[data-background-color=red] .scrollbar-inner>.scroll-element.scroll-draggable .scroll-bar,
+.sidebar[data-background-color=red] .scrollbar-inner>.scroll-element:hover .scroll-bar {
+    background-color: #dcdbdb
+}
+
+.sidebar[data-background-color=red2] {
+    background: #ea4d56!important
+}
+
+.sidebar[data-background-color=red2] .user {
+    margin-top: 0;
+    padding-top: 12.5px;
+    border-top: 1px solid;
+    border-color: rgba(255, 255, 255, .1)!important
+}
+
+.sidebar[data-background-color=red2] .user .info a>span {
+    color: #fff
+}
+
+.sidebar[data-background-color=red2] .user .info a>span .user-level {
+    color: #eaeaea
+}
+
+.sidebar[data-background-color=red2] .user .info .caret {
+    border-top-color: #fff
+}
+
+.sidebar[data-background-color=red2] .nav .nav-item a {
+    color: #eaeaea!important
+}
+
+.sidebar[data-background-color=red2] .nav .nav-item a .caret,
+.sidebar[data-background-color=red2] .nav .nav-item a i,
+.sidebar[data-background-color=red2] .nav .nav-item a p {
+    color: #eaeaea!important
+}
+
+.sidebar[data-background-color=red2] .nav .nav-item a:focus,
+.sidebar[data-background-color=red2] .nav .nav-item a:hover,
+.sidebar[data-background-color=red2] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] {
+    color: #fff!important
+}
+
+.sidebar[data-background-color=red2] .nav .nav-item a:focus .caret,
+.sidebar[data-background-color=red2] .nav .nav-item a:focus i,
+.sidebar[data-background-color=red2] .nav .nav-item a:focus p,
+.sidebar[data-background-color=red2] .nav .nav-item a:hover .caret,
+.sidebar[data-background-color=red2] .nav .nav-item a:hover i,
+.sidebar[data-background-color=red2] .nav .nav-item a:hover p,
+.sidebar[data-background-color=red2] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] .caret,
+.sidebar[data-background-color=red2] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] i,
+.sidebar[data-background-color=red2] .nav .nav-item a[data-toggle=collapse][aria-expanded=true] p {
+    color: #fff!important
+}
+
+.sidebar[data-background-color=red2] .nav .nav-item.active>a,
+.sidebar[data-background-color=red2] .nav .nav-item.active>a:focus,
+.sidebar[data-background-color=red2] .nav .nav-item.active>a:hover,
+.sidebar[data-background-color=red2] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] {
+    background: #fff!important;
+    color: #ea4d56!important
+}
+
+.sidebar[data-background-color=red2] .nav .nav-item.active>a .caret,
+.sidebar[data-background-color=red2] .nav .nav-item.active>a i,
+.sidebar[data-background-color=red2] .nav .nav-item.active>a p,
+.sidebar[data-background-color=red2] .nav .nav-item.active>a:focus .caret,
+.sidebar[data-background-color=red2] .nav .nav-item.active>a:focus i,
+.sidebar[data-background-color=red2] .nav .nav-item.active>a:focus p,
+.sidebar[data-background-color=red2] .nav .nav-item.active>a:hover .caret,
+.sidebar[data-background-color=red2] .nav .nav-item.active>a:hover i,
+.sidebar[data-background-color=red2] .nav .nav-item.active>a:hover p,
+.sidebar[data-background-color=red2] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] .caret,
+.sidebar[data-background-color=red2] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] i,
+.sidebar[data-background-color=red2] .nav .nav-item.active>a[data-toggle=collapse][aria-expanded=true] p {
+    color: #ea4d56!important
+}
+
+.sidebar[data-background-color=red2] .nav .nav-section .sidebar-mini-icon,
+.sidebar[data-background-color=red2] .nav .nav-section .text-section {
+    color: #eaeaea
+}
+
+.sidebar[data-background-color=red2] .nav .nav-collapse li a .sub-item:before {
+    background: #eaeaea
+}
+
+.sidebar[data-background-color=red2] .scrollbar-inner>.scroll-element .scroll-bar {
+    background-color: #f7f7f7
+}
+
+.sidebar[data-background-color=red2] .scrollbar-inner>.scroll-element.scroll-draggable .scroll-bar,
+.sidebar[data-background-color=red2] .scrollbar-inner>.scroll-element:hover .scroll-bar {
+    background-color: #dcdbdb
+}
+
+
+/* Notification Style */
+
+@keyframes fadeinup {
+    0% {
+        opacity: 0;
+        transform: translateY(25%);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeoutdown {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(25%);
+    }
+}
+
+@keyframes ripple {
+    0% {
+        transform: scale(0) translateY(-45%) translateX(13%);
+    }
+    100% {
+        transform: scale(1) translateY(-45%) translateX(13%);
+    }
+}
+
+.notyf__icon--error,
+.notyf__icon--success {
+    height: 21px;
+    width: 21px;
+    background: white;
+    border-radius: 50%;
+    display: block;
+    margin: 0 auto;
+    position: relative;
+}
+
+.notyf__icon--error:after,
+.notyf__icon--error:before {
+    content: "";
+    background: currentColor;
+    display: block;
+    position: absolute;
+    width: 3px;
+    border-radius: 3px;
+    left: 9px;
+    height: 12px;
+    top: 5px;
+}
+
+.notyf__icon--error:after {
+    transform: rotate(-45deg);
+}
+
+.notyf__icon--error:before {
+    transform: rotate(45deg);
+}
+
+.notyf__icon--success:after,
+.notyf__icon--success:before {
+    content: "";
+    background: currentColor;
+    display: block;
+    position: absolute;
+    width: 3px;
+    border-radius: 3px;
+}
+
+.notyf__icon--success:after {
+    height: 6px;
+    transform: rotate(-45deg);
+    top: 9px;
+    left: 6px;
+}
+
+.notyf__icon--success:before {
+    height: 11px;
+    transform: rotate(45deg);
+    top: 5px;
+    left: 10px;
+}
+
+.notyf__toast {
+    display: block;
+    overflow: hidden;
+    bottom: -100%;
+    box-shadow: 0px 3px 7px 0px rgba(0, 0, 0, 0.25);
+    position: relative;
+    padding: 0 13px;
+    border-radius: 2px;
+    margin-top: 12px;
+    width: 300px;
+    color: white;
+}
+
+.notyf__toast--disappear {
+    transform: translateY(0);
+    animation: fadeoutdown 0.3s forwards;
+    animation-delay: 0.25s;
+}
+
+.notyf__toast--disappear .notyf__message,
+.notyf__toast--disappear .notyf__icon {
+    animation: fadeoutdown 0.3s forwards;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.notyf__toast--disappear .notyf__message {
+    animation-delay: 0.05s;
+}
+
+.notyf__ripple {
+    height: 400px;
+    width: 400px;
+    position: absolute;
+    transform-origin: bottom right;
+    right: 0;
+    top: 0;
+    border-radius: 50%;
+    transform: scale(0) translateY(-51%) translateX(13%);
+    z-index: 5;
+    animation: ripple 0.4s ease-out forwards;
+}
+
+.notyf__wrapper {
+    display: flex;
+    align-items: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-right: 15px;
+    border-radius: 3px;
+    position: relative;
+    z-index: 10;
+}
+
+.notyf__icon {
+    width: 22px;
+    text-align: center;
+    font-size: 1.3em;
+    opacity: 0;
+    animation: fadeinup 0.3s forwards;
+    animation-delay: 0.3s;
+    margin-right: 13px;
+}
+
+.notyf__message {
+    vertical-align: middle;
+    position: relative;
+    opacity: 0;
+    animation: fadeinup 0.3s forwards;
+    animation-delay: 0.25s;
+}
+
+
+/* .notyf {
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    color: white;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  } */
+
+
+/* Small screens */
+
+@media only screen and (max-width: 736px) {
+    .notyf {
+        bottom: 0;
+        left: 0;
+        right: 0;
+        align-items: initial;
+    }
+    .notyf__ripple {
+        height: 600px;
+        width: 600px;
+        animation-duration: 0.5s;
+    }
+    .notyf__toast {
+        max-width: initial;
+        border-radius: 0;
+        box-shadow: 0px -2px 7px 0px rgba(0, 0, 0, 0.13);
+    }
+}
+
+
+/* Common Style */
+
+a:not([href]) {
+    cursor: pointer;
+}
+
+.form-check label.error,
+.form-group label.error {
+    white-space: initial !important;
+}
+
+ng-select .ng-select-container:after {
+    border-bottom: none !important;
+}
+
+.ng-dropdown-panel.ng-select-bottom {
+    top: calc(100% - 0.25em);
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-selected {
+    background: #FFF;
+    color: #810c03;
+}
+
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked {
+    background: #FFF;
+}
+
+.datatable-dropdown .dropdown-menu {
+    left: -100%;
+}
+
+.modal-body.view-data .form-group {
+    border: none;
+}
+
+.modal-body .form-group.dropdown {
+    overflow: visible;
+}
+
+.modal-body .form-group.dropdown button.calendar {
+    border: 0;
+}
+
+button.calendar,
+button.calendar:active {
+    width: 2.75rem;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACIAAAAcCAYAAAAEN20fAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAEUSURBVEiJ7ZQxToVAEIY/YCHGxN6XGOIpnpaEsBSeQC9ArZbm9TZ6ADyBNzAhQGGl8Riv4BLAWAgmkpBYkH1b8FWT2WK/zJ8ZJ4qiI6XUI3ANnGKWBnht2/ZBDRK3hgVGNsCd7/ui+JkEIrKtqurLpEWaphd933+IyI3LEIdpCYCiKD6HcuOa/nwOa0ScJEnk0BJg0UTUWJRl6RxCYEzEmomsIlPU3IPW+grIAbquy+q6fluy/28RIBeRMwDXdXMgXLj/B2uimRXpui4D9sBeRLKl+1N+L+t6RwbWrZliTTTr1oxYtzVWiTQAcRxvTX+eJMnlUDaO1vpZRO5NS0x48sIwfPc87xg4B04MCzQi8hIEwe4bl1DnFMCN2zsAAAAASUVORK5CYII=)!important;
+    background-repeat: no-repeat;
+    background-size: 23px;
+    background-position: center;
+}
+
+.date-readonly {
+    background: #FFF !important;
+    color: #495057 !important;
+    opacity: 1 !important;
+}
+
+.dataTables_empty {
+    display: none;
+}

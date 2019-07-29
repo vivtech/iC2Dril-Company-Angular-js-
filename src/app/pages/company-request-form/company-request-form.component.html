@@ -1,0 +1,82 @@
+<app-guest>
+    <div class="container container-login animated fadeIn">
+        <div class="row">
+            <div class="col-12 text-center">
+                <a [routerLink]="['/login']">
+                    <img src="assets/img/logo.png" class="pb-3">
+                </a>
+            </div>
+        </div>
+        <h3 class="text-center">License Request Form</h3>
+        <form class="login-form form row" id="requestForm" [formGroup]="requestForm" (ngSubmit)="onSubmit()" autocomplete="off">
+            <div class="col-12 p-5">
+                <div class="row">
+                    <div class="alert alert-warning alert-dismissible fade show text-center col-12 mb-5" [ngClass]="{'d-none': !validationError}" role="alert">
+                        <strong>{{ validationError }}</strong>
+                    </div>
+                    <div class="alert alert-success alert-dismissible fade show text-center col-12 mb-5" [ngClass]="{'d-none': !successMessage}" role="alert">
+                        <strong>{{ successMessage }}</strong>
+                    </div>
+
+                    <div class="form-group form-floating-label col-6 pb-5">
+                        <input id="requestName" formControlName="name" type="text" class="form-control floating-input input-border-bottom pl-1 pr-1" autofocus [attr.maxlength]="validator.name.max" [class.filled]="f.name.value">
+                        <label for="requestName" class="placeholder">Full Name</label>
+                        <error-label [control]="f.name"></error-label>
+                    </div>
+                    <div class="form-group form-floating-label col-6 pb-5">
+                        <input id="requestCompanyName" formControlName="companyName" type="text" class="form-control floating-input input-border-bottom pl-1 pr-1" [attr.maxlength]="validator.company.max" [class.filled]="f.companyName.value">
+                        <label for="requestCompanyName" class="placeholder">Company Name</label>
+                        <error-label [control]="f.companyName"></error-label>
+                    </div>
+                    <div class="form-group form-floating-label col-6 pb-5">
+                        <input id="requestEmail" formControlName="email" type="email" class="form-control floating-input input-border-bottom pl-1 pr-1" [attr.maxlength]="validator.email.max" [class.filled]="f.email.value">
+                        <label for="requestEmail" class="placeholder">Contact Email</label>
+                        <error-label [control]="f.email"></error-label>
+                    </div>
+
+
+                    <div class="form-group form-floating-label col-6 pb-5">
+                        <input id="requestPhone" digitOnly formControlName="phone" type="text" class="form-control floating-input input-border-bottom pl-1 pr-1" autofocus [attr.maxlength]="validator.phone.max" [class.filled]="f.phone.value">
+                        <label for="requestPhone" class="placeholder">Contact Number</label>
+                        <error-label [control]="f.phone"></error-label>
+                    </div>
+
+                    <div class="form-group form-floating-label col-6 pb-5">
+                        <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="country" [items]="countryList | async" bindLabel="name" bindValue="_id" [class.filled]="f.country.value"></ng-select>
+                        <label for="country" class="placeholder">Country</label>
+                        <error-label [control]="f.country"></error-label>
+                    </div>
+                    <div class="form-group form-floating-label col-6 pb-5">
+                        <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="package" [items]="packageList | async" bindLabel="name" bindValue="_id" [class.filled]="f.package.value"></ng-select>
+                        <label for="country" class="placeholder">Package</label>
+                        <error-label [control]="f.package"></error-label>
+                    </div>
+                    <div class="form-group form-floating-label col-6 pb-5">
+                        <input id="requestUser" autocomplete="new-password" digitOnly formControlName="userCount" type="text" class="form-control floating-input input-border-bottom pl-1 pr-1" [attr.maxlength]="validator.userCount.max">
+                        <label for="requestUser" class="placeholder">User Count</label>
+                        <error-label [control]="f.userCount"></error-label>
+                    </div>
+
+                    <!-- <div class="row form-sub m-0 col-6 pb-5">
+                        <div class="custom-control custom-checkbox ">
+                            <input type="checkbox " formControlName="remember" class="custom-control-input " id="rememberme ">
+                            <label class="custom-control-label " for="rememberme ">Remember Me</label>
+
+                        </div>
+
+                    </div> -->
+                    <div class="form-action col-12 text-center ">
+                        <app-submit-button [submitted]="submitted">Submit Request</app-submit-button>
+                    </div>
+                    <div class="login-account col-12 text-center">
+                        <span class="msg ">&copy; IC2 Admin</span>
+
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+
+</app-guest>

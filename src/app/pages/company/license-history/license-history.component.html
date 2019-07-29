@@ -1,0 +1,69 @@
+<div class="page-inner">
+    <div class="page-header">
+        <h4 class="page-title">{{title}}</h4>
+        <ul class="breadcrumbs">
+            <li class="nav-home">
+                <a href="#">
+                    <i class="flaticon-home"></i>
+                </a>
+            </li>
+            <li class="separator">
+                <i class="flaticon-right-arrow"></i>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/dashboard">Dashboard</a>
+            </li>
+            <li class="separator">
+                <i class="flaticon-right-arrow"></i>
+            </li>
+            <li class="nav-item">
+                <a href="#">{{ title }}</a>
+            </li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <!-- <div class="card-header">
+                    <div class="d-flex align-items-center">
+                        <button class="btn btn-primary btn-round ml-auto" id="addModalOpen" (click)="createData(editModal)">
+                                <i class="fa fa-plus"></i>
+                                Add Company
+                            </button>
+                    </div>
+                </div> -->
+                <div class="card-body">
+
+                    <div class="table-responsive">
+                        <table id="record-table" [dtOptions]="dtOptions" datatable class="display table table-striped table-hover w-100 table-head-bg-primary" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Package Name</th>
+                                    <th>Old Count</th>
+                                    <th>New Count</th>
+                                    <th>Expire At</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="companyList?.length != 0">
+                                <tr *ngFor="let data of companyList ">
+                                    <td>{{ data.packageName }}</td>
+                                    <td>{{ data.oldCount }}</td>
+                                    <td>{{ data.newCount }}</td>
+                                    <td>{{ data.expireAt | date: 'mediumDate' }}</td>
+                                </tr>
+                            </tbody>
+                            <tbody *ngIf="companyList?.length == 0">
+                                <tr>
+                                    <td colspan="6" class="no-data-available text-center">No matching records found</td>
+                                </tr>
+                                <tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

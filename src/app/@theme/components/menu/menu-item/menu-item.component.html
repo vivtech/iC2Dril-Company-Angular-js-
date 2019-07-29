@@ -1,0 +1,24 @@
+<li class="nav-item submenu" *ngIf="hasSubmenu()">
+    <a data-toggle="collapse" routerLink="" [ngClass]="{'collapsed': toggleState}" [attr.aria-expanded]="toggleState">
+        <i [ngClass]="item.icon"></i>
+        <p>{{ item.label }}</p>
+        <span class="caret"></span>
+    </a>
+    <div class="collapse " [ngClass]="{'show': toggleState}">
+        <ul class="nav nav-collapse">
+            <li *ngFor="let subMenu of item.items">
+                <a href="../demo1/index.html">
+                    <span class="sub-item">{{subMenu.label}}</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+</li>
+
+
+<li class="nav-item " *ngIf="!hasSubmenu()">
+    <a [routerLink]="item.link" routerLinkActive="active">
+        <i [ngClass]="item.icon"></i>
+        <p>{{ item.label }}</p>
+    </a>
+</li>

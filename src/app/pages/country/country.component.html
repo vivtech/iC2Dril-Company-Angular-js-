@@ -1,0 +1,149 @@
+<div class="page-inner">
+    <div class="page-header">
+        <h4 class="page-title">{{title}}</h4>
+        <ul class="breadcrumbs">
+            <li class="nav-home">
+                <a href="#">
+                    <i class="flaticon-home"></i>
+                </a>
+            </li>
+            <li class="separator">
+                <i class="flaticon-right-arrow"></i>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/dashboard">Dashboard</a>
+            </li>
+            <li class="separator">
+                <i class="flaticon-right-arrow"></i>
+            </li>
+            <li class="nav-item">
+                <a href="#">{{ title }}</a>
+            </li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex align-items-center">
+                        <button class="btn btn-primary btn-round ml-auto" id="addModalOpen" (click)="createData(editModal)">
+                                    <i class="fa fa-plus"></i>
+                                    Add Country
+                                </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row p-2 filter-cont mb-4">
+
+                        <div class="col-md-3 pl-0">
+                            <div class="form-group pt-0">
+                                <label>Status</label>
+                                <ng-select (change)="refreshTable()" class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [(ngModel)]="statusFilter" [items]="statusFilterData" bindLabel="name" bindValue="id"></ng-select>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="table-responsive">
+                        <table id="record-table" [dtOptions]="dtOptions" datatable class="display table table-striped table-hover w-100 table-head-bg-primary" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Code</th>
+                                    <th>Symbol</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="dataList?.length != 0">
+                                <tr *ngFor="let data of dataList">
+                                    <td>{{ data.name | capitalize }}</td>
+                                    <td>{{ data.code }}</td>
+                                    <td>{{ data.symbol }}</td>
+                                    <td>
+                                        <span class="badge badge-pill badge-success" *ngIf="data.active == 1">Active</span>
+                                        <span class="badge badge-pill badge-warning" *ngIf="data.active == 0">Inactive</span>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group datatable-dropdown">
+                                            <button class="btn btn-link btn-primary" (click)="editDetail(editModal,data._id)"><i class="fa fa-edit"></i></button>
+                                            <button class="btn btn-link btn-danger" (click)="deleteConfirmation(data._id)"><i class="fa fa-trash"></i></button>
+                                        </div>
+
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tbody *ngIf="dataList?.length == 0">
+                                <tr>
+                                    <td colspan="6" class="no-data-available text-center">No matching records found</td>
+                                </tr>
+                                <tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+
+<!-- Edit Modal -->
+<ng-template #editModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">{{ editing ? "Edit Country" : "Add Country" }}</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+              </button>
+    </div>
+    <div class="modal-body">
+        <form class="row form" *ngIf="requestDetail" id="editForm" [formGroup]="editForm" (ngSubmit)="updateRequest()">
+            <input type="hidden" formControlName="data" [attr.maxlength]="validator.name.max" class="form-control">
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form-group form-group-default">
+                            <label class="text-primary">Name</label>
+                            <input type="text" formControlName="name" [attr.maxlength]="validator.name.max" class="form-control" placeholder="Name">
+                            <error-label [control]="f.name"></error-label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group form-group-default">
+                            <label class="text-primary">Code</label>
+                            <input type="text" formControlName="code" [attr.maxlength]="validator.countryCode.max" class="form-control" placeholder="Code">
+                            <error-label [control]="f.code"></error-label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group form-group-default">
+                            <label class="text-primary">Symbol</label>
+                            <input type="text" formControlName="symbol" [attr.maxlength]="validator.countrySymbol.max" class="form-control" placeholder="Symbol">
+                            <error-label [control]="f.symbol"></error-label>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="form-group form-group-default dropdown">
+                            <label class="text-primary">Status</label>
+                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="active" [items]="statusData" bindLabel="name" bindValue="id" [class.filled]="f.active.value"></ng-select>
+                            <error-label [control]="f.active"></error-label>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark btn-rounded" (click)="modal.close('Close click')">Close</button>
+        <app-submit-button [submitted]="submitted" (click)="updateRequest()">{{editing? "Update" : "Add" }}</app-submit-button>
+    </div>
+</ng-template>

@@ -1,0 +1,50 @@
+<app-guest>
+    <div class="container container-login animated fadeIn">
+        <div class="row">
+            <div class="col-12 text-center">
+                <img src="assets/img/logo.png" class="pb-3">
+            </div>
+        </div>
+        <h3 class="text-center">Sign In</h3>
+        <form class="login-form form" id="loginForm" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+            <div class="alert alert-warning alert-dismissible fade show text-center " [ngClass]="{'d-none': !error}" role="alert">
+                <strong> Invalid Login </strong>
+            </div>
+
+            <div class="form-group form-floating-label">
+                <input id="loginEmail" formControlName="username" type="text" class="form-control floating-input input-border-bottom pl-1 pr-1" autofocus [attr.maxlength]="validator.email.max">
+                <label for="email" class="placeholder">Email</label>
+                <label class="error" for="loginEmail" *ngIf="(submitted || f.username.touched || f.username.dirty) && f.username.errors">Please enter a
+                    valid email address.</label>
+            </div>
+            <div class="form-group form-floating-label" [ngClass]="{'error-cont': (submitted || f.password.touched || f.password.dirty) && f.password.errors }">
+                <input id="password" formControlName="password" [type]=" passwordHidden ? 'password' : 'text'" class="form-control floating-input input-border-bottom pl-1 pr-5" [attr.maxlength]="validator.password.max">
+                <label for="password " class="placeholder ">Password</label>
+                <div class="show-password ">
+                    <i class="far " (click)="togglePassword()" [ngClass]="{'fa-eye': !passwordHidden, 'fa-eye-slash': passwordHidden}"></i>
+                </div>
+                <label class="error " for="password " *ngIf="(submitted || f.password.touched || f.password.dirty) && f.password.errors ">Please enter a
+                    valid password.</label>
+            </div>
+            <div class="row form-sub m-0 ">
+                <div class="custom-control custom-checkbox ">
+                    <input type="checkbox " formControlName="remember" class="custom-control-input " id="rememberme ">
+                    <label class="custom-control-label " for="rememberme ">Remember Me</label>
+
+                </div>
+
+                <a routerLink="/forgot-password" id="show-forgot " class="link float-right">Forget Password ?</a>
+            </div>
+            <div class="form-action mb-3 ">
+                <button type="submit " class="btn btn-primary btn-rounded btn-login " data-loading-text="Signing In.. " data-loading=" " data-text=" " id="signin ">Sign In</button>
+            </div>
+            <div class="login-account ">
+                <span class="msg ">&copy; IC2 Admin</span>
+
+            </div>
+        </form>
+    </div>
+
+
+</app-guest>
