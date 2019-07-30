@@ -3410,3 +3410,28 @@ button.calendar:active {
 .dataTables_empty {
     display: none;
 }
+
+.sidebar .nav .nav-item.active>a {
+    background: #810c03 !important;
+    box-shadow: 4px 4px 10px 0 rgba(0, 0, 0, 0.1), 4px 4px 15px -5px rgba(21, 114, 232, 0.4) !important;
+}
+
+.sidebar .nav .nav-item.active>a p,
+.sidebar[data-background-color=white] .nav .nav-item.active>a p {
+    color: #ffffff!important;
+    font-weight: 600;
+}
+
+.sidebar .nav .nav-item.active a i,
+.sidebar[data-background-color=white] .nav .nav-item.active a i {
+    color: #FFF
+}
+
+.sidebar.sidebar-style-2 .nav .nav-item.active a:focus i,
+.sidebar.sidebar-style-2 .nav .nav-item.active a:focus p,
+.sidebar.sidebar-style-2 .nav .nav-item.active a:hover i,
+.sidebar.sidebar-style-2 .nav .nav-item.active a:hover p,
+.sidebar.sidebar-style-2 .nav .nav-item.active a[data-toggle=collapse][aria-expanded=true] i,
+.sidebar.sidebar-style-2 .nav .nav-item.active a[data-toggle=collapse][aria-expanded=true] p {
+    color: #ffffff !important;
+}

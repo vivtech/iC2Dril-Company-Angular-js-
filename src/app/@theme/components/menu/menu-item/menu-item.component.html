@@ -16,8 +16,8 @@
 </li>
 
 
-<li class="nav-item " *ngIf="!hasSubmenu()">
-    <a [routerLink]="item.link" routerLinkActive="active">
+<li class="nav-item " *ngIf="!hasSubmenu()" routerLinkActive="active">
+    <a [routerLink]="item.link">
         <i [ngClass]="item.icon"></i>
         <p>{{ item.label }}</p>
     </a>

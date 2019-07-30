@@ -30,6 +30,7 @@ import { RouterModule } from '@angular/router';
 import { CapitalizePipe } from './pipes/capitalize.pipe';
 import { DeleteModalComponent } from './components/modals/delete-modal/delete-modal.component';
 import { PopoverOptionComponent } from './components/utils/popover-option/popover-option.component';
+import { BreadcrumbComponent } from './components/utils/breadcrumb/breadcrumb.component';
 
 
 const COMPONENTS = [
@@ -46,7 +47,8 @@ const COMPONENTS = [
     ErrorLabelComponent,
     SubmitButtonComponent,
     DeleteModalComponent,
-    PopoverOptionComponent
+    PopoverOptionComponent,
+    BreadcrumbComponent
 ];
 
 const DIRECTIVE = [
@@ -89,7 +91,7 @@ const ENTRY_COMPONENTS = [
 
 @NgModule({
     exports: [...BASE_MODULES, ...COMPONENTS, ...DIRECTIVE, ...PIPES],
-    declarations: [...COMPONENTS, ...DIRECTIVE, ...PIPES, LogoutComponent, NotyfToast, PasswordFieldComponent, DataTableComponent,],
+    declarations: [...COMPONENTS, ...DIRECTIVE, ...PIPES, LogoutComponent, NotyfToast, PasswordFieldComponent, DataTableComponent, ],
     imports: [...BASE_MODULES],
     entryComponents: [ ...ENTRY_COMPONENTS ],
 
