@@ -7,8 +7,8 @@ import { FormService } from './services/form-validation.service';
 import { CommonService } from './services/common.service';
 import { ResetTokenGuard } from './guards/rest-token-checker.guard';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { projectService } from './services/project-service';
 import { UserService } from './services/user.service';
-
 
 const COMMON_INTERCEPTOR = [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
@@ -16,12 +16,14 @@ const COMMON_INTERCEPTOR = [
 ];
 
 const SERVICES = [
-    UserService
+    UserService,
+    projectService
 ];
 
 const COMMON_SERVICES = [
     FormService,
-    CommonService
+    CommonService,
+    
 ];
 const COMMON_GUARDS = [
     ResetTokenGuard

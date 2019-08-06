@@ -14,6 +14,8 @@ import { ResetTokenGuard } from '../@core/guards/rest-token-checker.guard';
 import { ProfileComponent } from './profile/profile.component';
 import { PackageComponent } from './package/package.component';
 import { CountryComponent } from './country/country.component';
+import { ProjectComponent } from './project/project.component';
+import { AddProjectComponent } from './project/add-project/add-project.component';
 
 const routes: Routes = [
     {
@@ -42,6 +44,14 @@ const routes: Routes = [
             {
                 path: 'dashboard',
                 component: DashboardComponent,
+            },
+            {
+                path: 'project',
+                component: ProjectComponent,
+            },
+            {
+                path: 'addproject',
+                component: AddProjectComponent,
             },
             {
                 path: 'company-request',

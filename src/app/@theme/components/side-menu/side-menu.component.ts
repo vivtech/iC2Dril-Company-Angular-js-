@@ -13,15 +13,15 @@ export class SideMenuComponent implements OnInit {
             link: '/dashboard',
           },
           {
-            label: 'Users',
+             label: 'Create Project',
+            icon: 'fas fa-th-list',
+            link: '/project',
+          },
+          {
+             label: 'Users',
             icon: 'fas fa-user-tie',
             link: '/user/list'
         },
-        //   {
-        //     label: 'License Request',
-        //     icon: 'fas fa-th-list',
-        //     link: '/company-request/list',
-        //   },
         //   {
         //     label: 'Subscribed Company',
         //     icon: 'fas fa-th-list',
