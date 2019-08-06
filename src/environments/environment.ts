@@ -15,6 +15,7 @@ export const environment = {
         notes: { min: 0, max: 300},
         countryCode: {min: 1, max: 5},
         countrySymbol: {min: 1, max: 5},
+        designation: {min: 3, max: 75},
     }
 };
 

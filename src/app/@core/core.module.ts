@@ -7,6 +7,7 @@ import { FormService } from './services/form-validation.service';
 import { CommonService } from './services/common.service';
 import { ResetTokenGuard } from './guards/rest-token-checker.guard';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { UserService } from './services/user.service';
 
 
 const COMMON_INTERCEPTOR = [
@@ -14,6 +15,9 @@ const COMMON_INTERCEPTOR = [
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
 ];
 
+const SERVICES = [
+    UserService
+];
 
 const COMMON_SERVICES = [
     FormService,
@@ -36,8 +40,9 @@ const COMMON_GUARDS = [
     ],
     providers: [
         ...COMMON_INTERCEPTOR,
-        COMMON_SERVICES,
-        COMMON_GUARDS
+        ...COMMON_SERVICES,
+        ...COMMON_GUARDS,
+        ...SERVICES
     ]
 })
 export class CoreModule { }
