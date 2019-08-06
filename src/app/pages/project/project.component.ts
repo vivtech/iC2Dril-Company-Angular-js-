@@ -18,22 +18,11 @@ import { DataTableDirective } from 'angular-datatables';
   styleUrls: ['./project.component.css']
 })
 export class ProjectComponent implements OnInit {
-  title = 'Create Project';
-  constructor(private modalService: NgbModal) { }
+  constructor() { }
 
   ngOnInit() {
   }
 
-   createData(modal) {
-        // this.f.data.setValidators(null);
-        // this.f.data.updateValueAndValidity();
-        // this.requestDetail = {
-        //     name: '',
-        //     active: 1
-        // };
-        // this.editing = false;
-        // this.editForm.reset();
-        this.modalService.open(modal);
-    }
+
 
 }

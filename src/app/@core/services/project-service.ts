@@ -8,7 +8,7 @@ import { map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class projectService {  public packageList: BehaviorSubject<Package[]>;
+export class ProjectService {  public packageList: BehaviorSubject<Package[]>;
 
     constructor(private http: HttpClient) {
       this.packageList = new BehaviorSubject<Package[]>([]);

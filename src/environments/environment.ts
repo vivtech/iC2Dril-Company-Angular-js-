@@ -16,6 +16,9 @@ export const environment = {
         countryCode: {min: 1, max: 5},
         countrySymbol: {min: 1, max: 5},
         designation: {min: 3, max: 75},
+        camUrl: {min: 3, max: 200},
+        camUsername: {min: 3, max: 75},
+        camPassword: {min: 3, max: 75},
     }
 };
 

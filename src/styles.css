@@ -3435,3 +3435,7 @@ button.calendar:active {
 .sidebar.sidebar-style-2 .nav .nav-item.active a[data-toggle=collapse][aria-expanded=true] p {
     color: #ffffff !important;
 }
+
+.ng-select .ng-has-value .ng-placeholder, .ng-select.ng-select-opened .ng-placeholder {
+    display: none;
+}

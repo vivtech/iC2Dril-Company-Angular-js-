@@ -15,7 +15,6 @@ import { ProjectComponent } from './project/project.component';
 import { ViewProjectComponent } from './project/view-project/view-project.component';
 import { AddProjectComponent } from './project/add-project/add-project.component';
 
-import { MatTabsModule } from '@angular/material/tabs';
 
 const COMPONENETS = [PagesComponent,
                     DashboardComponent,
@@ -30,11 +29,10 @@ const COMPONENETS = [PagesComponent,
                 ];
 
 @NgModule({
-    declarations: [...COMPONENETS, ProjectComponent, ViewProjectComponent, AddProjectComponent],
+    declarations: [...COMPONENETS ],
     imports: [
         PagesRoutingModule,
         ThemeModule,
-        MatTabsModule
     ]
 })
 export class PagesModule { }
