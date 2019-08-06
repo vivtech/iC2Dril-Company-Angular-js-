@@ -1,6 +1,10 @@
 export class User {
-    id: number;
+    _id?: number;
     name: string;
-    email: string;
-    phone: string;
+    email?: string;
+    phone?: string;
+    active?: string;
+    designation?: string;
+    userType?: string;
+    blocked?: string;
 }

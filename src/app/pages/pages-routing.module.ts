@@ -62,6 +62,10 @@ const routes: Routes = [
                 loadChildren: './company/company.module#CompanyModule'
             },
             {
+                path: 'user',
+                loadChildren: './user/user.module#UserModule'
+            },
+            {
                 path: 'package',
                 component:  PackageComponent
             },

@@ -8,18 +8,22 @@ import { CommonService } from './services/common.service';
 import { ResetTokenGuard } from './guards/rest-token-checker.guard';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { projectService } from './services/project-service';
-
+import { UserService } from './services/user.service';
 
 const COMMON_INTERCEPTOR = [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
 ];
 
+const SERVICES = [
+    UserService,
+    projectService
+];
 
 const COMMON_SERVICES = [
     FormService,
     CommonService,
-    projectService
+    
 ];
 const COMMON_GUARDS = [
     ResetTokenGuard
@@ -38,8 +42,9 @@ const COMMON_GUARDS = [
     ],
     providers: [
         ...COMMON_INTERCEPTOR,
-        COMMON_SERVICES,
-        COMMON_GUARDS
+        ...COMMON_SERVICES,
+        ...COMMON_GUARDS,
+        ...SERVICES
     ]
 })
 export class CoreModule { }
