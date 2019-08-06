@@ -7,6 +7,7 @@ import { FormService } from './services/form-validation.service';
 import { CommonService } from './services/common.service';
 import { ResetTokenGuard } from './guards/rest-token-checker.guard';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { projectService } from './services/project-service';
 
 
 const COMMON_INTERCEPTOR = [
@@ -17,7 +18,8 @@ const COMMON_INTERCEPTOR = [
 
 const COMMON_SERVICES = [
     FormService,
-    CommonService
+    CommonService,
+    projectService
 ];
 const COMMON_GUARDS = [
     ResetTokenGuard

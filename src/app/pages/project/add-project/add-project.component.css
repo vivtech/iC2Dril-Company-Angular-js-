@@ -1,0 +1,12 @@
+.backbtn#addModalOpen {
+    margin-left: 0 !important;
+        padding: 0.5rem 0.8rem;
+}
+.card-header.innerCard {
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	background: #810c03;
+	    color: #fff;
+    font-weight: 600;
+    text-align: center;
+}

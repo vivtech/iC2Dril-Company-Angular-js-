@@ -12,11 +12,11 @@ export class SideMenuComponent implements OnInit {
             icon: 'fas fa-home',
             link: '/dashboard',
           },
-        //   {
-        //     label: 'License Request',
-        //     icon: 'fas fa-th-list',
-        //     link: '/company-request/list',
-        //   },
+          {
+            label: 'Create Project',
+            icon: 'fas fa-th-list',
+            link: '/project',
+          },
         //   {
         //     label: 'Subscribed Company',
         //     icon: 'fas fa-th-list',
