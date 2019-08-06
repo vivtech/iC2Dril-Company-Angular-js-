@@ -154,7 +154,7 @@
                 </div>
                 <div>
                 <div class="d-flex align-items-center" (click)="t.select('tab-selectbyid2')">
-                    <button class="btn btn-primary btn-round ml-auto" id="addModalOpen" (click)="submit(addproductForm.value)">
+                    <button class="btn btn-primary btn-round ml-auto" id="addModalOpen" [disabled]="!addproductForm.valid" (click)="submit(addproductForm.value)">
                     Submit
                     </button>
                 </div>
@@ -171,7 +171,7 @@
                         <div class="card-header innerCard">Office Employee</div>
                         <div class="card-body">
                             <span  *ngFor="let user of UserType">
-                                <span *ngIf="user.webLogin == '1'"><input type="radio" name="">&nbsp;{{ user.name }}</span>
+                                <p *ngIf="user.userType.webLogin == '1'"><input type="radio" name="">&nbsp;{{ user.name }}</p>
                             </span>
                         </div>
                     </div>
@@ -181,7 +181,7 @@
                         <div class="card-header innerCard">Field Employee</div>
                         <div class="card-body">
                             <span *ngFor="let user of UserType">
-                                <span *ngIf="user.webLogin == '0'"><input type="radio" name="">&nbsp;{{ user.name }}</span>
+                                <p *ngIf="user.userType.webLogin == '0'"><input type="radio" name="">&nbsp;{{ user.name }}</p>
                             </span>
                         </div>
                     </div>

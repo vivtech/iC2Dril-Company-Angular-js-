@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { projectService } from 'src/app/@core/services/project-service';
+import { ProjectService } from 'src/app/@core/services/project-service';
 
 @Component({
   selector: 'app-add-project',
@@ -16,7 +16,7 @@ export class AddProjectComponent implements OnInit {
   mobileUser: any;
 
   constructor(private fb: FormBuilder,
-    private service: projectService) { }
+    private service: ProjectService) { }
 
   ngOnInit() {
   	this.addproductForm = this.fb.group({
@@ -30,7 +30,7 @@ export class AddProjectComponent implements OnInit {
   		client_phone : ['', Validators.required],
   		status : ['']
   	})
-    this.service.getUserType().subscribe(res=> {
+    this.service.getUser().subscribe(res=> {
       console.log('getUserType', res);
       this.UserType = res.data
       // for(var i in res.data) {
@@ -41,7 +41,7 @@ export class AddProjectComponent implements OnInit {
       //     console.log('Mob user', res.data[i].name)
       //   }
       // }
-    })
+    });
   }
 
   submit(value) {
