@@ -4,7 +4,7 @@
 
 export const environment = {
     production: false,
-    apiUrl: 'http://localhost:3000/console',
+    apiUrl: 'http://admin.ic2drill.techzarinfo.com/console',
     validators: {
         name: {min: 3, max: 75},
         email: {min: 3, max: 75},

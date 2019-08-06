@@ -15,8 +15,8 @@ export class AuthenticationService {
     public currentUser: Observable<User>;
 
     constructor(private http: HttpClient) {
-        this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
-        this.currentUserToken = new BehaviorSubject<string>(localStorage.getItem('userToken'));
+        this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('companyUser')));
+        this.currentUserToken = new BehaviorSubject<string>(localStorage.getItem('companyToken'));
         this.currentUser = this.currentUserSubject.asObservable();
     }
 
@@ -35,8 +35,8 @@ export class AuthenticationService {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 if ( response.status === 'success' ) {
 
-                    localStorage.setItem('currentUser', JSON.stringify(response.data.user));
-                    localStorage.setItem('userToken', response.data.token);
+                    localStorage.setItem('companyUser', JSON.stringify(response.data.user));
+                    localStorage.setItem('companyToken', response.data.token);
                     this.currentUserSubject.next(response.data.user);
                     console.log(response.data.token);
                     this.currentUserToken.next(response.data.token);
@@ -52,7 +52,7 @@ export class AuthenticationService {
             .pipe(map(response => {
                 console.log(response.data);
                 if ( response.status === 'success' ) {
-                    localStorage.setItem('currentUser', JSON.stringify(response.data.user));
+                    localStorage.setItem('companyUser', JSON.stringify(response.data.user));
                     this.currentUserSubject.next(response.data.user);
                 }
 
@@ -98,8 +98,8 @@ export class AuthenticationService {
 
     logout() {
         // remove user from local storage to log user out
-        localStorage.removeItem('currentUser');
-        localStorage.removeItem('userToken');
+        localStorage.removeItem('companyUser');
+        localStorage.removeItem('companyToken');
         this.currentUserSubject.next(null);
         this.currentUserToken.next(null);
     }
