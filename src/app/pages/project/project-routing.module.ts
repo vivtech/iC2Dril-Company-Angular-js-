@@ -12,6 +12,11 @@ const routes: Routes = [
         component: ProjectComponent,
         children: [
             {
+                path: '',
+                redirectTo: 'list',
+                pathMatch: 'full'
+            },
+            {
                 path: 'list',
                 component: ListProjectComponent
             },

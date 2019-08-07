@@ -62,8 +62,7 @@
                             <tbody *ngIf="dataList?.length != 0">
                                 <tr *ngFor="let data of dataList">
                                     <td>{{ data.name | capitalize }}</td>
-                                    <td>{{ data.code }}</td>
-                                    <td>{{ data.symbol }}</td>
+
                                     <td>
                                         <span class="badge badge-pill badge-success" *ngIf="data.active == 1">Active</span>
                                         <span class="badge badge-pill badge-warning" *ngIf="data.active == 0">Inactive</span>

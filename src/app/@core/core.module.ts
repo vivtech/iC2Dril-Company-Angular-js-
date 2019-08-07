@@ -7,7 +7,8 @@ import { FormService } from './services/form-validation.service';
 import { CommonService } from './services/common.service';
 import { ResetTokenGuard } from './guards/rest-token-checker.guard';
 import { ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import { ProjectService } from './services/project-service';
+// import { ProjectService } from './services/project-service';
+import { ProjectService } from './services/project.service';
 import { UserService } from './services/user.service';
 import { ProjectWellService } from './services/project-well.service';
 
@@ -19,7 +20,7 @@ const COMMON_INTERCEPTOR = [
 const SERVICES = [
     UserService,
     ProjectService,
-    ProjectWellService
+    ProjectWellService,
 ];
 
 const COMMON_SERVICES = [
