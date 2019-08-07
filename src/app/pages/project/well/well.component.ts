@@ -15,6 +15,7 @@ import { DeleteModalComponent } from 'src/app/@theme/components/modals/delete-mo
 import { CountryService } from 'src/app/@core/services/country.service';
 import { ProjectWellService } from 'src/app/@core/services/project-well.service';
 import { ProjectWell } from 'src/app/@core/models/project.model';
+import { Router, ActivatedRoute }  from '@angular/router';
 
 @Component({
     selector: 'app-well',
@@ -42,6 +43,7 @@ export class WellComponent implements OnInit {
     submitted = false;
     today = new Date();
     minDate = {year: this.today.getFullYear(), month: this.today.getMonth() + 1, day: this.today.getDate()};
+    projectId: any;
 
     constructor(private commonService: CommonService,
                 private projectWellService: ProjectWellService,
@@ -49,12 +51,18 @@ export class WellComponent implements OnInit {
                 private modalConfig: NgbModalConfig,
                 private formService: FormService,
                 private formBuilder: FormBuilder,
-                private toastr: ToastrService) {
+                private toastr: ToastrService,
+                private router: Router,
+                private route: ActivatedRoute) {
         modalConfig.backdrop = 'static';
         modalConfig.keyboard = false;
     }
 
     ngOnInit() {
+        this.route.params.subscribe(params => {
+            console.log('route', params);
+            this.projectId = params.data;
+        })
         const that = this;
         this.dtOptions = {
             dom:    `<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>"
@@ -67,6 +75,7 @@ export class WellComponent implements OnInit {
           processing: true,
           ajax: (dataTablesParameters: object, callback) => {
               dataTablesParameters['filter'] = [];
+              dataTablesParameters['project'] = this.projectId;
               dataTablesParameters['filter'][0] = {column: 'active', data: this.statusFilter};
               console.log(dataTablesParameters);
               const responseData = this.projectWellService.getList(dataTablesParameters).pipe(first())
@@ -151,17 +160,21 @@ export class WellComponent implements OnInit {
     }
 
     updateRequest() {
+        // this.editForm.controls['data'].setValue(this.projectId);
         this.formService.clearCustomError(this.editForm);
         this.submitted = true;
         this.editForm.markAllAsTouched();
         console.log(this.editForm.getRawValue());
         if (this.editForm.invalid) {
+            console.log('this.editForm-not valid')
             this.submitted = false;
             return false;
         }
 
         if (this.editing) {
-            this.projectWellService.updateData(this.editForm.getRawValue())
+            var value = this.editForm.getRawValue();
+            console.log('this.editForm', this.editForm.getRawValue());
+            this.projectWellService.updateData(value)
             .pipe(first())
             .subscribe(
                 data => {
@@ -188,7 +201,14 @@ export class WellComponent implements OnInit {
                     this.submitted = false;
                 });
         } else {
-            this.projectWellService.create(this.editForm.getRawValue())
+            var value = this.editForm.getRawValue();
+            console.log('this.editForm', this.editForm.getRawValue());
+            // var params = {
+            //     'active': value.active,
+            //     'data': value.data,
+            //     'name': value.name
+            // }
+            this.projectWellService.create(value)
             .pipe(first())
             .subscribe(
                 data => {
@@ -228,14 +248,15 @@ export class WellComponent implements OnInit {
     }
 
     createData(modal) {
-        this.f.data.setValidators(null);
-        this.f.data.updateValueAndValidity();
+        // this.f.data.setValidators(null);
+        // this.f.data.updateValueAndValidity();
         this.requestDetail = {
             name: '',
             active: 1
         };
         this.editing = false;
         this.editForm.reset();
+        this.f.data.setValue(this.projectId);
         this.modalService.open(modal);
     }
 
@@ -250,6 +271,10 @@ export class WellComponent implements OnInit {
             (error) => {
                 console.log(error);
             });
+    }
+
+    view(id) {
+         this.router.navigate(['project/well/'+ id]); 
     }
 
 }

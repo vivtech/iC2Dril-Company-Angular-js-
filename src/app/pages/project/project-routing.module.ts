@@ -5,6 +5,7 @@ import { ProjectComponent } from './project.component';
 import { ListProjectComponent } from './list-project/list-project.component';
 import { WellComponent } from './well/well.component';
 import { CameraComponent } from './camera/camera.component';
+import { AddProjectComponent } from './add-project/add-project.component';
 
 const routes: Routes = [
     {
@@ -15,6 +16,10 @@ const routes: Routes = [
                 path: '',
                 redirectTo: 'list',
                 pathMatch: 'full'
+            },
+            {
+                path: 'create',
+                component: AddProjectComponent
             },
             {
                 path: 'list',

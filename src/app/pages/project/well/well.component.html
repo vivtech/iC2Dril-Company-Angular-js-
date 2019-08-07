@@ -69,6 +69,7 @@
                                     </td>
                                     <td>
                                         <div class="btn-group datatable-dropdown">
+                                            <button class="btn btn-link btn-danger" (click)="view(data._id)"><i class="fa fa-eye"></i></button>
                                             <button class="btn btn-link btn-primary" (click)="editDetail(editModal,data._id)"><i class="fa fa-edit"></i></button>
                                             <button class="btn btn-link btn-danger" (click)="deleteConfirmation(data._id)"><i class="fa fa-trash"></i></button>
                                         </div>
@@ -97,14 +98,14 @@
 <!-- Edit Modal -->
 <ng-template #editModal let-modal>
     <div class="modal-header">
-        <h4 class="modal-title">{{ editing ? "Edit Country" : "Add Country" }}</h4>
+        <h4 class="modal-title">{{ editing ? "Edit" : "Add" }} Well</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
                 <span aria-hidden="true">&times;</span>
               </button>
     </div>
     <div class="modal-body">
         <form class="row form" *ngIf="requestDetail" id="editForm" [formGroup]="editForm" (ngSubmit)="updateRequest()">
-            <input type="hidden" formControlName="data" [attr.maxlength]="validator.name.max" class="form-control">
+            <input type="hidden" formControlName="data" class="form-control">
             <div class="col-sm-12">
                 <div class="row">
                     <div class="col-sm-12">

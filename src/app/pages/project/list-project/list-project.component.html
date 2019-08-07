@@ -17,14 +17,14 @@
                 <i class="flaticon-right-arrow"></i>
             </li>
             <li class="nav-item">
-                <a routerLink="/project/list">Projects</a>
+                <a routerLink="/project">Projects</a>
             </li>
-            <li class="separator">
+           <!--  <li class="separator">
                 <i class="flaticon-right-arrow"></i>
             </li>
             <li class="nav-item">
                 <a >{{ title }}</a>
-            </li>
+            </li> -->
         </ul>
     </div>
     <div class="row">
@@ -32,7 +32,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex align-items-center">
-                        <a class="btn btn-primary btn-round ml-auto" [routerLink]="['create']">
+                        <a class="btn btn-primary btn-round ml-auto" routerLink="/project/create">
                                     <i class="fa fa-plus"></i>
                                     Create Project
                         </a>
@@ -55,6 +55,7 @@
                             <thead>
                                 <tr>
                                     <th>Name</th>
+                                    <th>Client</th>
                                     <th>Active</th>
                                     <th>Status</th>
                                     <th>Action</th>
@@ -63,6 +64,7 @@
                             <tbody *ngIf="dataList?.length != 0">
                                 <tr *ngFor="let data of dataList">
                                     <td>{{ data.name | capitalize }}</td>
+                                    <td>{{ data.client.name | capitalize }}</td>
                                     <td>
                                         <span class="badge badge-pill badge-success" *ngIf="data.active == 1">Active</span>
                                         <span class="badge badge-pill badge-danger" *ngIf="data.active == 0">Inactive</span>
@@ -73,6 +75,7 @@
                                     </td>
                                     <td>
                                         <div class="btn-group datatable-dropdown">
+                                            <button class="btn btn-link btn-danger" (click)="view(data._id)"><i class="fa fa-eye"></i></button>
                                             <button class="btn btn-link btn-primary" (click)="editDetail(editModal,data._id)"><i class="fa fa-edit"></i></button>
                                             <button class="btn btn-link btn-danger" (click)="deleteConfirmation(data._id)"><i class="fa fa-trash"></i></button>
                                         </div>
@@ -101,7 +104,7 @@
 <!-- Edit Modal -->
 <ng-template #editModal let-modal>
     <div class="modal-header">
-        <h4 class="modal-title">{{ editing ? "Edit Country" : "Add Country" }}</h4>
+        <h4 class="modal-title">{{ editing ? "Edit" : "Add Country" }}</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -111,22 +114,100 @@
             <input type="hidden" formControlName="data" [attr.maxlength]="validator.name.max" class="form-control">
             <div class="col-sm-12">
                 <div class="row">
-                    <div class="col-sm-12">
+                    <div class="col-sm-6">
                         <div class="form-group form-group-default">
-                            <label class="text-primary">Name</label>
-                            <input type="text" formControlName="name" [attr.maxlength]="validator.name.max" class="form-control" placeholder="Name">
-                            <error-label [control]="f.name"></error-label>
+                            <label class="text-primary">Project Name</label>
+                            <input type="text" formControlName="name" class="form-control" placeholder="project name">
+                            <p 
+                            style="color: red;position: relative;
+                            top: 10px;
+                            font-size: 12px;" *ngIf="editForm.controls.name.touched && !editForm.controls.name.valid">Please enter projectname</p>
                         </div>
                     </div>
-                    <div class="col-md-12">
+                    <div class="col-sm-6">
+                        <div class="form-group form-group-default">
+                            <label class="text-primary">Client Name</label>
+                            <input type="text" formControlName="client_name" class="form-control" placeholder="clientname">
+                            <p 
+                            style="color: red;position: relative;
+                            top: 10px;
+                            font-size: 12px;" *ngIf="editForm.controls.client_name.touched && !editForm.controls.client_name.valid">Please enter clientname</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group form-group-default">
+                            <label class="text-primary">Address</label>
+                                <input type="email" formControlName="address" class="form-control" placeholder="address">
+                                <p 
+                                style="color: red;position: relative;
+                                top: 10px;
+                                font-size: 12px;" *ngIf="editForm.controls.address.touched && !editForm.controls.address.valid">Please enter address</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group form-group-default">
+                            <label class="text-primary">Client Email</label>
+                                <input type="text" formControlName="client_email" class="form-control" placeholder="clientemail">
+                                <p 
+                                style="color: red;position: relative;
+                                top: 10px;
+                                font-size: 12px;" *ngIf="editForm.controls.client_email.touched && !editForm.controls.client_email.valid">Please enter clientemail</p>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group form-group-default">
+                            <label class="text-primary">City</label>
+                                <input type="text" formControlName="city" class="form-control" placeholder="city">
+                                <p 
+                                style="color: red;position: relative;
+                                top: 10px;
+                                font-size: 12px;" *ngIf="editForm.controls.city.touched && !editForm.controls.city.valid">Please enter city</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default dropdown">
+                            <label class="text-primary">Client Phone</label>
+                                <input type="text" formControlName="client_phone" class="form-control" placeholder="clientphone">
+                                <p 
+                                style="color: red;position: relative;
+                                top: 10px;
+                                font-size: 12px;" *ngIf="editForm.controls.client_phone.touched && !editForm.controls.client_phone.valid">Please enter clientphone</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default dropdown">
+                            <label class="text-primary">State</label>
+                                <input type="text" formControlName="state" class="form-control" placeholder="state">
+                                <p 
+                                style="color: red;position: relative;
+                                top: 10px;
+                                font-size: 12px;" *ngIf="editForm.controls.state.touched && !editForm.controls.state.valid">Please enter state</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
                         <div class="form-group form-group-default dropdown">
                             <label class="text-primary">Status</label>
-                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="active" [items]="statusData" bindLabel="name" bindValue="id" [class.filled]="f.active.value"></ng-select>
-                            <error-label [control]="f.active"></error-label>
+                            <select class="custom-select" formControlName="status">
+                                <option value="1">Active</option>
+                                <option value="0">Deactive</option>
+                            </select>
                         </div>
                     </div>
-
-
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default dropdown">
+                            <label class="text-primary">Country</label>
+                                <input type="text" formControlName="country" class="form-control" placeholder="country">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default dropdown">
+                            <label class="text-primary">Active</label>
+                            <select class="custom-select" formControlName="active">
+                                <option value="1">Active</option>
+                                <option value="0">Deactive</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
 

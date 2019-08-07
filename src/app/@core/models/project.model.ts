@@ -1,8 +1,15 @@
 export interface Project {
     _id?: string;
     name: string;
-    users?: string;
+    company?: string;
+    project?: string;
     active?: number;
+    address: string;
+    city: string;
+    state: string;
+    country: string;
+    client: any;
+    status: any;
 }
 
 

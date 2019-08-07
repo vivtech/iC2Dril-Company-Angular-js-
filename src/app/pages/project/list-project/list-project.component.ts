@@ -14,7 +14,8 @@ import { ToastrService } from 'ngx-toastr';
 import { DeleteModalComponent } from 'src/app/@theme/components/modals/delete-modal/delete-modal.component';
 import { CountryService } from 'src/app/@core/services/country.service';
 import { ProjectService } from 'src/app/@core/services/project.service';
-import { ProjectWell } from 'src/app/@core/models/project.model';
+import { Project } from 'src/app/@core/models/project.model';
+import { Router }  from '@angular/router';  
 
 @Component({
     selector: 'app-list-project',
@@ -31,13 +32,13 @@ export class ListProjectComponent implements OnInit {
     statusFilter = '';
     editing = false;
 
-    title = 'Project List';
+    title = 'Project';
     dtOptions: DataTables.Settings = {};
-    requestDetail: ProjectWell;
+    requestDetail: Project;
     editForm: FormGroup;
     licenseForm: FormGroup;
     validator = environment.validators;
-    dataList: Observable<ProjectWell[]>;
+    dataList: Observable<Project[]>;
     //dataList: Observable<Package[]>;
     submitted = false;
     today = new Date();
@@ -49,7 +50,8 @@ export class ListProjectComponent implements OnInit {
                 private modalConfig: NgbModalConfig,
                 private formService: FormService,
                 private formBuilder: FormBuilder,
-                private toastr: ToastrService) {
+                private toastr: ToastrService,
+                private router: Router) {
         modalConfig.backdrop = 'static';
         modalConfig.keyboard = false;
     }
@@ -87,6 +89,8 @@ export class ListProjectComponent implements OnInit {
           },
           columns: [
                     { data: 'name' },
+                    { data: 'client' },
+                    // { data: 'state' },
                     { data: 'active' }, { data: 'status' }, { data: '_id' }],
           columnDefs: [
             {
@@ -103,9 +107,16 @@ export class ListProjectComponent implements OnInit {
 
         this.editForm = this.formBuilder.group({
             data: ['', [Validators.required]],
-            name: ['', [Validators.required, Validators.minLength(this.validator.name.min),
-                Validators.maxLength(this.validator.name.max)]],
-            active: ['', [Validators.required]]
+            name: ['', [Validators.required]],
+            address: ['', [Validators.required]],
+            city: ['', [Validators.required]],
+            state: ['', [Validators.required]],
+            country: ['', [Validators.required]],
+            client_name: ['', [Validators.required]],
+            client_email: ['', [Validators.required]],
+            client_phone: ['', [Validators.required]],
+            active: [''],
+            status: ['']
         });
 
 
@@ -119,21 +130,36 @@ export class ListProjectComponent implements OnInit {
         this.apiService.getData(data).subscribe(response => {
             console.log(response);
             this.requestDetail = response.data;
+            console.log('this.requestDetail', this.requestDetail)
             this.editForm.reset();
             this.editing = true;
             this.f.data.setValidators([Validators.required]);
             this.f.data.updateValueAndValidity();
             this.editForm.patchValue({
-               data: this.requestDetail._id,
-               name: this.requestDetail.name,
-               active: this.requestDetail.active
+                data: this.requestDetail._id,
+                name: this.requestDetail.name,
+                address: this.requestDetail.address,
+                city: this.requestDetail.city,
+                state: this.requestDetail.state,
+                country: this.requestDetail.country,
+                client_name: this.requestDetail.client.name,
+                client_email: this.requestDetail.client.email,
+                client_phone: this.requestDetail.client.phone,
+                status: this.requestDetail.status,
+                active: this.requestDetail.active
             });
-            this.modalService.open(editModal);
+            this.modalService.open(editModal, {
+                size: 'lg'
+            });
         },
         error => {
             // this.noti
         }
         );
+    }
+
+    view(id) {
+         this.router.navigate(['project/'+ id]); 
     }
 
     deleteRequest(data) {
@@ -161,7 +187,22 @@ export class ListProjectComponent implements OnInit {
         }
 
         if (this.editing) {
-            this.apiService.updateData(this.editForm.getRawValue())
+            var value = this.editForm.getRawValue()
+            console.log('this.editForm', this.editForm.getRawValue());
+            var params = {
+                'name': value.name,
+                'address': value.address,
+                'city': value.city,
+                'state': value.state,
+                'status': value.status,
+                'country': value.country,
+                'clientName': value.client_name,
+                'clientEmail': value.client_email,
+                'clientPhone': value.client_phone,
+                'data': value.data,
+                'active': value.active
+            }
+            this.apiService.updateData(params)
             .pipe(first())
             .subscribe(
                 data => {
@@ -227,23 +268,24 @@ export class ListProjectComponent implements OnInit {
         });
     }
 
-    createData(modal) {
-        this.f.data.setValidators(null);
-        this.f.data.updateValueAndValidity();
-        this.requestDetail = {
-            name: '',
-            active: 1
-        };
-        this.editing = false;
-        this.editForm.reset();
-        this.modalService.open(modal);
-    }
+    // createData(modal) {
+    //     this.f.data.setValidators(null);
+    //     this.f.data.updateValueAndValidity();
+    //     this.requestDetail = {
+    //         name: '',
+    //         active: 1
+    //     };
+    //     this.editing = false;
+    //     this.editForm.reset();
+    //     this.modalService.open(modal);
+    // }
 
     deleteConfirmation(data){
         const modalRef = this.modalService.open(DeleteModalComponent);
         modalRef.componentInstance.data = data;
         modalRef.result.then((result) => {
             if (result) {
+                console.log('delete', data)
                 this.deleteRequest(result);
             }
             },

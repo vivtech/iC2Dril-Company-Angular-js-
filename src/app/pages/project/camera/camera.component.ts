@@ -137,7 +137,10 @@ export class CameraComponent implements OnInit {
             this.editForm.patchValue({
                data: this.requestDetail._id,
                name: this.requestDetail.name,
-               active: this.requestDetail.active
+               url: this.requestDetail.url,
+               username: this.requestDetail.username,
+               password: this.requestDetail.password,
+               active: this.requestDetail.active,
             });
             this.modalService.open(editModal);
         },
@@ -247,6 +250,7 @@ export class CameraComponent implements OnInit {
         };
         this.editing = false;
         this.editForm.reset();
+        this.f.data.setValue(this.wellId);
         this.modalService.open(modal);
     }
 

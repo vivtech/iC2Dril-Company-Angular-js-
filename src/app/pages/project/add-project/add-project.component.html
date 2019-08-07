@@ -17,7 +17,7 @@
                 <i class="flaticon-right-arrow"></i>
             </li>
             <li class="nav-item">
-                <a routerLink="/project">Create Project</a>
+                <a routerLink="/project">Project</a>
             </li>
             <li class="separator">
                 <i class="flaticon-right-arrow"></i>
@@ -83,7 +83,7 @@
                                 <p 
                                 style="color: red;position: relative;
                                 top: 10px;
-                                font-size: 12px;" *ngIf="addproductForm.controls.client_email.touched && !addproductForm.controls.client_email.valid">Please enter clientemail</p>
+                                font-size: 12px;" *ngIf="addproductForm.controls.client_email.touched && !addproductForm.controls.client_email.valid">Please enter valid email</p>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -103,7 +103,7 @@
                                 <p 
                                 style="color: red;position: relative;
                                 top: 10px;
-                                font-size: 12px;" *ngIf="addproductForm.controls.client_phone.touched && !addproductForm.controls.client_phone.valid">Please enter clientphone</p>
+                                font-size: 12px;" *ngIf="addproductForm.controls.client_phone.touched && !addproductForm.controls.client_phone.valid">Please enter client phone</p>
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -119,7 +119,10 @@
                         <div class="col-sm-6">
                             <div class="form-group form-group-default">
                                 <label class="text-primary">Status</label>
-                                <input type="text" formControlName="client_phone" class="form-control" placeholder="Organisation Name">
+                                <select class="custom-select" formControlName="status">
+                                    <option value="1">Active</option>
+                                    <option value="0">Deactive</option>
+                                </select>
                             </div>
                         </div>
                         <div class="col-sm-6">
@@ -153,8 +156,9 @@
                     </div>
                 </div>
                 <div>
-                <div class="d-flex align-items-center" (click)="t.select('tab-selectbyid2')">
-                    <button class="btn btn-primary btn-round ml-auto" id="addModalOpen" (click)="submit(addproductForm.value)">
+                     <!-- (click)="t.select('tab-selectbyid2')" -->
+                <div class="d-flex align-items-center">
+                    <button class="btn btn-primary btn-round ml-auto" id="addModalOpen" [disabled]="!addproductForm.valid" (click)="submit(addproductForm.value)">
                     Submit
                     </button>
                 </div>

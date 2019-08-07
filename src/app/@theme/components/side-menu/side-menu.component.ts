@@ -13,7 +13,7 @@ export class SideMenuComponent implements OnInit {
             link: '/dashboard',
           },
           {
-             label: 'Create Project',
+             label: 'Project',
             icon: 'fas fa-th-list',
             link: '/project',
           },

@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { ProjectService } from "src/app/@core/services/project-service";
+import { ProjectService } from "src/app/@core/services/project.service";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: "app-add-project",
@@ -15,7 +16,9 @@ export class AddProjectComponent implements OnInit {
     webUser: any;
     mobileUser: any;
 
-    constructor(private fb: FormBuilder, private service: ProjectService) {}
+    constructor(private fb: FormBuilder, 
+      private service: ProjectService,
+      private toastr: ToastrService) {}
 
     ngOnInit() {
         this.addproductForm = this.fb.group({
@@ -29,22 +32,38 @@ export class AddProjectComponent implements OnInit {
             client_phone: ["", Validators.required],
             status: [""]
         });
-        this.service.getUserType().subscribe(res => {
-            console.log("getUserType", res);
-            this.UserType = res.data;
-            // for(var i in res.data) {
-            //   if(res.data[i].webLogin == 1) {
-            //     console.log('web user', res.data[i].name)
-            //   }
-            //   else {
-            //     console.log('Mob user', res.data[i].name)
-            //   }
-            // }
-        });
+        // this.service.getUserType().subscribe(res => {
+        //     console.log("getUserType", res);
+        //     this.UserType = res.data;
+        //     // for(var i in res.data) {
+        //     //   if(res.data[i].webLogin == 1) {
+        //     //     console.log('web user', res.data[i].name)
+        //     //   }
+        //     //   else {
+        //     //     console.log('Mob user', res.data[i].name)
+        //     //   }
+        //     // }
+        // });
     }
 
     submit(value) {
         this.disable = false;
+        var params = {
+            'name': value.name,
+            'address': value.address,
+            'city': value.city,
+            'state': value.state,
+            'status': value.status,
+            'country': value.country,
+            'clientName': value.client_name,
+            'clientEmail': value.client_email,
+            'clientPhone': value.client_phone
+        }
         console.log("value", value);
+        this.service.create(params).subscribe(res => {
+          console.log('Project create response', res)
+          this.toastr.error('', res.message);
+          this.addproductForm.reset();
+        })
     }
 }
