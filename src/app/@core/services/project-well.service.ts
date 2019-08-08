@@ -66,4 +66,16 @@ export class ProjectWellService {
       getCompanyRequestList(): Observable<ProjectWell[]> {
           return this.dataList.asObservable();
       }
+
+      checkWell(id) {
+        return true;
+        return this.http.get<any>(`${environment.apiUrl}/well/${id}`)
+            .pipe(map(response => {
+                console.log("response", response);
+                if(response.status === 200){
+                    return true;
+                }
+                return false;
+            }));
+      }
 }

@@ -19,6 +19,7 @@ export const environment = {
         camUrl: {min: 3, max: 200},
         camUsername: {min: 3, max: 75},
         camPassword: {min: 3, max: 75},
+        emailPattern: {pattern: '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$'}
     }
 };
 

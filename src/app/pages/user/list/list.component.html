@@ -220,7 +220,8 @@
                         <div class="form-group form-group-default">
                             <label class="text-primary">Email</label>
                             <input type="email" formControlName="email" [attr.maxlength]="validator.email.max" class="form-control" placeholder="Email">
-                            <error-label [control]="f.email"></error-label>
+                            <label class="error" for="loginEmail" *ngIf="(submitted || f.email.touched || f.email.dirty) && f.email.errors">Please enter a
+                            valid email address.</label>
                         </div>
                     </div>
                     <div class="col-md-6">

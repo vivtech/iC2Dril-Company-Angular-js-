@@ -32,7 +32,7 @@ export class WellComponent implements OnInit {
     statusFilter = '';
     editing = false;
 
-    title = 'Well List';
+    title = 'Location List';
     dtOptions: DataTables.Settings = {};
     requestDetail: ProjectWell;
     editForm: FormGroup;
@@ -274,7 +274,7 @@ export class WellComponent implements OnInit {
     }
 
     view(id) {
-         this.router.navigate(['project/well/'+ id]);
+         this.router.navigate(['project/location/'+ this.projectId + '/' + id]);
     }
 
 }

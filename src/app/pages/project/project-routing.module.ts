@@ -6,6 +6,8 @@ import { ListProjectComponent } from './list-project/list-project.component';
 import { WellComponent } from './well/well.component';
 import { CameraComponent } from './camera/camera.component';
 import { AddProjectComponent } from './add-project/add-project.component';
+import { TokenGuard } from '../../@core/guards/token.guard';
+// import { CameraGuard } from '../../@core/guards/camera.guard';
 
 const routes: Routes = [
     {
@@ -26,14 +28,16 @@ const routes: Routes = [
                 component: ListProjectComponent
             },
             {
-                path: 'well/:data',
-                component: CameraComponent
-                // canActivate: [CompanyGuard]
+                path: 'location/:project/:data',
+                component: CameraComponent,
+                canActivate: [TokenGuard],
+                data: {guard: 'well'}
             },
             {
                 path: ':data',
-                component: WellComponent
-                // canActivate: [CompanyGuard]
+                component: WellComponent,
+                canActivate: [TokenGuard],
+                data: {guard: 'project'}
             }
         ]
     }

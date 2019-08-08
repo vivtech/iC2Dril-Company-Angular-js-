@@ -66,4 +66,16 @@ export class ProjectCameraService {
       getCompanyRequestList(): Observable<ProjectCamera[]> {
           return this.dataList.asObservable();
       }
+
+      checkCamera(id) {
+        return true;
+        return this.http.get<any>(`${environment.apiUrl}/camera/${id}`)
+            .pipe(map(response => {
+                console.log("response", response);
+                if(response.status === 200){
+                    return true;
+                }
+                return false;
+            }));
+      }
 }

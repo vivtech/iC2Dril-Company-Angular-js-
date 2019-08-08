@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { ProjectService } from "src/app/@core/services/project.service";
 import { ToastrService } from 'ngx-toastr';
+import { environment } from 'src/environments/environment';
 
 @Component({
     selector: "app-add-project",
@@ -15,6 +16,7 @@ export class AddProjectComponent implements OnInit {
     UserType: any;
     webUser: any;
     mobileUser: any;
+    validator = environment.validators;
 
     constructor(private fb: FormBuilder, 
       private service: ProjectService,
@@ -28,7 +30,7 @@ export class AddProjectComponent implements OnInit {
             state: ["", Validators.required],
             country: [""],
             client_name: ["", Validators.required],
-            client_email: ["", Validators.required],
+            client_email: ["", Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')],
             client_phone: ["", Validators.required],
             status: [""]
         });

@@ -40,6 +40,7 @@ export class CameraComponent implements OnInit {
     submitted = false;
     today = new Date();
     wellId = '';
+    projectId = '';
     minDate = {year: this.today.getFullYear(), month: this.today.getMonth() + 1, day: this.today.getDate()};
 
     constructor(private commonService: CommonService,
@@ -58,6 +59,8 @@ export class CameraComponent implements OnInit {
         const that = this;
         this.activeRoute.params.subscribe(param => {
             this.wellId = param.data;
+            this.projectId = param.project;
+            console.log('project', param.project)
         });
         this.dtOptions = {
             dom:    `<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>"

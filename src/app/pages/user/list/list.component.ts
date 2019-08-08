@@ -180,9 +180,7 @@ export class ListComponent implements OnInit, OnDestroy {
                 '',
                 [
                     Validators.required,
-                    Validators.email,
-                    Validators.minLength(this.validator.email.min),
-                    Validators.maxLength(this.validator.email.max)
+                    Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
                 ]
             ],
             phone: [
