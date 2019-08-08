@@ -15,7 +15,7 @@ import { DeleteModalComponent } from 'src/app/@theme/components/modals/delete-mo
 import { CountryService } from 'src/app/@core/services/country.service';
 import { ProjectService } from 'src/app/@core/services/project.service';
 import { Project } from 'src/app/@core/models/project.model';
-import { Router }  from '@angular/router';  
+import { Router }  from '@angular/router';
 
 @Component({
     selector: 'app-list-project',
@@ -38,7 +38,7 @@ export class ListProjectComponent implements OnInit {
     editForm: FormGroup;
     licenseForm: FormGroup;
     validator = environment.validators;
-    dataList: Observable<Project[]>;
+    dataList: Project[];
     //dataList: Observable<Package[]>;
     submitted = false;
     today = new Date();
@@ -159,7 +159,7 @@ export class ListProjectComponent implements OnInit {
     }
 
     view(id) {
-         this.router.navigate(['project/'+ id]); 
+         this.router.navigate(['project/'+ id]);
     }
 
     deleteRequest(data) {

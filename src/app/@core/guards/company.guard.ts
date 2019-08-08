@@ -17,8 +17,7 @@ export class CompanyGuard implements  CanActivate {
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) : Observable<boolean> | Promise<boolean> | boolean {
         const token = route.paramMap.get('data');
         console.log(token);
-        let data  : boolean;
-        return   this.companyService.checkCompany(token);
+        return this.companyService.checkCompany(token);
 
     }
 }

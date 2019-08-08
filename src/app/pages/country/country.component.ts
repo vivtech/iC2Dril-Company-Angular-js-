@@ -35,7 +35,7 @@ export class CountryComponent implements OnInit {
     editForm: FormGroup;
     licenseForm: FormGroup;
     validator = environment.validators;
-    dataList: Observable<Country[]>;
+    dataList: Country[];
     //dataList: Observable<Package[]>;
     submitted = false;
     today = new Date();

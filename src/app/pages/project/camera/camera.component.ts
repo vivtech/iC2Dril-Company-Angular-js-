@@ -35,7 +35,7 @@ export class CameraComponent implements OnInit {
     editForm: FormGroup;
     licenseForm: FormGroup;
     validator = environment.validators;
-    dataList: Observable<ProjectCamera[]>;
+    dataList: ProjectCamera[];
     // dataList: Observable<Package[]>;
     submitted = false;
     today = new Date();

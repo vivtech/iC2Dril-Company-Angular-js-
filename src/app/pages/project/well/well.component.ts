@@ -38,7 +38,7 @@ export class WellComponent implements OnInit {
     editForm: FormGroup;
     licenseForm: FormGroup;
     validator = environment.validators;
-    dataList: Observable<ProjectWell[]>;
+    dataList: ProjectWell[];
     //dataList: Observable<Package[]>;
     submitted = false;
     today = new Date();
@@ -274,7 +274,7 @@ export class WellComponent implements OnInit {
     }
 
     view(id) {
-         this.router.navigate(['project/well/'+ id]); 
+         this.router.navigate(['project/well/'+ id]);
     }
 
 }

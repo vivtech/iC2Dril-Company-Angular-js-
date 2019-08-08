@@ -12,7 +12,6 @@ import { ProfileComponent } from './profile/profile.component';
 import { PackageComponent } from './package/package.component';
 import { CountryComponent } from './country/country.component';
 import { ProjectComponent } from './project/project.component';
-import { ViewProjectComponent } from './project/view-project/view-project.component';
 import { AddProjectComponent } from './project/add-project/add-project.component';
 
 
