@@ -43,6 +43,19 @@ export class UserService {
             );
     }
 
+    getAllUser(): any {
+        return this.http.get<any>( `${environment.apiUrl}/user/list`)
+            .pipe(
+                map(response => {
+                    if (response.code === 200) {
+                        console.log(response.data.data);
+                        // this.dataList.next(response.data.data);
+                    }
+                    return response;
+                })
+            );
+    }
+
     updateData(fieldParameters): any {
         return this.http
             .put<any>(`${environment.apiUrl}/user`, fieldParameters)

@@ -30,6 +30,6 @@ export interface ProjectCamera {
     url?: string;
     username?: string;
     password?: string;
-    users?: string;
+    users?: any;
     active?: number;
 }

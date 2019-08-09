@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { MustMatch } from 'src/app/@core/validators/must-match.validators';
 import { ValidPassword } from 'src/app/@core/validators/valid-password.validators';
 import { first } from 'rxjs/operators';
+import { ValidEmail } from 'src/app/@core/validators/valid-email.validators';
 
 @Component({
     selector: 'app-reset-password',
@@ -36,7 +37,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
         });
         this.resetPasswordForm = this.formBuilder.group({
             token: [this.resetToken, [Validators.required]],
-            email: ['', [Validators.required, Validators.email]],
+            email: ['', [Validators.required, ValidEmail]],
             password: ['', [Validators.required,
             Validators.minLength(this.validator.password.min),
             Validators.maxLength(this.validator.password.max), ValidPassword]],

@@ -16,6 +16,7 @@ import { CountryService } from 'src/app/@core/services/country.service';
 import { ProjectService } from 'src/app/@core/services/project.service';
 import { Project } from 'src/app/@core/models/project.model';
 import { Router }  from '@angular/router';
+import { ValidEmail } from 'src/app/@core/validators/valid-email.validators';
 
 @Component({
     selector: 'app-list-project',
@@ -113,10 +114,10 @@ export class ListProjectComponent implements OnInit {
             state: ['', [Validators.required]],
             country: ['', [Validators.required]],
             client_name: ['', [Validators.required]],
-            client_email: ['', [Validators.required]],
+            client_email: ['', [Validators.required, ValidEmail]],
             client_phone: ['', [Validators.required]],
-            active: [''],
-            status: ['']
+            active: ['',  [Validators.required]],
+            status: ['',  [Validators.required]]
         });
 
 
@@ -268,17 +269,13 @@ export class ListProjectComponent implements OnInit {
         });
     }
 
-    // createData(modal) {
-    //     this.f.data.setValidators(null);
-    //     this.f.data.updateValueAndValidity();
-    //     this.requestDetail = {
-    //         name: '',
-    //         active: 1
-    //     };
-    //     this.editing = false;
-    //     this.editForm.reset();
-    //     this.modalService.open(modal);
-    // }
+    createData(modal) {
+        this.f.data.setValidators(null);
+        this.f.data.updateValueAndValidity();
+        this.editing = false;
+        this.editForm.reset();
+        this.modalService.open(modal);
+    }
 
     deleteConfirmation(data){
         const modalRef = this.modalService.open(DeleteModalComponent);

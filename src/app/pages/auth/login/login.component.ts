@@ -7,6 +7,7 @@ import { first } from 'rxjs/operators';
 import { Route } from '@angular/compiler/src/core';
 import { Router, ActivatedRouteSnapshot, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { ValidEmail } from 'src/app/@core/validators/valid-email.validators';
 
 @Component({
     selector: 'app-login',
@@ -33,7 +34,7 @@ export class LoginComponent implements OnInit {
     ngOnInit() {
 
         this.loginForm = this.formBuilder.group({
-            username: ['', [Validators.required, Validators.email]],
+            username: ['', [Validators.required, ValidEmail]],
             password: ['', [Validators.required, Validators.minLength(this.validator.password.min)]],
             // remember: [true]
         }, {

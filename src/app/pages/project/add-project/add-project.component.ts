@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { ProjectService } from "src/app/@core/services/project.service";
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
+import { ValidEmail } from 'src/app/@core/validators/valid-email.validators';
 
 @Component({
     selector: "app-add-project",
@@ -17,22 +18,22 @@ export class AddProjectComponent implements OnInit {
     webUser: any;
     mobileUser: any;
     validator = environment.validators;
-
+    statusData = [ {id: 1, name: 'Active'}, {id: 0, name: 'Inactive'}];
     constructor(private fb: FormBuilder, 
       private service: ProjectService,
       private toastr: ToastrService) {}
 
     ngOnInit() {
         this.addproductForm = this.fb.group({
-            name: ["", Validators.required],
-            address: ["", Validators.required],
-            city: ["", Validators.required],
-            state: ["", Validators.required],
-            country: [""],
-            client_name: ["", Validators.required],
-            client_email: ["", Validators.required, Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')],
-            client_phone: ["", Validators.required],
-            status: [""]
+            name: ["", [Validators.required]],
+            address: ["", [Validators.required]],
+            city: ["", [Validators.required]],
+            state: ["", [Validators.required]],
+            country: ["", [Validators.required]],
+            client_name: ["", [Validators.required]],
+            client_email: ["", [Validators.required, ValidEmail]],
+            client_phone: ["", [Validators.required]],
+            status: ["", [Validators.required]]
         });
         // this.service.getUserType().subscribe(res => {
         //     console.log("getUserType", res);
@@ -47,6 +48,8 @@ export class AddProjectComponent implements OnInit {
         //     // }
         // });
     }
+
+    get f() { return this.addproductForm.controls; }
 
     submit(value) {
         this.disable = false;

@@ -15,6 +15,7 @@ import { DeleteModalComponent } from 'src/app/@theme/components/modals/delete-mo
 import { UserService } from 'src/app/@core/services/user.service';
 import { UserType } from 'src/app/@core/models/user-type.model';
 import { User } from 'src/app/@core/models/user.model';
+import { ValidEmail } from 'src/app/@core/validators/valid-email.validators';
 
 @Component({
     selector: 'app-user-list',
@@ -180,7 +181,7 @@ export class ListComponent implements OnInit, OnDestroy {
                 '',
                 [
                     Validators.required,
-                    Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+                    ValidEmail
                 ]
             ],
             phone: [
@@ -225,9 +226,7 @@ export class ListComponent implements OnInit, OnDestroy {
                 '',
                 [
                     Validators.required,
-                    Validators.email,
-                    Validators.minLength(this.validator.email.min),
-                    Validators.maxLength(this.validator.email.max)
+                    ValidEmail
                 ]
             ],
             phone: [
@@ -251,9 +250,9 @@ export class ListComponent implements OnInit, OnDestroy {
             ],
             licenseDate: ['', [Validators.required]]
         });
-        const data = this.commonService.getRequestFormData().subscribe();
-        this.countryList = this.commonService.getCountryList();
-        this.packageList = this.commonService.getPackageList();
+        // const data = this.commonService.getRequestFormData().subscribe();
+        // this.countryList = this.commonService.getCountryList();
+        // this.packageList = this.commonService.getPackageList();
     }
 
     statusClass(status) {

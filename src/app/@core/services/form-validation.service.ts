@@ -66,6 +66,7 @@ export class FormService {
       validPassword: `Password must have 1 Number, 1 lowercase, 1 Uppercase letter & 1 Special Character (=!$^&*()-@._*)`,
       maxlength: `Please cannot be more than ${validatorValue.requiredLength} characters`,
       customError: `${validatorValue}`,
+      validEmail: `Please enter a valid email address`,
       mustmatch: `Value of `
                     + this.toNormalcase(validatorValue.matchingControlName) + ` must match with `
                     + this.toNormalcase(validatorValue.controlName)

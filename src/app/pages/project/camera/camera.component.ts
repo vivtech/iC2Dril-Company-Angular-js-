@@ -13,6 +13,7 @@ import { DeleteModalComponent } from 'src/app/@theme/components/modals/delete-mo
 import { ProjectCamera } from 'src/app/@core/models/project.model';
 import { ProjectCameraService } from 'src/app/@core/services/project-camera.service';
 import { ActivatedRoute } from '@angular/router';
+import { UserService } from 'src/app/@core/services/user.service';
 
 @Component({
     selector: 'app-camera',
@@ -23,7 +24,8 @@ export class CameraComponent implements OnInit {
 
     @ViewChild(DataTableDirective, {static: false})
     datatableElement: DataTableDirective;
-
+    people = [];
+    id = [];
     statusFilterData = [{id: '', name: 'All'}, {id: 1, name: 'Active'}, {id: 0, name: 'Inactive'}];
     statusData = [ {id: 1, name: 'Active'}, {id: 0, name: 'Inactive'}];
     statusFilter = '';
@@ -41,6 +43,8 @@ export class CameraComponent implements OnInit {
     today = new Date();
     wellId = '';
     projectId = '';
+    selectedPeople = [];
+    selectedPeople_Id= [];
     minDate = {year: this.today.getFullYear(), month: this.today.getMonth() + 1, day: this.today.getDate()};
 
     constructor(private commonService: CommonService,
@@ -50,12 +54,21 @@ export class CameraComponent implements OnInit {
                 private formService: FormService,
                 private formBuilder: FormBuilder,
                 private toastr: ToastrService,
+                private service: UserService,
                 private activeRoute: ActivatedRoute) {
         modalConfig.backdrop = 'static';
         modalConfig.keyboard = false;
     }
 
     ngOnInit() {
+        this.service.getAllUser().subscribe(users => {
+            console.log('userList', users.data);
+            var array = []
+            for(var i in users.data) {
+                array.push({"name": users.data[i].name, "_id": users.data[i]._id})
+            }
+            this.people = array;
+        })
         const that = this;
         this.activeRoute.params.subscribe(param => {
             this.wellId = param.data;
@@ -119,17 +132,34 @@ export class CameraComponent implements OnInit {
                         Validators.maxLength(this.validator.camUsername.max)]],
             password: ['', [Validators.required, Validators.minLength(this.validator.camPassword.min),
                             Validators.maxLength(this.validator.camPassword.max)]],
-            active: ['', [Validators.required]]
+            active: ['', [Validators.required]],
+            users: ['', [Validators.required]]
         });
 
 
+    }
+
+    onAdd(event) {
+        console.log('onAdd', event);
+        this.selectedPeople.push(event);
+    }
+
+    onRemove(event) {
+        console.log('event', event.value);
+        let removed = this.selectedPeople.filter( a => a.name !== event.value.name);
+        console.log('removed', removed);
+        this.selectedPeople = removed;
+    }
+
+    clearModel() {
+        this.selectedPeople = [];
     }
 
 
     get f() { return this.editForm.controls; }
 
     editDetail(editModal, data) {
-
+        this.selectedPeople = [];
         this.apiService.getData(data).subscribe(response => {
             console.log(response);
             this.requestDetail = response.data;
@@ -144,8 +174,19 @@ export class CameraComponent implements OnInit {
                username: this.requestDetail.username,
                password: this.requestDetail.password,
                active: this.requestDetail.active,
+               users: this.requestDetail.users
             });
-            this.modalService.open(editModal);
+            this.modalService.open(editModal, {
+                size: 'lg'
+            });
+            for(var i in this.requestDetail.users) {
+                var filter = this.people.filter(a => a._id == this.requestDetail.users[i]);
+                console.log('filter', filter);
+                for(var j in filter) {
+                    this.selectedPeople.push(filter[j])
+                }
+                console.log('this.requestDetail.users[i]', this.requestDetail.users[i]);
+            }
         },
         error => {
             // this.noti
@@ -171,6 +212,15 @@ export class CameraComponent implements OnInit {
         this.formService.clearCustomError(this.editForm);
         this.submitted = true;
         this.editForm.markAllAsTouched();
+        var params = {
+            data: this.editForm.getRawValue().data,
+            name: this.editForm.getRawValue().name,
+            url: this.editForm.getRawValue().url,
+            username: this.editForm.getRawValue().username,
+            password: this.editForm.getRawValue().password,
+            active: this.editForm.getRawValue().active,
+            users: this.editForm.getRawValue().users
+        }
         console.log(this.editForm.getRawValue());
         if (this.editForm.invalid) {
             this.submitted = false;
@@ -178,7 +228,7 @@ export class CameraComponent implements OnInit {
         }
 
         if (this.editing) {
-            this.apiService.updateData(this.editForm.getRawValue())
+            this.apiService.updateData(params)
             .pipe(first())
             .subscribe(
                 data => {
@@ -187,6 +237,8 @@ export class CameraComponent implements OnInit {
                         this.toastr.error('', data.message);
                         this.modalService.dismissAll();
                         this.editForm.reset();
+                        this.selectedPeople = [];
+                        this.selectedPeople_Id = [];
                         this.refreshTable();
                     }
 
@@ -205,7 +257,8 @@ export class CameraComponent implements OnInit {
                     this.submitted = false;
                 });
         } else {
-            this.apiService.create(this.editForm.getRawValue())
+            console.log('params', params)
+            this.apiService.create(params)
             .pipe(first())
             .subscribe(
                 data => {
@@ -214,6 +267,8 @@ export class CameraComponent implements OnInit {
                         this.toastr.error('', data.message);
                         this.modalService.dismissAll();
                         this.editForm.reset();
+                        this.selectedPeople = [];
+                        this.selectedPeople_Id = [];
                         this.refreshTable();
                     }
 
@@ -253,8 +308,12 @@ export class CameraComponent implements OnInit {
         };
         this.editing = false;
         this.editForm.reset();
+        this.selectedPeople_Id = [];
+        this.selectedPeople = [];
         this.f.data.setValue(this.wellId);
-        this.modalService.open(modal);
+        this.modalService.open(modal, {
+            size: 'lg'
+        });
     }
 
     deleteConfirmation(data){

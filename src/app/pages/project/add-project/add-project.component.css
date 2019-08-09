@@ -10,3 +10,7 @@
     font-weight: 600;
     text-align: center;
 }
+
+.form-group.dropdown {
+    overflow: visible;
+}

@@ -3439,3 +3439,9 @@ button.calendar:active {
 .ng-select .ng-has-value .ng-placeholder, .ng-select.ng-select-opened .ng-placeholder {
     display: none;
 }
+.form-group.form-group-default.dropdown .ng-value-container{
+   border: 0;
+}
+.form-group.form-group-default.dropdown .ng-select .ng-select-container{
+   min-height: auto;
+}
