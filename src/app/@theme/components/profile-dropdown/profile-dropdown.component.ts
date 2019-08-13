@@ -14,12 +14,14 @@ export class ProfileDropdownComponent implements OnInit {
     visibility = false;
     redirectUrl = '/login';
     user: any;
+    profileImage;
 
     constructor(private _eref: ElementRef, private router: Router, private authenticationService: AuthenticationService) { }
 
     ngOnInit() {
         this.authenticationService.currentUser.subscribe(data => {
             this.user = data;
+            console.log('userData', data)
         });
     }
 

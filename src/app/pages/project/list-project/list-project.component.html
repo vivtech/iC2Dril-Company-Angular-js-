@@ -174,12 +174,13 @@
                         <div class="form-group form-group-default dropdown">
                             <label class="text-primary">Country</label>
                                 <input type="text" formControlName="country" class="form-control" placeholder="country">
+                                <error-label [control]="f.country"></error-label>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group form-group-default dropdown">
                             <label class="text-primary">Active</label>
-                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="active" [items]="statusData" bindLabel="name" bindValue="id"></ng-select>
+                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="active" [items]="activeData" bindLabel="name" bindValue="id"></ng-select>
                             <error-label [control]="f.active"></error-label>
                         </div>
                     </div>

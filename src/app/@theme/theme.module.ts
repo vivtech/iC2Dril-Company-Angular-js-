@@ -31,7 +31,7 @@ import { CapitalizePipe } from './pipes/capitalize.pipe';
 import { DeleteModalComponent } from './components/modals/delete-modal/delete-modal.component';
 import { PopoverOptionComponent } from './components/utils/popover-option/popover-option.component';
 import { BreadcrumbComponent } from './components/utils/breadcrumb/breadcrumb.component';
-
+import { AvatarModule } from 'ngx-avatar';
 
 const COMPONENTS = [
     WebComponent,
@@ -65,7 +65,7 @@ const BASE_MODULES = [
     DataTablesModule,
     NgbModule,
     RouterModule,
-
+    AvatarModule
 ];
 
 const PIPES = [

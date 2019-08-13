@@ -160,6 +160,7 @@
                             bindValue="_id"
                             formControlName="users"
                             (add)="onAdd($event)"
+                            (clear)="onClear($event)"
                             (remove)="onRemove($event)">
                                 <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
                                     <div class="ng-value" *ngFor="let item of items | slice:0:3">
@@ -171,8 +172,9 @@
                                     </div>
                                 </ng-template>
                             </ng-select>
+                            <error-label [control]="f.users"></error-label>
                         </div>
-                        <div class="mt-3">
+                        <div class="mt-3" *ngIf="selectedPeople.length > 0">
                             Selected users: <br/>
                             <ul>
                                 <li *ngFor="let item of selectedPeople">

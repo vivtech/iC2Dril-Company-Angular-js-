@@ -1,5 +1,6 @@
 <li class="nav-item dropdown hidden-caret" [ngClass]="{'show': visibility}">
     <a class="dropdown-toggle profile-pic" data-toggle="dropdown" aria-expanded="false">
+        <!-- <ngx-avatar *ngIf="profileImage == null" name={{user.name}} bgColor="#520701"></ngx-avatar> -->
         <div class="avatar-sm">
             <img src="../assets/img/profile.jpg" alt="..." class="avatar-img rounded-circle">
         </div>
@@ -8,6 +9,7 @@
         <div class="dropdown-user-scroll scrollbar-outer">
             <li>
                 <div class="user-box">
+                    <!-- <ngx-avatar [cornerRadius]="5" [round]="false" *ngIf="profileImage == null" name={{user.name}} bgColor="#520701"></ngx-avatar> -->
                     <div class="avatar-lg"><img src="../assets/img/profile.jpg" alt="image profile" class="avatar-img rounded"></div>
                     <div class="u-text">
                         <h4>{{user.name}}</h4>

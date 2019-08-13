@@ -151,7 +151,8 @@ export class CameraComponent implements OnInit {
         this.selectedPeople = removed;
     }
 
-    clearModel() {
+    onClear(event) {
+        console.log('event', event);
         this.selectedPeople = [];
     }
 

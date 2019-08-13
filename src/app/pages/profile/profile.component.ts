@@ -9,6 +9,8 @@ import { first } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { ValidPassword } from 'src/app/@core/validators/valid-password.validators';
 import { MustMatch } from 'src/app/@core/validators/must-match.validators';
+import { FileUploader } from 'ng2-file-upload';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-profile',
@@ -27,12 +29,16 @@ export class ProfileComponent implements OnInit {
     confirmPasswordForm: FormGroup;
     successMessage = '';
     validationError = '';
+    public uploader:FileUploader = new FileUploader({});
+    public filePreviewPath: File = null;
+    imageError: boolean = false;
 
   constructor(private profileService: ProfileService,
               private authenticationService: AuthenticationService,
               private formBuilder: FormBuilder,
               private formService: FormService,
-              private toastr: ToastrService) { }
+              private toastr: ToastrService,
+              public sanitizer: DomSanitizer) { }
 
   ngOnInit() {
       this.user = this.authenticationService.currentUserValue;
@@ -76,6 +82,27 @@ export class ProfileComponent implements OnInit {
             this.confirmPasswordForm.reset();
         }
         this.passwordVisible = !this.passwordVisible;
+  }
+
+  profileImage() {
+
+  }
+
+  onFileSelected(event) {
+    console.log('event', event[0].type);
+    if (event[0].type == 'image/png' || event[0].type == 'image/jpeg') {
+        this.imageError = false;
+        var reader = new FileReader();
+        reader.readAsDataURL(event[0]); // read file as data url
+        reader.onload = (event: any) => { // called once readAsDataURL is completed
+            console.log('event', event);
+            this.filePreviewPath = event.target.result;
+        }
+    }
+    else {
+        console.log('File not image');
+        this.imageError = true;
+    }
   }
 
   onProfileSubmit() {

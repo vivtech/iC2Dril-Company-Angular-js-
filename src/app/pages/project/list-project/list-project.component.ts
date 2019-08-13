@@ -29,7 +29,8 @@ export class ListProjectComponent implements OnInit {
     datatableElement: DataTableDirective;
 
     statusFilterData = [{id: '', name: 'All'}, {id: 1, name: 'Active'}, {id: 0, name: 'Inactive'}];
-    statusData = [ {id: 1, name: 'Active'}, {id: 0, name: 'Inactive'}];
+    statusData = [ {id: 1, name: 'Inprogress'}, {id: 0, name: 'Completed'}];
+    activeData = [ {id: 1, name: 'Active'}, {id: 0, name: 'Inactive'}];
     statusFilter = '';
     editing = false;
 
@@ -108,14 +109,30 @@ export class ListProjectComponent implements OnInit {
 
         this.editForm = this.formBuilder.group({
             data: ['', [Validators.required]],
-            name: ['', [Validators.required]],
-            address: ['', [Validators.required]],
-            city: ['', [Validators.required]],
-            state: ['', [Validators.required]],
-            country: ['', [Validators.required]],
-            client_name: ['', [Validators.required]],
-            client_email: ['', [Validators.required, ValidEmail]],
-            client_phone: ['', [Validators.required]],
+            name: ['', [Validators.required, 
+                        Validators.minLength(this.validator.name.min),
+                        Validators.maxLength(this.validator.name.max)]],
+            address: ['', [Validators.required, 
+                        Validators.minLength(this.validator.name.min),
+                        Validators.maxLength(this.validator.name.max)]],
+            city: ['', [Validators.required, 
+                        Validators.minLength(this.validator.name.min),
+                        Validators.maxLength(this.validator.name.max)]],
+            state: ['', [Validators.required, 
+                        Validators.minLength(this.validator.name.min),
+                        Validators.maxLength(this.validator.name.max)]],
+            country: ['', [Validators.required, 
+                        Validators.minLength(this.validator.name.min),
+                        Validators.maxLength(this.validator.name.max)]],
+            client_name: ['', [Validators.required, 
+                        Validators.minLength(this.validator.name.min),
+                        Validators.maxLength(this.validator.name.max)]],
+            client_email: ['', [Validators.required, ValidEmail, ValidEmail, 
+                        Validators.minLength(this.validator.email.min),
+                        Validators.maxLength(this.validator.email.max)]],
+            client_phone: ['', [Validators.required, 
+                        Validators.minLength(this.validator.phone.min),
+                        Validators.maxLength(this.validator.phone.max)]],
             active: ['',  [Validators.required]],
             status: ['',  [Validators.required]]
         });

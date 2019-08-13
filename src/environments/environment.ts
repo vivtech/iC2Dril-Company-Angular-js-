@@ -5,10 +5,11 @@
 export const environment = {
     production: false,
     apiUrl: 'http://admin.ic2drill.techzarinfo.com/console',
+    ProjectName: 'IC2 Dril',
     validators: {
-        name: {min: 3, max: 75},
-        email: {min: 3, max: 75},
-        company: {min: 3, max: 75},
+        name: {min: 3, max: 20},
+        email: {min: 3, max: 20},
+        company: {min: 3, max: 30},
         phone: {min: 8, max: 15},
         password: {min: 8, max: 16},
         userCount: {minValue: 1, maxValue: 999, min: 1, max: 3},
@@ -18,8 +19,7 @@ export const environment = {
         designation: {min: 3, max: 75},
         camUrl: {min: 3, max: 200},
         camUsername: {min: 3, max: 75},
-        camPassword: {min: 3, max: 75},
-        emailPattern: {pattern: '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$'}
+        camPassword: {min: 3, max: 75}
     }
 };
 
