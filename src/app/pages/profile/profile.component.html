@@ -41,7 +41,7 @@
                                 <div class="col-md-5 offset-md-2">
                                     <div class="row mt-3">
                                         <div class="col-md-2">
-                                            <ngx-avatar *ngIf="filePreviewPath == null" [cornerRadius]="5" [size]="60" [round]="false" name={{user.name}} bgColor="#520701"></ngx-avatar>
+                                            <ngx-avatar *ngIf="filePreviewPath == null" [cornerRadius]="5" [size]="60" [round]="false" name={{user.name}} title={{user.name}} bgColor="#520701"></ngx-avatar>
                                             <ngx-avatar *ngIf="filePreviewPath" [cornerRadius]="5" [size]="60" [round]="false" src={{filePreviewPath}} bgColor="#520701"></ngx-avatar>
                                         </div>
                                         <div class="col-md-10" style="align-items: center;display: flex;">
