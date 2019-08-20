@@ -31,7 +31,7 @@ export class CameraComponent implements OnInit {
     statusFilter = '';
     editing = false;
 
-    title = 'Camera List';
+    title = 'Camera';
     dtOptions: DataTables.Settings = {};
     requestDetail: ProjectCamera;
     editForm: FormGroup;

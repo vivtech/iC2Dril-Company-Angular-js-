@@ -3,15 +3,9 @@
         <h4 class="page-title">{{title}}</h4>
         <ul class="breadcrumbs">
             <li class="nav-home">
-                <a href="#">
+                <a routerLink="/dashboard">
                     <i class="flaticon-home"></i>
                 </a>
-            </li>
-            <li class="separator">
-                <i class="flaticon-right-arrow"></i>
-            </li>
-            <li class="nav-item">
-                <a routerLink="/dashboard">Dashboard</a>
             </li>
             <li class="separator">
                 <i class="flaticon-right-arrow"></i>
@@ -32,6 +26,7 @@
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex align-items-center">
+                        <h4 class="page-title">Rig location list</h4>
                         <button class="btn btn-primary btn-round ml-auto" id="addModalOpen" (click)="createData(editModal)">
                                     <i class="fa fa-plus"></i>
                                     Add Rig Location
@@ -61,7 +56,7 @@
                             </thead>
                             <tbody *ngIf="dataList?.length != 0">
                                 <tr *ngFor="let data of dataList">
-                                    <td>{{ data.name | capitalize }}</td>
+                                    <td><a (click)="view(data._id)">{{ data.name | capitalize }}</a></td>
 
                                     <td>
                                         <span class="badge badge-pill badge-success" *ngIf="data.active == 1">Active</span>

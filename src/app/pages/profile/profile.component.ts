@@ -33,163 +33,154 @@ export class ProfileComponent implements OnInit {
     public filePreviewPath: File = null;
     imageError: boolean = false;
 
-  constructor(private profileService: ProfileService,
+    constructor(private profileService: ProfileService,
               private authenticationService: AuthenticationService,
               private formBuilder: FormBuilder,
               private formService: FormService,
               private toastr: ToastrService,
               public sanitizer: DomSanitizer) { }
 
-  ngOnInit() {
-      this.user = this.authenticationService.currentUserValue;
-      this.profileForm = this.formBuilder.group({
-        name: [this.user.name, [Validators.required, Validators.minLength(this.validator.name.min),
+    ngOnInit() {
+        this.user = this.authenticationService.currentUserValue;
+        this.profileForm = this.formBuilder.group({
+            name: [this.user.name, [Validators.required, Validators.minLength(this.validator.name.min),
             Validators.maxLength(this.validator.name.max)]],
-
-        email: [this.user.email, [Validators.required, Validators.email, Validators.minLength(this.validator.email.min),
+            email: [this.user.email, [Validators.required, Validators.email, Validators.minLength(this.validator.email.min),
             Validators.maxLength(this.validator.email.max)]],
-        phone: [this.user.phone, [Validators.required, Validators.minLength(this.validator.phone.min),
-            Validators.maxLength(this.validator.phone.max)]],
+            phone: [this.user.phone, [Validators.required, Validators.minLength(this.validator.phone.min),
+            Validators.maxLength(this.validator.phone.max)]]
+        });
 
-    });
-
-      this.confirmPasswordForm = this.formBuilder.group({
-        currentPassword: [this.user.name, [Validators.required,
+        this.confirmPasswordForm = this.formBuilder.group({
+            currentPassword: [this.user.name, [Validators.required,
             Validators.minLength(this.validator.password.min),
             Validators.maxLength(this.validator.password.max)]],
 
-        password: [this.user.email, [Validators.required,
+            password: [this.user.email, [Validators.required,
             Validators.minLength(this.validator.password.min),
             Validators.maxLength(this.validator.password.max), ValidPassword]],
 
-        confirmPassword: [this.user.phone, [Validators.required,
+            confirmPassword: [this.user.phone, [Validators.required,
             Validators.minLength(this.validator.password.min),
-            Validators.maxLength(this.validator.password.max)]],
+            Validators.maxLength(this.validator.password.max)]]
+        }, {
+            validator: MustMatch('password', 'confirmPassword')
+        });
+    }
 
-    }, {
-        validator: MustMatch('password', 'confirmPassword')
-    });
+    get f() { return this.profileForm.controls; }
 
-  }
+    get pf() { return this.confirmPasswordForm.controls; }
 
-  get f() { return this.profileForm.controls; }
-
-  get pf() { return this.confirmPasswordForm.controls; }
-
-  togglePassword() {
+    togglePassword() {
         this.submitted = false;
         if ( !this.passwordVisible ) {
             this.confirmPasswordForm.reset();
         }
         this.passwordVisible = !this.passwordVisible;
-  }
+    }
 
-  profileImage() {
+    profileImage() {
 
-  }
+    }
 
-  onFileSelected(event) {
-    console.log('event', event[0].type);
-    if (event[0].type == 'image/png' || event[0].type == 'image/jpeg') {
-        this.imageError = false;
-        var reader = new FileReader();
-        reader.readAsDataURL(event[0]); // read file as data url
-        reader.onload = (event: any) => { // called once readAsDataURL is completed
-            console.log('event', event);
-            this.filePreviewPath = event.target.result;
+    onFileSelected(event) {
+        console.log('event', event[0].type);
+        if (event[0].type == 'image/png' || event[0].type == 'image/jpeg') {
+            this.imageError = false;
+            var reader = new FileReader();
+            reader.readAsDataURL(event[0]); // read file as data url
+            reader.onload = (event: any) => { // called once readAsDataURL is completed
+                console.log('event', event);
+                this.filePreviewPath = event.target.result;
+            }
+        }
+        else {
+            console.log('File not image');
+            this.imageError = true;
         }
     }
-    else {
-        console.log('File not image');
-        this.imageError = true;
-    }
-  }
 
-  onProfileSubmit() {
-    this.formService.clearCustomError(this.profileForm);
-    //this.validationError = '';
-    //this.successMessage = '';
-    //this.error = false;
-    this.submitted = true;
-    this.profileForm.markAllAsTouched();
+    onProfileSubmit() {
+        this.formService.clearCustomError(this.profileForm);
+        //this.validationError = '';
+        //this.successMessage = '';
+        //this.error = false;
+        this.submitted = true;
+        this.profileForm.markAllAsTouched();
 
-    if (this.profileForm.invalid) {
-        this.submitted = false;
-        return false;
-    }
+        if (this.profileForm.invalid) {
+            this.submitted = false;
+            return false;
+        }
 
+        this.authenticationService.profileUpdate(this.profileForm.getRawValue())
+        .pipe(first())
+        .subscribe(
+            data => {
+                if (data.status === 'success') {
+                    console.log(data);
+                    this.toastr.error('', data.message);
+                    window.scroll(0,0);
+                } else {
+                    this.validationError = data.message;
+                }
 
-    this.authenticationService.profileUpdate(this.profileForm.getRawValue())
-                    .pipe(first())
-                    .subscribe(
-                        data => {
-                            if (data.status === 'success') {
-                                console.log(data);
-                                this.toastr.error('', data.message);
-                                window.scroll(0,0);
-                            } else {
-                                this.validationError = data.message;
-                            }
-
-                        },
-                        error => {
-                            this.submitted = false;
-                            console.log(error);
-                            this.error = true;
-                            if (error.errors.length > 0) {
-                                for (const fieldError of error.errors) {
-                                    const check = fieldError.param;
-                                    this.profileForm.get(check).setErrors( { customError : fieldError.msg } ) ;
-                                }
-                            }
-                            this.validationError = error.message;
-                        },
-                        () => {
-                            this.submitted = false;
-                        });
-
-  }
-
-  onPasswordSubmit() {
-    this.formService.clearCustomError(this.confirmPasswordForm);
-    this.submitted = true;
-    this.confirmPasswordForm.markAllAsTouched();
-    if (this.confirmPasswordForm.invalid) {
-        this.submitted = false;
-        return false;
+            },
+            error => {
+                this.submitted = false;
+                console.log(error);
+                this.error = true;
+                if (error.errors.length > 0) {
+                    for (const fieldError of error.errors) {
+                        const check = fieldError.param;
+                        this.profileForm.get(check).setErrors( { customError : fieldError.msg } ) ;
+                    }
+                }
+                this.validationError = error.message;
+            },
+            () => {
+                this.submitted = false;
+            });
     }
 
+    onPasswordSubmit() {
+        this.formService.clearCustomError(this.confirmPasswordForm);
+        this.submitted = true;
+        this.confirmPasswordForm.markAllAsTouched();
+        if (this.confirmPasswordForm.invalid) {
+            this.submitted = false;
+            return false;
+        }
 
-    this.authenticationService.changePassword(this.confirmPasswordForm.getRawValue())
-                    .pipe(first())
-                    .subscribe(
-                        data => {
-                            if (data.status === 'success') {
-                                console.log(data);
-                                this.confirmPasswordForm.reset();
-                                this.toastr.error('', data.message);
-                                window.scroll(0,0);
-                            } else {
-                                // this.validationError = data.message;
-                            }
-
-                        },
-                        error => {
-                            this.submitted = false;
-                            console.log(error);
-                            this.error = true;
-                            if (error.errors.length > 0) {
-                                for (const fieldError of error.errors) {
-                                    const check = fieldError.param;
-                                    this.confirmPasswordForm.get(check).setErrors( { customError : fieldError.msg } ) ;
-                                }
-                            }
-                            this.validationError = error.message;
-                        },
-                        () => {
-                            this.submitted = false;
-                        });
-
-  }
+        this.authenticationService.changePassword(this.confirmPasswordForm.getRawValue())
+        .pipe(first())
+        .subscribe(
+            data => {
+                if (data.status === 'success') {
+                    console.log(data);
+                    this.confirmPasswordForm.reset();
+                    this.toastr.error('', data.message);
+                    window.scroll(0,0);
+                } else {
+                    // this.validationError = data.message;
+                }
+            },
+            error => {
+                this.submitted = false;
+                console.log(error);
+                this.error = true;
+                if (error.errors.length > 0) {
+                    for (const fieldError of error.errors) {
+                        const check = fieldError.param;
+                        this.confirmPasswordForm.get(check).setErrors( { customError : fieldError.msg } ) ;
+                    }
+                }
+                this.validationError = error.message;
+            },
+            () => {
+                this.submitted = false;
+            });
+    }
 
 }

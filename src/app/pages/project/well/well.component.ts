@@ -32,7 +32,7 @@ export class WellComponent implements OnInit {
     statusFilter = '';
     editing = false;
 
-    title = 'Rig Location List';
+    title = 'Rig location';
     dtOptions: DataTables.Settings = {};
     requestDetail: ProjectWell;
     editForm: FormGroup;

@@ -51,7 +51,7 @@ export class ListComponent implements OnInit, OnDestroy {
     userTypeFilterData: UserType[];
     subscription: Subscription;
 
-    title = 'User List';
+    title = 'Users';
     dtOptions: DataTables.Settings = {};
     // companyList: Observable<CompanyRequest[]>;
     // callback: any;

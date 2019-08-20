@@ -3,7 +3,7 @@
         <h4 class="page-title">{{title}}</h4>
         <ul class="breadcrumbs">
             <li class="nav-home">
-                <a href="#">
+                <a routerLink="/dashboard">
                     <i class="flaticon-home"></i>
                 </a>
             </li>
@@ -11,13 +11,7 @@
                 <i class="flaticon-right-arrow"></i>
             </li>
             <li class="nav-item">
-                <a routerLink="/dashboard">Dashboard</a>
-            </li>
-            <li class="separator">
-                <i class="flaticon-right-arrow"></i>
-            </li>
-            <li class="nav-item">
-                <a routerLink="/project">Projects</a>
+                <a>{{title}}</a>
             </li>
            <!--  <li class="separator">
                 <i class="flaticon-right-arrow"></i>
@@ -32,9 +26,10 @@
             <div class="card">
                 <div class="card-header">
                     <div class="d-flex align-items-center">
+                        <h4 class="page-title">Project List</h4>
                         <a class="btn btn-primary btn-round ml-auto" routerLink="/project/create">
-                                    <i class="fa fa-plus"></i>
-                                    Create Project
+                            <i class="fa fa-plus"></i>
+                            Create Project
                         </a>
                     </div>
                 </div>
@@ -63,7 +58,7 @@
                             </thead>
                             <tbody *ngIf="dataList?.length != 0">
                                 <tr *ngFor="let data of dataList">
-                                    <td>{{ data.name | capitalize }}</td>
+                                    <td><a (click)="view(data._id)">{{ data.name | capitalize }}</a></td>
                                     <td>{{ data.client.name | capitalize }}</td>
                                     <td>
                                         <span class="badge badge-pill badge-success" *ngIf="data.active == 1">Active</span>

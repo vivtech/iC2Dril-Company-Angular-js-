@@ -28,9 +28,13 @@
                 <div class="card-header">
                     <div class="row row-nav-line">
                         <ul class="nav nav-tabs nav-line nav-color-secondary" role="tablist">
-
-                            <li class="nav-item"> <a class="nav-link " [ngClass]="{ active: !passwordVisible,  show: !passwordVisible }" data-toggle="tab" (click)="togglePassword()" role="tab" aria-selected="false">Profile</a> </li>
-                            <li class="nav-item"> <a class="nav-link" [ngClass]="{ active: passwordVisible,  show: passwordVisible }" data-toggle="tab" (click)="togglePassword()" role="tab" aria-selected="false">Change Password</a> </li>
+                            <li class="nav-item">
+                                <a class="nav-link " [ngClass]="{ active: !passwordVisible,  show: !passwordVisible }" data-toggle="tab" (click)="togglePassword()" role="tab" aria-selected="false">
+                                Profile</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" [ngClass]="{ active: passwordVisible,  show: passwordVisible }" data-toggle="tab" (click)="togglePassword()" role="tab" aria-selected="false">Change Password</a>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -46,9 +50,11 @@
                                         </div>
                                         <div class="col-md-10" style="align-items: center;display: flex;">
                                              <input type="file" [hidden]="true" id="file" ng2FileSelect [uploader]="uploader" (onFileSelected)="onFileSelected($event)">
-                                             <label for="file" style="color: #520701 !important;font-weight: 600; cursor: pointer;">Change profile image <br>
-                                                <small *ngIf="imageError" style="color: red !important;">please choose image</small>
-                                             </label>
+                                            <label for="file" style="color: #520701 !important;font-weight: 600; cursor: pointer;">
+                                                Change profile image<br>
+                                                <small *ngIf="imageError" style="color: red !important;">please choose image
+                                                </small>
+                                            </label>
                                         </div>
                                     </div>
                                     <div class="row mt-3">
@@ -133,7 +139,6 @@
 
                                         <div class="text-center mt-3 mb-3 col-md-12">
                                             <app-submit-button [submitted]="submitted">Update Password</app-submit-button>
-
                                         </div>
                                     </div>
                                 </form>

@@ -34,7 +34,7 @@ export class ListProjectComponent implements OnInit {
     statusFilter = '';
     editing = false;
 
-    title = 'Project';
+    title = 'Projects';
     dtOptions: DataTables.Settings = {};
     requestDetail: Project;
     editForm: FormGroup;
