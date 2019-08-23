@@ -43,10 +43,14 @@
                         <div class="tab-pane fade " [ngClass]="{ active: !passwordVisible,  show: !passwordVisible }" id="profile-tab" role="tabpanel" aria-labelledby="pills-home-tab-nobd">
                             <form class="row" id="profileForm" enctype="multipart/form-data" [formGroup]="profileForm" (ngSubmit)="onProfileSubmit()">
                                 <div class="col-md-5 offset-md-2">
-                                    <!-- <div class="row mt-3">
+                                    <div class="row mt-3">
                                         <div class="col-md-2">
-                                            <ngx-avatar *ngIf="filePreviewPath == null" [cornerRadius]="5" [size]="60" [round]="false" name={{user.name}} title={{user.name}} bgColor="#520701"></ngx-avatar>
-                                            <ngx-avatar *ngIf="filePreviewPath" [cornerRadius]="5" [size]="60" [round]="false" src={{filePreviewPath}} bgColor="#520701"></ngx-avatar>
+                                            <div *ngIf="filePreviewPath == null" class="avatar-sm">
+                                                <img src="../assets/img/profile.jpg" alt="..." class="avatar-img rounded-circle">
+                                            </div>
+                                            <div *ngIf="filePreviewPath" class="avatar-sm">
+                                                <img src={{filePreviewPath}} alt="..." class="avatar-img rounded-circle">
+                                            </div>
                                         </div>
                                         <div class="col-md-10" style="align-items: center;display: flex;">
                                              <input type="file" [hidden]="true" id="file" ng2FileSelect [uploader]="uploader" (onFileSelected)="onFileSelected($event)">
@@ -56,7 +60,7 @@
                                                 </small>
                                             </label>
                                         </div>
-                                    </div> -->
+                                    </div>
                                     <div class="row mt-3">
                                         <div class="col-md-12">
                                             <div class="form-group form-group-default">
