@@ -13,7 +13,6 @@ import { PackageComponent } from './package/package.component';
 import { CountryComponent } from './country/country.component';
 import { ProjectComponent } from './project/project.component';
 import { AddProjectComponent } from './project/add-project/add-project.component';
-import { AvatarModule } from 'ngx-avatar';
 import { FileUploadModule } from 'ng2-file-upload';
 
 const COMPONENETS = [PagesComponent,
@@ -33,7 +32,6 @@ const COMPONENETS = [PagesComponent,
     imports: [
         PagesRoutingModule,
         ThemeModule,
-        AvatarModule,
         FileUploadModule
     ]
 })

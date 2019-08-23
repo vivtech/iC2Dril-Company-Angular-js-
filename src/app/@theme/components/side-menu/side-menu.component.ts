@@ -6,59 +6,61 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./side-menu.component.css']
 })
 export class SideMenuComponent implements OnInit {
-    appitems = [
-        {
-            label: 'Dashboard',
-            icon: 'fas fa-home',
-            link: '/dashboard',
-          },
-          {
-             label: 'Projects',
-            icon: 'fas fa-th-list',
-            link: '/project',
-          },
-          {
-             label: 'Users',
-            icon: 'fas fa-user-tie',
-            link: '/user/list'
-        },
-        //   {
-        //     label: 'Subscribed Company',
-        //     icon: 'fas fa-th-list',
-        //     link: '/company/list',
-        //   },
-        //   {
-        //     label: 'Packages',
-        //     icon: 'fas fa-th-list',
-        //     link: '/package',
-        //   },
-        //   {
-        //     label: 'Country',
-        //     icon: 'fas fa-th-list',
-        //     link: '/country',
-        //   },
+  appitems = [
+    {
+      label: 'Dashboard',
+      icon: 'fas fa-home',
+      link: '/dashboard',
+    },{
+       label: 'Projects',
+      icon: 'fas fa-th-list',
+      link: '/project',
+    },{
+       label: 'Users',
+      icon: 'fas fa-user-tie',
+      link: '/user/list'
+    },{
+      label: 'Meetings',
+      icon: 'fas fa-handshake',
+      link: '/meeting/list'
+    }
+      //   {
+      //     label: 'Subscribed Company',
+      //     icon: 'fas fa-th-list',
+      //     link: '/company/list',
+      //   },
+      //   {
+      //     label: 'Packages',
+      //     icon: 'fas fa-th-list',
+      //     link: '/package',
+      //   },
+      //   {
+      //     label: 'Country',
+      //     icon: 'fas fa-th-list',
+      //     link: '/country',
+      //   },
 
-        // {
-        //   label: 'Dashboard',
-        //   icon: 'fas fa-home',
-        //   items: [
-        //     {
-        //       label: 'Dashboard 1',
-        //       link: '/item-1-1',
-        //       icon: 'fab fa-accusoft'
-        //     },
-        //     {
-        //       label: 'Dashboard 2',
-        //       icon: 'fab fa-accessible-icon',
-        //     }
-        //   ]
-        // },
-        // {
-        //   label: 'Item 2',
-        //   icon: 'fas fa-th-list',
+      // {
+      //   label: 'Dashboard',
+      //   icon: 'fas fa-home',
+      //   items: [
+      //     {
+      //       label: 'Dashboard 1',
+      //       link: '/item-1-1',
+      //       icon: 'fab fa-accusoft'
+      //     },
+      //     {
+      //       label: 'Dashboard 2',
+      //       icon: 'fab fa-accessible-icon',
+      //     }
+      //   ]
+      // },
+      // {
+      //   label: 'Item 2',
+      //   icon: 'fas fa-th-list',
 
-        // }
-      ];
+      // }
+  ];
   constructor() { }
 
   ngOnInit() {

@@ -56,6 +56,10 @@ const routes: Routes = [
                 loadChildren: './user/user.module#UserModule'
             },
             {
+                path: 'meeting',
+                loadChildren: './meeting/meeting.module#MeetingModule'
+            },
+            {
                 path: 'project',
                 loadChildren: './project/project.module#ProjectModule'
             },
