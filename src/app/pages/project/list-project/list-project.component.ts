@@ -46,14 +46,15 @@ export class ListProjectComponent implements OnInit {
     today = new Date();
     minDate = {year: this.today.getFullYear(), month: this.today.getMonth() + 1, day: this.today.getDate()};
 
-    constructor(private commonService: CommonService,
-                private apiService: ProjectService,
-                private modalService: NgbModal,
-                private modalConfig: NgbModalConfig,
-                private formService: FormService,
-                private formBuilder: FormBuilder,
-                private toastr: ToastrService,
-                private router: Router) {
+    constructor(
+        private commonService: CommonService,
+        private apiService: ProjectService,
+        private modalService: NgbModal,
+        private modalConfig: NgbModalConfig,
+        private formService: FormService,
+        private formBuilder: FormBuilder,
+        private toastr: ToastrService,
+        private router: Router) {
         modalConfig.backdrop = 'static';
         modalConfig.keyboard = false;
     }
@@ -61,50 +62,50 @@ export class ListProjectComponent implements OnInit {
     ngOnInit() {
         const that = this;
         this.dtOptions = {
-            dom:    `<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>"
-                    "<'row'<'col-sm-12'tr>>"
-                    "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>`,
-          pagingType: 'simple_numbers',
-          renderer: 'bootstrap',
-          pageLength: 10,
-          serverSide: true,
-          processing: true,
-          ajax: (dataTablesParameters: object, callback) => {
+            dom:`<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>"
+                "<'row'<'col-sm-12'tr>>"
+                "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>`,
+            pagingType: 'simple_numbers',
+            renderer: 'bootstrap',
+            pageLength: 10,
+            serverSide: true,
+            processing: true,
+            ajax: (dataTablesParameters: object, callback) => {
               dataTablesParameters['filter'] = [];
               dataTablesParameters['filter'][0] = {column: 'active', data: this.statusFilter};
               console.log(dataTablesParameters);
               const responseData = this.apiService.getList(dataTablesParameters).pipe(first())
               .subscribe( response => {
-                  console.log(response);
-                  if ( response.code === 200 ) {
+                console.log(response);
+                    if ( response.code === 200 ) {
                     this.dataList = response.data.data;
                     callback({
-                    recordsTotal: response.data.recordsTotal,
-                    recordsFiltered: response.data.recordsFiltered,
-                    data : []
-                  });
-                  }
-              }
-              );
-
-
-          },
-          columns: [
-                    { data: 'name' },
-                    { data: 'client' },
-                    // { data: 'state' },
-                    { data: 'active' }, { data: 'status' }, { data: '_id' }],
-          columnDefs: [
-            {
-                "searchable": false,
-                "orderable": false,
-                "targets": [-1]
+                        recordsTotal: response.data.recordsTotal,
+                        recordsFiltered: response.data.recordsFiltered,
+                        data : []
+                    });
+                }
+              });
             },
-            {
-                "searchable": false,
-                "targets": [-2]
-            }
-        ]
+            columns: [
+                { data: 'name' },
+                { data: 'client' },
+                // { data: 'state' },
+                { data: 'active' },
+                { data: 'status' },
+                { data: '_id' }
+            ],
+            columnDefs: [
+                {
+                    "searchable": true,
+                    "orderable": false,
+                    "targets": [-1]
+                },
+                {
+                    "searchable": false,
+                    "targets": [-2]
+                }
+            ]
         };
 
         this.editForm = this.formBuilder.group({
@@ -136,10 +137,7 @@ export class ListProjectComponent implements OnInit {
             active: ['',  [Validators.required]],
             status: ['',  [Validators.required]]
         });
-
-
     }
-
 
     get f() { return this.editForm.controls; }
 
@@ -275,7 +273,6 @@ export class ListProjectComponent implements OnInit {
                 });
         }
 
-
     }
 
 
@@ -302,10 +299,10 @@ export class ListProjectComponent implements OnInit {
                 console.log('delete', data)
                 this.deleteRequest(result);
             }
-            },
-            (error) => {
-                console.log(error);
-            });
+        },
+        (error) => {
+            console.log(error);
+        });
     }
 
 }

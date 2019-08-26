@@ -13,6 +13,7 @@ import { DataTableDirective } from 'angular-datatables';
 import { ToastrService } from 'ngx-toastr';
 import { DeleteModalComponent } from 'src/app/@theme/components/modals/delete-modal/delete-modal.component';
 import { UserService } from 'src/app/@core/services/user.service';
+import { MeetingService } from 'src/app/@core/services/meeting.service';
 import { UserType } from 'src/app/@core/models/user-type.model';
 import { User } from 'src/app/@core/models/user.model';
 import { ValidEmail } from 'src/app/@core/validators/valid-email.validators';
@@ -70,10 +71,12 @@ export class ListComponent implements OnInit, OnDestroy {
         month: this.today.getMonth() + 1,
         day: this.today.getDate()
     };
+    modelData;
 
     constructor(
         private commonService: CommonService,
         private apiService: UserService,
+        private meetService: MeetingService,
         private modalService: NgbModal,
         private modalConfig: NgbModalConfig,
         private formService: FormService,
@@ -110,20 +113,8 @@ export class ListComponent implements OnInit, OnDestroy {
             processing: true,
             ajax: (dataTablesParameters: object, callback) => {
                 dataTablesParameters['filter'] = [];
-                dataTablesParameters['filter'][0] = {
-                    column: 'active',
-                    data: this.statusFilter
-                };
-                dataTablesParameters['filter'][1] = {
-                    column: 'userType',
-                    data: this.typeFilter
-                };
-                dataTablesParameters['filter'][2] = {
-                    column: 'blocked',
-                    data: this.blockFilter
-                };
-                console.log(dataTablesParameters);
-                const responseData = this.apiService
+                console.log('data', dataTablesParameters);
+                const responseData = this.meetService
                     .getList(dataTablesParameters)
                     .pipe(first())
                     .subscribe(response => {
@@ -139,13 +130,13 @@ export class ListComponent implements OnInit, OnDestroy {
                     });
             },
             columns: [
-                { data: 'name' },
-                { data: 'userType' },
-                { data: 'email' },
-                { data: 'phone' },
+                { data: 'title' },
+                { data: 'desc' },
+                { data: 'startTime' },
+                { data: 'endTime' },
                 { data: 'active' },
-                { data: 'blocked' },
-                { data: '_id' }
+                { data: 'status' },
+                { data: 'attenders'}
             ],
             columnDefs: [
                 {
@@ -288,33 +279,41 @@ export class ListComponent implements OnInit, OnDestroy {
         );
     }
 
-    editDetail(editModal, data) {
-        this.apiService.getData(data).subscribe(
-            response => {
-                this.requestDetail = response.data;
-                this.editForm.reset();
-                this.f.data.setValidators([Validators.required]);
-                this.f.active.setValidators([Validators.required]);
-                this.f.block.setValidators([Validators.required]);
-                this.editing = true;
-                this.editForm.patchValue({
-                    data: this.requestDetail._id,
-                    name: this.requestDetail.name,
-                    designation: this.requestDetail.designation,
-                    email: this.requestDetail.email,
-                    phone: this.requestDetail.phone,
-                    userType: this.requestDetail.userType,
-                    active: this.requestDetail.active,
-                    block: this.requestDetail.blocked,
-                });
-                this.modalService.open(editModal, {
-                    size: 'lg'
-                });
-            },
-            error => {
-                // this.noti
-            }
-        );
+    view(editModal, MeetId) {
+        console.log('modleData', MeetId)
+        this.meetService.getData(MeetId).subscribe(data => {
+            console.log('data', data.data);
+            this.modelData = data.data;
+            this.modalService.open(editModal, {
+                size: 'lg'
+            });
+        })
+        // this.apiService.getData(data).subscribe(
+        //     response => {
+        //         this.requestDetail = response.data;
+        //         this.editForm.reset();
+        //         this.f.data.setValidators([Validators.required]);
+        //         this.f.active.setValidators([Validators.required]);
+        //         this.f.block.setValidators([Validators.required]);
+        //         this.editing = true;
+        //         this.editForm.patchValue({
+        //             data: this.requestDetail._id,
+        //             name: this.requestDetail.name,
+        //             designation: this.requestDetail.designation,
+        //             email: this.requestDetail.email,
+        //             phone: this.requestDetail.phone,
+        //             userType: this.requestDetail.userType,
+        //             active: this.requestDetail.active,
+        //             block: this.requestDetail.blocked,
+        //         });
+        //         this.modalService.open(editModal, {
+        //             size: 'lg'
+        //         });
+        //     },
+        //     error => {
+        //         // this.noti
+        //     }
+        // );
     }
 
     deleteRequest(data) {
