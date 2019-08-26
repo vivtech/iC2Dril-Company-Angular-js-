@@ -32,6 +32,7 @@ export class ProfileComponent implements OnInit {
     public uploader:FileUploader = new FileUploader({});
     public filePreviewPath: File = null;
     imageError: boolean = false;
+    selectedFile: any;
 
     constructor(private profileService: ProfileService,
               private authenticationService: AuthenticationService,
@@ -85,7 +86,7 @@ export class ProfileComponent implements OnInit {
     }
 
     onFileSelected(event) {
-        console.log('event', event[0].type);
+        console.log('event1', event[0].type);
         if (event[0].type == 'image/png' || event[0].type == 'image/jpeg') {
             this.imageError = false;
             var reader = new FileReader();
@@ -99,6 +100,16 @@ export class ProfileComponent implements OnInit {
             console.log('File not image');
             this.imageError = true;
         }
+    }
+
+    upload() {
+        const fd = new FormData();
+        fd.append('image', this.selectedFile, this.selectedFile.name);
+        // this.http.post('http://example.com/upload/image', fd).subscribe((res: any) => {
+        //   this.image = res.data;
+        // }, (err: any) => {
+        //     // Show error message or make something.
+        // });
     }
 
     onProfileSubmit() {

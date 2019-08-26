@@ -46,14 +46,14 @@
                                     <div class="row mt-3">
                                         <div class="col-md-2">
                                             <div *ngIf="filePreviewPath == null" class="avatar-sm">
-                                                <img src="../assets/img/profile.jpg" alt="..." class="avatar-img rounded-circle">
+                                                <img src="../assets/img/profile.jpg" alt="Profile" class="avatar-img rounded-circle">
                                             </div>
                                             <div *ngIf="filePreviewPath" class="avatar-sm">
-                                                <img src={{filePreviewPath}} alt="..." class="avatar-img rounded-circle">
+                                                <img src={{filePreviewPath}} alt="Profile" class="avatar-img rounded-circle">
                                             </div>
                                         </div>
                                         <div class="col-md-10" style="align-items: center;display: flex;">
-                                             <input type="file" [hidden]="true" id="file" ng2FileSelect [uploader]="uploader" (onFileSelected)="onFileSelected($event)">
+                                             <input type="file" accept="image/*" [hidden]="true" id="file" ng2FileSelect [uploader]="uploader" (onFileSelected)="onFileSelected($event)">
                                             <label for="file" style="color: #520701 !important;font-weight: 600; cursor: pointer;">
                                                 Change profile image<br>
                                                 <small *ngIf="imageError" style="color: red !important;">please choose image
