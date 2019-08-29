@@ -43,16 +43,25 @@ export class MeetingService {
             })
         );
     }
-
-    getCompanyRequestList(): Observable<Meeting[]> {
-        return this.dataList.asObservable();
-    }
-
-    create(fields): any {
+    
+    deleteData(id) {
         return this.http
-            .post<any>(`${environment.apiUrl}/user`, fields)
+            .delete<any>(`${environment.apiUrl}/meeting/${id}`)
             .pipe(
                 map(response => {
+                    return response;
+                })
+            );
+    }
+
+    updateData(fieldParameters): any {
+        return this.http
+            .put<any>(`${environment.apiUrl}/meeting/status`, fieldParameters)
+            .pipe(
+                map(response => {
+                    if (response.code === 200) {
+                        console.log(response.data.data);
+                    }
                     return response;
                 })
             );

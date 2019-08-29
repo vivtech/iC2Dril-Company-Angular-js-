@@ -21,7 +21,7 @@ import { UserService } from 'src/app/@core/services/user.service';
     styleUrls: ['./camera.component.css']
   })
 export class CameraComponent implements OnInit {
-
+    passwordHidden = true;
     @ViewChild(DataTableDirective, {static: false})
     datatableElement: DataTableDirective;
     people = [];
@@ -288,11 +288,11 @@ export class CameraComponent implements OnInit {
                     this.submitted = false;
                 });
         }
-
-
     }
 
-
+    togglePassword(){
+        this.passwordHidden = !this.passwordHidden
+    }
 
     refreshTable() {
         this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {

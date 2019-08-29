@@ -138,7 +138,10 @@
                         <div class="col-sm-12">
                             <div class="form-group form-group-default">
                                 <label class="text-primary">Password</label>
-                                <input type="text" formControlName="password" [attr.maxlength]="validator.camPassword.max" class="form-control" placeholder="Password">
+                                <input [type]=" passwordHidden ? 'password' : 'text'" formControlName="password" [attr.maxlength]="validator.camPassword.max" class="form-control" placeholder="Password">
+                                <div class="show-password">
+                                    <i class="far " (click)="togglePassword()" [ngClass]="{'fa-eye': !passwordHidden, 'fa-eye-slash': passwordHidden}"></i>
+                                </div>
                                 <error-label [control]="f.password"></error-label>
                             </div>
                         </div>

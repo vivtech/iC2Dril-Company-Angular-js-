@@ -25,11 +25,11 @@ import { ValidEmail } from 'src/app/@core/validators/valid-email.validators';
 export class ListComponent implements OnInit, OnDestroy {
     @ViewChild(DataTableDirective, { static: false })
     datatableElement: DataTableDirective;
-    permission = 'notcreate'
+    permission = 'create'
     statusFilterData = [
         { id: '', name: 'All' },
-        { id: 0, name: 'Active' },
-        { id: 1, name: 'Inactive' }
+        { id: 1, name: 'Active' },
+        { id: 0, name: 'Inactive' }
     ];
     blockedFilterData = [
         { id: '', name: 'All' },

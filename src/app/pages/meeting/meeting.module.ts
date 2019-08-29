@@ -5,6 +5,7 @@ import { ThemeModule } from '../../@theme/theme.module';
 import { ListComponent } from './list/list.component';
 import { MeetingRoutingModule } from './meeting-routing.module';
 import { MeetingComponent } from './meeting.component';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
 const COMPONENTS = [
     MeetingComponent,
@@ -12,7 +13,7 @@ const COMPONENTS = [
 ];
 
 @NgModule({
-  imports: [ThemeModule, MeetingRoutingModule ],
+  imports: [ThemeModule, MeetingRoutingModule, PerfectScrollbarModule ],
   declarations: [...COMPONENTS, ],
 })
 export class MeetingModule {}

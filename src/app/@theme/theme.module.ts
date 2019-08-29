@@ -24,11 +24,12 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { DigitOnlyDirective } from './directives/digit-only.directive';
 import { DataTableComponent } from './components/data-table/data-table.component';
 import { DataTablesModule } from 'angular-datatables';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterModule } from '@angular/router';
 
 import { CapitalizePipe } from './pipes/capitalize.pipe';
 import { DeleteModalComponent } from './components/modals/delete-modal/delete-modal.component';
+import { CancelModalComponent } from './components/modals/cancel-modal/cancel-modal';
 import { PopoverOptionComponent } from './components/utils/popover-option/popover-option.component';
 import { BreadcrumbComponent } from './components/utils/breadcrumb/breadcrumb.component';
 
@@ -46,6 +47,7 @@ const COMPONENTS = [
     ErrorLabelComponent,
     SubmitButtonComponent,
     DeleteModalComponent,
+    CancelModalComponent,
     PopoverOptionComponent,
     BreadcrumbComponent
 ];
@@ -84,7 +86,8 @@ const NB_THEME_PROVIDERS = [
 
 const ENTRY_COMPONENTS = [
     NotyfToast,
-    DeleteModalComponent
+    DeleteModalComponent,
+    CancelModalComponent
 ];
 
 @NgModule({

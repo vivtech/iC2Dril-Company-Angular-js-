@@ -12,6 +12,7 @@ import { Package } from 'src/app/@core/models/package.model';
 import { DataTableDirective } from 'angular-datatables';
 import { ToastrService } from 'ngx-toastr';
 import { DeleteModalComponent } from 'src/app/@theme/components/modals/delete-modal/delete-modal.component';
+import { CancelModalComponent } from 'src/app/@theme/components/modals/cancel-modal/cancel-modal';
 import { UserService } from 'src/app/@core/services/user.service';
 import { MeetingService } from 'src/app/@core/services/meeting.service';
 import { UserType } from 'src/app/@core/models/user-type.model';
@@ -29,8 +30,8 @@ export class ListComponent implements OnInit, OnDestroy {
     permission = 'create'
     statusFilterData = [
         { id: '', name: 'All' },
-        { id: 0, name: 'Active' },
-        { id: 1, name: 'Inactive' }
+        { id: 1, name: 'Active' },
+        { id: 0, name: 'Cancelled' }
     ];
     blockedFilterData = [
         { id: '', name: 'All' },
@@ -38,8 +39,8 @@ export class ListComponent implements OnInit, OnDestroy {
         { id: 1, name: 'Blocked' }
     ];
     activeList = [
-        { id: 0, name: 'Active' },
-        { id: 1, name: 'Inactive' }
+        { id: 1, name: 'Active' },
+        { id: 0, name: 'Cancelled' }
     ];
     blockList = [
         { id: 0, name: 'Unblocked' },
@@ -113,6 +114,14 @@ export class ListComponent implements OnInit, OnDestroy {
             processing: true,
             ajax: (dataTablesParameters: object, callback) => {
                 dataTablesParameters['filter'] = [];
+                dataTablesParameters['filter'][0] = {
+                    column: 'active',
+                    data: this.statusFilter
+                };
+                dataTablesParameters['filter'][1] = {
+                    column: 'status',
+                    data: this.blockFilter
+                };
                 console.log('data', dataTablesParameters);
                 const responseData = this.meetService
                     .getList(dataTablesParameters)
@@ -317,7 +326,7 @@ export class ListComponent implements OnInit, OnDestroy {
     }
 
     deleteRequest(data) {
-        this.apiService.deleteData(data).subscribe(
+        this.meetService.deleteData(data).subscribe(
             response => {
                 this.modalService.dismissAll();
                 this.toastr.success('', response.message);
@@ -429,52 +438,6 @@ export class ListComponent implements OnInit, OnDestroy {
         }
     }
 
-    createLicense() {
-        this.formService.clearCustomError(this.licenseForm);
-        this.submitted = true;
-        this.licenseForm.markAllAsTouched();
-        console.log(this.licenseForm.getRawValue());
-        if (this.licenseForm.invalid) {
-            this.submitted = false;
-            return false;
-        }
-        const currentData = this.licenseForm.getRawValue();
-        const licenseDate = `${currentData.licenseDate.year}-${
-            currentData.licenseDate.month
-        }-${currentData.licenseDate.day}`;
-        currentData.licenseDate = licenseDate;
-        console.log(currentData);
-        this.apiService
-            .create(currentData)
-            .pipe(first())
-            .subscribe(
-                data => {
-                    if (data.status === 'success') {
-                        console.log(data);
-                        this.toastr.error('', data.message);
-                        this.modalService.dismissAll();
-                        this.licenseForm.reset();
-                        this.refreshTable();
-                    }
-                },
-                error => {
-                    this.submitted = false;
-                    console.log(error);
-                    if (error.errors.length > 0) {
-                        for (const fieldError of error.errors) {
-                            const check = fieldError.param;
-                            this.licenseForm
-                                .get(check)
-                                .setErrors({ customError: fieldError.msg });
-                        }
-                    }
-                },
-                () => {
-                    this.submitted = false;
-                }
-            );
-    }
-
     refreshTable() {
         this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
             dtInstance.draw();
@@ -496,20 +459,64 @@ export class ListComponent implements OnInit, OnDestroy {
         );
     }
 
-    createData(modal) {
-        this.f.data.setValidators(null);
-        this.f.active.setValidators(null);
-        this.f.block.setValidators(null);
-        this.f.data.updateValueAndValidity();
-        this.requestDetail = {
-            name: '',
-        };
-        this.editing = false;
-        this.editForm.reset();
-        this.modalService.open(modal, {
-            size: 'lg'
-        });
+    CancelConfirmation(id, active) {
+        var params:any;
+        if(active == 0) {
+            params = {
+                "data" : id,
+                "status" : 1
+            }
+        }
+        else {
+            params = {
+                "data" : id,
+                "status" : 0
+            }
+        }
+        console.log(params)
+        const modalRef = this.modalService.open(CancelModalComponent);
+        modalRef.componentInstance.data = params;
+        modalRef.result.then(
+            result => {
+                if (result) {
+                    this.cancelRequest(result);
+                }
+            },
+            error => {
+                console.log(error);
+            }
+        );
     }
+
+    cancelRequest(data) {
+        console.log(data)
+        this.meetService.updateData(data).subscribe(
+            response => {
+                this.modalService.dismissAll();
+                this.toastr.success('', response.message);
+                this.refreshTable();
+            },
+            error => {
+                this.modalService.dismissAll();
+                // this.noti
+            }
+        );
+    }
+
+    // createData(modal) {
+    //     this.f.data.setValidators(null);
+    //     this.f.active.setValidators(null);
+    //     this.f.block.setValidators(null);
+    //     this.f.data.updateValueAndValidity();
+    //     this.requestDetail = {
+    //         name: '',
+    //     };
+    //     this.editing = false;
+    //     this.editForm.reset();
+    //     this.modalService.open(modal, {
+    //         size: 'lg'
+    //     });
+    // }
 
     ngOnDestroy(): void {
         this.subscription.unsubscribe();

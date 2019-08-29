@@ -29,16 +29,16 @@
                 </div>
                 <div class="card-body">
                     <div class="row p-2 filter-cont mb-4">
-                        <div class="col-md-3 pl-0">
+                        <!-- <div class="col-md-3 pl-0">
                             <div class="form-group pt-0">
-                                <label>Meeting</label>
+                                <label>Meeting Title</label>
                                 <ng-select (change)="refreshTable()" class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [(ngModel)]="typeFilter" [items]="userTypeFilterData" bindLabel="name" bindValue="_id">
-                                    <!-- <ng-option [value]="'custom'">Custom</ng-option>
-                                    <ng-option *ngFor="let car of cars" [value]="car.id" [disabled]="car.disabled">{{car.name}}</ng-option> -->
+                                    <ng-option [value]="'custom'">Custom</ng-option>
+                                    <ng-option *ngFor="let car of cars" [value]="car.id" [disabled]="car.disabled">{{car.name}}</ng-option>
                                 </ng-select>
 
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-md-3 pl-0">
                             <div class="form-group pt-0">
                                 <label>Status</label>
@@ -74,7 +74,7 @@
                                     <td>{{ meeting.endTime | date:'short' }}</td>
                                     <td>
                                         <span class="badge badge-pill badge-success" *ngIf="meeting.active == 1">Active</span>
-                                        <span class="badge badge-pill badge-warning" *ngIf="meeting.active == 0">Inactive</span>
+                                        <span class="badge badge-pill badge-warning" *ngIf="meeting.active == 0">Cancelled</span>
 
                                     </td>
                                     <td>
@@ -83,7 +83,16 @@
                                     </td>
                                     <td>
                                         <div class="btn-group datatable-dropdown">
-                                            <button class="btn btn-link btn" (click)="view(editModal, meeting._id)"><i class="fa fa-eye"></i></button>
+                                            <button type="button" class="btn btn-primary" (click)="view(editModal, meeting._id)">view
+                                            </button>
+                                            <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
+                                                <button class="btn btn-primary dropdown-toggle-split" ngbDropdownToggle></button>
+                                                <div class="dropdown-menu" ngbDropdownMenu>
+                                                    <button *ngIf="meeting.active == 1" ngbDropdownItem (click)="CancelConfirmation(meeting._id, meeting.active)">Cancel Meeting</button>
+                                                    <button *ngIf="meeting.active == 0" ngbDropdownItem (click)="CancelConfirmation(meeting._id, meeting.active)">Active Meeting</button>
+                                                    <button ngbDropdownItem (click)="deleteConfirmation(meeting._id)">Delete</button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </td>
                                 </tr>
@@ -127,10 +136,10 @@
                             <label class="text-primary">Description</label>
                             <span class="form-control text-muted">{{ modelData.desc }}</span>
                         </div>
-                        <div class="form-group form-group-default">
+                        <!-- <div class="form-group form-group-default">
                             <label class="text-primary">Company</label>
                             <span class="form-control text-muted">{{ modelData.company }}</span>
-                        </div>
+                        </div> -->
                         <div class="form-group form-group-default">
                             <label class="text-primary">Start Time</label>
                             <span class="form-control text-muted">{{ modelData.startTime | date :'medium' }}</span>
@@ -149,16 +158,18 @@
                         </div>
                     </div>
                     <div class="col-sm-6">
-                        <div class="form-group form-group-default">
+                        <div  class="form-group form-group-default">
                             <label class="text-primary">Attenders</label>
+                            <perfect-scrollbar style="height:350px;">
                             <span class="form-control text-muted">
-                                <div class="row" *ngFor="let attende of modelData.attenders">
+                                <div class="row" style="margin-top: 10px;margin-bottom: 10px;" *ngFor="let attende of modelData.attenders">
                                     <div style="" class="col-sm-3">
                                         <img src={{attende.profilePic}} alt="Profile" class="avatar-img rounded-circle">
                                     </div>
                                     <div class="col-sm-9 attendename">{{ attende.name }}</div>
                                 </div>
                             </span>
+                            </perfect-scrollbar>
                         </div>
                     </div>
                 </div>

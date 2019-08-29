@@ -1,9 +1,22 @@
 .avatar-img {
-	width: 65% !important;
+	width: 50% !important;
 }
 
 .attendename {
 	display: flex;
     align-items: center;
     margin-left: -35px;
+}
+
+.form-group-default {
+	margin-bottom: 5px !important;
+}
+
+.scroll-container {
+  position: relative;
+}
+
+.scrollable-content {
+  padding: 16px;
+  margin: 0;
 }
