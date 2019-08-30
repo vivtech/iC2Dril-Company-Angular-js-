@@ -52,6 +52,12 @@
                                 <ng-select (change)="refreshTable()" class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [(ngModel)]="statusFilter" [items]="statusFilterData" bindLabel="name" bindValue="id"></ng-select>
                             </div>
                         </div>
+                        <!-- <div class="col-md-3 pl-0">
+                            <div class="form-group pt-0">
+                                <label>Date</label>
+                                <input type="text" [locale]="{applyLabel: 'ok', format: 'DD-MM-YYYY'}" ngxDaterangepickerMd [(ngModel)]="dateRangeFilter" class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0"/>
+                            </div>
+                        </div> -->
                     </div>
                     <div class="table-responsive">
                         <table id="record-table" [dtOptions]="dtOptions" datatable class="display table table-striped table-hover w-100 table-head-bg-primary" width="100%">

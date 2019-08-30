@@ -6,6 +6,7 @@ import { ListComponent } from './list/list.component';
 import { MeetingRoutingModule } from './meeting-routing.module';
 import { MeetingComponent } from './meeting.component';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
+import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 
 const COMPONENTS = [
     MeetingComponent,
@@ -13,7 +14,7 @@ const COMPONENTS = [
 ];
 
 @NgModule({
-  imports: [ThemeModule, MeetingRoutingModule, PerfectScrollbarModule ],
+  imports: [ThemeModule, MeetingRoutingModule, PerfectScrollbarModule, NgxDaterangepickerMd.forRoot() ],
   declarations: [...COMPONENTS, ],
 })
 export class MeetingModule {}

@@ -20,3 +20,6 @@
   padding: 16px;
   margin: 0;
 }
+input.form-control.floating-input.input-border-bottom.pl-1.pr-1.pb-0.pt-0 {
+	margin-top: 29px;
+}

@@ -49,6 +49,7 @@ export class ListComponent implements OnInit, OnDestroy {
     statusFilter = '';
     typeFilter = '';
     blockFilter = '';
+    dateRangeFilter = '';
     userTypeList: UserType[];
     userTypeFilterData: UserType[];
     subscription: Subscription;
@@ -163,8 +164,17 @@ export class ListComponent implements OnInit, OnDestroy {
                 },
                 {
                     searchable: false,
-                    targets: [1]
+                    targets: [-4]
+                },
+                {
+                    searchable: false,
+                    targets: [-5]
+                },
+                {
+                    searchable: false,
+                    targets: [-6]
                 }
+
             ]
         };
         this.editForm = this.formBuilder.group({
