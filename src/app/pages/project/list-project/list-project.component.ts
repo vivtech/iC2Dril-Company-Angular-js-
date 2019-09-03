@@ -29,7 +29,7 @@ export class ListProjectComponent implements OnInit {
     datatableElement: DataTableDirective;
 
     statusFilterData = [{id: '', name: 'All'}, {id: 1, name: 'Active'}, {id: 0, name: 'Inactive'}];
-    statusData = [ {id: 1, name: 'Inprogress'}, {id: 0, name: 'Completed'}];
+    statusData = [ {id: 0, name: 'Inprogress'}, {id: 1, name: 'Completed'}];
     activeData = [ {id: 1, name: 'Active'}, {id: 0, name: 'Inactive'}];
     statusFilter = '';
     editing = false;

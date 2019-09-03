@@ -13,7 +13,7 @@
             </div>
 
             <div class="form-group form-floating-label">
-                <input id="loginEmail" formControlName="username" type="email" class="form-control floating-input input-border-bottom pl-1 pr-1" autofocus [attr.maxlength]="validator.email.max">
+                <input id="loginEmail" formControlName="username" type="email" class="form-control floating-input input-border-bottom pl-1 pr-1" autofocus>
                 <label for="email" class="placeholder">Email</label>
                 <label class="error" for="loginEmail" *ngIf="(submitted || f.username.touched || f.username.dirty) && f.username.errors">Please enter a
                     valid email address.</label>

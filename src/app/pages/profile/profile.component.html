@@ -43,7 +43,7 @@
                         <div class="tab-pane fade " [ngClass]="{ active: !passwordVisible,  show: !passwordVisible }" id="profile-tab" role="tabpanel" aria-labelledby="pills-home-tab-nobd">
                             <form class="row" id="profileForm" enctype="multipart/form-data" [formGroup]="profileForm" (ngSubmit)="onProfileSubmit()">
                                 <div class="col-md-5 offset-md-2">
-                                    <div class="row mt-3">
+                                    <!-- <div class="row mt-3">
                                         <div class="col-md-2">
                                             <div *ngIf="filePreviewPath == null" class="avatar-sm">
                                                 <img src="../assets/img/profile.jpg" alt="Profile" class="avatar-img rounded-circle">
@@ -60,7 +60,7 @@
                                                 </small>
                                             </label>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="row mt-3">
                                         <div class="col-md-12">
                                             <div class="form-group form-group-default">
@@ -121,7 +121,10 @@
                                         <div class="col-md-12">
                                             <div class="form-group form-group-default">
                                                 <label>Current Password</label>
-                                                <input type="password" maxlength="" class="form-control inline-control" formControlName="currentPassword" placeholder="Fill Current Password">
+                                                <input [type]="CurrentpasswordHidden ? 'password' : 'text'" maxlength="" class="form-control inline-control" formControlName="currentPassword" placeholder="Fill Current Password">
+                                                <div class="show-password">
+                                                    <i class="far " (click)="toggleVisible('current')" [ngClass]="{'fa-eye': !CurrentpasswordHidden, 'fa-eye-slash': CurrentpasswordHidden}"></i>
+                                                </div>
                                                 <error-label [control]="pf.currentPassword"></error-label>
                                             </div>
                                         </div>
@@ -129,14 +132,20 @@
                                         <div class="col-md-12">
                                             <div class="form-group form-group-default">
                                                 <label>New Password</label>
-                                                <input type="password" maxlength="" class="form-control inline-control" id="password" formControlName="password" placeholder="Fill New Password">
+                                                <input [type]="NewpasswordHidden ? 'password' : 'text'" maxlength="" class="form-control inline-control" id="password" formControlName="password" placeholder="Fill New Password">
+                                                <div class="show-password">
+                                                    <i class="far " (click)="toggleVisible('new')" [ngClass]="{'fa-eye': !NewpasswordHidden, 'fa-eye-slash': NewpasswordHidden}"></i>
+                                                </div>
                                                 <error-label [control]="pf.password"></error-label>
                                             </div>
                                         </div>
                                         <div class="col-md-12">
                                             <div class="form-group form-group-default">
                                                 <label>Confirm Password</label>
-                                                <input type="password" maxlength="" class="form-control inline-control" formControlName="confirmPassword" placeholder="Fill Confirm Password">
+                                                <input [type]="ConfirmpasswordHidden ? 'password' : 'text'" maxlength="" class="form-control inline-control" formControlName="confirmPassword" placeholder="Fill Confirm Password">
+                                                <div class="show-password">
+                                                    <i class="far " (click)="toggleVisible('confirm')" [ngClass]="{'fa-eye': !ConfirmpasswordHidden, 'fa-eye-slash': ConfirmpasswordHidden}"></i>
+                                                </div>
                                                 <error-label [control]="pf.confirmPassword"></error-label>
                                             </div>
                                         </div>

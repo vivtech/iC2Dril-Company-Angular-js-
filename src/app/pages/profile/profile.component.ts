@@ -21,6 +21,9 @@ export class ProfileComponent implements OnInit {
 
     title = 'Profile';
     passwordVisible = false;
+    CurrentpasswordHidden = true;
+    NewpasswordHidden = true;
+    ConfirmpasswordHidden = true;
     user: User;
     validator = environment.validators;
     submitted = false;
@@ -79,6 +82,20 @@ export class ProfileComponent implements OnInit {
             this.confirmPasswordForm.reset();
         }
         this.passwordVisible = !this.passwordVisible;
+    }
+
+    toggleVisible(value) {
+        switch(value) {
+            case 'current' :
+                this.CurrentpasswordHidden = !this.CurrentpasswordHidden;
+            break;
+            case 'new' :
+                this.NewpasswordHidden = !this.NewpasswordHidden;
+            break;
+            case 'confirm' : 
+                this.ConfirmpasswordHidden = !this.ConfirmpasswordHidden;
+            break;
+        }
     }
 
     profileImage() {

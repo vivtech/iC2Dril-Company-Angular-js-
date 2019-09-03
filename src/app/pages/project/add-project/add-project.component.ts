@@ -4,6 +4,7 @@ import { ProjectService } from "src/app/@core/services/project.service";
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
 import { ValidEmail } from 'src/app/@core/validators/valid-email.validators';
+import { Router }  from '@angular/router';
 
 @Component({
     selector: "app-add-project",
@@ -21,7 +22,8 @@ export class AddProjectComponent implements OnInit {
     statusData = [ {id: 1, name: 'Inprogress'}, {id: 0, name: 'Completed'}];
     constructor(private fb: FormBuilder, 
       private service: ProjectService,
-      private toastr: ToastrService) {}
+      private toastr: ToastrService,
+      private router: Router) {}
 
     ngOnInit() {
         this.addproductForm = this.fb.group({
@@ -82,9 +84,14 @@ export class AddProjectComponent implements OnInit {
         }
         console.log("value", value);
         this.service.create(params).subscribe(res => {
-          console.log('Project create response', res)
           this.toastr.error('', res.message);
           this.addproductForm.reset();
+          console.log('Project create response', res.data._id)
+          // var scope = this;
+          setTimeout(() => {
+              this.router.navigate(['/project/list']);
+          }, 1500) 
+          
         })
     }
 }
