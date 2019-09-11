@@ -1,6 +1,7 @@
 export const environment = {
     production: true,
     apiUrl: "http://admin.ic2drill.techzarinfo.com/console",
+    adminUrl: 'http://admin.ic2drill.techzarinfo.com',
     validators: {
         name: { min: 3, max: 75 },
         email: { min: 3, max: 75 },

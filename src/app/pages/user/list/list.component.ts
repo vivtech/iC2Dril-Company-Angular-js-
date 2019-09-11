@@ -143,6 +143,7 @@ export class ListComponent implements OnInit, OnDestroy {
                 { data: 'userType' },
                 { data: 'email' },
                 { data: 'phone' },
+                { data: 'tel' },
                 { data: 'active' },
                 { data: 'blocked' },
                 { data: '_id' }
@@ -160,6 +161,11 @@ export class ListComponent implements OnInit, OnDestroy {
                 {
                     searchable: false,
                     targets: [-3]
+                },
+                {
+                    targets: [ 4 ],
+                    visible: false,
+                    searchable: false
                 },
                 {
                     searchable: false,
@@ -190,6 +196,12 @@ export class ListComponent implements OnInit, OnDestroy {
                     Validators.required,
                     Validators.minLength(this.validator.phone.min),
                     Validators.maxLength(this.validator.phone.max)
+                ]
+            ],
+            tel: [
+                '',
+                [
+                    Validators.required
                 ]
             ],
             designation: [
@@ -250,8 +262,8 @@ export class ListComponent implements OnInit, OnDestroy {
             ],
             licenseDate: ['', [Validators.required]]
         });
-        // const data = this.commonService.getRequestFormData().subscribe();
-        // this.countryList = this.commonService.getCountryList();
+        const data = this.commonService.getRequestFormData().subscribe();
+        this.countryList = this.commonService.getCountryList();
         // this.packageList = this.commonService.getPackageList();
     }
 
@@ -303,6 +315,7 @@ export class ListComponent implements OnInit, OnDestroy {
                     designation: this.requestDetail.designation,
                     email: this.requestDetail.email,
                     phone: this.requestDetail.phone,
+                    tel: this.requestDetail.tel._id,
                     userType: this.requestDetail.userType,
                     active: this.requestDetail.active,
                     block: this.requestDetail.blocked,

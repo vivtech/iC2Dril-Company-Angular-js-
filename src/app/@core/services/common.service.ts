@@ -23,7 +23,7 @@ export class CommonService {
 
   getRequestFormData() {
     console.log("enter");
-    return this.http.get<any>(`${environment.apiUrl}/request-form-data`, {  })
+    return this.http.get<any>(`${environment.adminUrl}/request-form-data`, {  })
         .pipe(map(response => {
             console.log(response);
             if (response.status === 'success') {

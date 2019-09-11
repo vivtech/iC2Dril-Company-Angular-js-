@@ -11,6 +11,9 @@ import { ValidPassword } from 'src/app/@core/validators/valid-password.validator
 import { MustMatch } from 'src/app/@core/validators/must-match.validators';
 import { FileUploader } from 'ng2-file-upload';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { CommonService } from 'src/app/@core/services/common.service';
+import { Observable } from 'rxjs';
+import { Country } from 'src/app/@core/models/country.model';
 
 @Component({
   selector: 'app-profile',
@@ -36,8 +39,11 @@ export class ProfileComponent implements OnInit {
     public filePreviewPath: File = null;
     imageError: boolean = false;
     selectedFile: any;
+    countryList: Observable<Country[]>;
 
-    constructor(private profileService: ProfileService,
+    constructor(
+              private commonService: CommonService,
+              private profileService: ProfileService,
               private authenticationService: AuthenticationService,
               private formBuilder: FormBuilder,
               private formService: FormService,
@@ -45,6 +51,8 @@ export class ProfileComponent implements OnInit {
               public sanitizer: DomSanitizer) { }
 
     ngOnInit() {
+        const data = this.commonService.getRequestFormData().subscribe();
+        this.countryList = this.commonService.getCountryList();
         this.user = this.authenticationService.currentUserValue;
         this.profileForm = this.formBuilder.group({
             name: [this.user.name, [Validators.required, Validators.minLength(this.validator.name.min),
@@ -52,7 +60,8 @@ export class ProfileComponent implements OnInit {
             email: [this.user.email, [Validators.required, Validators.email, Validators.minLength(this.validator.email.min),
             Validators.maxLength(this.validator.email.max)]],
             phone: [this.user.phone, [Validators.required, Validators.minLength(this.validator.phone.min),
-            Validators.maxLength(this.validator.phone.max)]]
+            Validators.maxLength(this.validator.phone.max)]],
+            tel: [this.user.tel, [Validators.required]]
         });
 
         this.confirmPasswordForm = this.formBuilder.group({
@@ -70,6 +79,8 @@ export class ProfileComponent implements OnInit {
         }, {
             validator: MustMatch('password', 'confirmPassword')
         });
+
+
     }
 
     get f() { return this.profileForm.controls; }
@@ -92,7 +103,7 @@ export class ProfileComponent implements OnInit {
             case 'new' :
                 this.NewpasswordHidden = !this.NewpasswordHidden;
             break;
-            case 'confirm' : 
+            case 'confirm' :
                 this.ConfirmpasswordHidden = !this.ConfirmpasswordHidden;
             break;
         }

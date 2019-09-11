@@ -71,18 +71,26 @@
                                         </div>
                                     </div>
                                     <div class="row mt-3">
-                                        <div class="col-md-6">
+                                        <div class="col-md-12">
                                             <div class="form-group form-group-default">
                                                 <label>Email</label>
                                                 <input type="email" class="form-control" formControlName="email" placeholder="Name" value="" [attr.maxlength]="validator.email.max">
                                                 <error-label [control]="f.email"></error-label>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group form-group-default">
+                                        <div class="col-md-12 mt-3">
+                                            <div class="form-group form-group-default dropdown">
                                                 <label>Phone</label>
-                                                <input type="text" [attr.maxlength]="validator.phone.max" digitOnly class="form-control digit-only" value="" formControlName="phone" placeholder="Phone">
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0"  [clearable]="false" formControlName="tel" [items]="countryList | async" bindLabel="tel" bindValue="_id"></ng-select>
+                                                    </div>
+                                                    <div class="col-md-8">
+                                                        <input type="text" formControlName="phone" [attr.maxlength]="validator.phone.max" class="form-control digit-only" digitOnly>
+                                                    </div>
+                                                </div>
                                                 <error-label [control]="f.phone"></error-label>
+                                                <error-label [control]="f.tel"></error-label>
                                             </div>
                                         </div>
                                     </div>
