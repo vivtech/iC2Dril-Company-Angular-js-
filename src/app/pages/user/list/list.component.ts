@@ -37,8 +37,8 @@ export class ListComponent implements OnInit, OnDestroy {
         { id: 1, name: 'Blocked' }
     ];
     activeList = [
-        { id: 0, name: 'Active' },
-        { id: 1, name: 'Inactive' }
+        { id: 1, name: 'Active' },
+        { id: 0, name: 'Inactive' }
     ];
     blockList = [
         { id: 0, name: 'Unblocked' },

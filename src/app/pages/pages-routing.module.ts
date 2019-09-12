@@ -23,12 +23,13 @@ const routes: Routes = [
     },
     {
         path: 'forgot-password',
-        component: ForgotPasswordComponent
+        component: ForgotPasswordComponent,
+        canActivate: [AuthRedirect]
     },
     {
         path: 'reset-password/:token',
         component: ResetPasswordComponent,
-        canActivate: [ResetTokenGuard]
+        canActivate: [ResetTokenGuard, AuthRedirect]
     },
     {
         path: 'request-form',
