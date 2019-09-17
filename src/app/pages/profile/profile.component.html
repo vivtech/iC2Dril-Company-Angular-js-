@@ -43,7 +43,7 @@
                         <div class="tab-pane fade " [ngClass]="{ active: !passwordVisible,  show: !passwordVisible }" id="profile-tab" role="tabpanel" aria-labelledby="pills-home-tab-nobd">
                             <form class="row" id="profileForm" enctype="multipart/form-data" [formGroup]="profileForm" (ngSubmit)="onProfileSubmit()">
                                 <div class="col-md-5 offset-md-2">
-                                    <!-- <div class="row mt-3">
+                                    <div class="row mt-3">
                                         <div class="col-md-2">
                                             <div *ngIf="filePreviewPath == null" class="avatar-sm">
                                                 <img src="../assets/img/profile.jpg" alt="Profile" class="avatar-img rounded-circle">
@@ -53,14 +53,14 @@
                                             </div>
                                         </div>
                                         <div class="col-md-10" style="align-items: center;display: flex;">
-                                             <input type="file" accept="image/*" [hidden]="true" id="file" ng2FileSelect [uploader]="uploader" (onFileSelected)="onFileSelected($event)">
+                                            <input type="file" accept="image/*" [hidden]="true" id="file" ng2FileSelect [uploader]="uploader" (onFileSelected)="onFileSelected($event)">
                                             <label for="file" style="color: #520701 !important;font-weight: 600; cursor: pointer;">
                                                 Change profile image<br>
                                                 <small *ngIf="imageError" style="color: red !important;">please choose image
                                                 </small>
                                             </label>
                                         </div>
-                                    </div> -->
+                                    </div>
                                     <div class="row mt-3">
                                         <div class="col-md-12">
                                             <div class="form-group form-group-default">
@@ -83,7 +83,7 @@
                                                 <label>Phone</label>
                                                 <div class="row">
                                                     <div class="col-md-4">
-                                                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0"  [clearable]="false" formControlName="tel" [items]="countryList | async" bindLabel="tel" bindValue="_id"></ng-select>
+                                                        <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [clearable]="false" formControlName="tel" [items]="countryList | async" bindLabel="tel" bindValue="_id"></ng-select>
                                                     </div>
                                                     <div class="col-md-8">
                                                         <input type="text" formControlName="phone" [attr.maxlength]="validator.phone.max" class="form-control digit-only" digitOnly>

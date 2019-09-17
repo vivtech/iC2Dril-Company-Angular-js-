@@ -13,7 +13,7 @@
             <li class="nav-item">
                 <a>{{title}}</a>
             </li>
-           <!--  <li class="separator">
+            <!--  <li class="separator">
                 <i class="flaticon-right-arrow"></i>
             </li>
             <li class="nav-item">
@@ -28,8 +28,7 @@
                     <div class="d-flex align-items-center">
                         <h4 class="page-title">Project List</h4>
                         <a class="btn btn-primary btn-round ml-auto" routerLink="/project/create">
-                            <i class="fa fa-plus"></i>
-                            Create Project
+                            <i class="fa fa-plus"></i> Create Project
                         </a>
                     </div>
                 </div>
@@ -39,7 +38,7 @@
                         <div class="col-md-3 pl-0">
                             <div class="form-group pt-0">
                                 <label>Status</label>
-                                <ng-select (change)="refreshTable()" class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [(ngModel)]="statusFilter" [items]="statusFilterData" bindLabel="name" bindValue="id"></ng-select>
+                                <ng-select (change)="refreshTable()" class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [(ngModel)]="statusFilter" [clearable]="false" [items]="statusFilterData" bindLabel="name" bindValue="id"></ng-select>
 
                             </div>
                         </div>
@@ -50,8 +49,13 @@
                             <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>Client</th>
-                                    <th>Active</th>
+                                    <th>Block Name</th>
+                                    <th>Field Name</th>
+                                    <th>Field Environment</th>
+                                    <th>Well Name</th>
+                                    <th>Depth</th>
+                                    <th>Depth Type</th>
+                                    <!-- <th>country</th> -->
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -59,11 +63,17 @@
                             <tbody *ngIf="dataList?.length != 0">
                                 <tr *ngFor="let data of dataList">
                                     <td><a (click)="view(data._id)">{{ data.name | capitalize }}</a></td>
-                                    <td>{{ data.client.name | capitalize }}</td>
-                                    <td>
+                                    <td>{{ data.blockName | capitalize }}</td>
+                                    <td>{{ data.fieldName | capitalize }}</td>
+                                    <td>{{ data.fieldEnv | capitalize }}</td>
+                                    <td>{{ data.wellName | capitalize }}</td>
+                                    <td>{{ data.depth | capitalize }}</td>
+                                    <td>{{ data.depthType | capitalize }}</td>
+                                    <!-- <td>{{ data.country | capitalize }}</td> -->
+                                    <!-- <td>
                                         <span class="badge badge-pill badge-success" *ngIf="data.active == 1">Active</span>
                                         <span class="badge badge-pill badge-danger" *ngIf="data.active == 0">Inactive</span>
-                                    </td>
+                                    </td> -->
                                     <td>
                                         <span class="badge badge-pill badge-success" *ngIf="data.status == 1">Completed</span>
                                         <span class="badge badge-pill badge-warning" *ngIf="data.status == 0">In Progress</span>
@@ -74,7 +84,6 @@
                                             <button class="btn btn-link btn-primary" (click)="editDetail(editModal,data._id)"><i class="fa fa-edit"></i></button>
                                             <button class="btn btn-link btn-danger" (click)="deleteConfirmation(data._id)"><i class="fa fa-trash"></i></button>
                                         </div>
-
                                     </td>
                                 </tr>
                             </tbody>
@@ -118,64 +127,71 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group form-group-default">
-                            <label class="text-primary">Client Name</label>
-                            <input type="text" formControlName="client_name" class="form-control" placeholder="clientname">
-                            <error-label [control]="f.client_name"></error-label>
+                            <label class="text-primary">Block Name</label>
+                            <input type="text" formControlName="blockName" class="form-control" placeholder="Block name">
+                            <error-label [control]="f.blockName"></error-label>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group form-group-default">
-                            <label class="text-primary">Address</label>
-                                <input type="email" formControlName="address" class="form-control" placeholder="address">
-                                <error-label [control]="f.address"></error-label>
+                            <label class="text-primary">Field Name</label>
+                            <input type="text" name="fieldName" formControlName="fieldName" class="form-control" placeholder="Field name">
+                            <error-label [control]="f.fieldName"></error-label>
                         </div>
                     </div>
                     <div class="col-sm-6">
-                        <div class="form-group form-group-default">
-                            <label class="text-primary">Client Email</label>
-                                <input type="text" formControlName="client_email" class="form-control" placeholder="clientemail">
-                                <error-label [control]="f.client_email"></error-label>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="form-group form-group-default">
-                            <label class="text-primary">City</label>
-                                <input type="text" formControlName="city" class="form-control" placeholder="city">
-                                <error-label [control]="f.city"></error-label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
                         <div class="form-group form-group-default dropdown">
-                            <label class="text-primary">Client Phone</label>
-                                <input type="text" formControlName="client_phone" class="form-control" placeholder="clientphone">
-                                <error-label [control]="f.client_phone"></error-label>
+                            <label class="text-primary">Field Environment</label>
+                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="fieldEnv" [items]="fieldEnvData" bindLabel="name" [clearable]="false" bindValue="id" placeholder="Field environment"></ng-select>
+                            <error-label [control]="f.fieldEnv"></error-label>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-sm-6">
+                        <div class="form-group form-group-default">
+                            <label class="text-primary">Well Name</label>
+                            <input type="text" name="wellName" formControlName="wellName" class="form-control" placeholder="Well Name">
+                            <error-label [control]="f.wellName"></error-label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <!-- <div class="row"> -->
+                        <!-- <div class="col-sm-8"> -->
+                        <div class="form-group form-group-default">
+                            <label class="text-primary">Water Depth</label>
+                            <input type="number" name="depth" formControlName="depth" class="form-control" placeholder="Water depth">
+                            <error-label [control]="f.depth"></error-label>
+                        </div>
+                        <!-- </div> -->
+                        <!-- <div class="col-sm-4"> -->
+
+                        <!-- </div> -->
+                        <!-- </div> -->
+                    </div>
+                    <div class="col-sm-6">
                         <div class="form-group form-group-default dropdown">
-                            <label class="text-primary">State</label>
-                                <input type="text" formControlName="state" class="form-control" placeholder="state">
-                                <error-label [control]="f.state"></error-label>
+                            <label class="text-primary">WaterDepth Type</label>
+                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="depthType" [items]="depthData" bindLabel="name" [clearable]="false" bindValue="name" placeholder="Type"></ng-select>
+                            <error-label [control]="f.depthType"></error-label>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-sm-6">
+                        <div class="form-group form-group-default dropdown">
+                            <label class="text-primary">Country</label>
+                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [items]="countryList | async" formControlName="country" [clearable]="false" bindLabel="name" bindValue="_id" placeholder="Country">
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
                         <div class="form-group form-group-default dropdown">
                             <label class="text-primary">Status</label>
-                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="status" [items]="statusData" bindLabel="name" bindValue="id"></ng-select>
+                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="status" [items]="statusData" bindLabel="name" [clearable]="false" bindValue="id" placeholder="Status"></ng-select>
                             <error-label [control]="f.status"></error-label>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group form-group-default dropdown">
-                            <label class="text-primary">Country</label>
-                                <input type="text" formControlName="country" class="form-control" placeholder="country">
-                                <error-label [control]="f.country"></error-label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
+                    <div class="col-sm-6">
                         <div class="form-group form-group-default dropdown">
                             <label class="text-primary">Active</label>
-                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="active" [items]="activeData" bindLabel="name" bindValue="id"></ng-select>
+                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="active" [items]="activeData" bindLabel="name" [clearable]="false" bindValue="id" placeholder="Status"></ng-select>
                             <error-label [control]="f.active"></error-label>
                         </div>
                     </div>

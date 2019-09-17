@@ -1,0 +1,25 @@
+.avatar-img {
+	width: 50% !important;
+}
+
+.attendename {
+	display: flex;
+    align-items: center;
+    margin-left: -35px;
+}
+
+.form-group-default {
+	margin-bottom: 5px !important;
+}
+
+.scroll-container {
+  position: relative;
+}
+
+.scrollable-content {
+  padding: 16px;
+  margin: 0;
+}
+input.form-control.floating-input.input-border-bottom.pl-1.pr-1.pb-0.pt-0 {
+	margin-top: 29px;
+}

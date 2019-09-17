@@ -25,6 +25,14 @@ export class ProjectWellService {
         ));
     }
 
+    getAll(id): any {
+        return this.http.post(`${environment.apiUrl}/well/list?type=All`, {project: id})
+            .pipe(map(response => {
+                return response;
+            }
+        ));
+    }
+
 
       getList(dataTablesParameters): any {
           return this.http.post<any>(`${environment.apiUrl}/well/list`, dataTablesParameters)

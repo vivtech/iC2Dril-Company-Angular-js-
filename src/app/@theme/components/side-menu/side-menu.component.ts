@@ -16,6 +16,14 @@ export class SideMenuComponent implements OnInit {
       icon: 'fas fa-th-list',
       link: '/project',
     },{
+        label: 'Rig Locations',
+        icon: 'fas fa-map-marker-alt',
+        link: '/riglocation/list'
+    },{
+        label: 'Cameras',
+        icon: 'fas fa-video',
+        link: '/camera/list'
+    },{
        label: 'Users',
       icon: 'fas fa-user-tie',
       link: '/user/list'

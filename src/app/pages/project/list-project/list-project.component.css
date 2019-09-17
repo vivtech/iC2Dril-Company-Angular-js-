@@ -5,3 +5,7 @@
     border: 1px solid #999;
     overflow: hidden;
 }
+
+.ng-select {
+    padding-bottom: 0px;
+}

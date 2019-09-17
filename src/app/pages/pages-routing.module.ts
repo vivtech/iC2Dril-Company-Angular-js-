@@ -65,6 +65,13 @@ const routes: Routes = [
                 loadChildren: './project/project.module#ProjectModule'
             },
             {
+                path: 'riglocation',
+                loadChildren: './rig-location/rig.module#RigModule'
+            },{
+                path: 'camera',
+                loadChildren: './camera/camera.module#CameraModule'
+            },
+            {
                 path: 'package',
                 component:  PackageComponent
             },

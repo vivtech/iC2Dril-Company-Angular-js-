@@ -1,35 +1,43 @@
 export interface Project {
     _id?: string;
     name: string;
-    company?: string;
-    project?: string;
-    active?: number;
-    address: string;
-    city: string;
+    blockName?: string;
+    fieldName?: string;
+    fieldEnv?: number;
+    wellName: string;
     state: string;
-    country: string;
-    client: any;
+    depth: any;
+    depthType: string;
+    country: any;
     status: any;
+    active: any;
 }
 
 
 export interface ProjectWell {
     _id?: string;
-    name: string;
-    company?: string;
-    project?: string;
+    fieldName?: string;
+    rigLocation?: string;
+    project?: any;
+    status?: number;
+    country?: string;
+    data?: string;
+    name: any;
     active?: number;
 }
 
 export interface ProjectCamera {
     _id?: string;
     company?: string;
-    project?: string;
+    project?: any;
     well?: string;
     name: string;
     url?: string;
     username?: string;
     password?: string;
+    data?: any;
+    default?: number;
+    confirm?: number;
     users?: any;
     active?: number;
 }

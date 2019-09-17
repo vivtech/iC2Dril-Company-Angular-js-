@@ -374,6 +374,7 @@ export class ListComponent implements OnInit, OnDestroy {
         this.editForm.markAllAsTouched();
         console.log(this.editForm.getRawValue());
         if (this.editForm.invalid) {
+            console.log('userForm-notvalid');
             this.submitted = false;
             return false;
         }

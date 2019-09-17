@@ -32,7 +32,7 @@
                         <div class="col-md-3 pl-0">
                             <div class="form-group pt-0">
                                 <label>User Type</label>
-                                <ng-select (change)="refreshTable()" class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [(ngModel)]="typeFilter" [items]="userTypeFilterData" bindLabel="name" bindValue="_id">
+                                <ng-select (change)="refreshTable()" class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [(ngModel)]="typeFilter" [clearable]="false" [items]="userTypeFilterData" bindLabel="name" bindValue="_id">
                                     <!-- <ng-option [value]="'custom'">Custom</ng-option>
                                     <ng-option *ngFor="let car of cars" [value]="car.id" [disabled]="car.disabled">{{car.name}}</ng-option> -->
                                 </ng-select>
@@ -42,17 +42,17 @@
                         <div class="col-md-3 pl-0">
                             <div class="form-group pt-0">
                                 <label>Block Type</label>
-                                <ng-select (change)="refreshTable()" class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [(ngModel)]="blockFilter" [items]="blockedFilterData" bindLabel="name" bindValue="id"></ng-select>
+                                <ng-select (change)="refreshTable()" class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [(ngModel)]="blockFilter" [clearable]="false" [items]="blockedFilterData" bindLabel="name" bindValue="id"></ng-select>
 
                             </div>
                         </div>
                         <div class="col-md-3 pl-0">
-                                <div class="form-group pt-0">
-                                    <label>Status</label>
-                                    <ng-select (change)="refreshTable()" class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [(ngModel)]="statusFilter" [items]="statusFilterData" bindLabel="name" bindValue="id"></ng-select>
+                            <div class="form-group pt-0">
+                                <label>Status</label>
+                                <ng-select (change)="refreshTable()" class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [(ngModel)]="statusFilter" [clearable]="false" [items]="statusFilterData" bindLabel="name" bindValue="id"></ng-select>
 
-                                </div>
                             </div>
+                        </div>
 
                     </div>
                     <div class="table-responsive">
@@ -224,7 +224,7 @@
                             <label class="text-primary">Phone Number</label>
                             <div class="row">
                                 <div class="col-md-4">
-                                        <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0"  [clearable]="false" formControlName="tel" [items]="countryList | async" bindLabel="tel" bindValue="_id" ></ng-select>
+                                    <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [clearable]="false" formControlName="tel" [items]="countryList | async" bindLabel="tel" bindValue="_id"></ng-select>
                                 </div>
                                 <div class="col-md-8">
                                     <input type="text" formControlName="phone" [attr.maxlength]="validator.phone.max" class="form-control" digitOnly>
@@ -235,30 +235,30 @@
                         </div>
                     </div>
                     <div class="col-sm-6">
-                            <div class="form-group form-group-default">
-                                <label class="text-primary">Designation</label>
-                                <input type="text" formControlName="designation" [attr.maxlength]="validator.company.max" class="form-control" placeholder="Designation">
-                                <error-label [control]="f.designation"></error-label>
-                            </div>
+                        <div class="form-group form-group-default">
+                            <label class="text-primary">Designation</label>
+                            <input type="text" formControlName="designation" [attr.maxlength]="validator.company.max" class="form-control" placeholder="Designation">
+                            <error-label [control]="f.designation"></error-label>
                         </div>
+                    </div>
                     <div class="col-md-6">
                         <div class="form-group form-group-default dropdown">
                             <label class="text-primary">User Type</label>
-                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="userType" [items]="userTypeList" bindLabel="name" bindValue="_id" [class.filled]="f.userType.value"></ng-select>
+                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="userType" [clearable]="false" [items]="userTypeList" bindLabel="name" bindValue="_id" [class.filled]="f.userType.value"></ng-select>
                             <error-label [control]="f.userType"></error-label>
                         </div>
                     </div>
                     <div class="col-md-6" *ngIf="editing">
                         <div class="form-group form-group-default dropdown">
                             <label class="text-primary">Active Status</label>
-                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="active" [items]="activeList" bindLabel="name" bindValue="id" [class.filled]="f.active.value"></ng-select>
+                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="active" [clearable]="false" [items]="activeList" bindLabel="name" bindValue="id" [class.filled]="f.active.value"></ng-select>
                             <error-label [control]="f.active"></error-label>
                         </div>
                     </div>
                     <div class="col-md-6" *ngIf="editing">
                         <div class="form-group form-group-default dropdown">
                             <label class="text-primary">Block Status</label>
-                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="block" [items]="blockList" bindLabel="name" bindValue="id" [class.filled]="f.block.value"></ng-select>
+                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="block" [clearable]="false" [items]="blockList" bindLabel="name" bindValue="id" [class.filled]="f.block.value"></ng-select>
                             <error-label [control]="f.block"></error-label>
                         </div>
                     </div>

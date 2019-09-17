@@ -24,6 +24,8 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     successMessage = '';
     resetToken = '';
     subscription: any;
+    NewpasswordHidden = true;
+    ConfirmpasswordHidden = true;
 
 
     constructor(private router: Router,
@@ -52,6 +54,17 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
 
         this.subscription.unsubscribe();
+    }
+
+    toggleVisible(value) {
+        switch(value) {
+            case 'new' :
+                this.NewpasswordHidden = !this.NewpasswordHidden;
+            break;
+            case 'confirm' :
+                this.ConfirmpasswordHidden = !this.ConfirmpasswordHidden;
+            break;
+        }
     }
 
     onSubmit() {
