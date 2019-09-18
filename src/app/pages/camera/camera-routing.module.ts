@@ -20,6 +20,10 @@ const routes: Routes = [
                 redirectTo: 'list',
                 pathMatch: 'full'
             },
+            {
+                path: 'list/:data',
+                component: ListComponent
+            }
         ],
     },
 

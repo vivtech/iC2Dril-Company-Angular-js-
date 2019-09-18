@@ -38,3 +38,12 @@ input.form-control.floating-input.input-border-bottom.pl-1.pr-1.pb-0.pt-0 {
     font-size: 20px;
     cursor: pointer;
 }
+
+.check-box {
+    margin-top: 10px;
+}
+
+.check {
+    position: relative;
+    top: 2px;
+}

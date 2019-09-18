@@ -40,8 +40,11 @@ export class ListComponent implements OnInit {
     licenseForm: FormGroup;
     validator = environment.validators;
     dataList: ProjectCamera[];
+    projectFilterData = [];
     projectOptionData = [];
     wellOptionData = [];
+    projectFilter: any;
+    rigFilter: any;
     // dataList: Observable<Package[]>;
     submitted = false;
     today = new Date();
@@ -52,6 +55,7 @@ export class ListComponent implements OnInit {
     selectedPeople_Id = [];
     minDate = {year: this.today.getFullYear(), month: this.today.getMonth() + 1, day: this.today.getDate()};
     checkCtrl: FormControl;
+    hideConfirm: boolean = true;
 
     constructor(private commonService: CommonService,
                 private apiService: ProjectCameraService,
@@ -69,9 +73,18 @@ export class ListComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.activeRoute.params.subscribe(params => {
+            const projectId = params.data;
+            if (projectId !== undefined) {
+                this.projectFilter = projectId;
+                console.log('route', this.projectFilter);
+                this.projectOnchange('', '');
+            }
+        });
         this.projectService.getAll().subscribe(response => {
             console.log('AllProject', response.data);
             const allProjects = response.data;
+            this.projectFilterData = [{_id: '', name: 'All'}, ...allProjects];
             this.projectOptionData = [...allProjects];
         });
         this.service.getAllUser().subscribe(users => {
@@ -103,7 +116,9 @@ export class ListComponent implements OnInit {
               // tslint:disable-next-line: no-string-literal
               dataTablesParameters['filter'] = [];
               // tslint:disable-next-line: no-string-literal
-              dataTablesParameters['filter'][0] = {column: 'active', data: this.statusFilter};
+              dataTablesParameters['filter'][0] = {column: 'well', data: this.rigFilter ? this.rigFilter : ''};
+              // tslint:disable-next-line: no-string-literal
+              dataTablesParameters['filter'][1] = {column: 'active', data: this.statusFilter};
               // dataTablesParameters['filter'][1] = {column: 'project', data: this.projectId};
               console.log(dataTablesParameters);
               const responseData = this.apiService.getList(dataTablesParameters).pipe(first())
@@ -149,8 +164,8 @@ export class ListComponent implements OnInit {
             password: ['', [Validators.required, Validators.minLength(this.validator.camPassword.min),
                             Validators.maxLength(this.validator.camPassword.max)]],
             active: ['', [Validators.required]],
-            confirm: ['', [Validators.required]],
-            default: ['', [Validators.required]],
+            confirm: [0, [Validators.required]],
+            default: [0, [Validators.required]],
             project: [null, [Validators.required]],
             users: [null, [Validators.required]]
         });
@@ -174,7 +189,6 @@ export class ListComponent implements OnInit {
         console.log('event', event);
         this.selectedPeople = [];
     }
-
 
     get f() { return this.editForm.controls; }
 
@@ -318,17 +332,27 @@ export class ListComponent implements OnInit {
     }
 
     projectOnchange(data, event) {
-        console.log('projectSelect', data, event._id);
-        const id = event._id;
+        console.log('projectOnchange');
+        // tslint:disable-next-line: no-var-keyword
+        let id: any;
+        if (this.projectFilter !== undefined) {
+            id = this.projectFilter;
+        } else {
+            id = event._id;
+        }
         if (id !== undefined) {
             // tslint:disable-next-line: no-shadowed-variable
             this.wellService.getAll(id).subscribe(data => {
                 console.log('data', data.data[0]);
                 this.wellOptionData = [...data.data];
+                this.rigFilter = data.data[0] ? data.data[0]._id : '';
+                this.refreshTable();
                 this.f.data.setValue(data.data[0] ? data.data[0]._id : '');
             });
         }
-        this.refreshTable();
+        if (data !== 'projectFlter') {
+            this.refreshTable();
+        }
     }
 
     onchange(event) {
@@ -336,12 +360,24 @@ export class ListComponent implements OnInit {
         const checked = event.target.checked;
         if (checked) {
             this.f.default.setValue(1);
+            this.f.users.setValue(null);
         } else {
             this.f.default.setValue(0);
         }
     }
 
+    onConfirmChange(event) {
+        console.log('event', event.target.checked);
+        const checked = event.target.checked;
+        if (checked) {
+            this.f.confirm.setValue(1);
+        } else {
+            this.f.confirm.setValue(0);
+        }
+    }
+
     refreshTable() {
+        console.log('refresh');
         this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
             dtInstance.draw();
         });
@@ -360,6 +396,7 @@ export class ListComponent implements OnInit {
         this.selectedPeople = [];
         this.f.data.setValue(this.wellId);
         this.f.confirm.setValue(0);
+        this.f.default.setValue(0);
         this.modalService.open(modal, {
             size: 'lg'
         });

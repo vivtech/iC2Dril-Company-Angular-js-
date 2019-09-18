@@ -1,0 +1,97 @@
+<div class="page-inner">
+    <div class="page-header">
+        <h4 class="page-title">{{title}}</h4>
+        <ul class="breadcrumbs">
+            <li class="nav-home">
+                <a routerLink="/dashboard">
+                    <i class="flaticon-home"></i>
+                </a>
+            </li>
+            <li class="separator">
+                <i class="flaticon-right-arrow"></i>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/project/list">Project</a>
+            </li>
+            <li class="separator">
+                <i class="flaticon-right-arrow"></i>
+            </li>
+            <li class="nav-item">
+                <a>{{ title }}</a>
+            </li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex align-items-center">
+                        <h4 class="page-title project-name">{{ projectName }}</h4>
+                        <div class="ml-auto">
+                            <a class="btn btn-primary btn-round" title="Rig location" (click)="view('rig')"><i class="icon fas fa-map-marker-alt"></i>
+                            </a>&nbsp;&nbsp;
+                            <a class="btn btn-primary btn-round" title="Camera" (click)="view('camera')"><i class="icon fas fa-video"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <!-- <div class="col-sm-6">
+                                <div>
+                                    <label class="text-primary">Project Name</label>
+                                    <h5>{{ projectName }}</h5>
+                                </div>
+                            </div> -->
+                            <div class="col-sm-6 detail-div">
+                                <div>
+                                    <label class="text-primary">Block Name</label>
+                                    <h5>{{ blockName }}</h5>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 detail-div">
+                                <div>
+                                    <label class="text-primary">Field Name</label>
+                                    <h5>{{ fieldName }}</h5>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 detail-div">
+                                <div>
+                                    <label class="text-primary">Filed Environment</label>
+                                    <h5>{{ fieldEnv }}</h5>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 detail-div">
+                                <div>
+                                    <label class="text-primary">Well Name</label>
+                                    <h5>{{ wellName }}</h5>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 detail-div">
+                                <div>
+                                    <label class="text-primary">Depth</label>
+                                    <h5>{{ depth }}</h5>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 detail-div">
+                                <div>
+                                    <label class="text-primary">Depth Type</label>
+                                    <h5>{{ depthType }}</h5>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 detail-div">
+                                <div>
+                                    <label class="text-primary">Status</label>
+                                    <h5>{{ status }}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

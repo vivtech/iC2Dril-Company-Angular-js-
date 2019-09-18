@@ -46,6 +46,14 @@ export class ProjectWellService {
           ));
       }
 
+        getListById(dataTablesParameters, id): any {
+            return this.http.get<any>(`${environment.apiUrl}/well/${id}`, dataTablesParameters)
+                .pipe(map(response => {
+
+                    return response;
+                }));
+        }
+
       updateData(fieldParameters): any{
           return this.http.put<any>(`${environment.apiUrl}/well`, fieldParameters)
               .pipe(map(response => {

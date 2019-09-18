@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AuthGuard } from '../../@core/guards/auth.guard';
 import { AuthRedirect } from '../../@core/guards/auth-redirect.guard';
 import { RigComponent } from './rig.component';
-import { ListComponent } from './list/list.component';
+import { RigListComponent } from './list/list.component';
 
 const routes: Routes = [
     {
@@ -13,13 +13,17 @@ const routes: Routes = [
         children: [
             {
                 path: 'list',
-                component: ListComponent,
+                component: RigListComponent,
             },
             {
                 path: '',
                 redirectTo: 'list',
                 pathMatch: 'full'
             },
+            {
+                path: 'list/:data',
+                component: RigListComponent
+            }
         ],
     },
 

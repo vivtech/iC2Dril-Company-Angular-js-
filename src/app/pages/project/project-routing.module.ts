@@ -8,6 +8,9 @@ import { CameraComponent } from './camera/camera.component';
 import { AddProjectComponent } from './add-project/add-project.component';
 import { TokenGuard } from '../../@core/guards/token.guard';
 // import { CameraGuard } from '../../@core/guards/camera.guard';
+import { ProjectDetailComponent } from './project-detail/project-detail.component';
+import { ListComponent } from '../camera/list/list.component';
+import { RigListComponent } from '../rig-location/list/list.component';
 
 const routes: Routes = [
     {
@@ -26,6 +29,18 @@ const routes: Routes = [
             {
                 path: 'list',
                 component: ListProjectComponent
+            },
+            {
+                path: 'details/:data',
+                component: ProjectDetailComponent
+            },
+            {
+                path: 'riglocation/list/:data',
+                component: RigListComponent
+            },
+            {
+                path: 'camera/list/:data',
+                component: ListComponent
             },
             {
                 path: 'location/:project/:data',

@@ -22,7 +22,7 @@ import { Observable } from 'rxjs';
     templateUrl: './list.component.html',
     styleUrls: ['./list.component.css']
 })
-export class ListComponent implements OnInit {
+export class RigListComponent implements OnInit {
 
     @ViewChild(DataTableDirective, {static: false})
     datatableElement: DataTableDirective;
@@ -62,10 +62,13 @@ export class ListComponent implements OnInit {
     }
 
     ngOnInit() {
-        // this.route.params.subscribe(params => {
-        //     console.log('route', params);
-        //     this.projectId = params.data;
-        // })
+        this.route.params.subscribe(params => {
+            console.log('route', params.data);
+            const projectId = params.data;
+            if (projectId !== undefined) {
+                this.projectFilter = projectId;
+            }
+        });
         this.projectService.getAll().subscribe(response => {
             console.log('AllProject', response.data);
             const allProjects = response.data;

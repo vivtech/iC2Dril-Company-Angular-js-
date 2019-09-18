@@ -12,6 +12,9 @@ import { AddProjectComponent } from './add-project/add-project.component';
 import { CameraComponent } from './camera/camera.component';
 import { ListProjectComponent } from './list-project/list-project.component';
 import { ProjectComponent } from './project.component';
+import { ProjectDetailComponent } from './project-detail/project-detail.component';
+import { RigModule } from '../rig-location/rig.module';
+import { CameraModule } from '../camera/camera.module';
 
 const COMPONENTS = [
     ProjectComponent,
@@ -22,7 +25,7 @@ const COMPONENTS = [
 ];
 
 @NgModule({
-  imports: [ThemeModule, ProjectRoutingModule ],
-  declarations: [...COMPONENTS],
+  imports: [ThemeModule, ProjectRoutingModule, RigModule, CameraModule ],
+  declarations: [...COMPONENTS, ProjectDetailComponent],
 })
 export class ProjectModule {}

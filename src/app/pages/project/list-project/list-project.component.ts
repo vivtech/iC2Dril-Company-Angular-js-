@@ -203,7 +203,7 @@ export class ListProjectComponent implements OnInit {
     }
 
     view(id) {
-        this.router.navigate(['project/' + id]);
+        this.router.navigate(['project/details/' + id]);
     }
 
     deleteRequest(data) {
