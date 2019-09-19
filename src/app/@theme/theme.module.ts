@@ -32,6 +32,8 @@ import { DeleteModalComponent } from './components/modals/delete-modal/delete-mo
 import { CancelModalComponent } from './components/modals/cancel-modal/cancel-modal';
 import { PopoverOptionComponent } from './components/utils/popover-option/popover-option.component';
 import { BreadcrumbComponent } from './components/utils/breadcrumb/breadcrumb.component';
+import { FilterPipe } from './pipes/filter.pipe';
+import { DurationPipe } from './pipes/duration.pipe';
 
 const COMPONENTS = [
     WebComponent,
@@ -69,7 +71,9 @@ const BASE_MODULES = [
 ];
 
 const PIPES = [
-    CapitalizePipe
+    CapitalizePipe,
+    FilterPipe,
+    DurationPipe
 ];
 
 const NB_THEME_PROVIDERS = [
