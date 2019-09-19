@@ -382,7 +382,7 @@ export class ListComponent implements OnInit {
     }
 
     onchange(event) {
-        console.log('event', event);
+        console.log('event', event.target.checked);
         const checked = event.target.checked;
         if (checked) {
             this.hideConfirm = false;
