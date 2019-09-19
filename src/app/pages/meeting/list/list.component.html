@@ -64,9 +64,11 @@
                             <thead>
                                 <tr>
                                     <th>Title</th>
-                                    <th>Description</th>
-                                    <th>Start Time</th>
-                                    <!-- <th>End Time</th> -->
+                                    <th>Project</th>
+                                    <th>Rig Location</th>
+                                    <!-- <th>Description</th> -->
+                                    <!-- <th>Start Time</th> -->
+                                    <th>Duration</th>
                                     <th>Active</th>
                                     <th>Status</th>
                                     <th>Action</th>
@@ -75,9 +77,10 @@
                             <tbody *ngIf="companyList?.length != 0">
                                 <tr *ngFor="let meeting of companyList ">
                                     <td>{{ meeting.title }}</td>
-                                    <td>{{ meeting.desc }}</td>
-                                    <td>{{ meeting.startTime | date:'short' }}</td>
-                                    <!-- <td>{{ meeting.endTime | date:'short' }}</td> -->
+                                    <td>{{ meeting.project?.name }}</td>
+                                    <td>{{ meeting.well?.name }}</td>
+                                    <!-- <td>{{ meeting.startTime | date:'short' }}</td> -->
+                                    <td>{{ meeting.duration | minuteSeconds}}</td>
                                     <td>
                                         <span class="badge badge-pill badge-success" *ngIf="meeting.active == 1">Active</span>
                                         <span class="badge badge-pill badge-warning" *ngIf="meeting.active == 0">Cancelled</span>
@@ -138,43 +141,68 @@
                             <label class="text-primary">Title</label>
                             <span class="form-control text-muted">{{ modelData.title }}</span>
                         </div>
+
+
                         <div class="form-group form-group-default">
-                            <label class="text-primary">Description</label>
-                            <span class="form-control text-muted">{{ modelData.desc }}</span>
+                            <label class="text-primary">Meeting Type</label>
+                            <span class="form-control text-muted">{{ MeetingType | Filterpipe:modelData.type }}</span>
                         </div>
-                        <!-- <div class="form-group form-group-default">
-                            <label class="text-primary">Company</label>
-                            <span class="form-control text-muted">{{ modelData.company }}</span>
-                        </div> -->
-                        <div class="form-group form-group-default">
+                        <div class="form-group form-group-default" *ngIf="modelData.type != 3">
                             <label class="text-primary">Start Time</label>
-                            <span class="form-control text-muted">{{ modelData.startTime | date :'medium' }}</span>
+                            <span class="form-control text-muted">{{ modelData.startTime | date : dateFormet }}</span>
+                        </div>
+                        <div class="form-group form-group-default" *ngIf="modelData.type == 3">
+                            <label class="text-primary">Start Time</label>
+                            <span class="form-control text-muted">{{ modelData.startTime | date : dateFormet }} {{ dayType | Filterpipe:modelData.day }}</span>
                         </div>
                         <div class="form-group form-group-default">
-                            <label class="text-primary">End Time</label>
-                            <span class="form-control text-muted">{{ modelData.endTime | date :'medium' }}</span>
+                            <label class="text-primary">Duration</label>
+                            <span class="form-control text-muted">{{ modelData.duration | minuteSeconds }}</span>
+                        </div>
+
+
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group form-group-default">
+                            <label class="text-primary">Project</label>
+                            <span class="form-control text-muted">{{ modelData.project?.name }}</span>
+                        </div>
+                        <div class="form-group form-group-default">
+                            <label class="text-primary">Rig Location</label>
+                            <span class="form-control text-muted">{{ modelData.well?.name }}</span>
                         </div>
                         <div class="form-group form-group-default">
                             <label class="text-primary">Created By</label>
-                            <span class="form-control text-muted">{{ modelData.createdBy }}</span>
+                            <span class="form-control text-muted">{{ modelData.createdBy.name }}</span>
                         </div>
                         <div class="form-group form-group-default">
                             <label class="text-primary">Created At</label>
                             <span class="form-control text-muted">{{ modelData.createdAt | date :'medium' }}</span>
                         </div>
+
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-12">
                         <div class="form-group form-group-default">
-                            <label class="text-primary">Attenders</label>
-                            <perfect-scrollbar style="height:350px;">
-                                <span class="form-control text-muted">
-                                <div class="row" style="margin-top: 10px;margin-bottom: 10px;" *ngFor="let attende of modelData.attenders">
-                                    <div style="" class="col-sm-3">
-                                        <img src={{attende.profilePic}} alt="Profile" class="avatar-img rounded-circle">
+                            <label class="text-primary">Description</label>
+                            <span class="form-control text-muted">{{ modelData.desc }}</span>
+                        </div>
+                        <div class="form-group form-group-default">
+                            <div class="text-primary font-weight-bold bg-light p-2">
+                                <h4 class="m-0">Attenders</h4>
+                            </div>
+                            <perfect-scrollbar style="max-height:350px;">
+
+                                <div class="row">
+                                    <div class="col-md-4" style="margin-top: 10px;margin-bottom: 10px;" *ngFor="let attende of modelData.attenders">
+                                        <div class="row">
+                                            <div class="col-sm-4 ">
+                                                <img src={{attende.profilePic}} alt="Profile" class="avatar-img rounded-circle">
+                                            </div>
+                                            <div class="col-sm-8 attendename p-0">{{ attende.name }}</div>
+                                        </div>
                                     </div>
-                                    <div class="col-sm-9 attendename">{{ attende.name }}</div>
                                 </div>
-                            </span>
+
                             </perfect-scrollbar>
                         </div>
                     </div>
@@ -183,6 +211,6 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+        <button type="button" class="btn btn-outline-dark btn-rounded" (click)="modal.close('Close click')">Close</button>
     </div>
 </ng-template>

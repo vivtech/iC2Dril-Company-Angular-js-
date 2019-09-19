@@ -27,7 +27,8 @@ import { ValidEmail } from 'src/app/@core/validators/valid-email.validators';
 export class ListComponent implements OnInit, OnDestroy {
     @ViewChild(DataTableDirective, { static: false })
     datatableElement: DataTableDirective;
-    permission = 'create'
+    permission = 'create';
+    dateFormet;
     statusFilterData = [
         { id: '', name: 'All' },
         { id: 1, name: 'Active' },
@@ -74,6 +75,19 @@ export class ListComponent implements OnInit, OnDestroy {
         day: this.today.getDate()
     };
     modelData;
+    MeetingType = [
+        { id: 1, name: 'Occur once' },
+        { id: 2, name: 'Daily Meeting' },
+        { id: 3, name: 'Weekly Meeting' },
+        { id: 4, name: 'Monthly Meeting' }];
+        dayType = [
+            { id: 0, name: 'Sunday' },
+            { id: 1, name: 'Monday' },
+            { id: 2, name: 'Tuesday' },
+            { id: 3, name: 'Wednesday' },
+            { id: 4, name: 'Thursday' },
+            { id: 5, name: 'Friday' },
+            { id: 6, name: 'Saturday' }];
 
     constructor(
         private commonService: CommonService,
@@ -141,9 +155,11 @@ export class ListComponent implements OnInit, OnDestroy {
             },
             columns: [
                 { data: 'title' },
-                { data: 'desc' },
-                { data: 'startTime' },
-                // { data: 'endTime' },
+                { data: 'project' },
+                { data: 'well' },
+                // { data: 'desc' },
+                // { data: 'startTime' },
+                { data: 'duration' },
                 { data: 'active' },
                 { data: 'status' },
                 { data: 'attenders'}
@@ -295,6 +311,20 @@ export class ListComponent implements OnInit, OnDestroy {
         this.meetService.getData(MeetId).subscribe(data => {
             console.log('data', data.data);
             this.modelData = data.data;
+            switch (this.modelData.type) {
+                case 1:
+                    this.dateFormet =  'medium';
+                    break;
+                case 2:
+                    this.dateFormet =  'h:mm a';
+                    break;
+                case 3:
+                    this.dateFormet =  'h:mm a, ';
+                    break;
+                case 4:
+                    this.dateFormet =   'd, h:mm a';
+                    break;
+            }
             this.modalService.open(editModal, {
                 size: 'lg'
             });

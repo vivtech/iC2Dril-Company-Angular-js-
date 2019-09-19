@@ -8,30 +8,35 @@ import { Component, OnInit } from '@angular/core';
 export class SideMenuComponent implements OnInit {
   appitems = [
     {
-      label: 'Dashboard',
-      icon: 'fas fa-home',
-      link: '/dashboard',
-    },{
-       label: 'Projects',
-      icon: 'fas fa-th-list',
-      link: '/project',
-    },{
+        label: 'Dashboard',
+        icon: 'fas fa-home',
+        link: '/dashboard',
+    },
+    {
+        label: 'Projects',
+        icon: 'fas fa-th-list',
+        link: '/project',
+    },
+    {
         label: 'Rig Locations',
         icon: 'fas fa-map-marker-alt',
         link: '/riglocation/list'
-    },{
+    },
+    {
         label: 'Cameras',
         icon: 'fas fa-video',
         link: '/camera/list'
-    },{
-       label: 'Users',
-      icon: 'fas fa-user-tie',
-      link: '/user/list'
-    },{
-      label: 'Meetings',
-      icon: 'fas fa-handshake',
-      link: '/meeting/list'
-    }
+    },
+    {
+        label: 'Meetings',
+        icon: 'fas fa-handshake',
+        link: '/meeting/list'
+    },
+    {
+        label: 'Users',
+        icon: 'fas fa-user-tie',
+        link: '/user/list'
+     }
       //   {
       //     label: 'Subscribed Company',
       //     icon: 'fas fa-th-list',
