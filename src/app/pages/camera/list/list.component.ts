@@ -32,7 +32,7 @@ export class ListComponent implements OnInit {
     statusData = [ {id: 1, name: 'Active'}, {id: 0, name: 'Inactive'}];
     statusFilter = '';
     editing = false;
-
+    hideProRig = false;
     title = 'Camera';
     dtOptions: DataTables.Settings = {};
     requestDetail: ProjectCamera;
@@ -45,6 +45,7 @@ export class ListComponent implements OnInit {
     wellOptionData = [];
     projectFilter: any;
     rigFilter: any;
+    rigID: any;
     // dataList: Observable<Package[]>;
     submitted = false;
     today = new Date();
@@ -74,9 +75,16 @@ export class ListComponent implements OnInit {
 
     ngOnInit() {
         this.activeRoute.params.subscribe(params => {
-            const projectId = params.data;
-            if (projectId !== undefined) {
-                this.projectFilter = projectId;
+            console.log('from Rig', params);
+            const projectId = params;
+            if (projectId.data !== undefined) {
+                this.projectFilter = projectId.data;
+                console.log('route', this.projectFilter);
+                this.projectOnchange('', '');
+            }
+            if (params.proId !== undefined && params.rigId !== undefined) {
+                this.projectFilter = projectId.proId;
+                this.rigID = projectId.rigId;
                 console.log('route', this.projectFilter);
                 this.projectOnchange('', '');
             }
@@ -139,6 +147,8 @@ export class ListComponent implements OnInit {
           },
           columns: [
                     { data: 'name' },
+                    { data: 'project' },
+                    { data: 'well' },
                     { data: 'active' }, { data: '_id' }],
           columnDefs: [
             {
@@ -201,14 +211,20 @@ export class ListComponent implements OnInit {
             this.editing = true;
             this.f.data.setValidators([Validators.required]);
             this.f.data.updateValueAndValidity();
+            this.hideProRig = true;
+            this.f.project.setValidators(null);
+            // this.projectOnchange('edit', this.requestDetail.project._id);
             this.editForm.patchValue({
-               data: this.requestDetail._id,
-               name: this.requestDetail.name,
-               url: this.requestDetail.url,
-               username: this.requestDetail.username,
-               password: this.requestDetail.password,
-               active: this.requestDetail.active,
-               users: this.requestDetail.users
+                data: this.requestDetail._id,
+                name: this.requestDetail.name,
+                url: this.requestDetail.url,
+                username: this.requestDetail.username,
+                password: this.requestDetail.password,
+                active: this.requestDetail.active,
+                users: this.requestDetail.users,
+                confirm: this.requestDetail.default,
+                default: this.requestDetail.default,
+                // project: this.requestDetail.project._id
             });
             this.modalService.open(editModal, {
                 size: 'lg'
@@ -335,19 +351,29 @@ export class ListComponent implements OnInit {
         console.log('projectOnchange');
         // tslint:disable-next-line: no-var-keyword
         let id: any;
-        if (this.projectFilter !== undefined) {
-            id = this.projectFilter;
+        if (data !== 'edit') {
+            if (this.projectFilter !== undefined) {
+                id = this.projectFilter;
+                console.log('this.projectFilter', id);
+            } else {
+                id = event._id;
+            }
         } else {
-            id = event._id;
+            console.log('edit-projId', event);
+            id = event;
         }
         if (id !== undefined) {
             // tslint:disable-next-line: no-shadowed-variable
-            this.wellService.getAll(id).subscribe(data => {
-                console.log('data', data.data[0]);
-                this.wellOptionData = [...data.data];
-                this.rigFilter = data.data[0] ? data.data[0]._id : '';
+            this.wellService.getAll(id).subscribe(result => {
+                console.log('result', data);
+                this.wellOptionData = [...result.data];
+                if (this.rigID !== undefined) {
+                    this.rigFilter = this.rigID;
+                } else if (data === 'projectFlter') {
+                    this.rigFilter = result.data[0] ? result.data[0]._id : null;
+                }
                 this.refreshTable();
-                this.f.data.setValue(data.data[0] ? data.data[0]._id : '');
+                this.f.data.setValue(result.data[0] ? result.data[0]._id : null);
             });
         }
         if (data !== 'projectFlter') {
@@ -359,10 +385,15 @@ export class ListComponent implements OnInit {
         console.log('event', event.target.checked);
         const checked = event.target.checked;
         if (checked) {
+            this.hideConfirm = false;
             this.f.default.setValue(1);
+            this.f.users.setValidators(null);
             this.f.users.setValue(null);
         } else {
+            this.hideConfirm = true;
             this.f.default.setValue(0);
+            this.f.confirm.setValue(0);
+            this.f.users.setValidators([Validators.required]);
         }
     }
 

@@ -20,7 +20,7 @@ export interface ProjectWell {
     rigLocation?: string;
     project?: any;
     status?: number;
-    country?: string;
+    country?: any;
     data?: string;
     name: any;
     active?: number;

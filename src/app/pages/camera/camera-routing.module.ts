@@ -21,6 +21,10 @@ const routes: Routes = [
                 pathMatch: 'full'
             },
             {
+                path: 'list/:proId/:rigId',
+                component: ListComponent
+            },
+            {
                 path: 'list/:data',
                 component: ListComponent
             }

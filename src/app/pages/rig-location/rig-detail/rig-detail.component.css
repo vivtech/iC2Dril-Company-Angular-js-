@@ -1,0 +1,16 @@
+h5 {
+    text-transform: capitalize;
+    /* font-weight: 600; */
+}
+
+.project-name {
+    text-transform: capitalize;
+}
+
+.detail-div {
+    margin-bottom: 10px;
+}
+
+.btn-round {
+    color: #fff !important;
+}

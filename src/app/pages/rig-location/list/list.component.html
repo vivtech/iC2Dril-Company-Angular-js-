@@ -53,6 +53,7 @@
                             <thead>
                                 <tr>
                                     <th>Name</th>
+                                    <th>Project</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -60,6 +61,7 @@
                             <tbody *ngIf="dataList?.length != 0">
                                 <tr *ngFor="let data of dataList">
                                     <td><a (click)="view(data._id)">{{ data.name | capitalize }}</a></td>
+                                    <td><a>{{ data.project.name | capitalize }}</a></td>
 
                                     <td>
                                         <span class="badge badge-pill badge-success" *ngIf="data.active == 1">Active</span>

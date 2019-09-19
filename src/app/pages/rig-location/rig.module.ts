@@ -9,6 +9,7 @@ import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
 import { AddRigComponent } from './add-rig/add-rig.component';
 import { RigDetailComponent } from './rig-detail/rig-detail.component';
+import { CameraModule } from '../camera/camera.module';
 
 const COMPONENTS = [
     RigComponent,
@@ -16,7 +17,7 @@ const COMPONENTS = [
 ];
 
 @NgModule({
-  imports: [ThemeModule, RigRoutingModule, PerfectScrollbarModule, NgxDaterangepickerMd.forRoot() ],
+  imports: [ThemeModule, RigRoutingModule, CameraModule, PerfectScrollbarModule, NgxDaterangepickerMd.forRoot() ],
   declarations: [...COMPONENTS, AddRigComponent, RigDetailComponent, ],
 })
 export class RigModule {}

@@ -111,6 +111,7 @@ export class RigListComponent implements OnInit {
           },
           columns: [
                     { data: 'name' },
+                    { data: 'project' },
                     { data: 'active' }, { data: '_id' }],
           columnDefs: [
             {
@@ -121,6 +122,10 @@ export class RigListComponent implements OnInit {
             {
                 searchable: false,
                 targets: [-2]
+            },
+            {
+                searchable: false,
+                targets: [-3]
             }
         ]
         };
@@ -158,7 +163,7 @@ export class RigListComponent implements OnInit {
                 rigLocation: this.requestDetail.rigLocation,
                 name: this.requestDetail.name,
                 active: this.requestDetail.active,
-                country: this.requestDetail.country,
+                country: this.requestDetail.country._id,
                 // project: this.requestDetail.project,
             });
             this.modalService.open(editModal, {
@@ -297,7 +302,7 @@ export class RigListComponent implements OnInit {
     }
 
     view(id) {
-         this.router.navigate(['project/location/' + this.projectId + '/' + id]);
+         this.router.navigate(['riglocation/details/' +  id]);
     }
 
 }

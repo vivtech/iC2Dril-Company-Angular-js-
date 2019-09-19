@@ -19,3 +19,8 @@
 .ng-select {
     padding-bottom: 0px;
 }
+
+.submit-btn {
+    text-align: right;
+    padding: 5px;
+}

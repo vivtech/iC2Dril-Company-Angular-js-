@@ -5,6 +5,7 @@ import { AuthGuard } from '../../@core/guards/auth.guard';
 import { AuthRedirect } from '../../@core/guards/auth-redirect.guard';
 import { RigComponent } from './rig.component';
 import { RigListComponent } from './list/list.component';
+import { RigDetailComponent } from './rig-detail/rig-detail.component';
 
 const routes: Routes = [
     {
@@ -14,6 +15,10 @@ const routes: Routes = [
             {
                 path: 'list',
                 component: RigListComponent,
+            },
+            {
+                path: 'details/:id',
+                component: RigDetailComponent,
             },
             {
                 path: '',

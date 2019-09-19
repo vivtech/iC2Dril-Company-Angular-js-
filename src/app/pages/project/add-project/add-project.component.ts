@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Country } from 'src/app/@core/models/country.model';
 import { CommonService } from 'src/app/@core/services/common.service';
+import { FormService } from 'src/app/@core/services/form-validation.service';
 
 @Component({
     selector: 'app-add-project',
@@ -16,6 +17,7 @@ import { CommonService } from 'src/app/@core/services/common.service';
 })
 export class AddProjectComponent implements OnInit {
     title = 'Create Project';
+    submitted = false;
     addproductForm: FormGroup;
     disable = true;
     UserType: any;
@@ -36,6 +38,7 @@ export class AddProjectComponent implements OnInit {
                 private service: ProjectService,
                 private toastr: ToastrService,
                 private router: Router,
+                private formService: FormService,
                 private commonService: CommonService) {}
 
     ngOnInit() {
@@ -97,7 +100,16 @@ export class AddProjectComponent implements OnInit {
     }
 
     submit(value) {
+        this.formService.clearCustomError(this.addproductForm);
+        this.addproductForm.markAllAsTouched();
+        this.submitted = true;
         this.disable = false;
+        if (this.addproductForm.invalid) {
+            console.log('invalid', this.addproductForm.getRawValue());
+            console.log('this.addproductForm-not valid');
+            this.submitted = false;
+            return false;
+        }
         const params = {
             name: value.name,
             blockName: value.blockName,
@@ -111,6 +123,7 @@ export class AddProjectComponent implements OnInit {
         };
         console.log('value', params);
         this.service.create(params).subscribe(res => {
+          this.submitted = false;
           this.toastr.error('', res.message);
           this.addproductForm.reset();
           console.log('Project create response', res.data._id);
@@ -119,6 +132,8 @@ export class AddProjectComponent implements OnInit {
               this.router.navigate(['/project/list']);
           }, 1500);
 
+        }, (err)=> {
+            this.submitted = false;
         });
     }
 }

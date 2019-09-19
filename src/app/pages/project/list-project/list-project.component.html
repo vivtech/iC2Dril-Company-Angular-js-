@@ -65,7 +65,7 @@
                                     <td><a (click)="view(data._id)">{{ data.name | capitalize }}</a></td>
                                     <td>{{ data.blockName | capitalize }}</td>
                                     <td>{{ data.fieldName | capitalize }}</td>
-                                    <td>{{ data.fieldEnv | capitalize }}</td>
+                                    <td>{{ fieldEnvData | Filterpipe:data.fieldEnv }}</td>
                                     <td>{{ data.wellName | capitalize }}</td>
                                     <td>{{ data.depth | capitalize }}</td>
                                     <td>{{ data.depthType | capitalize }}</td>

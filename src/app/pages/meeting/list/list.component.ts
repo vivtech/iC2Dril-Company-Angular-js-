@@ -143,7 +143,7 @@ export class ListComponent implements OnInit, OnDestroy {
                 { data: 'title' },
                 { data: 'desc' },
                 { data: 'startTime' },
-                { data: 'endTime' },
+                // { data: 'endTime' },
                 { data: 'active' },
                 { data: 'status' },
                 { data: 'attenders'}
@@ -165,14 +165,6 @@ export class ListComponent implements OnInit, OnDestroy {
                 {
                     searchable: false,
                     targets: [-4]
-                },
-                {
-                    searchable: false,
-                    targets: [-5]
-                },
-                {
-                    searchable: false,
-                    targets: [-6]
                 }
 
             ]

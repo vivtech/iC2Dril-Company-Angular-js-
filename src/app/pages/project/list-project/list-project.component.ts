@@ -16,13 +16,13 @@ import { CountryService } from 'src/app/@core/services/country.service';
 import { ProjectService } from 'src/app/@core/services/project.service';
 import { Project } from 'src/app/@core/models/project.model';
 import { Router } from '@angular/router';
-import { ValidEmail } from 'src/app/@core/validators/valid-email.validators';
 
 @Component({
     selector: 'app-list-project',
     templateUrl: './list-project.component.html',
     styleUrls: ['./list-project.component.css']
 })
+
 export class ListProjectComponent implements OnInit {
 
     @ViewChild(DataTableDirective, { static: false })
@@ -50,6 +50,7 @@ export class ListProjectComponent implements OnInit {
     submitted = false;
     today = new Date();
     minDate = { year: this.today.getFullYear(), month: this.today.getMonth() + 1, day: this.today.getDate() };
+    fieldEnvName: any;
 
     constructor(
         private commonService: CommonService,
@@ -84,6 +85,7 @@ export class ListProjectComponent implements OnInit {
                 const responseData = this.apiService.getList(dataTablesParameters).pipe(first())
                     .subscribe(response => {
                         console.log(response);
+                        // this.fieldEnvName = response.data.data;
                         if (response.code === 200) {
                             this.dataList = response.data.data;
                             callback({
@@ -333,4 +335,3 @@ export class ListProjectComponent implements OnInit {
     }
 
 }
-

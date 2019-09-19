@@ -1,1 +1,83 @@
-<p>rig-detail works!</p>
+<div class="page-inner">
+    <div class="page-header">
+        <h4 class="page-title">{{title}}</h4>
+        <ul class="breadcrumbs">
+            <li class="nav-home">
+                <a routerLink="/dashboard">
+                    <i class="flaticon-home"></i>
+                </a>
+            </li>
+            <li class="separator">
+                <i class="flaticon-right-arrow"></i>
+            </li>
+            <li class="nav-item">
+                <a routerLink="/project/list">Project</a>
+            </li>
+            <li class="separator">
+                <i class="flaticon-right-arrow"></i>
+            </li>
+            <li class="nav-item">
+                <a>{{ title }}</a>
+            </li>
+        </ul>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="d-flex align-items-center">
+                        <h4 class="page-title project-name">{{ name }}</h4>
+                        <div class="ml-auto">
+                            <a class="btn btn-primary btn-round" title="Camera" (click)="view()"><i class="fas fa-video"></i>
+                            &nbsp;Camera</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="col-sm-12">
+                        <div class="row">
+                            <!-- <div class="col-sm-6">
+                                <div>
+                                    <label class="text-primary">Project Name</label>
+                                    <h5>{{ projectName }}</h5>
+                                </div>
+                            </div> -->
+                            <div class="col-sm-6 detail-div">
+                                <div>
+                                    <label class="text-primary">Field Name</label>
+                                    <h5>{{ fieldName }}</h5>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 detail-div">
+                                <div>
+                                    <label class="text-primary">Rig Location</label>
+                                    <h5>{{ rigLocation }}</h5>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 detail-div">
+                                <div>
+                                    <label class="text-primary">Project</label>
+                                    <h5>{{ project }}</h5>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 detail-div">
+                                <div>
+                                    <label class="text-primary">Active</label>
+                                    <h5>{{ active }}</h5>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 detail-div">
+                                <div>
+                                    <label class="text-primary">Country</label>
+                                    <h5>{{ country }}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

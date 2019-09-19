@@ -21,10 +21,10 @@
                 <div class="card-header">
                     <div class="d-flex align-items-center">
                         <h4 class="page-title">Meeting List</h4>
-                        <button [hidden]="permission == 'notcreate'" class="btn btn-primary btn-round ml-auto" id="addModalOpen" (click)="createData(editModal)">
+                        <!-- <button [hidden]="permission == 'notcreate'" class="btn btn-primary btn-round ml-auto" id="addModalOpen" (click)="createData(editModal)">
                             <i class="fa fa-plus"></i>
                             Add Meeting
-                        </button>
+                        </button> -->
                     </div>
                 </div>
                 <div class="card-body">
@@ -42,14 +42,14 @@
                         <div class="col-md-3 pl-0">
                             <div class="form-group pt-0">
                                 <label>Status</label>
-                                <ng-select (change)="refreshTable()" class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [(ngModel)]="blockFilter" [items]="blockedFilterData" bindLabel="name" bindValue="id"></ng-select>
+                                <ng-select (change)="refreshTable()" class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [(ngModel)]="blockFilter" [clearable]="false" [items]="blockedFilterData" bindLabel="name" bindValue="id"></ng-select>
 
                             </div>
                         </div>
                         <div class="col-md-3 pl-0">
                             <div class="form-group pt-0">
                                 <label>Active</label>
-                                <ng-select (change)="refreshTable()" class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [(ngModel)]="statusFilter" [items]="statusFilterData" bindLabel="name" bindValue="id"></ng-select>
+                                <ng-select (change)="refreshTable()" class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [(ngModel)]="statusFilter" [clearable]="false" [items]="statusFilterData" bindLabel="name" bindValue="id"></ng-select>
                             </div>
                         </div>
                         <!-- <div class="col-md-3 pl-0">
@@ -66,7 +66,7 @@
                                     <th>Title</th>
                                     <th>Description</th>
                                     <th>Start Time</th>
-                                    <th>End Time</th>
+                                    <!-- <th>End Time</th> -->
                                     <th>Active</th>
                                     <th>Status</th>
                                     <th>Action</th>
@@ -77,7 +77,7 @@
                                     <td>{{ meeting.title }}</td>
                                     <td>{{ meeting.desc }}</td>
                                     <td>{{ meeting.startTime | date:'short' }}</td>
-                                    <td>{{ meeting.endTime | date:'short' }}</td>
+                                    <!-- <td>{{ meeting.endTime | date:'short' }}</td> -->
                                     <td>
                                         <span class="badge badge-pill badge-success" *ngIf="meeting.active == 1">Active</span>
                                         <span class="badge badge-pill badge-warning" *ngIf="meeting.active == 0">Cancelled</span>
@@ -164,10 +164,10 @@
                         </div>
                     </div>
                     <div class="col-sm-6">
-                        <div  class="form-group form-group-default">
+                        <div class="form-group form-group-default">
                             <label class="text-primary">Attenders</label>
                             <perfect-scrollbar style="height:350px;">
-                            <span class="form-control text-muted">
+                                <span class="form-control text-muted">
                                 <div class="row" style="margin-top: 10px;margin-bottom: 10px;" *ngFor="let attende of modelData.attenders">
                                     <div style="" class="col-sm-3">
                                         <img src={{attende.profilePic}} alt="Profile" class="avatar-img rounded-circle">
@@ -186,4 +186,3 @@
         <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
     </div>
 </ng-template>
-

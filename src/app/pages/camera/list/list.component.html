@@ -70,6 +70,8 @@
                                 <thead>
                                     <tr>
                                         <th>Name</th>
+                                        <th>Project</th>
+                                        <th>Rig Location</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -77,6 +79,8 @@
                                 <tbody *ngIf="dataList?.length != 0">
                                     <tr *ngFor="let data of dataList">
                                         <td>{{ data.name | capitalize }}</td>
+                                        <td>{{ data.project.name | capitalize }}</td>
+                                        <td>{{ data.well.name | capitalize }}</td>
                                         <td>
                                             <span class="badge badge-pill badge-success" *ngIf="data.active == 1">Active</span>
                                             <span class="badge badge-pill badge-warning" *ngIf="data.active == 0">Inactive</span>
@@ -162,7 +166,24 @@
                             </div>
                         </div>
                         <div class="col-sm-6">
-                            <div class="form-group form-group-default dropdown">
+                            <div [hidden]="hideProRig" class="form-group form-group-default dropdown">
+                                <label class="text-primary">Select Project</label>
+                                <ng-select (change)="projectOnchange('projectSelect', $event)" class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="project" placeholder="Project" [clearable]="false" [items]="projectOptionData" bindLabel="name"
+                                    bindValue="_id"></ng-select>
+                            </div>
+                            <div [hidden]="hideProRig" class="form-group form-group-default dropdown">
+                                <label class="text-primary">Select RigLocation</label>
+                                <ng-select (change)="refreshTable()" class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="data" placeholder="Please select project" [clearable]="false" [items]="wellOptionData" bindLabel="name" bindValue="_id"></ng-select>
+                            </div>
+                            <div class="check-box">
+                                <input type="checkbox" class="check" formControlName="default" (change)='onchange($event)' />&nbsp;&nbsp;
+                                <label class="text-primary">Default camera</label>
+                            </div>
+                            <div class="check-box" [hidden]="hideConfirm">
+                                <input type="checkbox" formControlName="confirm" (change)='onConfirmChange($event)' />&nbsp;&nbsp;
+                                <label class="text-primary">Confirm default camera</label>
+                            </div>
+                            <div class="form-group form-group-default dropdown" [hidden]="!hideConfirm">
                                 <label class="text-primary">Select User</label>
                                 <ng-select [items]="people" [multiple]="true" [closeOnSelect]="false" placeholder="Select user" bindLabel="name" bindValue="_id" formControlName="users" (add)="onAdd($event)" (clear)="onClear($event)" (remove)="onRemove($event)">
                                     <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
@@ -185,23 +206,6 @@
                                 </li>
                             </ul>
                         </div> -->
-                            <div class="form-group form-group-default dropdown">
-                                <label class="text-primary">Select Project</label>
-                                <ng-select (change)="projectOnchange('projectSelect', $event)" class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="project" placeholder="Project" [clearable]="false" [items]="projectOptionData" bindLabel="name"
-                                    bindValue="_id"></ng-select>
-                            </div>
-                            <div class="form-group form-group-default dropdown">
-                                <label class="text-primary">Select RigLocation</label>
-                                <ng-select (change)="refreshTable()" class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="data" placeholder="Please select project" [clearable]="false" [items]="wellOptionData" bindLabel="name" bindValue="_id"></ng-select>
-                            </div>
-                            <div class="check-box">
-                                <input type="checkbox" class="check" formControlName="default" (change)='onchange($event)' />&nbsp;&nbsp;
-                                <label class="text-primary">Default camera</label>
-                            </div>
-                            <div class="check-box" [hidden]="hideConfirm">
-                                <input type="checkbox" formControlName="confirm" (change)='onConfirmChange($event)' />&nbsp;&nbsp;
-                                <label class="text-primary">Confirm default camera</label>
-                            </div>
                         </div>
                         <!-- <div class="col-sm-6">
 

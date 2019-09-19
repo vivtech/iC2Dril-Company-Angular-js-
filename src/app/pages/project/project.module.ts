@@ -15,6 +15,7 @@ import { ProjectComponent } from './project.component';
 import { ProjectDetailComponent } from './project-detail/project-detail.component';
 import { RigModule } from '../rig-location/rig.module';
 import { CameraModule } from '../camera/camera.module';
+import { FilterPipe } from 'src/app/@theme/pipes/filter.pipe';
 
 const COMPONENTS = [
     ProjectComponent,
@@ -26,6 +27,6 @@ const COMPONENTS = [
 
 @NgModule({
   imports: [ThemeModule, ProjectRoutingModule, RigModule, CameraModule ],
-  declarations: [...COMPONENTS, ProjectDetailComponent],
+  declarations: [...COMPONENTS, ProjectDetailComponent, FilterPipe],
 })
 export class ProjectModule {}
