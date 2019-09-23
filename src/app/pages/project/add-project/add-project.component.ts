@@ -134,6 +134,13 @@ export class AddProjectComponent implements OnInit {
 
         }, (err)=> {
             this.submitted = false;
+            console.log(err);
+            if (err.errors.length > 0) {
+                for (const fieldError of err.errors) {
+                    const check = fieldError.param;
+                    this.addproductForm.get(check).setErrors( { customError : fieldError.msg } ) ;
+                }
+            }
         });
     }
 }

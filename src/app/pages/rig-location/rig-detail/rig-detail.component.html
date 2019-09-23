@@ -29,7 +29,7 @@
                         <h4 class="page-title project-name">{{ name }}</h4>
                         <div class="ml-auto">
                             <a class="btn btn-primary btn-round" title="Camera" (click)="view()"><i class="fas fa-video"></i>
-                            &nbsp;Camera</a>
+                            &nbsp;{{rigData.cameraCount > 0 ? 'Camera': 'Create Camera' }}</a>
                         </div>
                     </div>
                 </div>

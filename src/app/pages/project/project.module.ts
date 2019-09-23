@@ -6,10 +6,8 @@ import { ThemeModule } from '../../@theme/theme.module';
 // import { CompanyRoutingModule } from './company-routing.module';
 // import { CompanyComponent } from './company.component';
 // import { LicenseHistoryComponent } from './license-history/license-history.component';
-import { WellComponent } from './well/well.component';
 import { ProjectRoutingModule } from './project-routing.module';
 import { AddProjectComponent } from './add-project/add-project.component';
-import { CameraComponent } from './camera/camera.component';
 import { ListProjectComponent } from './list-project/list-project.component';
 import { ProjectComponent } from './project.component';
 import { ProjectDetailComponent } from './project-detail/project-detail.component';
@@ -20,9 +18,7 @@ import { CameraModule } from '../camera/camera.module';
 const COMPONENTS = [
     ProjectComponent,
     AddProjectComponent,
-    CameraComponent,
-    ListProjectComponent,
-    WellComponent,
+    ListProjectComponent
 ];
 
 @NgModule({

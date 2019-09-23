@@ -29,9 +29,9 @@
                         <h4 class="page-title project-name">{{ projectName }}</h4>
                         <div class="ml-auto">
                             <a class="btn btn-primary btn-round" title="Rig location" (click)="view('rig')"><i class="fas fa-map-marker-alt"></i>
-                                &nbsp;Rig</a>&nbsp;&nbsp;
-                            <a class="btn btn-primary btn-round" title="Camera" (click)="view('camera')"><i class="fas fa-video"></i>
-                                &nbsp;Camera</a>
+                                &nbsp;{{projectDetail.rigCount > 0 ? 'Rig Location' : 'Create Rig Location'}}</a>&nbsp;&nbsp;
+                            <a *ngIf="projectDetail.rigCount > 0" class="btn btn-primary btn-round" title="Camera" (click)="view('camera')"><i class="fas fa-video"></i>
+                                &nbsp;{{projectDetail.cameraCount > 0 ? 'Camera' : 'Create Camera'}}</a>
                         </div>
                     </div>
                 </div>
@@ -70,16 +70,16 @@
                             </div>
                             <div class="col-sm-6 detail-div">
                                 <div>
-                                    <label class="text-primary">Depth</label>
-                                    <h5>{{ depth }}</h5>
+                                    <label class="text-primary">Water Depth</label>
+                                    <h5>{{ depth }} {{ depthType }}</h5>
                                 </div>
                             </div>
-                            <div class="col-sm-6 detail-div">
+                            <!-- <div class="col-sm-6 detail-div">
                                 <div>
                                     <label class="text-primary">Depth Type</label>
                                     <h5>{{ depthType }}</h5>
                                 </div>
-                            </div>
+                            </div> -->
                             <div class="col-sm-6 detail-div">
                                 <div>
                                     <label class="text-primary">Status</label>

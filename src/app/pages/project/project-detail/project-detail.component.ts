@@ -8,6 +8,7 @@ import { ProjectService } from 'src/app/@core/services/project.service';
   styleUrls: ['./project-detail.component.css']
 })
 export class ProjectDetailComponent implements OnInit {
+    projectDetail: any;
     title = 'Project details';
     projectId: any;
     projectName: any;
@@ -33,9 +34,10 @@ export class ProjectDetailComponent implements OnInit {
     this.activeRoute.params.subscribe(param => {
         console.log('project', param.data);
         const projId = param.data;
-        this.projectService.getData(projId).subscribe(data => {
-            console.log('projectData', data.data);
-            const proData = data.data;
+        this.projectService.getData(projId).subscribe(response => {
+            console.log('projectData', response.data);
+            this.projectDetail = response.data;
+            const proData = this.projectDetail.data;
             this.projectName = proData.name;
             this.blockName = proData.blockName;
             this.fieldName = proData.fieldName;

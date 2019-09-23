@@ -136,6 +136,11 @@ export class ListProjectComponent implements OnInit {
                 {
                     searchable: false,
                     targets: [-6]
+                },
+                {
+                    searchable: false,
+                    targets: [6],
+                    visible: false
                 }
             ]
         };
@@ -170,7 +175,7 @@ export class ListProjectComponent implements OnInit {
 
         this.apiService.getData(data).subscribe(response => {
             console.log(response);
-            this.requestDetail = response.data;
+            this.requestDetail = response.data.data;
             console.log('this.requestDetail', this.requestDetail);
             this.editForm.reset();
             this.editing = true;

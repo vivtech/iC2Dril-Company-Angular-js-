@@ -29,7 +29,7 @@
                         <h4 class="page-title">Rig location list</h4>
                         <button class="btn btn-primary btn-round ml-auto" id="addModalOpen" (click)="createData(editModal)">
                                     <i class="fa fa-plus"></i>
-                                    Add Rig Location
+                                    &nbsp;&nbsp;&nbsp;Add Rig Location
                                 </button>
                     </div>
                 </div>
@@ -61,7 +61,7 @@
                             <tbody *ngIf="dataList?.length != 0">
                                 <tr *ngFor="let data of dataList">
                                     <td><a (click)="view(data._id)">{{ data.name | capitalize }}</a></td>
-                                    <td><a>{{ data.project.name | capitalize }}</a></td>
+                                    <td><a>{{ data.project?.name | capitalize }}</a></td>
 
                                     <td>
                                         <span class="badge badge-pill badge-success" *ngIf="data.active == 1">Active</span>
@@ -79,7 +79,7 @@
                             </tbody>
                             <tbody *ngIf="dataList?.length == 0">
                                 <tr>
-                                    <td colspan="3" class="no-data-available text-center">No matching records found</td>
+                                    <td colspan="4" class="no-data-available text-center">No matching records found</td>
                                 </tr>
                                 <tbody>
 

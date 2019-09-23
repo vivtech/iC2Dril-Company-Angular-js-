@@ -28,7 +28,7 @@
                     <div class="d-flex align-items-center">
                         <h4 class="page-title">Project List</h4>
                         <a class="btn btn-primary btn-round ml-auto" routerLink="/project/create">
-                            <i class="fa fa-plus"></i> Create Project
+                            <i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;Create Project
                         </a>
                     </div>
                 </div>
@@ -53,7 +53,7 @@
                                     <th>Field Name</th>
                                     <th>Field Environment</th>
                                     <th>Well Name</th>
-                                    <th>Depth</th>
+                                    <th>Water Depth</th>
                                     <th>Depth Type</th>
                                     <!-- <th>country</th> -->
                                     <th>Status</th>
@@ -63,12 +63,12 @@
                             <tbody *ngIf="dataList?.length != 0">
                                 <tr *ngFor="let data of dataList">
                                     <td><a (click)="view(data._id)">{{ data.name | capitalize }}</a></td>
-                                    <td>{{ data.blockName | capitalize }}</td>
-                                    <td>{{ data.fieldName | capitalize }}</td>
+                                    <td>{{ data.blockName }}</td>
+                                    <td>{{ data.fieldName }}</td>
                                     <td>{{ fieldEnvData | Filterpipe:data.fieldEnv }}</td>
                                     <td>{{ data.wellName | capitalize }}</td>
-                                    <td>{{ data.depth | capitalize }}</td>
-                                    <td>{{ data.depthType | capitalize }}</td>
+                                    <td>{{ data.depth | capitalize }} {{ data.depthType | capitalize }}</td>
+                                    <!-- <td>{{ data.depthType | capitalize }}</td> -->
                                     <!-- <td>{{ data.country | capitalize }}</td> -->
                                     <!-- <td>
                                         <span class="badge badge-pill badge-success" *ngIf="data.active == 1">Active</span>
@@ -89,7 +89,7 @@
                             </tbody>
                             <tbody *ngIf="dataList?.length == 0">
                                 <tr>
-                                    <td colspan="5" class="no-data-available text-center">No matching records found</td>
+                                    <td colspan="8" class="no-data-available text-center">No matching records found</td>
                                 </tr>
                                 <tbody>
 

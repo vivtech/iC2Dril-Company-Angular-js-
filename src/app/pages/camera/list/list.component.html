@@ -41,7 +41,7 @@
                         <h4 class="page-title">Camera List</h4>
                         <button class="btn btn-primary btn-round ml-auto" id="addModalOpen" (click)="createData(editModal)">
                                     <i class="fa fa-plus"></i>
-                                    Add Camera
+                                    &nbsp;&nbsp;&nbsp;Add Camera
                                 </button>
                     </div>
                 </div>
@@ -96,7 +96,7 @@
                                 </tbody>
                                 <tbody *ngIf="dataList?.length == 0">
                                     <tr>
-                                        <td colspan="3" class="no-data-available text-center">No matching records found</td>
+                                        <td colspan="5" class="no-data-available text-center">No matching records found</td>
                                     </tr>
                                     <tbody>
 
@@ -185,7 +185,7 @@
                             </div>
                             <div class="form-group form-group-default dropdown" [hidden]="!hideConfirm">
                                 <label class="text-primary">Select User</label>
-                                <ng-select [items]="people" [multiple]="true" [closeOnSelect]="false" placeholder="Select user" bindLabel="name" bindValue="_id" formControlName="users" (add)="onAdd($event)" (clear)="onClear($event)" (remove)="onRemove($event)">
+                                <!-- <ng-select [items]="people" [multiple]="true" [closeOnSelect]="false" placeholder="Select user" bindLabel="name" bindValue="_id" formControlName="users" (add)="onAdd($event)" (clear)="onClear($event)" (remove)="onRemove($event)">
                                     <ng-template ng-multi-label-tmp let-items="items" let-clear="clear">
                                         <div class="ng-value" *ngFor="let item of items | slice:0:3">
                                             <span class="ng-value-label">{{item.name}}</span>
@@ -195,7 +195,18 @@
                                             <span class="ng-value-label">{{items.length - 3}} more...</span>
                                         </div>
                                     </ng-template>
+                                </ng-select> -->
+                                <ng-select [items]="people" [multiple]="true" [closeOnSelect]="false" placeholder="Select user" bindLabel="name" bindValue="_id" formControlName="users" (add)="onAdd($event)" (clear)="onClear($event)" (remove)="onRemove($event)">
+                                    <ng-template ng-label-tmp let-item="item" let-clear="clear">
+                                        <span class="ng-value-label"><img [src]="item.profilePic" width="20px" height="20px"> {{item.name}}</span>
+                                        <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+                                    </ng-template>
+
+                                    <ng-template ng-option-tmp let-item="item">
+                                        <img [src]="item.profilePic" width="20px" height="20px">&nbsp;{{item.name}}
+                                    </ng-template>
                                 </ng-select>
+
                                 <error-label [control]="f.users"></error-label>
                             </div>
                             <!-- <div class="mt-3" *ngIf="selectedPeople.length > 0">

@@ -100,7 +100,10 @@ export class ListComponent implements OnInit {
             const array = [];
             // tslint:disable-next-line: forin
             for (const i in users.data) {
-                array.push({name: users.data[i].name, _id: users.data[i]._id});
+                array.push({name: users.data[i].name,
+                     _id: users.data[i]._id,
+                    profilePic: users.data[i].profilePic,
+                    designation: users.data[i].designation});
             }
             this.people = array;
         });
