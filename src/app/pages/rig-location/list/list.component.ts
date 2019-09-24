@@ -302,7 +302,8 @@ export class RigListComponent implements OnInit {
     }
 
     view(id) {
-         this.router.navigate(['riglocation/details/' +  id]);
+        this.router.navigate([]).then(result => {  window.open('riglocation/details/' +  id, '_blank'); });
+
     }
 
 }
