@@ -1,0 +1,13 @@
+.avatar-img {
+    width: 50% !important;
+}
+
+.attendename {
+    display: flex;
+    align-items: center;
+    margin-left: -35px;
+}
+
+.form-group-default {
+    border: none;
+}

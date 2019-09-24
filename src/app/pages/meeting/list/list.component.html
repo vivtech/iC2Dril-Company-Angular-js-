@@ -92,7 +92,7 @@
                                     </td>
                                     <td>
                                         <div class="btn-group datatable-dropdown">
-                                            <button type="button" class="btn btn-primary" (click)="view(editModal, meeting._id)">View
+                                            <button type="button" class="btn btn-primary" (click)="view(detailModal, meeting._id)">View
                                             </button>
                                             <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
                                                 <button class="btn btn-primary dropdown-toggle-split" ngbDropdownToggle></button>
@@ -125,7 +125,7 @@
 
 
 <!-- Edit Modal -->
-<ng-template #editModal let-modal>
+<ng-template #detailModal let-modal>
     <div class="modal-header">
         <h4 class="modal-title">Meeting Details</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -212,5 +212,75 @@
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-outline-dark btn-rounded" (click)="modal.close('Close click')">Close</button>
+    </div>
+</ng-template>
+
+<ng-template #createModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">{{ editing ? "Edit" : "Add" }} Rig Location</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+              </button>
+    </div>
+    <div class="modal-body">
+        <form class="row form" *ngIf="requestDetail" id="editForm" [formGroup]="editForm" (ngSubmit)="updateRequest()">
+            <!-- <input type="hidden" formControlName="data" class="form-control"> -->
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="form-group form-group-default">
+                            <label class="text-primary">Rig Name</label>
+                            <input type="text" formControlName="name" class="form-control" placeholder="Rig name">
+                            <error-label [control]="f.name"></error-label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6" [hidden]="editing">
+                        <div class="form-group form-group-default dropdown">
+                            <label class="text-primary">Select Project</label>
+                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [items]="projectOptionData" formControlName="data" [clearable]="false" bindLabel="name" bindValue="_id" placeholder="Select project">
+                            </ng-select>
+                            <error-label [control]="f.data"></error-label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group form-group-default">
+                            <label class="text-primary">Field Name</label>
+                            <input type="text" formControlName="fieldName" class="form-control" placeholder="Field name">
+                            <error-label [control]="f.fieldName"></error-label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group form-group-default">
+                            <label class="text-primary">Rig Location</label>
+                            <input type="text" formControlName="rigLocation" class="form-control" placeholder="Rig Location">
+                            <error-label [control]="f.rigLocation"></error-label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group form-group-default dropdown">
+                            <label class="text-primary">Country</label>
+                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [items]="countryList | async" formControlName="country" [clearable]="false" bindLabel="name" bindValue="_id" placeholder="Country">
+                            </ng-select>
+                            <error-label [control]="f.country"></error-label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default dropdown">
+                            <label class="text-primary">Active</label>
+                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="active" [items]="statusData" bindLabel="name" [clearable]="false" bindValue="id" [class.filled]="f.active.value" placeholder="Status"></ng-select>
+                            <error-label [control]="f.active"></error-label>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark btn-rounded" (click)="modal.close('Close click')">Close</button>
+        <app-submit-button [submitted]="submitted" (click)="updateRequest()">{{editing? "Update" : "Add" }}</app-submit-button>
     </div>
 </ng-template>

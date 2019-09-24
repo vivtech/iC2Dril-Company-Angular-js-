@@ -12,7 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 import { DeleteModalComponent } from 'src/app/@theme/components/modals/delete-modal/delete-modal.component';
 import { ProjectCamera } from 'src/app/@core/models/project.model';
 import { ProjectCameraService } from 'src/app/@core/services/project-camera.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/@core/services/user.service';
 import { ProjectService } from 'src/app/@core/services/project.service';
 import { ProjectWellService } from 'src/app/@core/services/project-well.service';
@@ -43,7 +43,8 @@ export class ListComponent implements OnInit {
     projectFilterData = [];
     projectOptionData = [];
     wellOptionData = [];
-    projectFilter: any;
+    wellFilterData = [];
+    projectFilter = '';
     rigFilter: any;
     rigID: any;
     // dataList: Observable<Package[]>;
@@ -68,7 +69,8 @@ export class ListComponent implements OnInit {
                 private service: UserService,
                 private projectService: ProjectService,
                 private wellService: ProjectWellService,
-                private activeRoute: ActivatedRoute) {
+                private activeRoute: ActivatedRoute,
+                private router: Router) {
         modalConfig.backdrop = 'static';
         modalConfig.keyboard = false;
     }
@@ -85,13 +87,14 @@ export class ListComponent implements OnInit {
             if (params.proId !== undefined && params.rigId !== undefined) {
                 this.projectFilter = projectId.proId;
                 this.rigID = projectId.rigId;
-                console.log('route', this.projectFilter);
+                console.log('route', this.rigID);
                 this.projectOnchange('', '');
             }
         });
         this.projectService.getAll().subscribe(response => {
-            console.log('AllProject', response.data);
             const allProjects = response.data;
+            console.log('AllProject', allProjects);
+
             this.projectFilterData = [{_id: '', name: 'All'}, ...allProjects];
             this.projectOptionData = [...allProjects];
         });
@@ -250,6 +253,10 @@ export class ListComponent implements OnInit {
         );
     }
 
+    view(id) {
+        this.router.navigate([]).then(result => {  window.open('camera/details/' +  id, '_blank'); });
+    }
+
     deleteRequest(data) {
 
         this.apiService.deleteData(data).subscribe(response => {
@@ -351,33 +358,38 @@ export class ListComponent implements OnInit {
     }
 
     projectOnchange(data, event) {
-        console.log('projectOnchange');
         // tslint:disable-next-line: no-var-keyword
         let id: any;
         if (data !== 'edit') {
-            if (this.projectFilter !== undefined) {
+            if (this.projectFilter) {
                 id = this.projectFilter;
                 console.log('this.projectFilter', id);
             } else {
                 id = event._id;
+                console.log('event', id);
             }
         } else {
             console.log('edit-projId', event);
             id = event;
         }
-        if (id !== undefined) {
+        if (id) {
             // tslint:disable-next-line: no-shadowed-variable
             this.wellService.getAll(id).subscribe(result => {
-                console.log('result', data);
-                this.wellOptionData = [...result.data];
+                this.wellFilterData = [{_id: '', name: 'All'}, ...result.data];
                 if (this.rigID !== undefined) {
                     this.rigFilter = this.rigID;
                 } else if (data === 'projectFlter') {
-                    this.rigFilter = result.data[0] ? result.data[0]._id : null;
+                    this.rigFilter = '';
+                } else if (data === 'projectSelect') {
+                    this.wellOptionData = [...result.data];
+                    this.f.data.setValue(result.data[0] ? result.data[0]._id : null);
                 }
                 this.refreshTable();
-                this.f.data.setValue(result.data[0] ? result.data[0]._id : null);
             });
+        } else {
+            this.wellFilterData = [];
+            this.rigFilter = null;
+            this.refreshTable();
         }
         if (data !== 'projectFlter') {
             this.refreshTable();
@@ -418,6 +430,7 @@ export class ListComponent implements OnInit {
     }
 
     createData(modal) {
+        this.hideProRig = false;
         this.f.data.setValidators(null);
         this.f.data.updateValueAndValidity();
         this.requestDetail = {
@@ -428,7 +441,7 @@ export class ListComponent implements OnInit {
         this.editForm.reset();
         this.selectedPeople_Id = [];
         this.selectedPeople = [];
-        this.f.data.setValue(this.wellId);
+        // this.f.data.setValue(this.wellId);
         this.f.confirm.setValue(0);
         this.f.default.setValue(0);
         this.modalService.open(modal, {

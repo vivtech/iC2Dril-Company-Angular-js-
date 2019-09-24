@@ -10,12 +10,12 @@ export class SideMenuComponent implements OnInit {
     {
         label: 'Dashboard',
         icon: 'fas fa-home',
-        link: '/dashboard',
+        link: '/dashboard'
     },
     {
         label: 'Projects',
         icon: 'fas fa-th-list',
-        link: '/project',
+        link: '/project'
     },
     {
         label: 'Rig Locations',
@@ -25,7 +25,7 @@ export class SideMenuComponent implements OnInit {
     {
         label: 'Cameras',
         icon: 'fas fa-video',
-        link: '/camera/list'
+        link: '/camera/list',
     },
     {
         label: 'Meetings',

@@ -29,9 +29,9 @@
                         <h4 class="page-title project-name">{{ projectName }}</h4>
                         <div class="ml-auto">
                             <a class="btn btn-primary btn-round" title="Rig location" (click)="view('rig')"><i class="fas fa-map-marker-alt"></i>
-                                &nbsp;{{projectDetail.rigCount > 0 ? 'Rig Location' : 'Create Rig Location'}}</a>&nbsp;&nbsp;
-                            <a *ngIf="projectDetail.rigCount > 0" class="btn btn-primary btn-round" title="Camera" (click)="view('camera')"><i class="fas fa-video"></i>
-                                &nbsp;{{projectDetail.cameraCount > 0 ? 'Camera' : 'Create Camera'}}</a>
+                                &nbsp;{{projectDetail?.rigCount > 0 ? 'Rig Location' : 'Create Rig Location'}}</a>&nbsp;&nbsp;
+                            <a *ngIf="projectDetail?.rigCount > 0" class="btn btn-primary btn-round" title="Camera" (click)="view('camera')"><i class="fas fa-video"></i>
+                                &nbsp;{{projectDetail?.cameraCount > 0 ? 'Camera' : 'Create Camera'}}</a>
                         </div>
                     </div>
                 </div>

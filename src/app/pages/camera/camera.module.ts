@@ -7,7 +7,7 @@ import { CameraRoutingModule } from './camera-routing.module';
 import { CameraComponent } from './camera.component';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
-import { AddCameraComponent } from './add-camera/add-camera.component';
+import { CameraDetailComponent } from './camera-detail/camera-detail.component';
 
 const COMPONENTS = [
     CameraComponent,
@@ -16,6 +16,6 @@ const COMPONENTS = [
 
 @NgModule({
   imports: [ThemeModule, CameraRoutingModule, PerfectScrollbarModule, NgxDaterangepickerMd.forRoot() ],
-  declarations: [...COMPONENTS, AddCameraComponent, ],
+  declarations: [...COMPONENTS, CameraDetailComponent],
 })
 export class CameraModule {}

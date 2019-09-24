@@ -291,22 +291,7 @@ export class ListComponent implements OnInit, OnDestroy {
         return this.licenseForm.controls;
     }
 
-    viewDetail(viewModal, data) {
-        this.apiService.getData(data).subscribe(
-            response => {
-                this.requestDetail = response.data;
-                this.modalService.open(viewModal, {
-                    scrollable: true,
-                    size: 'lg'
-                });
-            },
-            error => {
-                // this.noti
-            }
-        );
-    }
-
-    view(editModal, MeetId) {
+    view(detailModal, MeetId) {
         console.log('modleData', MeetId)
         this.meetService.getData(MeetId).subscribe(data => {
             console.log('data', data.data);
@@ -325,7 +310,7 @@ export class ListComponent implements OnInit, OnDestroy {
                     this.dateFormet =   'd, h:mm a';
                     break;
             }
-            this.modalService.open(editModal, {
+            this.modalService.open(detailModal, {
                 size: 'lg'
             });
         })

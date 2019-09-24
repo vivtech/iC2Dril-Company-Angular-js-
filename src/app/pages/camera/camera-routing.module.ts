@@ -5,6 +5,7 @@ import { AuthGuard } from '../../@core/guards/auth.guard';
 import { AuthRedirect } from '../../@core/guards/auth-redirect.guard';
 import { CameraComponent } from './camera.component';
 import { ListComponent } from './list/list.component';
+import { CameraDetailComponent } from './camera-detail/camera-detail.component';
 
 const routes: Routes = [
     {
@@ -27,6 +28,10 @@ const routes: Routes = [
             {
                 path: 'list/:data',
                 component: ListComponent
+            },
+            {
+                path: 'details/:data',
+                component: CameraDetailComponent
             }
         ],
     },

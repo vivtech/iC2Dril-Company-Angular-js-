@@ -3449,7 +3449,8 @@ button.calendar:active {
     min-height: auto;
 }
 
-.ng-dropdown-panel .ng-dropdown-panel-items .ng-option:hover {
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option:hover,
+.ng-dropdown-panel .ng-dropdown-panel-items .ng-option.ng-option-marked {
     background-color: #efefefef;
 }
 
@@ -3464,4 +3465,8 @@ button.calendar:active {
 
 .login .wrapper.wrapper-login .container-login .btn-login {
     width: 245px !important;
+}
+
+ng-dropdown-panel {
+    border-radius: 5px !important;
 }

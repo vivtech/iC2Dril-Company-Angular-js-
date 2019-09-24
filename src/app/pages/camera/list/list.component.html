@@ -56,7 +56,8 @@
                         <div class="col-md-3 pl-0">
                             <div class="form-group pt-0">
                                 <label>Rig Location</label>
-                                <ng-select (change)="refreshTable()" class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" placeholder="select product" [(ngModel)]="rigFilter" [clearable]="false" [items]="wellOptionData" bindLabel="name" bindValue="_id"></ng-select>
+                                <ng-select (change)="refreshTable()" class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" placeholder="Select project" [notFoundText]="'No wells found'" [(ngModel)]="rigFilter" [clearable]="false" [items]="wellFilterData" bindLabel="name"
+                                    bindValue="_id"></ng-select>
                             </div>
                         </div>
                         <div class="col-md-3 pl-0">
@@ -87,6 +88,7 @@
                                         </td>
                                         <td>
                                             <div class="btn-group datatable-dropdown">
+                                                <button class="btn btn-link" (click)="view(data._id)"><i class="fa fa-eye"></i></button>
                                                 <button class="btn btn-link btn-primary" (click)="editDetail(editModal,data._id)"><i class="fa fa-edit"></i></button>
                                                 <button class="btn btn-link btn-danger" (click)="deleteConfirmation(data._id)"><i class="fa fa-trash"></i></button>
                                             </div>
