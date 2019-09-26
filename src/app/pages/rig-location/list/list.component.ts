@@ -16,6 +16,7 @@ import { ProjectService } from 'src/app/@core/services/project.service';
 import { ProjectWell } from 'src/app/@core/models/project.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import { UserService } from 'src/app/@core/services/user.service';
 
 @Component({
     selector: 'app-user-list',
@@ -34,6 +35,7 @@ export class RigListComponent implements OnInit {
     projectFilter = '';
     projectFilterData = [];
     projectOptionData = [];
+    userOptionData = [];
     title = 'Rig location';
     dtOptions: DataTables.Settings = {};
     requestDetail: ProjectWell;
@@ -46,6 +48,7 @@ export class RigListComponent implements OnInit {
     today = new Date();
     minDate = {year: this.today.getFullYear(), month: this.today.getMonth() + 1, day: this.today.getDate()};
     projectId: any;
+    people = [];
 
     constructor(private commonService: CommonService,
                 private projectWellService: ProjectWellService,
@@ -56,7 +59,8 @@ export class RigListComponent implements OnInit {
                 private toastr: ToastrService,
                 private router: Router,
                 private route: ActivatedRoute,
-                private projectService: ProjectService) {
+                private projectService: ProjectService,
+                private service: UserService) {
         modalConfig.backdrop = 'static';
         modalConfig.keyboard = false;
     }
@@ -74,6 +78,18 @@ export class RigListComponent implements OnInit {
             const allProjects = response.data;
             this.projectFilterData = [{_id: '', name: 'All'}, ...allProjects];
             this.projectOptionData = [...allProjects];
+        });
+        this.service.getUserByType('MANAGER').subscribe(users => {
+            console.log('userList', users.data);
+            const array = [];
+            // tslint:disable-next-line: forin
+            for (const i in users.data) {
+                array.push({name: users.data[i].name,
+                     _id: users.data[i]._id,
+                    profilePic: users.data[i].profilePic,
+                    designation: users.data[i].designation});
+            }
+            this.people = array;
         });
         const that = this;
         this.dtOptions = {
@@ -112,6 +128,7 @@ export class RigListComponent implements OnInit {
           columns: [
                     { data: 'name' },
                     { data: 'project' },
+                    { data: 'manager' },
                     { data: 'active' }, { data: '_id' }],
           columnDefs: [
             {
@@ -139,6 +156,7 @@ export class RigListComponent implements OnInit {
                     Validators.maxLength(this.validator.name.max)]],
             active: [null, [Validators.required]],
             country: ['', [Validators.required]],
+            manager: ['', [Validators.required]],
             // project: ['', [Validators.required]]
         });
         this.commonService.getRequestFormData().subscribe(res => {
@@ -150,10 +168,11 @@ export class RigListComponent implements OnInit {
     get f() { return this.editForm.controls; }
 
     editDetail(editModal, data) {
+        console.log('edit', data);
         this.editing = true;
         this.projectWellService.getData(data).subscribe(response => {
             console.log(response);
-            this.requestDetail = response.data;
+            this.requestDetail = response.data.data;
             this.editForm.reset();
             this.f.data.setValidators([Validators.required]);
             this.f.data.updateValueAndValidity();
@@ -164,6 +183,7 @@ export class RigListComponent implements OnInit {
                 name: this.requestDetail.name,
                 active: this.requestDetail.active,
                 country: this.requestDetail.country._id,
+                manager: this.requestDetail.manager._id,
                 // project: this.requestDetail.project,
             });
             this.modalService.open(editModal, {
@@ -303,7 +323,6 @@ export class RigListComponent implements OnInit {
 
     view(id) {
         this.router.navigate([]).then(result => {  window.open('riglocation/details/' +  id, '_blank'); });
-
     }
 
 }

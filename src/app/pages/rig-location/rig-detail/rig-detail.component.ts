@@ -19,6 +19,7 @@ export class RigDetailComponent implements OnInit {
     rigId: any;
     projectId: any;
     rigData: any;
+    manager: any;
 
   constructor(private acitveRoute: ActivatedRoute,
               private rigService: ProjectWellService,
@@ -29,14 +30,16 @@ export class RigDetailComponent implements OnInit {
           console.log('routeParams', data.id);
           const rigId: any = data.id;
           this.rigService.getData(rigId).subscribe(response => {
-              console.log('rigDetail', response.data);
+              console.log('rigDetail', response.data.data);
               this.rigData = response.data;
               const rigDetail: any = response.data.data;
               this.name = rigDetail.name;
               this.fieldName = rigDetail.fieldName;
               this.country = rigDetail.country.name;
               this.project = rigDetail.project.name;
+              this.manager = rigDetail.manager.name;
               this.rigLocation = rigDetail.rigLocation;
+              console.log('filterStatus', rigDetail.active);
               const filterStatus = this.activeData.filter(a => a.id === rigDetail.active);
               this.active = filterStatus[0].name;
               this.rigId = rigDetail._id;

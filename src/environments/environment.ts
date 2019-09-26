@@ -5,6 +5,7 @@
 export const environment = {
     production: false,
     apiUrl: 'http://admin.ic2drill.techzarinfo.com/console',
+    mobapiUrl: 'http://admin.ic2drill.techzarinfo.com/api/v1',
     adminUrl: 'http://admin.ic2drill.techzarinfo.com',
     ProjectName: 'IC2 Dril',
     validators: {

@@ -98,7 +98,7 @@ export class ListComponent implements OnInit {
             this.projectFilterData = [{_id: '', name: 'All'}, ...allProjects];
             this.projectOptionData = [...allProjects];
         });
-        this.service.getAllUser().subscribe(users => {
+        this.service.getUserByType('OTHER').subscribe(users => {
             console.log('userList', users.data);
             const array = [];
             // tslint:disable-next-line: forin

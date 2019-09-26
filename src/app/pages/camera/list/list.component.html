@@ -175,7 +175,7 @@
                             </div>
                             <div [hidden]="hideProRig" class="form-group form-group-default dropdown">
                                 <label class="text-primary">Select RigLocation</label>
-                                <ng-select (change)="refreshTable()" class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="data" placeholder="Please select project" [clearable]="false" [items]="wellOptionData" bindLabel="name" bindValue="_id"></ng-select>
+                                <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="data" placeholder="Please select project" [clearable]="false" [items]="wellOptionData" bindLabel="name" bindValue="_id"></ng-select>
                             </div>
                             <div class="check-box">
                                 <input type="checkbox" class="check" formControlName="default" (change)='onchange($event)' />&nbsp;&nbsp;
@@ -205,7 +205,9 @@
                                     </ng-template>
 
                                     <ng-template ng-option-tmp let-item="item">
-                                        <img [src]="item.profilePic" width="20px" height="20px">&nbsp;{{item.name}}
+                                        <img [src]="item.profilePic" width="20px" height="20px">&nbsp;
+                                        <span style="position: absolute;
+                                        top: 3px;">{{item.name}}</span>
                                     </ng-template>
                                 </ng-select>
 

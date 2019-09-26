@@ -199,7 +199,7 @@ export class ListComponent implements OnInit, OnDestroy {
                 ]
             ],
             tel: [
-                '',
+                null,
                 [
                     Validators.required
                 ]

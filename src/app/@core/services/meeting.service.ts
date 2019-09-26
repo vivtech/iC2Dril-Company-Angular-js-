@@ -43,7 +43,15 @@ export class MeetingService {
             })
         );
     }
-    
+
+    getMeetingUser(project, well) {
+        return this.http.post<any>(`${environment.mobapiUrl}/meeting/users`, {project, well}).pipe(
+            map(response => {
+                return response;
+            })
+        );
+    }
+
     deleteData(id) {
         return this.http
             .delete<any>(`${environment.apiUrl}/meeting/${id}`)

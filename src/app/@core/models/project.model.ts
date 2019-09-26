@@ -15,6 +15,7 @@ export interface Project {
 
 
 export interface ProjectWell {
+    manager?: any;
     _id?: string;
     fieldName?: string;
     rigLocation?: string;
@@ -22,7 +23,7 @@ export interface ProjectWell {
     status?: number;
     country?: any;
     data?: string;
-    name: any;
+    name: string;
     active?: number;
 }
 

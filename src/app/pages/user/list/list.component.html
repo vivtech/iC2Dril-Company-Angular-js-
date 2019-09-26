@@ -224,10 +224,10 @@
                             <label class="text-primary">Phone Number</label>
                             <div class="row">
                                 <div class="col-md-4">
-                                    <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [clearable]="false" formControlName="tel" [items]="countryList | async" bindLabel="tel" bindValue="_id"></ng-select>
+                                    <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [clearable]="false" placeholder="Code" formControlName="tel" [items]="countryList | async" bindLabel="tel" bindValue="_id"></ng-select>
                                 </div>
                                 <div class="col-md-8">
-                                    <input type="text" formControlName="phone" [attr.maxlength]="validator.phone.max" class="form-control" digitOnly>
+                                    <input type="text" formControlName="phone" placeholder="Phone number" [attr.maxlength]="validator.phone.max" class="form-control" digitOnly>
                                 </div>
                             </div>
                             <error-label [control]="f.phone"></error-label>

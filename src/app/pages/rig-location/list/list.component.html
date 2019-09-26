@@ -54,6 +54,7 @@
                                 <tr>
                                     <th>Name</th>
                                     <th>Project</th>
+                                    <th>Manager</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -62,6 +63,7 @@
                                 <tr *ngFor="let data of dataList">
                                     <td><a (click)="view(data._id)">{{ data.name | capitalize }}</a></td>
                                     <td><a>{{ data.project?.name | capitalize }}</a></td>
+                                    <td><a>{{ data.manager?.name }}</a></td>
 
                                     <td>
                                         <span class="badge badge-pill badge-success" *ngIf="data.active == 1">Active</span>
@@ -125,16 +127,40 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group form-group-default">
+                            <label class="text-primary">Rig Location</label>
+                            <input type="text" formControlName="rigLocation" class="form-control" placeholder="Rig Location">
+                            <error-label [control]="f.rigLocation"></error-label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group form-group-default dropdown">
+                            <label class="text-primary">Select Rig Manager</label>
+                            <ng-select [items]="people" [multiple]="false" [closeOnSelect]="false" placeholder="Select user" bindLabel="name" bindValue="_id" formControlName="manager">
+                                <ng-template ng-label-tmp let-item="item" let-clear="clear">
+                                    <span class="ng-value-label"><img [src]="item.profilePic" width="20px" height="20px"> {{item.name}}</span>
+                                    <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
+                                </ng-template>
+
+                                <ng-template ng-option-tmp let-item="item">
+                                    <img [src]="item.profilePic" width="20px" height="20px">&nbsp;<span style="position: absolute;
+                                    top: 3px;">{{item.name}}</span>
+                                </ng-template>
+                            </ng-select>
+                            <error-label [control]="f.manager"></error-label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group form-group-default">
                             <label class="text-primary">Field Name</label>
                             <input type="text" formControlName="fieldName" class="form-control" placeholder="Field name">
                             <error-label [control]="f.fieldName"></error-label>
                         </div>
                     </div>
-                    <div class="col-sm-6">
-                        <div class="form-group form-group-default">
-                            <label class="text-primary">Rig Location</label>
-                            <input type="text" formControlName="rigLocation" class="form-control" placeholder="Rig Location">
-                            <error-label [control]="f.rigLocation"></error-label>
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default dropdown">
+                            <label class="text-primary">Active</label>
+                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="active" [items]="statusData" bindLabel="name" [clearable]="false" bindValue="id" [class.filled]="f.active.value" placeholder="Status"></ng-select>
+                            <error-label [control]="f.active"></error-label>
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -143,13 +169,6 @@
                             <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [items]="countryList | async" formControlName="country" [clearable]="false" bindLabel="name" bindValue="_id" placeholder="Country">
                             </ng-select>
                             <error-label [control]="f.country"></error-label>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group form-group-default dropdown">
-                            <label class="text-primary">Active</label>
-                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="active" [items]="statusData" bindLabel="name" [clearable]="false" bindValue="id" [class.filled]="f.active.value" placeholder="Status"></ng-select>
-                            <error-label [control]="f.active"></error-label>
                         </div>
                     </div>
 

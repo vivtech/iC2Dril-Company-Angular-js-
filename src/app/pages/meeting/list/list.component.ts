@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy, OnChanges, ChangeDetectorRef } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { CompanyRequest } from 'src/app/@core/models/company-request.model';
 import { first } from 'rxjs/operators';
@@ -18,13 +18,15 @@ import { MeetingService } from 'src/app/@core/services/meeting.service';
 import { UserType } from 'src/app/@core/models/user-type.model';
 import { User } from 'src/app/@core/models/user.model';
 import { ValidEmail } from 'src/app/@core/validators/valid-email.validators';
+import { ProjectService } from 'src/app/@core/services/project.service';
+import { ProjectWellService } from 'src/app/@core/services/project-well.service';
 
 @Component({
     selector: 'app-user-list',
     templateUrl: './list.component.html',
     styleUrls: ['./list.component.css']
 })
-export class ListComponent implements OnInit, OnDestroy {
+export class ListComponent implements OnInit, OnDestroy, OnChanges {
     @ViewChild(DataTableDirective, { static: false })
     datatableElement: DataTableDirective;
     permission = 'create';
@@ -88,6 +90,15 @@ export class ListComponent implements OnInit, OnDestroy {
             { id: 4, name: 'Thursday' },
             { id: 5, name: 'Friday' },
             { id: 6, name: 'Saturday' }];
+    projectOptionData: any[];
+    wellFilterData: any[];
+    rigID: any;
+    rigFilter: any;
+    wellFilter: any;
+    wellOptionData: any[];
+    projectFilterData: any[];
+    projectFilter = '';
+    meetingUsers: any[];
 
     constructor(
         private commonService: CommonService,
@@ -97,7 +108,10 @@ export class ListComponent implements OnInit, OnDestroy {
         private modalConfig: NgbModalConfig,
         private formService: FormService,
         private formBuilder: FormBuilder,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private projectService: ProjectService,
+        private wellService: ProjectWellService,
+        private cd: ChangeDetectorRef
     ) {
         modalConfig.backdrop = 'static';
         modalConfig.keyboard = false;
@@ -115,6 +129,13 @@ export class ListComponent implements OnInit, OnDestroy {
                 data.unshift(temp);
                 this.userTypeFilterData = data;
             });
+        this.projectService.getAll().subscribe(response => {
+            const allProjects = response.data;
+            console.log('AllProject', allProjects);
+
+            this.projectFilterData = [{_id: '', name: 'All'}, ...allProjects];
+            this.projectOptionData = [...allProjects];
+        });
         this.commonService.getUserTypeData().subscribe();
 
         // this.companyList = this.apiService.getCompanyRequestList();
@@ -137,6 +158,7 @@ export class ListComponent implements OnInit, OnDestroy {
                     column: 'status',
                     data: this.blockFilter
                 };
+                dataTablesParameters['filter'][2] = {column: 'well', data: this.rigFilter ? this.rigFilter : ''};
                 console.log('data', dataTablesParameters);
                 const responseData = this.meetService
                     .getList(dataTablesParameters)
@@ -187,7 +209,7 @@ export class ListComponent implements OnInit, OnDestroy {
         };
         this.editForm = this.formBuilder.group({
             data: ['', [Validators.required]],
-            name: [
+            title: [
                 '',
                 [
                     Validators.required,
@@ -195,32 +217,26 @@ export class ListComponent implements OnInit, OnDestroy {
                     Validators.maxLength(this.validator.name.max)
                 ]
             ],
-            email: [
+            type: [
                 '',
                 [
-                    Validators.required,
-                    ValidEmail
+                    Validators.required
                 ]
             ],
-            phone: [
+            startTime: [
                 '',
                 [
-                    Validators.required,
-                    Validators.minLength(this.validator.phone.min),
-                    Validators.maxLength(this.validator.phone.max)
+                    Validators.required
                 ]
             ],
-            designation: [
-                '',
-                [
-                    Validators.required,
-                    Validators.minLength(this.validator.designation.min),
-                    Validators.maxLength(this.validator.designation.max)
-                ]
+            duration: [
+                ''
             ],
-            userType: ['', [Validators.required]],
-            active: ['', [Validators.required]],
-            block: ['', [Validators.required]]
+            project: ['', [Validators.required]],
+            well: ['', [Validators.required]],
+            desc: ['', [Validators.required]],
+            attenders: [[], [Validators.required]],
+            active: ['', [Validators.required]]
         });
         this.licenseForm = this.formBuilder.group({
             data: ['', [Validators.required]],
@@ -273,6 +289,47 @@ export class ListComponent implements OnInit, OnDestroy {
         // this.packageList = this.commonService.getPackageList();
     }
 
+    ngOnChanges() {
+        console.log()
+    }
+
+    projectOnchange(data, event) {
+        // tslint:disable-next-line: no-var-keyword
+        let id: any;
+        id = event._id;
+        if (id) {
+            // tslint:disable-next-line: no-shadowed-variable
+            this.wellService.getAll(id).subscribe(result => {
+                console.log('result', result.data);
+                this.wellFilterData = [{_id: '', name: 'All'}, ...result.data];
+                if (this.rigID !== undefined) {
+                    this.rigFilter = this.rigID;
+                } else if (data === 'projectFlter') {
+                    this.rigFilter = '';
+                } else if (data === 'projectSelect') {
+                    this.wellOptionData = [...result.data];
+                    // this.f.well.setValue(result.data[0] ? result.data[0]._id : null);
+                }
+                this.refreshTable();
+            });
+        } else {
+            this.wellFilterData = [];
+            this.rigFilter = null;
+            this.refreshTable();
+        }
+        if (data !== 'projectFlter') {
+            this.refreshTable();
+        }
+    }
+
+    rigOnchange(event) {
+        console.log('rigOnchange', event);
+        this.meetService.getMeetingUser(event.project, event._id).subscribe(response => {
+            console.log('meetinguser', response.data.currentProject);
+            this.meetingUsers = [...response.data.currentProject];
+        });
+    }
+
     statusClass(status) {
         switch (status) {
             case 0:
@@ -292,7 +349,7 @@ export class ListComponent implements OnInit, OnDestroy {
     }
 
     view(detailModal, MeetId) {
-        console.log('modleData', MeetId)
+        console.log('modleData', MeetId);
         this.meetService.getData(MeetId).subscribe(data => {
             console.log('data', data.data);
             this.modelData = data.data;
@@ -520,20 +577,19 @@ export class ListComponent implements OnInit, OnDestroy {
         );
     }
 
-    // createData(modal) {
-    //     this.f.data.setValidators(null);
-    //     this.f.active.setValidators(null);
-    //     this.f.block.setValidators(null);
-    //     this.f.data.updateValueAndValidity();
-    //     this.requestDetail = {
-    //         name: '',
-    //     };
-    //     this.editing = false;
-    //     this.editForm.reset();
-    //     this.modalService.open(modal, {
-    //         size: 'lg'
-    //     });
-    // }
+    createData(createModal) {
+        this.f.data.setValidators(null);
+        this.f.active.setValidators(null);
+        this.f.data.updateValueAndValidity();
+        this.requestDetail = {
+            name: '',
+        };
+        this.editing = false;
+        this.editForm.reset();
+        this.modalService.open(createModal, {
+            size: 'lg'
+        });
+    }
 
     ngOnDestroy(): void {
         this.subscription.unsubscribe();
