@@ -1,8 +1,7 @@
 import { Component, OnInit, ViewChild, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
-import { CompanyRequest } from 'src/app/@core/models/company-request.model';
-import { first, throwIfEmpty } from 'rxjs/operators';
-import { NgbModal, NgbModalConfig, NgbTimeStruct } from '@ng-bootstrap/ng-bootstrap';
+import { first } from 'rxjs/operators';
+import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { FormService } from 'src/app/@core/services/form-validation.service';
 import { environment } from 'src/environments/environment';
@@ -13,11 +12,9 @@ import { DataTableDirective } from 'angular-datatables';
 import { ToastrService } from 'ngx-toastr';
 import { DeleteModalComponent } from 'src/app/@theme/components/modals/delete-modal/delete-modal.component';
 import { CancelModalComponent } from 'src/app/@theme/components/modals/cancel-modal/cancel-modal';
-import { UserService } from 'src/app/@core/services/user.service';
 import { MeetingService } from 'src/app/@core/services/meeting.service';
 import { UserType } from 'src/app/@core/models/user-type.model';
 import { Meeting } from 'src/app/@core/models/meeting.model';
-import { ValidEmail } from 'src/app/@core/validators/valid-email.validators';
 import { ProjectService } from 'src/app/@core/services/project.service';
 import { ProjectWellService } from 'src/app/@core/services/project-well.service';
 
@@ -185,15 +182,19 @@ export class ListComponent implements OnInit, OnDestroy {
             serverSide: true,
             processing: true,
             ajax: (dataTablesParameters: object, callback) => {
+                // tslint:disable-next-line: no-string-literal
                 dataTablesParameters['filter'] = [];
+                // tslint:disable-next-line: no-string-literal
                 dataTablesParameters['filter'][0] = {
                     column: 'active',
                     data: this.statusFilter
                 };
+                // tslint:disable-next-line: no-string-literal
                 dataTablesParameters['filter'][1] = {
                     column: 'status',
                     data: this.blockFilter
                 };
+                // tslint:disable-next-line: no-string-literal
                 dataTablesParameters['filter'][2] = {column: 'well', data: this.rigFilter ? this.rigFilter : ''};
                 console.log('data', dataTablesParameters);
                 const responseData = this.meetService
@@ -219,7 +220,7 @@ export class ListComponent implements OnInit, OnDestroy {
                 // { data: 'startTime' },
                 { data: 'duration' },
                 { data: 'active' },
-                { data: 'status' },
+                // { data: 'status' },
                 { data: 'attenders'}
             ],
             columnDefs: [
@@ -461,7 +462,7 @@ export class ListComponent implements OnInit, OnDestroy {
             // console.log('fullTime', fullTime);
             this.fullTimeFormat = fullTime;
             const newDate = new Date();
-            const month: number = 1;
+            const month = 1;
             if (this.f.startDate.value) {
                 // tslint:disable-next-line: max-line-length
                 time = `${this.f.startDate.value.year}-${this.f.startDate.value.month}-${this.f.startDate.value.day}` + ' ' + this.fullTimeFormat;
@@ -544,7 +545,7 @@ export class ListComponent implements OnInit, OnDestroy {
             console.log('meetTypeWithDate', meetingDate);
         } else {
             console.log('meetTypeWithoutDate');
-            const month: number = 1;
+            const month = 1;
             if (this.fullTimeFormat) {
                 // tslint:disable-next-line: max-line-length
                 meetingDate = `${currentData.startDate.year}-${currentData.startDate.month}-${currentData.startDate.day}` + ' ' + this.fullTimeFormat;
@@ -666,17 +667,17 @@ export class ListComponent implements OnInit, OnDestroy {
     }
 
     CancelConfirmation(id, active) {
-        var params:any;
-        if(active == 0) {
+        let params: any;
+        // tslint:disable-next-line: triple-equals
+        if (active == 0) {
             params = {
-                "data" : id,
-                "status" : 1
+                data : id,
+                status : 1
             };
-        }
-        else {
+        } else {
             params = {
-                "data" : id,
-                "status" : 0
+                data : id,
+                status : 0
             };
         }
         console.log(params);

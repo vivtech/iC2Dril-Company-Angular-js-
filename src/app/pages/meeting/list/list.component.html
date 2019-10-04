@@ -73,7 +73,7 @@
                                     <!-- <th>Start Time</th> -->
                                     <th>Duration</th>
                                     <th>Active</th>
-                                    <th>Status</th>
+                                    <!-- <th>Status</th> -->
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -97,10 +97,10 @@
                                         <span class="badge badge-pill badge-warning" *ngIf="meeting.active == 0">Cancelled</span>
 
                                     </td>
-                                    <td>
+                                    <!-- <td>
                                         <span class="badge badge-pill badge-danger" *ngIf="meeting.status == 1">Blocked</span>
                                         <span class="badge badge-pill badge-success" *ngIf="meeting.status == 0">Unblocked</span>
-                                    </td>
+                                    </td> -->
                                     <td>
                                         <div class="btn-group datatable-dropdown">
                                             <button type="button" class="btn btn-primary" (click)="view(detailModal, meeting._id)">View</button>

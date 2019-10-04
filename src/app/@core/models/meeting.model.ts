@@ -1,5 +1,5 @@
 export interface Meeting {
-    day: any;
+    day?: any;
     _id?: string;
     title: string;
     type?: number;
