@@ -31,3 +31,23 @@ input.form-control.floating-input.input-border-bottom.pl-1.pr-1.pb-0.pt-0 {
     font-size: .875rem!important;
     line-height: 1.5
 }
+
+.btn-outline-secondary:hover {
+    background-color: #fff;
+    color: #6c757d;
+}
+
+button.btn.btn-outline-secondary.calendar:active,
+button.btn.btn-outline-secondary.clock:active {
+    background-color: #fff;
+    color: #6c757d;
+}
+
+i.fa.fa-calendar,
+i.fa.fa-clock {
+    font-size: 20px;
+}
+
+.dropdown-menu.show {
+    transform: translate(-105px, 45px) !important;
+}

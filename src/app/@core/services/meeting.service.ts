@@ -52,6 +52,14 @@ export class MeetingService {
         );
     }
 
+    getUtcOptions() {
+        return this.http.get<any>(`${environment.mobapiUrl}/meeting/options`).pipe(
+            map(response => {
+                return response;
+            })
+        );
+    }
+
     deleteData(id) {
         return this.http
             .delete<any>(`${environment.apiUrl}/meeting/${id}`)
@@ -62,9 +70,30 @@ export class MeetingService {
             );
     }
 
-    updateData(fieldParameters): any {
+    updateStatus(fieldParameters): any {
         return this.http
             .put<any>(`${environment.apiUrl}/meeting/status`, fieldParameters)
+            .pipe(
+                map(response => {
+                    if (response.code === 200) {
+                        console.log(response.data.data);
+                    }
+                    return response;
+                })
+            );
+    }
+
+    create(fields): any {
+        return this.http.post<any>(`${environment.mobapiUrl}/meeting`, fields)
+            .pipe(map(response => {
+                return response;
+            }
+            ));
+    }
+
+    updateData(fieldParameters): any {
+        return this.http
+            .put<any>(`${environment.mobapiUrl}/meeting`, fieldParameters)
             .pipe(
                 map(response => {
                     if (response.code === 200) {

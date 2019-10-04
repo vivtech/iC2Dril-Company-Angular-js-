@@ -58,6 +58,8 @@ export class ListComponent implements OnInit {
     minDate = {year: this.today.getFullYear(), month: this.today.getMonth() + 1, day: this.today.getDate()};
     checkCtrl: FormControl;
     hideConfirm: boolean = true;
+    hourStep = 1;
+    minuteStep = 15;
 
     constructor(private commonService: CommonService,
                 private apiService: ProjectCameraService,
@@ -81,6 +83,7 @@ export class ListComponent implements OnInit {
             const projectId = params;
             if (projectId.data !== undefined) {
                 this.projectFilter = projectId.data;
+                this.f.data.setValue(projectId.data);
                 console.log('route', this.projectFilter);
                 this.projectOnchange('', '');
             }
@@ -191,19 +194,19 @@ export class ListComponent implements OnInit {
 
     onAdd(event) {
         console.log('onAdd', event);
-        this.selectedPeople.push(event);
+        // this.selectedPeople.push(event);
     }
 
     onRemove(event) {
         console.log('event', event.value);
         const removed = this.selectedPeople.filter( a => a.name !== event.value.name);
         console.log('removed', removed);
-        this.selectedPeople = removed;
+        // this.selectedPeople = removed;
     }
 
     onClear(event) {
         console.log('event', event);
-        this.selectedPeople = [];
+        // this.selectedPeople = [];
     }
 
     get f() { return this.editForm.controls; }
@@ -227,7 +230,6 @@ export class ListComponent implements OnInit {
                 username: this.requestDetail.username,
                 password: this.requestDetail.password,
                 active: this.requestDetail.active,
-                users: this.requestDetail.users,
                 confirm: this.requestDetail.default,
                 default: this.requestDetail.default,
                 // project: this.requestDetail.project._id
@@ -236,16 +238,19 @@ export class ListComponent implements OnInit {
                 size: 'lg'
             });
             // tslint:disable-next-line: forin
+            const userId = [];
             for (const i in this.requestDetail.users) {
                 // tslint:disable-next-line: triple-equals
-                const filter = this.people.filter(a => a._id == this.requestDetail.users[i]);
-                console.log('filter', filter);
+                console.log('this.people', this.people);
+                console.log('this.requestDetail.users', this.requestDetail.users);
+                const filter = this.people.filter(a => a._id === this.requestDetail.users[i]._id);
                 // tslint:disable-next-line: forin
-                for (const j in filter) {
-                    this.selectedPeople.push(filter[j]);
+                for (const f in filter) {
+                    userId.push(filter[f]._id);
                 }
-                console.log('this.requestDetail.users[i]', this.requestDetail.users[i]);
             }
+            this.f.users.setValue(userId);
+            console.log('filter', userId);
         },
         error => {
             // this.noti
@@ -380,7 +385,8 @@ export class ListComponent implements OnInit {
                     this.rigFilter = this.rigID;
                 } else if (data === 'projectFlter') {
                     this.rigFilter = '';
-                } else if (data === 'projectSelect') {
+                }
+                if (data === 'projectSelect') {
                     this.wellOptionData = [...result.data];
                     this.f.data.setValue(result.data[0] ? result.data[0]._id : null);
                 }

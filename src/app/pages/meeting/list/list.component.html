@@ -21,10 +21,10 @@
                 <div class="card-header">
                     <div class="d-flex align-items-center">
                         <h4 class="page-title">Meeting List</h4>
-                        <!-- <button [hidden]="permission == 'notcreate'" class="btn btn-primary btn-round ml-auto" id="addModalOpen" (click)="createData(createModal)">
+                        <button [hidden]="permission == 'notcreate'" class="btn btn-primary btn-round ml-auto" id="addModalOpen" (click)="createData(createModal)">
                             <i class="fa fa-plus"></i>
                             Add Meeting
-                        </button> -->
+                        </button>
                     </div>
                 </div>
                 <div class="card-body">
@@ -69,7 +69,7 @@
                                     <th>Title</th>
                                     <th>Project</th>
                                     <th>Rig Location</th>
-                                    <!-- <th>Description</th> -->
+                                    <th>Meeting Type</th>
                                     <!-- <th>Start Time</th> -->
                                     <th>Duration</th>
                                     <th>Active</th>
@@ -82,7 +82,15 @@
                                     <td>{{ meeting.title }}</td>
                                     <td>{{ meeting.project?.name }}</td>
                                     <td>{{ meeting.well?.name }}</td>
-                                    <!-- <td>{{ meeting.startTime | date:'short' }}</td> -->
+                                    <td>
+                                        <span *ngIf="meeting.type == 0">Sunday</span>
+                                        <span *ngIf="meeting.type == 1">Monday</span>
+                                        <span *ngIf="meeting.type == 2">Tuesday</span>
+                                        <span *ngIf="meeting.type == 3">Wednesday</span>
+                                        <span *ngIf="meeting.type == 4">Thursday</span>
+                                        <span *ngIf="meeting.type == 5">Friday</span>
+                                        <span *ngIf="meeting.type == 6">Saturday</span>
+                                    </td>
                                     <td>{{ meeting.duration | minuteSeconds}}</td>
                                     <td>
                                         <span class="badge badge-pill badge-success" *ngIf="meeting.active == 1">Active</span>
@@ -95,13 +103,13 @@
                                     </td>
                                     <td>
                                         <div class="btn-group datatable-dropdown">
-                                            <button type="button" class="btn btn-primary" (click)="view(detailModal, meeting._id)">View
-                                            </button>
+                                            <button type="button" class="btn btn-primary" (click)="view(detailModal, meeting._id)">View</button>
                                             <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
                                                 <button class="btn btn-primary dropdown-toggle-split" ngbDropdownToggle></button>
                                                 <div class="dropdown-menu" ngbDropdownMenu>
                                                     <button *ngIf="meeting.active == 1" ngbDropdownItem (click)="CancelConfirmation(meeting._id, meeting.active)">Cancel Meeting</button>
                                                     <button *ngIf="meeting.active == 0" ngbDropdownItem (click)="CancelConfirmation(meeting._id, meeting.active)">Active Meeting</button>
+                                                    <button ngbDropdownItem (click)="editDetail(createModal, meeting._id)">Edit Meeting</button>
                                                     <button ngbDropdownItem (click)="deleteConfirmation(meeting._id)">Delete</button>
                                                 </div>
                                             </div>
@@ -237,7 +245,7 @@
                             <error-label [control]="f.title"></error-label>
                         </div>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-6" [hidden]="editing">
                         <div class="form-group form-group-default dropdown">
                             <label class="text-primary">Select Project</label>
                             <ng-select (change)="projectOnchange('projectSelect', $event)" class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="project" placeholder="Project" [clearable]="false" [items]="projectOptionData" bindLabel="name"
@@ -245,50 +253,19 @@
                             <error-label [control]="f.project"></error-label>
                         </div>
                     </div>
-                    <div class="col-sm-6" [hidden]="editing">
+                    <div class="col-sm-6">
                         <div class="form-group form-group-default dropdown">
                             <label class="text-primary">Meeting Type</label>
-                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [items]="MeetingType" formControlName="type" [clearable]="false" bindLabel="name" bindValue="id" placeholder="Select Meeting Type">
+                            <ng-select (change)="meetingTypeOnchange($event)" class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [items]="MeetingType" formControlName="type" [clearable]="false" bindLabel="name" bindValue="id" placeholder="Select Meeting Type">
                             </ng-select>
                             <error-label [control]="f.type"></error-label>
                         </div>
                     </div>
-                    <div class="col-sm-6">
+                    <div class="col-sm-6" [hidden]="editing">
                         <div class="form-group form-group-default dropdown">
                             <label class="text-primary">Select Rig</label>
                             <ng-select (change)="rigOnchange($event)" class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="well" placeholder="Please select project" [clearable]="false" [items]="wellOptionData" bindLabel="name" bindValue="_id"></ng-select>
                             <error-label [control]="f.well"></error-label>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="form-group form-group-default dropdown">
-                            <label class="text-primary">Select Date</label>
-                            <div class="input-group">
-                                <input class="form-control date-readonly" placeholder="yyyy-mm-dd" formControlName="startTime" readonly [minDate]="minDate" ngbDatepicker #d="ngbDatepicker">
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
-                                </div>
-                            </div>
-                            <error-label [control]="f.startTime"></error-label>
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <!-- <div class="form-group form-group-default dropdown">
-                            <label class="text-primary">Select Time</label>
-                            <div class="input-group">
-                                <input class="form-control date-readonly" placeholder="hh-mm-ss" formControlName="startTime" readonly [minDate]="minDate" ngbDatepicker #d="ngbDatepicker">
-                                <div class="input-group-append">
-                                    <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
-                                </div>
-                            </div>
-                            <error-label [control]="f.startTime"></error-label>
-                        </div> -->
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="form-group form-group-default dropdown">
-                            <label class="text-primary">Select Attenders</label>
-                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="attenders" placeholder="Please select rig location" [clearable]="false" [items]="meetingUsers" bindLabel="name" bindValue="_id"></ng-select>
-                            <error-label [control]="f.attenders"></error-label>
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -298,11 +275,112 @@
                             <error-label [control]="f.desc"></error-label>
                         </div>
                     </div>
+                    <div class="col-sm-6">
+                        <div class="form-group form-group-default dropdown">
+                            <label class="text-primary">Select Duration</label>
+                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="duration" placeholder="Select duration" [clearable]="false" [items]="durationOptiondata" bindLabel="name" bindValue="_id"></ng-select>
+                            <error-label [control]="f.duration"></error-label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group form-group-default dropdown">
+                            <label class="text-primary">UTC</label>
+                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="timezone" placeholder="Select utc" [clearable]="false" [items]="utcOptions" bindLabel="text" bindValue="_id"></ng-select>
+                            <error-label [control]="f.timezone"></error-label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group form-group-default dropdown">
+                            <label class="text-primary">Select Project Users</label>
+                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="projectUsers" placeholder="Select project users" [multiple]="true" [closeOnSelect]="false" [clearable]="false" [items]="meetingProjectUsers" bindLabel="name"
+                                bindValue="_id">
+                                <ng-template ng-label-tmp let-item="item" let-clear="clear">
+                                    <span class="ng-value-label"><img [src]="item.profilePic" width="20px" height="20px">&nbsp;{{item.name}}</span>
+                                    <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">&nbsp;&nbsp;×</span>
+                                </ng-template>
+
+                                <ng-template ng-option-tmp let-item="item">
+                                    <img [src]="item.profilePic" width="20px" height="20px">&nbsp;
+                                    <span style="position: absolute;
+                                    top: 3px;">{{item.name}}</span>
+                                </ng-template>
+                            </ng-select>
+                            <error-label [control]="f.projectUsers"></error-label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="form-group form-group-default dropdown">
+                            <label class="text-primary">Select Rig Users</label>
+                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="rigUsers" placeholder="Select rig user" [multiple]="true" [closeOnSelect]="false" [clearable]="false" [items]="meetingRigUsers" bindLabel="name" bindValue="_id">
+                                <ng-template ng-label-tmp let-item="item" let-clear="clear">
+                                    <span class="ng-value-label"><img [src]="item.profilePic" width="20px" height="20px">&nbsp;{{item.name}}</span>
+                                    <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">&nbsp;&nbsp;×</span>
+                                </ng-template>
+
+                                <ng-template ng-option-tmp let-item="item">
+                                    <img [src]="item.profilePic" width="20px" height="20px">&nbsp;
+                                    <span style="position: absolute;
+                                    top: 3px;">{{item.name}}</span>
+                                </ng-template>
+                            </ng-select>
+                            <error-label [control]="f.rigUsers"></error-label>
+                        </div>
+                    </div>
                     <div class="col-md-6">
                         <div class="form-group form-group-default dropdown">
                             <label class="text-primary">Active</label>
-                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="active" [items]="statusData" bindLabel="name" [clearable]="false" bindValue="id" [class.filled]="f.active.value" placeholder="Status"></ng-select>
+                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="active" [items]="activeList" bindLabel="name" [clearable]="false" bindValue="id" [class.filled]="f.active.value" placeholder="Status"></ng-select>
                             <error-label [control]="f.active"></error-label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6" *ngIf="selectdate">
+                        <div class="form-group form-group-default dropdown">
+                            <label class="text-primary">Select Date</label>
+                            <div class="input-group">
+                                <input class="form-control date-readonly" formControlName="startDate" placeholder="yyyy-mm-dd" readonly [(ngModel)]="minDate" ngbDatepicker #d="ngbDatepicker">
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button">
+                                        <i class="fa fa-calendar"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <error-label [control]="f.startDate"></error-label>
+                        </div>
+                    </div>
+                    <!-- <div class="col-sm-6" [hidden]="selectweek">
+                        <div class="form-group form-group-default dropdown">
+                            <label class="text-primary">Select Month</label>
+                            <div class="input-group">
+                                <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="well" placeholder="Select month" [clearable]="false" [items]="monthOptionData" bindLabel="name" bindValue="_id"></ng-select>
+                            </div>
+                            <error-label [control]="f.startDate"></error-label>
+                        </div>
+                    </div> -->
+                    <div class="col-sm-6" *ngIf="selectday">
+                        <div class="form-group form-group-default dropdown">
+                            <label class="text-primary">Select Day</label>
+                            <div class="input-group">
+                                <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="day" placeholder="Select day" [clearable]="false" [items]="dayOptionData" bindLabel="name" bindValue="_id"></ng-select>
+                            </div>
+                            <error-label [control]="f.day"></error-label>
+                        </div>
+                    </div>
+                    <div class="col-sm-6" [hidden]="selecttime">
+                        <div class="form-group form-group-default dropdown">
+                            <label class="text-primary">Select Time</label>
+                            <div class="input-group">
+                                <input class="form-control date-readonly" placeholder="hh-mm" readonly value="{{ time | date:'h:mm a'}}">
+                                <div class="input-group-append">
+                                    <button type="button" class="btn btn-outline-secondary clock" [ngbPopover]="popContent" [popoverTitle]="popTitle" [autoClose]="'outside'">
+                                        <i class="fa fa-clock"></i>
+                                    </button>
+                                </div>
+                                <ng-template #popContent>
+                                    <ngb-timepicker formControlName="startTime" (ngModelChange)="timeInput($event)" [meridian]="true" [hourStep]="hourStep" [minuteStep]="minuteStep"></ngb-timepicker>
+                                </ng-template>
+                                <ng-template #popTitle>Time Picker</ng-template>
+                            </div>
+                            <error-label [control]="f.startTime"></error-label>
                         </div>
                     </div>
 
