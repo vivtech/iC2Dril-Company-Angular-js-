@@ -36,8 +36,8 @@ export class CommonService {
     }
 
     getUserTypeData() {
-        console.log("enter");
-        return this.http.get<any>(`${environment.apiUrl}/user/type`, {})
+        // console.log("enter");
+        return this.http.get<any>(`${environment.apiUrl}/user/type?get=all`, {})
             .pipe(map(response => {
                 console.log(response);
                 if (response.status === 'success') {

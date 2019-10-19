@@ -70,7 +70,7 @@
                                     <th>Project</th>
                                     <th>Rig Location</th>
                                     <th>Meeting Type</th>
-                                    <!-- <th>Start Time</th> -->
+                                    <th [hidden]="true">Start Date</th>
                                     <th>Duration</th>
                                     <th>Active</th>
                                     <!-- <th>Status</th> -->
@@ -83,13 +83,10 @@
                                     <td>{{ meeting.project?.name }}</td>
                                     <td>{{ meeting.well?.name }}</td>
                                     <td>
-                                        <span *ngIf="meeting.type == 0">Sunday</span>
-                                        <span *ngIf="meeting.type == 1">Monday</span>
-                                        <span *ngIf="meeting.type == 2">Tuesday</span>
-                                        <span *ngIf="meeting.type == 3">Wednesday</span>
-                                        <span *ngIf="meeting.type == 4">Thursday</span>
-                                        <span *ngIf="meeting.type == 5">Friday</span>
-                                        <span *ngIf="meeting.type == 6">Saturday</span>
+                                        <span *ngIf="meeting.type == 1">Occur once</span>
+                                        <span *ngIf="meeting.type == 2">Daily Meeting</span>
+                                        <span *ngIf="meeting.type == 3">Weekly Meeting</span>
+                                        <span *ngIf="meeting.type == 4">Monthly Meeting</span>
                                     </td>
                                     <td>{{ meeting.duration | minuteSeconds}}</td>
                                     <td>
@@ -97,19 +94,18 @@
                                         <span class="badge badge-pill badge-warning" *ngIf="meeting.active == 0">Cancelled</span>
 
                                     </td>
-                                    <!-- <td>
-                                        <span class="badge badge-pill badge-danger" *ngIf="meeting.status == 1">Blocked</span>
-                                        <span class="badge badge-pill badge-success" *ngIf="meeting.status == 0">Unblocked</span>
-                                    </td> -->
+                                    <td [hidden]="true">
+                                        {{meeting.startDate}}
+                                    </td>
                                     <td>
                                         <div class="btn-group datatable-dropdown">
                                             <button type="button" class="btn btn-primary" (click)="view(detailModal, meeting._id)">View</button>
                                             <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
                                                 <button class="btn btn-primary dropdown-toggle-split" ngbDropdownToggle></button>
                                                 <div class="dropdown-menu" ngbDropdownMenu>
-                                                    <button *ngIf="meeting.active == 1" ngbDropdownItem (click)="CancelConfirmation(meeting._id, meeting.active)">Cancel Meeting</button>
-                                                    <button *ngIf="meeting.active == 0" ngbDropdownItem (click)="CancelConfirmation(meeting._id, meeting.active)">Active Meeting</button>
-                                                    <button ngbDropdownItem (click)="editDetail(createModal, meeting._id)">Edit Meeting</button>
+                                                    <button *ngIf="meeting.active == 1 && checkMeetingDate(meeting.startDate)" ngbDropdownItem (click)="CancelConfirmation(meeting._id, meeting.active)">Cancel Meeting</button>
+                                                    <button *ngIf="meeting.active == 0 && checkMeetingDate(meeting.startDate)" ngbDropdownItem (click)="CancelConfirmation(meeting._id, meeting.active)">Active Meeting</button>
+                                                    <button ngbDropdownItem *ngIf="checkMeetingDate(meeting.startDate)" (click)="editDetail(createModal, meeting._id)">Edit Meeting</button>
                                                     <button ngbDropdownItem (click)="deleteConfirmation(meeting._id)">Delete</button>
                                                 </div>
                                             </div>
@@ -313,7 +309,7 @@
                             <label class="text-primary">Select Rig Users</label>
                             <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="rigUsers" placeholder="Select rig user" [multiple]="true" [closeOnSelect]="false" [clearable]="false" [items]="meetingRigUsers" bindLabel="name" bindValue="_id">
                                 <ng-template ng-label-tmp let-item="item" let-clear="clear">
-                                    <span class="ng-value-label"><img [src]="item.profilePic" width="20px" height="20px">&nbsp;{{item.name}}</span>
+                                    <span class="ng-value-label"><img [src]="item.profilePic" width="20px" height="20px">&nbsp;&nbsp;{{item.name}}</span>
                                     <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">&nbsp;&nbsp;×</span>
                                 </ng-template>
 
@@ -347,7 +343,7 @@
                             <error-label [control]="f.startDate"></error-label>
                         </div>
                     </div>
-                    <!-- <div class="col-sm-6" [hidden]="selectweek">
+                    <div class="col-sm-6" [hidden]="selectweek">
                         <div class="form-group form-group-default dropdown">
                             <label class="text-primary">Select Month</label>
                             <div class="input-group">
@@ -355,7 +351,7 @@
                             </div>
                             <error-label [control]="f.startDate"></error-label>
                         </div>
-                    </div> -->
+                    </div>
                     <div class="col-sm-6" *ngIf="selectday">
                         <div class="form-group form-group-default dropdown">
                             <label class="text-primary">Select Day</label>
@@ -383,8 +379,6 @@
                             <error-label [control]="f.startTime"></error-label>
                         </div>
                     </div>
-
-
                 </div>
             </div>
 

@@ -2,6 +2,7 @@ export const environment = {
     production: true,
     apiUrl: "http://admin.ic2drill.techzarinfo.com/console",
     adminUrl: 'http://admin.ic2drill.techzarinfo.com',
+    mobapiUrl: 'http://admin.ic2drill.techzarinfo.com/api/v1',
     validators: {
         name: { min: 3, max: 75 },
         email: { min: 3, max: 75 },

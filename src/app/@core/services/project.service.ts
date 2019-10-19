@@ -71,7 +71,7 @@ export class ProjectService {
             }));
     }
 
-    getCompanyRequestList(): Observable<Project[]> {
-        return this.dataList.asObservable();
-    }
+    // getCompanyRequestList(): Observable<Project[]> {
+    //     return this.dataList.asObservable();
+    // }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
-import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalConfig, NgbDatepickerConfig } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { FormService } from 'src/app/@core/services/form-validation.service';
 import { environment } from 'src/environments/environment';
@@ -28,9 +28,11 @@ export class ListComponent implements OnInit, OnDestroy {
     datatableElement: DataTableDirective;
     permission = 'create';
     dateFormet;
+    minDate: any;
     selecttime = true;
     selectdate = false;
     selectday = false;
+    newDate = new Date();
     statusFilterData = [
         { id: '', name: 'All' },
         { id: 1, name: 'Active' },
@@ -71,11 +73,6 @@ export class ListComponent implements OnInit, OnDestroy {
     submitted = false;
     today = new Date();
     editing = false;
-    minDate = {
-        year: this.today.getFullYear(),
-        month: this.today.getMonth() + 1,
-        day: this.today.getDate()
-    };
     modelData;
     MeetingType = [
         { id: 1, name: 'Occur once' },
@@ -141,10 +138,14 @@ export class ListComponent implements OnInit, OnDestroy {
         private toastr: ToastrService,
         private projectService: ProjectService,
         private wellService: ProjectWellService,
-        private cd: ChangeDetectorRef
+        private cd: ChangeDetectorRef,
+        private config: NgbDatepickerConfig
     ) {
         modalConfig.backdrop = 'static';
         modalConfig.keyboard = false;
+        config.minDate = {year: this.newDate.getFullYear(), month: this.newDate.getMonth() + 1, day: this.newDate.getDate()};
+        config.maxDate = {year: 2099, month: 12, day: 31};
+        config.outsideDays = 'hidden';
     }
 
     ngOnInit() {
@@ -196,7 +197,7 @@ export class ListComponent implements OnInit, OnDestroy {
                 };
                 // tslint:disable-next-line: no-string-literal
                 dataTablesParameters['filter'][2] = {column: 'well', data: this.rigFilter ? this.rigFilter : ''};
-                console.log('data', dataTablesParameters);
+                console.log('data+++', dataTablesParameters);
                 const responseData = this.meetService
                     .getList(dataTablesParameters)
                     .pipe(first())
@@ -217,7 +218,7 @@ export class ListComponent implements OnInit, OnDestroy {
                 { data: 'project' },
                 { data: 'well' },
                 { data: 'type' },
-                // { data: 'startTime' },
+                { data: 'startDate' },
                 { data: 'duration' },
                 { data: 'active' },
                 // { data: 'status' },
@@ -289,7 +290,17 @@ export class ListComponent implements OnInit, OnDestroy {
         // this.packageList = this.commonService.getPackageList();
     }
 
+    checkMeetingDate(data: string) {
+        console.log('checkMeetingDate', data);
+        const cDate = Date.parse(data);
+        const expireDate =  Date.now() < cDate;
+        return expireDate;
+    }
+
     editDetail(createModal, data) {
+        this.selecttime = true;
+        this.selectdate = false;
+        this.selectday = false;
         this.meetService.getData(data).subscribe(response => {
             console.log(response);
             this.requestDetail = response.data;
@@ -300,6 +311,8 @@ export class ListComponent implements OnInit, OnDestroy {
             this.rigOnchange(event);
             this.meetingTypeOnchange({id: this.requestDetail.type});
             this.editForm.reset();
+            this.minDate = null;
+            this.time = '';
             this.editing = true;
             this.f.data.setValidators([Validators.required]);
             this.f.data.updateValueAndValidity();
@@ -559,7 +572,6 @@ export class ListComponent implements OnInit, OnDestroy {
             this.editForm.addControl('startDate', new FormControl(null));
         }
         const params = {
-            data: currentData.data,
             title: currentData.title,
             type: currentData.type,
             startTime: meetingDate,
@@ -570,7 +582,7 @@ export class ListComponent implements OnInit, OnDestroy {
             desc: currentData.desc,
             project: currentData.project,
             well: currentData.well,
-            attenders: currentData.attenders
+            users: currentData.attenders
         };
         console.log('params', params);
 
@@ -711,6 +723,9 @@ export class ListComponent implements OnInit, OnDestroy {
     }
 
     createData(createModal) {
+        this.selecttime = true;
+        this.selectdate = false;
+        this.selectday = false;
         this.f.data.setValidators(null);
         this.f.active.setValidators(null);
         this.f.data.updateValueAndValidity();
@@ -719,6 +734,8 @@ export class ListComponent implements OnInit, OnDestroy {
         };
         this.editing = false;
         this.editForm.reset();
+        this.minDate = null;
+        this.time = '';
         this.modalService.open(createModal, {
             size: 'lg'
         });

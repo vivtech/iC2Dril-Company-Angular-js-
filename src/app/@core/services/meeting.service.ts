@@ -7,19 +7,17 @@ import { Meeting } from '../models/meeting.model';
 
 
 @Injectable({
-	providedIn: 'root'
+    providedIn: 'root'
 })
 
 export class MeetingService {
-	dataParam = {data:'title'};
+    dataParam = {data: 'title'};
+    public dataList: BehaviorSubject<Meeting[]>;
+    constructor(private http: HttpClient) {
+        this.dataList = new BehaviorSubject<Meeting[]>([]);
+    }
 
-	public dataList: BehaviorSubject<Meeting[]>;
-
-	constructor(private http: HttpClient) {
-		this.dataList = new BehaviorSubject<Meeting[]>([]);
-	}
-
-	getList(dataTablesParameters): any {
+    getList(dataTablesParameters): any {
         return this.http
             .post<any>(
                 `${environment.apiUrl}/meeting/list`,

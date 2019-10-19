@@ -16,7 +16,7 @@ const COMPONENTS = [
 ];
 
 @NgModule({
-  imports: [ThemeModule, MeetingRoutingModule, PerfectScrollbarModule, NgxDaterangepickerMd.forRoot() ],
-  declarations: [...COMPONENTS, AddMeetingComponent, MinuteSecondsPipe],
+  imports: [ThemeModule, MeetingRoutingModule, PerfectScrollbarModule, NgxDaterangepickerMd.forRoot()],
+  declarations: [...COMPONENTS, AddMeetingComponent, MinuteSecondsPipe]
 })
 export class MeetingModule {}
