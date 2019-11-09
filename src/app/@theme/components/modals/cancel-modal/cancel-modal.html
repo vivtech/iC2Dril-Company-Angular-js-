@@ -1,11 +1,11 @@
 <div class="modal-header">
-    <h4 class="modal-title" id="modal-title">Delete Confirmation</h4>
+    <h4 class="modal-title" id="modal-title">{{ type }} Confirmation</h4>
     <button type="button" class="close" aria-label="Close button" aria-describedby="modal-title" (click)="modal.dismiss('Cross click')">
           <span aria-hidden="true">&times;</span>
         </button>
 </div>
 <div class="modal-body">
-    <p><strong>Are you sure you want to cancel meeting?</strong></p>
+    <p><strong>Are you sure you want to <span style="text-transform: lowercase;">{{ type }}</span> meeting?</strong></p>
 
 </div>
 <div class="modal-footer">

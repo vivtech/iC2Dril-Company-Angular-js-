@@ -8,12 +8,12 @@ import { SidebarToggleService } from 'src/app/@core/utils/sidebar-toggle.service
 })
 export class HeaderComponent implements OnInit {
     sidebarToggle: boolean = false;
-    
+
 
     constructor(private sidebarToggleService: SidebarToggleService) { }
 
     ngOnInit() {
-        
+
     }
 
     toggleSidebar(){

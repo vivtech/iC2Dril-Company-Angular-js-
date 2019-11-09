@@ -14,6 +14,9 @@ import { ResetTokenGuard } from '../@core/guards/rest-token-checker.guard';
 import { ProfileComponent } from './profile/profile.component';
 import { PackageComponent } from './package/package.component';
 import { CountryComponent } from './country/country.component';
+import { UpgradePackageComponent } from './upgrade/upgrade-package/upgrade-package.component';
+import { AddUserComponent } from './upgrade/add-user/add-user.component';
+import { AccountComponent } from './account/account.component';
 
 const routes: Routes = [
     {
@@ -67,7 +70,8 @@ const routes: Routes = [
             {
                 path: 'riglocation',
                 loadChildren: './rig-location/rig.module#RigModule'
-            },{
+            },
+            {
                 path: 'camera',
                 loadChildren: './camera/camera.module#CameraModule'
             },
@@ -80,10 +84,21 @@ const routes: Routes = [
                 component:  CountryComponent
             },
             {
+                path: 'upgrade',
+                loadChildren: './upgrade/upgrade.module#UpgradeModule'
+            },
+            {
                 path: 'profile',
                 component: ProfileComponent
             },
-
+            {
+                path: 'account',
+                component: AccountComponent
+            },
+            {
+                path: 'notification',
+                loadChildren: './notification/notification.module#NotificationModule'
+            },
             {
                 path: '',
                 redirectTo: 'dashboard',

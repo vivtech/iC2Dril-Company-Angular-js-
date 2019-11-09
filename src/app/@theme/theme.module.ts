@@ -34,6 +34,7 @@ import { PopoverOptionComponent } from './components/utils/popover-option/popove
 import { BreadcrumbComponent } from './components/utils/breadcrumb/breadcrumb.component';
 import { FilterPipe } from './pipes/filter.pipe';
 import { DurationPipe } from './pipes/duration.pipe';
+import { MeetingPipe } from './pipes/meeting.pipe';
 
 const COMPONENTS = [
     WebComponent,
@@ -73,7 +74,8 @@ const BASE_MODULES = [
 const PIPES = [
     CapitalizePipe,
     FilterPipe,
-    DurationPipe
+    DurationPipe,
+    MeetingPipe
 ];
 
 const NB_THEME_PROVIDERS = [

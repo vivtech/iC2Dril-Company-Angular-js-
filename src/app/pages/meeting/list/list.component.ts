@@ -127,6 +127,7 @@ export class ListComponent implements OnInit, OnDestroy {
     ];
     utcOptions = [];
     time: any;
+    meetingDate = true;
 
     constructor(
         private commonService: CommonService,
@@ -149,6 +150,12 @@ export class ListComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
+        const comId: any = localStorage.getItem('companyId');
+        // tslint:disable-next-line: radix
+        // console.log('CompanyId', comId, parseInt(comId));
+        this.meetService.getlicenceData(comId).subscribe(response => {
+            console.log('license-history', response);
+        });
         const that = this;
         this.subscription = this.commonService
             .getUserTypeList()
@@ -221,6 +228,7 @@ export class ListComponent implements OnInit, OnDestroy {
                 { data: 'startDate' },
                 { data: 'duration' },
                 { data: 'active' },
+                { data: 'createdAt' },
                 // { data: 'status' },
                 { data: 'attenders'}
             ],
@@ -249,8 +257,19 @@ export class ListComponent implements OnInit, OnDestroy {
                 {
                     searchable: false,
                     targets: [-6]
+                },
+                {
+                    searchable: false,
+                    targets: [-7]
+                },
+                {
+                    searchable: false,
+                    targets: [-8]
                 }
 
+            ],
+            order: [
+                [7, 'desc']
             ]
         };
         this.editForm = this.formBuilder.group({
@@ -269,6 +288,13 @@ export class ListComponent implements OnInit, OnDestroy {
                     Validators.required
                 ]
             ],
+            desc: ['',
+                [
+                    Validators.required,
+                    Validators.minLength(this.validator.notes.min),
+                    Validators.maxLength(this.validator.notes.max)
+                ]
+            ],
             startTime: [
                 '',
                 [
@@ -279,9 +305,7 @@ export class ListComponent implements OnInit, OnDestroy {
             timezone: ['', [ Validators.required]],
             project: ['', [Validators.required]],
             well: ['', [Validators.required]],
-            desc: ['', [Validators.required]],
             attenders: [[]],
-            rigUsers: [[]],
             projectUsers: [[]],
             active: ['', [Validators.required]]
         });
@@ -291,7 +315,7 @@ export class ListComponent implements OnInit, OnDestroy {
     }
 
     checkMeetingDate(data: string) {
-        console.log('checkMeetingDate', data);
+        console.log('checkMeet', data);
         const cDate = Date.parse(data);
         const expireDate =  Date.now() < cDate;
         return expireDate;
@@ -302,7 +326,7 @@ export class ListComponent implements OnInit, OnDestroy {
         this.selectdate = false;
         this.selectday = false;
         this.meetService.getData(data).subscribe(response => {
-            console.log(response);
+            console.log('Edit', response);
             this.requestDetail = response.data;
             const event = {
                 project: this.requestDetail.project._id,
@@ -333,17 +357,24 @@ export class ListComponent implements OnInit, OnDestroy {
                 well: this.requestDetail.well._id,
                 day: this.requestDetail.day
             });
+            // tslint:disable-next-line: triple-equals
+            if (this.requestDetail.type == 1 || this.requestDetail.type == 4) {
+                const editDate = new Date(this.requestDetail.startDate);
+                this.minDate = {
+                    year: editDate.getFullYear(),
+                    month: editDate.getMonth() + 1,
+                    day: editDate.getDate()
+                };
+            } else {
+                this.editForm.patchValue({
+                    startDate: null
+                });
+            }
             this.modalService.open(createModal, {
                 size: 'lg'
             });
             const splitedT = this.requestDetail.startTime.substr(0, this.requestDetail.startTime.indexOf('.'));
             this.time = splitedT;
-            const editDate = new Date(this.requestDetail.startDate);
-            this.minDate = {
-                year: editDate.getFullYear(),
-                month: editDate.getMonth() + 1,
-                day: editDate.getDate()
-            };
             console.log('minDate', this.requestDetail.startTime.substr(0, this.requestDetail.startTime.indexOf('.')));
 
         },
@@ -419,18 +450,21 @@ export class ListComponent implements OnInit, OnDestroy {
     rigOnchange(event) {
         console.log('rigOnchange', event);
         this.meetService.getMeetingUser(event.project, event._id).subscribe(response => {
-            console.log('meetinguser', response.data.currentProject);
-            this.meetingProjectUsers = [...response.data.currentProject];
-            this.meetingRigUsers = [...response.data.currentRig];
+            console.log('meetinguser', response.data);
+            const meetingProjectUsers = response.data.currentProject;
+            const meetingRigUsers = response.data.currentRig;
+            const otherrig = meetingProjectUsers.map(v => ({...v, type: 'otherrig'}));
+            const currentrig = meetingRigUsers.map(v => ({...v, type: 'currentrig'}));
+            this.meetingProjectUsers = [...otherrig, ...currentrig];
             if (this.editing) {
                 if (this.meetingProjectUsers.length !== 0) {
-                    const result1 = this.filterUser(this.meetingProjectUsers);
-                    this.f.projectUsers.setValue(result1);
+                    const result = this.filterUser(this.meetingProjectUsers);
+                    this.f.projectUsers.setValue(result);
                 }
-                if (this.meetingRigUsers.length !== 0) {
-                    const result2 = this.filterUser(this.meetingRigUsers);
-                    this.f.rigUsers.setValue(result2);
-                }
+                // if (this.meetingRigUsers.length !== 0) {
+                //     const result2 = this.filterUser(this.meetingRigUsers);
+                //     this.f.rigUsers.setValue(result2);
+                // }
             }
         });
     }
@@ -464,6 +498,7 @@ export class ListComponent implements OnInit, OnDestroy {
     get f() {
         return this.editForm.controls;
     }
+
     timeInput(event) {
         console.log('eventt', event);
         let time: any;
@@ -472,16 +507,18 @@ export class ListComponent implements OnInit, OnDestroy {
             const currentHour = (currenttime.hour < 9) ? `${0}` + currenttime.hour : currenttime.hour;
             const currentTime = (currenttime.minute < 9) ? `${0}` + currenttime.minute : currenttime.minute;
             const fullTime  = (currentHour + ':' + currentTime).toString();
-            // console.log('fullTime', fullTime);
+            console.log('fullTime', fullTime);
             this.fullTimeFormat = fullTime;
             const newDate = new Date();
             const month = 1;
-            if (this.f.startDate.value) {
+            if (this.f.startDate) {
                 // tslint:disable-next-line: max-line-length
                 time = `${this.f.startDate.value.year}-${this.f.startDate.value.month}-${this.f.startDate.value.day}` + ' ' + this.fullTimeFormat;
+                console.log('TimeWithSelectedDate', time);
             } else {
                 // tslint:disable-next-line: max-line-length
                 time = `${newDate.getFullYear()}-${newDate.getMonth() + month}-${newDate.getDate() + month}` + ' ' + this.fullTimeFormat;
+                console.log('TimeWithoutSelectedDate', time);
             }
             this.time = time;
         }
@@ -506,7 +543,7 @@ export class ListComponent implements OnInit, OnDestroy {
                     this.dateFormet =  'h:mm a, ';
                     break;
                 case 4:
-                    this.dateFormet =   'd, h:mm a';
+                    this.dateFormet =   'dd, h:mm a';
                     break;
             }
             this.modalService.open(detailModal, {
@@ -530,18 +567,18 @@ export class ListComponent implements OnInit, OnDestroy {
     }
 
     updateRequest() {
-        this.formService.clearCustomError(this.editForm);
+        // this.formService.clearCustomError(this.editForm);
         this.submitted = true;
         this.editForm.markAllAsTouched();
         const currentData = this.editForm.getRawValue();
+        console.log('currentData', currentData);
         // tslint:disable-next-line: max-line-length
-        currentData.attenders = (currentData.rigUsers ? currentData.rigUsers : []).concat(currentData.projectUsers ? currentData.projectUsers : []);
-        console.log('currentData.attenders', currentData.attenders);
+        currentData.attenders = currentData.projectUsers ? currentData.projectUsers : [];
         if (currentData.attenders.length === 0) {
-            this.f.rigUsers.setValidators(Validators.required);
+            // this.f.rigUsers.setValidators(Validators.required);
             this.f.projectUsers.setValidators(Validators.required);
         } else {
-            this.f.rigUsers.setValidators(null);
+            // this.f.rigUsers.setValidators(null);
             this.f.projectUsers.setValidators(null);
         }
         let meetingDate: any;
@@ -549,7 +586,7 @@ export class ListComponent implements OnInit, OnDestroy {
             if (this.fullTimeFormat) {
                 // tslint:disable-next-line: max-line-length
                 meetingDate = `${currentData.startDate.year}-${currentData.startDate.month}-${currentData.startDate.day}` + ' ' + this.fullTimeFormat;
-            } else {
+            } else if (this.time) {
                 const oldTime = new Date(this.time);
                 // tslint:disable-next-line: max-line-length
                 meetingDate = `${currentData.startDate.year}-${currentData.startDate.month}-${currentData.startDate.day}` + ' ' +  `${oldTime.getHours()}:${oldTime.getMinutes()}`;
@@ -559,19 +596,21 @@ export class ListComponent implements OnInit, OnDestroy {
         } else {
             console.log('meetTypeWithoutDate');
             const month = 1;
+            const cDate = new Date();
             if (this.fullTimeFormat) {
                 // tslint:disable-next-line: max-line-length
-                meetingDate = `${currentData.startDate.year}-${currentData.startDate.month}-${currentData.startDate.day}` + ' ' + this.fullTimeFormat;
-            } else {
+                meetingDate = `${cDate.getFullYear()}-${cDate.getMonth() + month}-${cDate.getDate()}` + ' ' + this.fullTimeFormat;
+            } else if (this.time) {
                 const oldTime = new Date(this.time);
                 // tslint:disable-next-line: max-line-length
-                meetingDate = `${currentData.startDate.year}-${currentData.startDate.month}-${currentData.startDate.day}` + ' ' +  `${oldTime.getHours()}:${oldTime.getMinutes()}`;
+                meetingDate = `${cDate.getFullYear()}-${cDate.getMonth() + month}-${cDate.getDate()}` + ' ' +  `${oldTime.getHours()}:${oldTime.getMinutes()}`;
             }
             console.log('Date', meetingDate);
             this.editForm.addControl('day', new FormControl(null));
             this.editForm.addControl('startDate', new FormControl(null));
         }
         const params = {
+            data: currentData.data,
             title: currentData.title,
             type: currentData.type,
             startTime: meetingDate,
@@ -582,10 +621,10 @@ export class ListComponent implements OnInit, OnDestroy {
             desc: currentData.desc,
             project: currentData.project,
             well: currentData.well,
-            users: currentData.attenders
+            users: currentData.attenders,
+            day: currentData.day
         };
         console.log('params', params);
-
         console.log('form', this.editForm.getRawValue());
         if (this.editForm.invalid) {
             this.submitted = false;
@@ -678,7 +717,7 @@ export class ListComponent implements OnInit, OnDestroy {
         );
     }
 
-    CancelConfirmation(id, active) {
+    CancelConfirmation(id, active, type) {
         let params: any;
         // tslint:disable-next-line: triple-equals
         if (active == 0) {
@@ -695,6 +734,7 @@ export class ListComponent implements OnInit, OnDestroy {
         console.log(params);
         const modalRef = this.modalService.open(CancelModalComponent);
         modalRef.componentInstance.data = params;
+        modalRef.componentInstance.type = type;
         modalRef.result.then(
             result => {
                 if (result) {
@@ -736,6 +776,7 @@ export class ListComponent implements OnInit, OnDestroy {
         this.editForm.reset();
         this.minDate = null;
         this.time = '';
+        this.meetingProjectUsers = [];
         this.modalService.open(createModal, {
             size: 'lg'
         });

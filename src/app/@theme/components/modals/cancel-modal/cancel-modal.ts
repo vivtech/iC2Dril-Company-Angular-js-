@@ -8,10 +8,12 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class CancelModalComponent implements OnInit {
     @Input() data;
+    @Input() type;
 
     constructor(public modal: NgbActiveModal) { }
 
     ngOnInit() {
+        console.log('model', this.modal);
     }
 
     passBack() {

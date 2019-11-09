@@ -113,7 +113,7 @@
                     <div class="col-sm-6">
                         <div class="form-group form-group-default">
                             <label class="text-primary">Rig Name</label>
-                            <input type="text" formControlName="name" class="form-control" placeholder="Rig name">
+                            <input type="text" formControlName="name" [attr.maxlength]="validator.name.max" class="form-control" placeholder="Rig name">
                             <error-label [control]="f.name"></error-label>
                         </div>
                     </div>
@@ -128,7 +128,7 @@
                     <div class="col-sm-6">
                         <div class="form-group form-group-default">
                             <label class="text-primary">Rig Location</label>
-                            <input type="text" formControlName="rigLocation" class="form-control" placeholder="Rig Location">
+                            <input type="text" formControlName="rigLocation" [attr.maxlength]="validator.name.max" class="form-control" placeholder="Rig Location">
                             <error-label [control]="f.rigLocation"></error-label>
                         </div>
                     </div>
@@ -152,7 +152,7 @@
                     <div class="col-sm-6">
                         <div class="form-group form-group-default">
                             <label class="text-primary">Field Name</label>
-                            <input type="text" formControlName="fieldName" class="form-control" placeholder="Field name">
+                            <input type="text" formControlName="fieldName" [attr.maxlength]="validator.name.max" class="form-control" placeholder="Field name">
                             <error-label [control]="f.fieldName"></error-label>
                         </div>
                     </div>

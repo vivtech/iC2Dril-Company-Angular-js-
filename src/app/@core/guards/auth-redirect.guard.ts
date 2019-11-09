@@ -12,11 +12,11 @@ export class AuthRedirect implements CanActivate {
     }
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
         const currentUser = this.authenticationService.userToken;
-        console.log(currentUser)
+        console.log(currentUser);
         if (currentUser) {
             this.router.navigate(
                 ['/dashboard']
-                //, { queryParams: { returnUrl: state.url } }
+                , { queryParams: { returnUrl: state.url } }
                 );
             return false;
         }

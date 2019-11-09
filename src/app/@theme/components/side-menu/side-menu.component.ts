@@ -34,9 +34,35 @@ export class SideMenuComponent implements OnInit {
     },
     {
         label: 'Users',
-        icon: 'fas fa-user-tie',
+        icon: 'fas fa-user',
         link: '/user/list'
-     }
+    },
+    // {
+    //     label: 'Upgrade Package',
+    //     icon: 'fas fa-cubes',
+    //     link: '/upgrade/package'
+    // },
+    {
+        label: 'Upgrade',
+        icon: 'fas fa-cubes',
+        items: [
+            {
+                label: 'Package',
+                icon: 'fas fa-user-plus',
+                link: '/upgrade/package',
+            },
+            {
+                label: 'User',
+                icon: 'fas fa-user-plus',
+                link: '/upgrade/adduser',
+            }
+        ]
+    },
+    {
+        label: 'Notification',
+        icon: 'fa fa-envelope',
+        link: '/notification/list'
+    }
       //   {
       //     label: 'Subscribed Company',
       //     icon: 'fas fa-th-list',

@@ -35,9 +35,9 @@ export class ProfileComponent implements OnInit {
     confirmPasswordForm: FormGroup;
     successMessage = '';
     validationError = '';
-    public uploader:FileUploader = new FileUploader({});
+    public uploader: FileUploader = new FileUploader({});
     public filePreviewPath: File = null;
-    imageError: boolean = false;
+    imageError = false;
     selectedFile: any;
     countryList: Observable<Country[]>;
 
@@ -96,16 +96,16 @@ export class ProfileComponent implements OnInit {
     }
 
     toggleVisible(value) {
-        switch(value) {
+        switch (value) {
             case 'current' :
                 this.CurrentpasswordHidden = !this.CurrentpasswordHidden;
-            break;
+                break;
             case 'new' :
                 this.NewpasswordHidden = !this.NewpasswordHidden;
-            break;
+                break;
             case 'confirm' :
                 this.ConfirmpasswordHidden = !this.ConfirmpasswordHidden;
-            break;
+                break;
         }
     }
 
@@ -115,16 +115,17 @@ export class ProfileComponent implements OnInit {
 
     onFileSelected(event) {
         console.log('event1', event[0].type);
+        // tslint:disable-next-line: triple-equals
         if (event[0].type == 'image/png' || event[0].type == 'image/jpeg') {
             this.imageError = false;
-            var reader = new FileReader();
+            const reader = new FileReader();
             reader.readAsDataURL(event[0]); // read file as data url
+            // tslint:disable-next-line: no-shadowed-variable
             reader.onload = (event: any) => { // called once readAsDataURL is completed
                 console.log('event', event);
                 this.filePreviewPath = event.target.result;
-            }
-        }
-        else {
+            };
+        } else {
             console.log('File not image');
             this.imageError = true;
         }
@@ -142,9 +143,9 @@ export class ProfileComponent implements OnInit {
 
     onProfileSubmit() {
         this.formService.clearCustomError(this.profileForm);
-        //this.validationError = '';
-        //this.successMessage = '';
-        //this.error = false;
+        // this.validationError = '';
+        // this.successMessage = '';
+        // this.error = false;
         this.submitted = true;
         this.profileForm.markAllAsTouched();
 
@@ -160,7 +161,7 @@ export class ProfileComponent implements OnInit {
                 if (data.status === 'success') {
                     console.log(data);
                     this.toastr.error('', data.message);
-                    window.scroll(0,0);
+                    window.scroll(0, 0);
                 } else {
                     this.validationError = data.message;
                 }
@@ -200,7 +201,7 @@ export class ProfileComponent implements OnInit {
                     console.log(data);
                     this.confirmPasswordForm.reset();
                     this.toastr.error('', data.message);
-                    window.scroll(0,0);
+                    window.scroll(0, 0);
                 } else {
                     // this.validationError = data.message;
                 }

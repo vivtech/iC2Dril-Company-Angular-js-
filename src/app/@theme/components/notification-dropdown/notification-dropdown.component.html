@@ -7,13 +7,13 @@
         <li>
             <div class="dropdown-title d-flex justify-content-between align-items-center">
                 Messages
-                <a href="#" class="small">Mark all as read</a>
+                <a [routerLink]="'/notification/list'" class="small">Mark all as read</a>
             </div>
         </li>
         <li>
             <div class="message-notif-scroll scrollbar-outer" [perfectScrollbar]>
                 <div class="notif-center">
-                    <a href="#">
+                    <a [routerLink]="'/notification/list'">
                         <div class="notif-img">
                             <img src="../assets/img/jm_denis.jpg" alt="Img Profile">
                         </div>
@@ -25,7 +25,7 @@
                             <span class="time">5 minutes ago</span>
                         </div>
                     </a>
-                    <a href="#">
+                    <a [routerLink]="'/notification/list'">
                         <div class="notif-img">
                             <img src="../assets/img/chadengle.jpg" alt="Img Profile">
                         </div>
@@ -37,7 +37,7 @@
                             <span class="time">12 minutes ago</span>
                         </div>
                     </a>
-                    <a href="#">
+                    <a [routerLink]="'/notification/list'">
                         <div class="notif-img">
                             <img src="../assets/img/mlane.jpg" alt="Img Profile">
                         </div>
@@ -49,7 +49,7 @@
                             <span class="time">12 minutes ago</span>
                         </div>
                     </a>
-                    <a href="#">
+                    <a [routerLink]="'/notification/list'">
                         <div class="notif-img">
                             <img src="../assets/img/talha.jpg" alt="Img Profile">
                         </div>
@@ -65,7 +65,7 @@
             </div>
         </li>
         <li>
-            <a class="see-all" href="javascript:void(0);">See all messages<i class="fa fa-angle-right"></i> </a>
+            <a class="see-all" [routerLink]="['/notification/list']" routerLinkActive="router-link-active">See all messages<i class="fa fa-angle-right"></i> </a>
         </li>
     </ul>
 </li>

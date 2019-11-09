@@ -42,6 +42,14 @@ export class MeetingService {
         );
     }
 
+    getlicenceData(id) {
+        return this.http.get<any>(`${environment.apiUrl}/package/${id}`).pipe(
+            map(response => {
+                return response;
+            })
+        );
+    }
+
     getMeetingUser(project, well) {
         return this.http.post<any>(`${environment.mobapiUrl}/meeting/users`, {project, well}).pipe(
             map(response => {

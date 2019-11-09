@@ -42,13 +42,13 @@
                                     bindValue="_id"></ng-select>
                             </div>
                         </div>
-                        <div class="col-md-3 pl-0">
+                        <!-- <div class="col-md-3 pl-0">
                             <div class="form-group pt-0">
                                 <label>Status</label>
                                 <ng-select (change)="refreshTable()" class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [(ngModel)]="blockFilter" [clearable]="false" [items]="blockedFilterData" bindLabel="name" bindValue="id"></ng-select>
 
                             </div>
-                        </div>
+                        </div> -->
                         <div class="col-md-3 pl-0">
                             <div class="form-group pt-0">
                                 <label>Active</label>
@@ -73,6 +73,7 @@
                                     <th [hidden]="true">Start Date</th>
                                     <th>Duration</th>
                                     <th>Active</th>
+                                    <th [hidden]="true">Created Date</th>
                                     <!-- <th>Status</th> -->
                                     <th>Action</th>
                                 </tr>
@@ -97,15 +98,20 @@
                                     <td [hidden]="true">
                                         {{meeting.startDate}}
                                     </td>
+                                    <td [hidden]="true">
+                                        {{meeting.createdAt}}
+                                    </td>
                                     <td>
                                         <div class="btn-group datatable-dropdown">
                                             <button type="button" class="btn btn-primary" (click)="view(detailModal, meeting._id)">View</button>
                                             <div class="btn-group" ngbDropdown role="group" aria-label="Button group with nested dropdown">
                                                 <button class="btn btn-primary dropdown-toggle-split" ngbDropdownToggle></button>
                                                 <div class="dropdown-menu" ngbDropdownMenu>
-                                                    <button *ngIf="meeting.active == 1 && checkMeetingDate(meeting.startDate)" ngbDropdownItem (click)="CancelConfirmation(meeting._id, meeting.active)">Cancel Meeting</button>
-                                                    <button *ngIf="meeting.active == 0 && checkMeetingDate(meeting.startDate)" ngbDropdownItem (click)="CancelConfirmation(meeting._id, meeting.active)">Active Meeting</button>
-                                                    <button ngbDropdownItem *ngIf="checkMeetingDate(meeting.startDate)" (click)="editDetail(createModal, meeting._id)">Edit Meeting</button>
+                                                    <div *ngIf="meeting.startDate | meetingpipe: meeting.type">
+                                                        <button ngbDropdownItem (click)="editDetail(createModal, meeting._id)">Edit Meeting</button>
+                                                        <button ngbDropdownItem *ngIf="meeting.active == 0" (click)="CancelConfirmation(meeting._id, meeting.active, 'Active')">Activate Meeting</button>
+                                                        <button ngbDropdownItem *ngIf="meeting.active == 1" (click)="CancelConfirmation(meeting._id, meeting.active, 'Cancel')">Cancel Meeting</button>
+                                                    </div>
                                                     <button ngbDropdownItem (click)="deleteConfirmation(meeting._id)">Delete</button>
                                                 </div>
                                             </div>
@@ -134,7 +140,7 @@
 <!-- Edit Modal -->
 <ng-template #detailModal let-modal>
     <div class="modal-header">
-        <h4 class="modal-title">Meeting Details</h4>
+        <!-- <h4 class="modal-title">Meeting Details</h4> -->
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -151,17 +157,32 @@
 
 
                         <div class="form-group form-group-default">
-                            <label class="text-primary">Meeting Type</label>
-                            <span class="form-control text-muted">{{ MeetingType | Filterpipe:modelData.type }}</span>
+                            <label class="text-primary">Meeting Details</label>
+                            <span *ngIf="modelData.type == 1" class="form-control text-muted">
+                                {{ modelData.startTime | date:'MMM d, y \'at\' h:mm a' :'UTC' }} ({{ modelData.timezone.abbr }})
+                            </span>
+                            <span *ngIf="modelData.type == 2" class="form-control text-muted">
+                                Daily at {{ modelData.startTime | date:'h:mm a' :'UTC' }} ({{ modelData.timezone.abbr }})
+                            </span>
+                            <span *ngIf="modelData.type == 3" class="form-control text-muted">
+                                <!-- {{ MeetingType | Filterpipe:modelData.type }}  -->
+                                Every {{ dayType | Filterpipe:modelData.day }} |
+                                {{ modelData.startTime | date:'h:mm a' :'UTC' }} ({{ modelData.timezone.abbr }})
+                            </span>
+                            <span *ngIf="modelData.type == 4" class="form-control text-muted">
+                                <!-- {{ MeetingType | Filterpipe:modelData.type }}  -->
+                                Every Month
+                                {{ modelData.startTime | date:'d \'at\' h:mm a' :'UTC' }} ({{ modelData.timezone.abbr }})
+                            </span>
                         </div>
-                        <div class="form-group form-group-default" *ngIf="modelData.type != 3">
+                        <!-- <div class="form-group form-group-default" *ngIf="modelData.type != 3">
                             <label class="text-primary">Start Time</label>
-                            <span class="form-control text-muted">{{ modelData.startTime | date : dateFormet }}</span>
+                            <span class="form-control text-muted">{{ modelData.startTime | date:'medium':'UTC' }}</span>
                         </div>
                         <div class="form-group form-group-default" *ngIf="modelData.type == 3">
                             <label class="text-primary">Start Time</label>
-                            <span class="form-control text-muted">{{ modelData.startTime | date : dateFormet }} {{ dayType | Filterpipe:modelData.day }}</span>
-                        </div>
+                            <span class="form-control text-muted">{{ modelData.startTime | date:'medium':'UTC' }} {{ dayType | Filterpipe:modelData.day }}</span>
+                        </div> -->
                         <div class="form-group form-group-default">
                             <label class="text-primary">Duration</label>
                             <span class="form-control text-muted">{{ modelData.duration | minuteSeconds }}</span>
@@ -182,10 +203,10 @@
                             <label class="text-primary">Created By</label>
                             <span class="form-control text-muted">{{ modelData.createdBy.name }}</span>
                         </div>
-                        <div class="form-group form-group-default">
+                        <!-- <div class="form-group form-group-default">
                             <label class="text-primary">Created At</label>
                             <span class="form-control text-muted">{{ modelData.createdAt | date :'medium' }}</span>
-                        </div>
+                        </div> -->
 
                     </div>
                     <div class="col-sm-12">
@@ -237,7 +258,7 @@
                     <div class="col-sm-6">
                         <div class="form-group form-group-default">
                             <label class="text-primary">Meeting Title</label>
-                            <input type="text" formControlName="title" class="form-control" placeholder="Meeting Title">
+                            <input type="text" [attr.maxlength]="validator.name.max" formControlName="title" class="form-control" placeholder="Meeting Title">
                             <error-label [control]="f.title"></error-label>
                         </div>
                     </div>
@@ -267,7 +288,7 @@
                     <div class="col-sm-6">
                         <div class="form-group form-group-default">
                             <label class="text-primary">Description</label>
-                            <input type="text" formControlName="desc" class="form-control" placeholder="Description">
+                            <input type="text" [attr.maxlength]="validator.notes.max" formControlName="desc" class="form-control" placeholder="Description">
                             <error-label [control]="f.desc"></error-label>
                         </div>
                     </div>
@@ -287,8 +308,8 @@
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group form-group-default dropdown">
-                            <label class="text-primary">Select Project Users</label>
-                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="projectUsers" placeholder="Select project users" [multiple]="true" [closeOnSelect]="false" [clearable]="false" [items]="meetingProjectUsers" bindLabel="name"
+                            <label class="text-primary">Select Users</label>
+                            <!-- <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="projectUsers" placeholder="Select project users" [multiple]="true" [closeOnSelect]="false" [clearable]="false" [items]="meetingProjectUsers" bindLabel="name"
                                 bindValue="_id">
                                 <ng-template ng-label-tmp let-item="item" let-clear="clear">
                                     <span class="ng-value-label"><img [src]="item.profilePic" width="20px" height="20px">&nbsp;{{item.name}}</span>
@@ -300,11 +321,25 @@
                                     <span style="position: absolute;
                                     top: 3px;">{{item.name}}</span>
                                 </ng-template>
+                            </ng-select> -->
+                            <ng-select [items]="meetingProjectUsers" formControlName="projectUsers" placeholder="Select users" [multiple]="true" bindLabel="name" groupBy="type" [selectableGroup]="true" [selectableGroupAsModel]="false" [closeOnSelect]="false" bindValue="_id">
+                                <ng-template ng-optgroup-tmp let-item="item" let-item$="item$" let-index="index">
+                                    {{item.type | uppercase}}
+                                </ng-template>
+                                <ng-template ng-label-tmp let-item="item" let-clear="clear">
+                                    <span class="ng-value-label"><img [src]="item.profilePic" width="20px" height="20px">&nbsp;&nbsp;{{item.name}}</span>
+                                    <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">&nbsp;&nbsp;×</span>
+                                </ng-template>
+                                <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
+                                    <img [src]="item.profilePic" width="20px" height="20px">&nbsp;
+                                    <span style="position: absolute;
+                                    top: 3px;">{{item.name}}</span>
+                                </ng-template>
                             </ng-select>
                             <error-label [control]="f.projectUsers"></error-label>
                         </div>
                     </div>
-                    <div class="col-sm-6">
+                    <!-- <div class="col-sm-6">
                         <div class="form-group form-group-default dropdown">
                             <label class="text-primary">Select Rig Users</label>
                             <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="rigUsers" placeholder="Select rig user" [multiple]="true" [closeOnSelect]="false" [clearable]="false" [items]="meetingRigUsers" bindLabel="name" bindValue="_id">
@@ -321,7 +356,7 @@
                             </ng-select>
                             <error-label [control]="f.rigUsers"></error-label>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="col-md-6">
                         <div class="form-group form-group-default dropdown">
                             <label class="text-primary">Active</label>
@@ -343,7 +378,7 @@
                             <error-label [control]="f.startDate"></error-label>
                         </div>
                     </div>
-                    <div class="col-sm-6" [hidden]="selectweek">
+                    <!-- <div class="col-sm-6" [hidden]="selectweek">
                         <div class="form-group form-group-default dropdown">
                             <label class="text-primary">Select Month</label>
                             <div class="input-group">
@@ -351,7 +386,7 @@
                             </div>
                             <error-label [control]="f.startDate"></error-label>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="col-sm-6" *ngIf="selectday">
                         <div class="form-group form-group-default dropdown">
                             <label class="text-primary">Select Day</label>

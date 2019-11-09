@@ -34,9 +34,10 @@ export class AuthenticationService {
             .pipe(map(response => {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 if ( response.status === 'success' ) {
-
+                    // console.log('loginRES', response.data)
                     localStorage.setItem('companyUser', JSON.stringify(response.data.user));
                     localStorage.setItem('companyToken', response.data.token);
+                    localStorage.setItem('companyId', response.data.user.company);
                     this.currentUserSubject.next(response.data.user);
                     console.log(response.data.token);
                     this.currentUserToken.next(response.data.token);

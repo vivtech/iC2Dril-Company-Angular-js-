@@ -1,6 +1,6 @@
 .avatar-img {
     width: 60% !important;
-    width: 60% !important;
+    height: 100% !important;
 }
 
 .attendename {
@@ -51,4 +51,8 @@ i.fa.fa-clock {
 
 .dropdown-menu.show {
     transform: translate(-105px, 45px) !important;
+}
+
+.ng-select {
+    padding-bottom: 0px !important;
 }
