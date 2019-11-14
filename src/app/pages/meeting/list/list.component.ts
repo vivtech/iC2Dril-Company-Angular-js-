@@ -150,12 +150,6 @@ export class ListComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        const comId: any = localStorage.getItem('companyId');
-        // tslint:disable-next-line: radix
-        // console.log('CompanyId', comId, parseInt(comId));
-        this.meetService.getlicenceData(comId).subscribe(response => {
-            console.log('license-history', response);
-        });
         const that = this;
         this.subscription = this.commonService
             .getUserTypeList()
@@ -495,7 +489,8 @@ export class ListComponent implements OnInit, OnDestroy {
         }
     }
 
-    get f() {
+    get f(): any {
+        // console.log('typeOf-control', typeof this.editForm.controls);
         return this.editForm.controls;
     }
 
@@ -523,7 +518,7 @@ export class ListComponent implements OnInit, OnDestroy {
             this.time = time;
         }
     }
-    get lf() {
+    get lf(): any {
         return this.licenseForm.controls;
     }
 

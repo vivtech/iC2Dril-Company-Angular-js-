@@ -12,10 +12,10 @@ const routes: Routes = [
                 path: 'package',
                 component: UpgradePackageComponent
             },
-            {
-                path: 'adduser',
-                component: AddUserComponent
-            },
+            // {
+            //     path: 'adduser',
+            //     component: AddUserComponent
+            // },
             {
                 path: '',
                 redirectTo: 'package'

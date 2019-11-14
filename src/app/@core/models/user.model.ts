@@ -8,6 +8,8 @@ export class User {
     tel?: Country;
     active?: string;
     designation?: string;
-    userType?: string;
+    userType?: any;
     blocked?: string;
+    meetingAccess?: number;
+    profilePic?: any;
 }

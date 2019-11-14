@@ -200,12 +200,12 @@
                                 </ng-select> -->
                                 <ng-select [items]="people" [multiple]="true" [closeOnSelect]="false" placeholder="Select user" bindLabel="name" bindValue="_id" formControlName="users" (add)="onAdd($event)" (clear)="onClear($event)" (remove)="onRemove($event)">
                                     <ng-template ng-label-tmp let-item="item" let-clear="clear">
-                                        <span class="ng-value-label"><img [src]="item.profilePic" width="20px" height="20px">&nbsp;{{item.name}}</span>
+                                        <span class="ng-value-label"><img [src]="item.profilePic | baseURL" width="20px" height="20px">&nbsp;{{item.name}}</span>
                                         <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">&nbsp;&nbsp;×</span>
                                     </ng-template>
 
                                     <ng-template ng-option-tmp let-item="item">
-                                        <img [src]="item.profilePic" width="20px" height="20px">&nbsp;
+                                        <img [src]="item.profilePic | baseURL" width="20px" height="20px">&nbsp;
                                         <span style="position: absolute;
                                         top: 3px;">{{item.name}}</span>
                                     </ng-template>

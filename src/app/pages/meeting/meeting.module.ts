@@ -7,7 +7,6 @@ import { MeetingRoutingModule } from './meeting-routing.module';
 import { MeetingComponent } from './meeting.component';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { NgxDaterangepickerMd } from 'ngx-daterangepicker-material';
-import { AddMeetingComponent } from './add-meeting/add-meeting.component';
 import { MinuteSecondsPipe } from 'src/app/@theme/pipes/time.pipe';
 
 const COMPONENTS = [
@@ -17,6 +16,6 @@ const COMPONENTS = [
 
 @NgModule({
   imports: [ThemeModule, MeetingRoutingModule, PerfectScrollbarModule, NgxDaterangepickerMd.forRoot()],
-  declarations: [...COMPONENTS, AddMeetingComponent, MinuteSecondsPipe]
+  declarations: [...COMPONENTS, MinuteSecondsPipe]
 })
 export class MeetingModule {}

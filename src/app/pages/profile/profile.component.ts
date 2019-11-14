@@ -57,6 +57,7 @@ export class ProfileComponent implements OnInit {
         this.profileForm = this.formBuilder.group({
             name: [this.user.name, [Validators.required, Validators.minLength(this.validator.name.min),
             Validators.maxLength(this.validator.name.max)]],
+            profilePic: [this.user.profilePic],
             email: [this.user.email, [Validators.required, Validators.email, Validators.minLength(this.validator.email.min),
             Validators.maxLength(this.validator.email.max)]],
             phone: [this.user.phone, [Validators.required, Validators.minLength(this.validator.phone.min),
@@ -83,9 +84,9 @@ export class ProfileComponent implements OnInit {
 
     }
 
-    get f() { return this.profileForm.controls; }
+    get f(): any { return this.profileForm.controls; }
 
-    get pf() { return this.confirmPasswordForm.controls; }
+    get pf(): any { return this.confirmPasswordForm.controls; }
 
     togglePassword() {
         this.submitted = false;
@@ -114,31 +115,23 @@ export class ProfileComponent implements OnInit {
     }
 
     onFileSelected(event) {
-        console.log('event1', event[0].type);
+        const image = event.target.files[0];
+      //   console.log('event', image);
         // tslint:disable-next-line: triple-equals
-        if (event[0].type == 'image/png' || event[0].type == 'image/jpeg') {
-            this.imageError = false;
-            const reader = new FileReader();
-            reader.readAsDataURL(event[0]); // read file as data url
-            // tslint:disable-next-line: no-shadowed-variable
-            reader.onload = (event: any) => { // called once readAsDataURL is completed
-                console.log('event', event);
-                this.filePreviewPath = event.target.result;
-            };
-        } else {
-            console.log('File not image');
-            this.imageError = true;
-        }
-    }
-
-    upload() {
-        const fd = new FormData();
-        fd.append('image', this.selectedFile, this.selectedFile.name);
-        // this.http.post('http://example.com/upload/image', fd).subscribe((res: any) => {
-        //   this.image = res.data;
-        // }, (err: any) => {
-        //     // Show error message or make something.
-        // });
+        if (image.type == 'image/png' || image.type == 'image/jpeg') {
+              this.imageError = false;
+              const reader = new FileReader();
+              reader.readAsDataURL(image); // read file as data url
+              this.profileForm.controls.profilePic.setValue(image);
+              console.log('event', this.profileForm.getRawValue());
+              // tslint:disable-next-line: no-shadowed-variable
+              reader.onload = (event: any) => {
+                  this.filePreviewPath = event.target.result;
+              };
+          } else {
+              console.log('File not image');
+              this.imageError = true;
+          }
     }
 
     onProfileSubmit() {
@@ -148,13 +141,22 @@ export class ProfileComponent implements OnInit {
         // this.error = false;
         this.submitted = true;
         this.profileForm.markAllAsTouched();
-
+        const currentData = this.profileForm.getRawValue();
         if (this.profileForm.invalid) {
             this.submitted = false;
             return false;
         }
-
-        this.authenticationService.profileUpdate(this.profileForm.getRawValue())
+        var formData = new FormData();
+        for (const key in currentData) {
+            if (key === 'profilePic') {
+                console.log('key', key);
+                formData.append(key, this.f.profilePic.value);
+            } else {
+                console.log('key', key);
+                formData.append(key, currentData[key]);
+            }
+        }
+        this.authenticationService.profileUpdate(formData)
         .pipe(first())
         .subscribe(
             data => {

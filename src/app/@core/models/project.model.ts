@@ -31,7 +31,7 @@ export interface ProjectCamera {
     _id?: string;
     company?: string;
     project?: any;
-    well?: string;
+    well?: any;
     name: string;
     url?: string;
     username?: string;

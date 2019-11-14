@@ -165,7 +165,7 @@ export class RigListComponent implements OnInit {
     }
 
 
-    get f() { return this.editForm.controls; }
+    get f(): any { return this.editForm.controls; }
 
     editDetail(editModal, data) {
         console.log('edit', data);
@@ -323,6 +323,7 @@ export class RigListComponent implements OnInit {
 
     view(id) {
         this.router.navigate([]).then(result => {  window.open('riglocation/details/' +  id, '_blank'); });
+        // this.router.navigateByUrl('riglocation/details/' +  id);
     }
 
 }

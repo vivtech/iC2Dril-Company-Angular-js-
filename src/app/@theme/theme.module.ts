@@ -35,6 +35,8 @@ import { BreadcrumbComponent } from './components/utils/breadcrumb/breadcrumb.co
 import { FilterPipe } from './pipes/filter.pipe';
 import { DurationPipe } from './pipes/duration.pipe';
 import { MeetingPipe } from './pipes/meeting.pipe';
+import { MinuteSecondsPipe } from './pipes/dateformat.pipe';
+import { BaseURLPipe } from './pipes/baseurl.pipe';
 
 const COMPONENTS = [
     WebComponent,
@@ -75,7 +77,9 @@ const PIPES = [
     CapitalizePipe,
     FilterPipe,
     DurationPipe,
-    MeetingPipe
+    MeetingPipe,
+    MinuteSecondsPipe,
+    BaseURLPipe
 ];
 
 const NB_THEME_PROVIDERS = [

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MeetingService } from 'src/app/@core/services/meeting.service';
 
 @Component({
   selector: 'app-upgrade-package',
@@ -6,11 +7,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./upgrade-package.component.css']
 })
 export class UpgradePackageComponent implements OnInit {
-    title = 'Upgrade package';
+    title = 'Upgrade';
     passwordVisible = false;
-  constructor() { }
+  constructor(private meetService: MeetingService) { }
 
   ngOnInit() {
+    this.meetService.getlicenceData().subscribe(response => {
+        console.log('license-history', response);
+    });
   }
 
     togglePassword() {

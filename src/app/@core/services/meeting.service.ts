@@ -42,8 +42,8 @@ export class MeetingService {
         );
     }
 
-    getlicenceData(id) {
-        return this.http.get<any>(`${environment.apiUrl}/package/${id}`).pipe(
+    getlicenceData() {
+        return this.http.post<any>(`${environment.apiUrl}/package`, {}).pipe(
             map(response => {
                 return response;
             })
