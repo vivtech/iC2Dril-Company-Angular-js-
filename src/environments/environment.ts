@@ -21,7 +21,10 @@ export const environment = {
         designation: {min: 3, max: 75},
         camUrl: {min: 3, max: 200},
         camUsername: {min: 3, max: 75},
-        camPassword: {min: 3, max: 75}
+        camPassword: {min: 3, max: 75},
+        transaction: {min: 1, max: 75},
+        amount: {min: 1, max: 15, minValue: 1},
+        invoice: {min: 1, max: 15, values: ['image/png', 'image/jpg', 'image/jpeg', 'application/pdf']}
     }
 };
 

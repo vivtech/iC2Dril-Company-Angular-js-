@@ -4,3 +4,13 @@ export interface Package {
     user: number;
     active?: number;
 }
+
+export interface UpgradePackage {
+    _id?: string;
+    supcriptionType?: string;
+    package?: string;
+    userCount?: any;
+    duration?: string;
+    status?: number;
+    active?: number;
+}

@@ -506,7 +506,7 @@ export class ListComponent implements OnInit, OnDestroy {
             this.fullTimeFormat = fullTime;
             const newDate = new Date();
             const month = 1;
-            if (this.f.startDate) {
+            if (this.f.startDate.value) {
                 // tslint:disable-next-line: max-line-length
                 time = `${this.f.startDate.value.year}-${this.f.startDate.value.month}-${this.f.startDate.value.day}` + ' ' + this.fullTimeFormat;
                 console.log('TimeWithSelectedDate', time);

@@ -143,6 +143,10 @@ export class RigListComponent implements OnInit {
             {
                 searchable: false,
                 targets: [-3]
+            },
+            {
+                searchable: false,
+                targets: [-4]
             }
         ]
         };

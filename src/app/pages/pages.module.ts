@@ -11,7 +11,6 @@ import { CompanyRequestFormComponent } from './company-request-form/company-requ
 import { ProfileComponent } from './profile/profile.component';
 import { PackageComponent } from './package/package.component';
 import { CountryComponent } from './country/country.component';
-import { FileUploadModule } from 'ng2-file-upload';
 import { AccountComponent } from './account/account.component';
 
 const COMPONENETS = [PagesComponent,
@@ -31,8 +30,7 @@ const COMPONENETS = [PagesComponent,
     declarations: [...COMPONENETS ],
     imports: [
         PagesRoutingModule,
-        ThemeModule,
-        FileUploadModule
+        ThemeModule
     ]
 })
 export class PagesModule { }

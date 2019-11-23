@@ -23,7 +23,7 @@ export class PackageService {  public packageList: BehaviorSubject<Package[]>;
     }
 
     getPackages(dataTablesParameters): any {
-        return this.http.post<any>(`${environment.apiUrl}/package/list`, dataTablesParameters)
+        return this.http.post<any>(`${environment.apiUrl}/package`, dataTablesParameters)
             .pipe(map(response => {
                 if (response.code === 200) {
                     console.log(response.data.data);

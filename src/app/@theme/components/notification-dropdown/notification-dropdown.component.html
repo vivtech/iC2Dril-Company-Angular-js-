@@ -1,13 +1,13 @@
 <li class="nav-item dropdown hidden-caret" [ngClass]="{'show': visibility}">
     <a class="nav-link dropdown-toggle" id="messageDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="fa fa-envelope"></i>
-        <span class="notification">4</span>
+        <i class="fa fa-bell"></i>
+        <!-- <span class="notification">4</span> -->
     </a>
     <ul class="dropdown-menu messages-notif-box animated fadeIn" aria-labelledby="messageDropdown" [ngClass]="{'show': visibility}">
         <li>
             <div class="dropdown-title d-flex justify-content-between align-items-center">
-                Messages
-                <a [routerLink]="'/notification/list'" class="small">Mark all as read</a>
+                Notifications
+                <!-- <a [routerLink]="'/notification/list'" class="small">Mark all as read</a> -->
             </div>
         </li>
         <li>
@@ -64,8 +64,8 @@
                 </div>
             </div>
         </li>
-        <li>
+        <!-- <li>
             <a class="see-all" [routerLink]="['/notification/list']" routerLinkActive="router-link-active">See all messages<i class="fa fa-angle-right"></i> </a>
-        </li>
+        </li> -->
     </ul>
 </li>

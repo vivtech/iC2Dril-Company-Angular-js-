@@ -135,7 +135,7 @@ export class ListComponent implements OnInit {
     }
 
 
-    get f() { return this.editForm.controls; }
+    get f(): any { return this.editForm.controls; }
 
 
     viewDetail(viewModal, data) {

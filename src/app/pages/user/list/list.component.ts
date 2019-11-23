@@ -25,7 +25,7 @@ import { ValidEmail } from 'src/app/@core/validators/valid-email.validators';
 export class ListComponent implements OnInit, OnDestroy {
     @ViewChild(DataTableDirective, { static: false })
     datatableElement: DataTableDirective;
-    permission = 'create'
+    permission = 'create';
     statusFilterData = [
         { id: '', name: 'All' },
         { id: 1, name: 'Active' },
@@ -115,15 +115,19 @@ export class ListComponent implements OnInit, OnDestroy {
             serverSide: true,
             processing: true,
             ajax: (dataTablesParameters: object, callback) => {
+                // tslint:disable-next-line: no-string-literal
                 dataTablesParameters['filter'] = [];
+                // tslint:disable-next-line: no-string-literal
                 dataTablesParameters['filter'][0] = {
                     column: 'active',
                     data: this.statusFilter
                 };
+                // tslint:disable-next-line: no-string-literal
                 dataTablesParameters['filter'][1] = {
                     column: 'userType',
                     data: this.typeFilter
                 };
+                // tslint:disable-next-line: no-string-literal
                 dataTablesParameters['filter'][2] = {
                     column: 'blocked',
                     data: this.blockFilter
@@ -177,6 +181,9 @@ export class ListComponent implements OnInit, OnDestroy {
                     searchable: false,
                     targets: [1]
                 }
+            ],
+            order: [
+                [0, 'desc']
             ]
         };
         this.editForm = this.formBuilder.group({

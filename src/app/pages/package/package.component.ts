@@ -37,18 +37,17 @@ export class PackageComponent implements OnInit {
     licenseForm: FormGroup;
     validator = environment.validators;
     countryList: Observable<Country[]>;
-    //packageList: Observable<Package[]>;
     editing = false;
     today = new Date();
     minDate = { year: this.today.getFullYear(), month: this.today.getMonth() + 1, day: this.today.getDate() };
 
     constructor(private commonService: CommonService,
-        private packageService: PackageService,
-        private modalService: NgbModal,
-        private modalConfig: NgbModalConfig,
-        private formService: FormService,
-        private formBuilder: FormBuilder,
-        private toastr: ToastrService) {
+                private packageService: PackageService,
+                private modalService: NgbModal,
+                private modalConfig: NgbModalConfig,
+                private formService: FormService,
+                private formBuilder: FormBuilder,
+                private toastr: ToastrService) {
         modalConfig.backdrop = 'static';
         modalConfig.keyboard = false;
     }
@@ -65,7 +64,9 @@ export class PackageComponent implements OnInit {
             serverSide: true,
             processing: true,
             ajax: (dataTablesParameters: object, callback) => {
+                // tslint:disable-next-line: no-string-literal
                 dataTablesParameters['filter'] = [];
+                // tslint:disable-next-line: no-string-literal
                 dataTablesParameters['filter'][0] = { column: 'active', data: this.statusFilter };
                 console.log(dataTablesParameters);
                 const responseData = this.packageService.getPackages(dataTablesParameters).pipe(first())
@@ -89,17 +90,17 @@ export class PackageComponent implements OnInit {
                 { data: 'user' }, { data: 'active' }, { data: '_id' }],
             columnDefs: [
                 {
-                    "searchable": false,
-                    "orderable": false,
-                    "targets": [-1]
+                    searchable: false,
+                    orderable: false,
+                    targets: [-1]
                 },
                 {
-                    "searchable": false,
-                    "targets": [-2]
+                    searchable: false,
+                    targets: [-2]
                 },
                 {
-                    "searchable": false,
-                    "targets": [-3]
+                    searchable: false,
+                    targets: [-3]
                 }
             ]
         };
@@ -126,7 +127,7 @@ export class PackageComponent implements OnInit {
         }
     }
 
-    get f() { return this.editForm.controls; }
+    get f(): any { return this.editForm.controls; }
 
     editDetail(editModal, data) {
 
@@ -145,7 +146,6 @@ export class PackageComponent implements OnInit {
             this.modalService.open(editModal);
         },
             error => {
-                //this.noti
             }
         );
     }
@@ -159,7 +159,6 @@ export class PackageComponent implements OnInit {
         },
             error => {
                 this.modalService.dismissAll();
-                //this.noti
             }
         );
     }

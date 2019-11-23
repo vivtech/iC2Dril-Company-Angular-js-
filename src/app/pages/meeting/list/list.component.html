@@ -93,7 +93,6 @@
                                     <td>
                                         <span class="badge badge-pill badge-success" *ngIf="meeting.active == 1">Active</span>
                                         <span class="badge badge-pill badge-warning" *ngIf="meeting.active == 0">Cancelled</span>
-
                                     </td>
                                     <td [hidden]="true">
                                         {{meeting.startDate}}
@@ -390,7 +389,7 @@
                     <div class="col-sm-6" *ngIf="selectday">
                         <div class="form-group form-group-default dropdown">
                             <label class="text-primary">Select Day</label>
-                            <div class="input-group" (click)="d.toggle()">
+                            <div class="input-group">
                                 <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="day" placeholder="Select day" [clearable]="false" [items]="dayOptionData" bindLabel="name" bindValue="_id"></ng-select>
                             </div>
                             <error-label [control]="f.day"></error-label>
@@ -399,15 +398,15 @@
                     <div class="col-sm-6" [hidden]="selecttime">
                         <div class="form-group form-group-default dropdown">
                             <label class="text-primary">Select Time</label>
-                            <div class="input-group">
+                            <div class="input-group" [ngbPopover]="popContent" [popoverTitle]="popTitle" [autoClose]="'outside'">
                                 <input class="form-control date-readonly" placeholder="hh-mm" readonly value="{{ time | date:'h:mm a'}}">
                                 <div class="input-group-append">
-                                    <button type="button" class="btn btn-outline-secondary clock" [ngbPopover]="popContent" [popoverTitle]="popTitle" [autoClose]="'outside'">
+                                    <button type="button" class="btn btn-outline-secondary clock">
                                         <i class="fa fa-clock"></i>
                                     </button>
                                 </div>
                                 <ng-template #popContent>
-                                    <ngb-timepicker formControlName="startTime" (ngModelChange)="timeInput($event)" [minuteStep]="15" [meridian]="true"></ngb-timepicker>
+                                    <ngb-timepicker formControlName="startTime" (ngModelChange)="timeInput($event)" [meridian]="true"></ngb-timepicker>
                                 </ng-template>
                                 <ng-template #popTitle>Time Picker</ng-template>
                             </div>

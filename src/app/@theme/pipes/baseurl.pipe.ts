@@ -10,9 +10,10 @@ export class BaseURLPipe implements PipeTransform {
     if (url) {
         return input;
     } else {
-        return input && input.length
-        ? environment.adminUrl + input.replace('public/', '/')
-        : input;
+        return input;
+        // input && input.length
+        // ? environment.adminUrl + input.replace('public/', '/')
+        // : input;
     }
   }
 

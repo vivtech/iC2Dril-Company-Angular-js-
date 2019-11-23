@@ -9,7 +9,6 @@ import { first } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { ValidPassword } from 'src/app/@core/validators/valid-password.validators';
 import { MustMatch } from 'src/app/@core/validators/must-match.validators';
-import { FileUploader } from 'ng2-file-upload';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { CommonService } from 'src/app/@core/services/common.service';
 import { Observable } from 'rxjs';
@@ -35,7 +34,6 @@ export class ProfileComponent implements OnInit {
     confirmPasswordForm: FormGroup;
     successMessage = '';
     validationError = '';
-    public uploader: FileUploader = new FileUploader({});
     public filePreviewPath: File = null;
     imageError = false;
     selectedFile: any;
@@ -176,7 +174,7 @@ export class ProfileComponent implements OnInit {
                 if (error.errors.length > 0) {
                     for (const fieldError of error.errors) {
                         const check = fieldError.param;
-                        this.profileForm.get(check).setErrors( { customError : fieldError.msg } ) ;
+                        // this.profileForm.get(check).setErrors( { customError : fieldError.msg } ) ;
                     }
                 }
                 this.validationError = error.message;

@@ -21,19 +21,181 @@
                 <div class="card-header">
                     <div class="d-flex align-items-center">
                         <h4 class="page-title">{{ title }} list</h4>
-                        <!-- <button [hidden]="permission == 'notcreate'" class="btn btn-primary btn-round ml-auto" id="addModalOpen" (click)="createData(createModal)">
+                        <button class="btn btn-primary btn-round ml-auto" id="addModalOpen" (click)="upgradeFormDetail(upgradeModal)">
                             <i class="fa fa-plus"></i>
-                            Add Meeting
-                        </button> -->
+                            Upgrade Package
+                        </button>
                     </div>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
+                        <table id="record-table" [dtOptions]="dtOptions" datatable class="display table table-striped table-hover w-100 table-head-bg-primary" width="100%">
+                            <thead>
+                                <tr>
+                                    <th [hidden]="true">Id</th>
+                                    <th>Subscription Type</th>
+                                    <th>Package</th>
+                                    <th>User Count</th>
+                                    <th>Duration</th>
+                                    <th>Status</th>
+                                    <th>Active</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="myRequestList?.length != 0">
+                                <tr *ngFor="let data of myRequestList ">
+                                    <td [hidden]="true">{{ data._id }}</td>
+                                    <td>{{ data.supcriptionType }}</td>
+                                    <td>{{ data.package }}</td>
+                                    <td>{{ data.userCount }}</td>
+                                    <td>{{ data.duration }}</td>
+                                    <td>{{ data.status }}</td>
+                                    <td>{{ data.active }}</td>
+                                </tr>
+                            </tbody>
+                            <tbody *ngIf="myRequestList?.length == 0">
+                                <tr>
+                                    <td colspan="7" class="no-data-available text-center">No matching records found</td>
+                                </tr>
+                                <tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
-
-
     </div>
 </div>
+
+<ng-template #upgradeModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title">Upgrade Package</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+    </div>
+    <div class="modal-body">
+        <form class="row form" id="upgradeForm" [formGroup]="upgradeForm" (ngSubmit)="upgradePackage()">
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default dropdown">
+                            <label class="text-primary">License Package</label>
+                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="package" (change)="onchangePackage($event)" placeholder="Package" [clearable]="false" [items]="packageList | async" bindLabel="name" bindValue="_id"></ng-select>
+                            <error-label [control]="uf.package"></error-label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group form-group-default dropdown">
+                            <label class="text-primary">Subscription Type</label>
+                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" (change)="onchangeType($event)" [clearable]="false" formControlName="subscriptionType" placeholder="Subscription type" [items]="subscriptionList" bindLabel="text" placeholder="License type"
+                                bindValue="value"></ng-select>
+                            <error-label [control]="uf.subscriptionType"></error-label>
+                        </div>
+                    </div>
+                    <div class="col-md-6" *ngIf="hideduration">
+                        <div class="form-group form-group-default dropdown">
+                            <label class="text-primary">License Duration</label>
+                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [clearable]="false" formControlName="duration" placeholder="Duration" [items]="durationList" bindLabel="text" placeholder="License type" bindValue="value"></ng-select>
+                            <error-label [control]="uf.duration"></error-label>
+                        </div>
+                    </div>
+                    <!-- <div class="col-md-6">
+                        <div class="form-group form-group-default">
+                            <label class="text-primary">Notes</label>
+                            <input type="text" formControlName="notes" [attr.maxlength]="validator.notes.max" class="form-control" placeholder="Notes..">
+                            <error-label [control]="uf.notes"></error-label>
+                        </div>
+                    </div> -->
+                    <div *ngIf="hidden" class="col-md-6">
+                        <div class="form-group form-group-default">
+                            <label class="text-primary">Custom user</label>
+                            <input id="requestUser" digitOnly formControlName="userCount" placeholder="Enter the number of user you want " type="text" class="form-control floating-input input-border-bottom pl-1 pr-1" minlength="1" maxlength="3" />
+                            <error-label [control]="uf.userCount"></error-label>
+                        </div>
+                    </div>
+                    <!-- <div class="col-md-6">
+                        <div class="form-group form-group-default dropdown">
+                            <label class="text-primary">Invoice</label>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="invoice" formControlName="invoice" accept="image/*,.pdf" (change)="onFileSelected($event, 'upgrade')">
+                                <label class="custom-file-label" for="invoice">{{ fileName }}</label>
+                                <error-label [control]="uf.invoice"></error-label>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+
+
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark btn-rounded" (click)="modal.close('Close click')">Close</button>
+        <app-submit-button [submitted]="submitted" (click)="upgradePackage()">Upgrade
+        </app-submit-button>
+    </div>
+</ng-template>
+
+<!-- <ng-template #addUserModal let-modal>
+        <div class="modal-header">
+            <h4 class="modal-title">Add User Count</h4>
+            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form class="row form" *ngIf="editDetail" id="addUserForm" [formGroup]="addUserForm" (ngSubmit)="addUserCount()">
+                <input type="hidden" formControlName="data" [attr.maxlength]="validator.name.max" class="form-control">
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group form-group-default">
+                                <label class="text-primary">Licensed User Count</label>
+                                <input type="text" digitOnly formControlName="userCount" [attr.maxlength]="validator.userCount.max" class="form-control" placeholder="User Count">
+                                <error-label [control]="af.userCount"></error-label>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group form-group-default">
+                                <label class="text-primary">Transaction Number</label>
+                                <input type="text" formControlName="transactionId" [attr.maxlength]="validator.transaction.max" class="form-control" placeholder="Transaction Number">
+                                <error-label [control]="af.transactionId"></error-label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group form-group-default dropdown">
+                                <label class="text-primary">Amount</label>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [clearable]="false" formControlName="amountType" [items]="currencyList | async" bindLabel="code" bindValue="_id" [class.filled]="af.amountType.value" placeholder="Code"></ng-select>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input type="type" formControlName="amount" numeric numericType="decimal" [attr.maxlength]="validator.amount.max" class="form-control" placeholder="Amount">
+                                    </div>
+                                </div>
+                                <error-label [control]="af.amount"></error-label>
+                                <error-label [control]="af.amountType"></error-label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group form-group-default dropdown">
+                                <label class="text-primary">Invoice</label>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="invoice" formControlName="invoice" accept="image/*,.pdf" (change)="onFileSelected($event, 'add')">
+                                    <label class="custom-file-label" for="invoice">{{ fileName }}</label>
+                                    <error-label [control]="af.invoice"></error-label>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </form>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-outline-dark btn-rounded" (click)="modal.close('Close click')">Close</button>
+            <app-submit-button [submitted]="submitted" (click)="addUserCount()">Add
+            </app-submit-button>
+        </div>
+</ng-template> -->
