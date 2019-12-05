@@ -7,8 +7,8 @@ export interface Package {
 
 export interface UpgradePackage {
     _id?: string;
-    supcriptionType?: string;
-    package?: string;
+    subscriptionType?: string;
+    package?: any;
     userCount?: any;
     duration?: string;
     status?: number;

@@ -1,0 +1,7 @@
+/* .avatar-img {
+    transform: scale(1.2);
+} */
+
+img.avatar-img.rounded {
+    background: #d3d3d3c9;
+}

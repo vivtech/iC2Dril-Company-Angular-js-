@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MeetingService } from 'src/app/@core/services/meeting.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { environment } from 'src/environments/environment';
@@ -12,6 +11,7 @@ import { first } from 'rxjs/operators';
 import { DataTableDirective } from 'angular-datatables';
 import { FormService } from 'src/app/@core/services/form-validation.service';
 import { ToastrService } from 'ngx-toastr';
+import { AuthenticationService } from 'src/app/@core/services/authentication.service';
 
 @Component({
   selector: 'app-upgrade-package',
@@ -37,18 +37,18 @@ export class UpgradePackageComponent implements OnInit {
     ];
     durationList = [
         { text: '1 Month', value: 1 },
-        { text: '2 Month', value: 2 },
-        { text: '3 Month', value: 3 },
-        { text: '4 Month', value: 4 },
-        { text: '5 Month', value: 5 },
-        { text: '6 Month', value: 6 },
-        { text: '7 Month', value: 7 },
-        { text: '8 Month', value: 8 },
-        { text: '9 Month', value: 9 },
-        { text: '10 Month', value: 10 },
-        { text: '11 Month', value: 11 },
+        { text: '2 Months', value: 2 },
+        { text: '3 Months', value: 3 },
+        { text: '4 Months', value: 4 },
+        { text: '5 Months', value: 5 },
+        { text: '6 Months', value: 6 },
+        { text: '7 Months', value: 7 },
+        { text: '8 Months', value: 8 },
+        { text: '9 Months', value: 9 },
+        { text: '10 Months', value: 10 },
+        { text: '11 Months', value: 11 },
         { text: '1 Year', value: 12 },
-        { text: '2 Year', value: 24 },
+        { text: '2 Years', value: 24 },
         // { text: "3 Year", value: 36 },
         // { text: "4 Year", value: 48 },
         // { text: "5 Year", value: 60 },
@@ -69,31 +69,19 @@ export class UpgradePackageComponent implements OnInit {
             Validators.minLength(this.validator.userCount.min),
             Validators.min(this.validator.userCount.minValue),
             Validators.max(this.validator.userCount.maxValue)
-        ],
-        licenseDate: [Validators.required],
-        transactionId: [
-            Validators.required,
-            Validators.minLength(this.validator.transaction.min),
-            Validators.maxLength(this.validator.transaction.max)
-        ],
-        amountType: [Validators.required],
-        amount: [
-            Validators.required,
-            Validators.min(this.validator.amount.minValue)
-        ],
-        invoice: []
+        ]
     };
+    mysubDetails: any;
+    hideAdduser: boolean = false;
   constructor(private packageService: PackageService,
               private modalService: NgbModal,
               private formBuilder: FormBuilder,
               private commonService: CommonService,
               private formService: FormService,
-              private toastr: ToastrService) { }
+              private toastr: ToastrService,
+              private authenticationService: AuthenticationService) { }
 
   ngOnInit() {
-    // this.meetService.getlicenceData().subscribe(response => {
-    //     console.log('license-history', response);
-    // });
     this.dtOptions = {
         dom: `<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>"
                 "<'row'<'col-sm-12'tr>>"
@@ -123,11 +111,10 @@ export class UpgradePackageComponent implements OnInit {
                 });
         },
         columns: [
-            { data: 'supcriptionType' },
+            { data: 'subscriptionType' },
             { data: 'package' },
             { data: 'userCount' },
             { data: 'duration' },
-            { data: 'active' },
             { data: 'status' },
             { data: '_id' }
         ],
@@ -152,7 +139,7 @@ export class UpgradePackageComponent implements OnInit {
             {
                 searchable: false,
                 targets: [-5]
-            },
+            }
         ]
     };
     this.upgradeForm = this.formBuilder.group({
@@ -180,9 +167,18 @@ export class UpgradePackageComponent implements OnInit {
     }
 
     upgradeFormDetail(model) {
-        // this.upgradeForm.reset();
-        this.modalService.open(model, {
-            size: 'lg'
+        const userId = localStorage.getItem('companyId');
+        this.authenticationService.getSubscriptions(userId).subscribe(mySub => {
+            // console.log('My Subs', mySub)
+            const result = mySub.data.company;
+            this.mysubDetails = result;
+            this.upgradeForm.patchValue({
+                package: result.package._id
+            });
+            this.hidden = false;
+            this.modalService.open(model, {
+                size: 'lg'
+            });
         });
     }
 
@@ -193,7 +189,10 @@ export class UpgradePackageComponent implements OnInit {
         if (event.custom === 1) {
             this.hidden = true;
             const validators = [Validators.required];
-            this.upgradeForm.addControl('userCount', new FormControl('', validators));
+            this.upgradeForm.addControl('userCount', new FormControl(''));
+            this.upgradeForm.patchValue({
+                userCount: this.mysubDetails.userCount
+            });
         } else {
             this.hidden = false;
             this.upgradeForm.removeControl('userCount');
@@ -205,10 +204,14 @@ export class UpgradePackageComponent implements OnInit {
         // tslint:disable-next-line: triple-equals
         if (event.value == 'RENEW') {
             this.hideduration = true;
+            this.hideAdduser = false;
             this.upgradeForm.addControl('duration', new FormControl(null, [Validators.required]));
+            this.upgradeForm.removeControl('adduser');
         } else {
             this.hideduration = false;
+            this.hideAdduser = true;
             this.upgradeForm.removeControl('duration');
+            this.upgradeForm.addControl('adduser', new FormControl(null, [Validators.required]));
 
         }
     }
@@ -224,7 +227,11 @@ export class UpgradePackageComponent implements OnInit {
             return false;
         }  else {
             const currentData = this.upgradeForm.getRawValue();
-            console.log(currentData);
+            if (currentData.adduser) {
+                currentData.userCount = currentData.adduser;
+                delete currentData.adduser;
+            }
+            console.log('currentData', currentData);
             this.packageService
             .create(currentData)
             .pipe(first())

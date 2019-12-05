@@ -1,3 +1,16 @@
-:host{
+:host {
     margin-right: 15px;
+}
+
+.notIcon {
+    color: #810c03;
+    font-size: 17px;
+}
+
+.notfound-content {
+    border-bottom: 1px solid #f1f1f1;
+    color: #444;
+    font-size: 14px;
+    padding: 12px 15px;
+    text-align: center
 }

@@ -18,7 +18,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">
+                <!-- <div class="card-header">
                     <div class="d-flex align-items-center">
                         <h4 class="page-title">User List</h4>
                         <button [hidden]="permission == 'notcreate'" class="btn btn-primary btn-round ml-auto" id="addModalOpen" (click)="createData(editModal)">
@@ -26,7 +26,7 @@
                             &nbsp;&nbsp;&nbsp;Add User
                         </button>
                     </div>
-                </div>
+                </div> -->
                 <div class="card-body">
                     <div class="row p-2 filter-cont mb-4">
                         <div class="col-md-3 pl-0">
@@ -53,7 +53,12 @@
 
                             </div>
                         </div>
-
+                        <div class="ml-auto">
+                            <button [hidden]="permission == 'notcreate'" class="btn btn-primary btn-round" id="addModalOpen" (click)="createData(editModal)">
+                                <i class="fa fa-plus"></i>
+                                &nbsp;&nbsp;&nbsp;Add User
+                            </button>
+                        </div>
                     </div>
                     <div class="table-responsive">
                         <table id="record-table" [dtOptions]="dtOptions" datatable class="display table table-striped table-hover w-100 table-head-bg-primary" width="100%">
@@ -142,8 +147,7 @@
                         <div class="form-group form-group-default">
                             <label class="text-primary">Email</label>
                             <input type="email" formControlName="email" [attr.maxlength]="validator.email.max" class="form-control" placeholder="Email">
-                            <label class="error" for="loginEmail" *ngIf="(submitted || f.email.touched || f.email.dirty) && f.email.errors">Please enter a
-                            valid email address.</label>
+                            <error-label [control]="f.email"></error-label>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -157,8 +161,9 @@
                                     <input type="text" formControlName="phone" placeholder="Phone number" [attr.maxlength]="validator.phone.max" class="form-control" digitOnly>
                                 </div>
                             </div>
-                            <error-label [control]="f.phone"></error-label>
-                            <error-label [control]="f.tel"></error-label>
+                            <label class="error" *ngIf="((submitted || f.tel.touched  || f.tel.dirty) && f.tel.errors) || ((submitted || f.phone.touched  || f.phone.dirty) && f.phone.errors)">
+                                Please enter a value
+                            </label>
                         </div>
                     </div>
                     <div class="col-sm-6">

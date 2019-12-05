@@ -65,4 +65,10 @@ export class CompanyRequestService {
     getCompanyRequestList(): Observable<CompanyRequest[]> {
         return this.companyRequestList.asObservable();
     }
+
+    getLatestNotify(): any {
+        return this.http.get<any>(`${environment.apiUrl}/notification/list`, {}).pipe(map(response => {
+            return response;
+        }));
+    }
 }

@@ -11,14 +11,14 @@
                 <i class="flaticon-right-arrow"></i>
             </li>
             <li class="nav-item">
-                <a href="#">{{ title }}</a>
+                <a>{{ title }}</a>
             </li>
         </ul>
     </div>
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">
+                <!-- <div class="card-header">
                     <div class="d-flex align-items-center">
                         <h4 class="page-title">{{ title }} list</h4>
                         <button class="btn btn-primary btn-round ml-auto" id="addModalOpen" (click)="upgradeFormDetail(upgradeModal)">
@@ -26,8 +26,16 @@
                             Upgrade Package
                         </button>
                     </div>
-                </div>
+                </div> -->
                 <div class="card-body">
+                    <div class="row p-2 filter-cont mb-4">
+                        <div class="ml-auto">
+                            <button class="btn btn-primary btn-round" id="addModalOpen" (click)="upgradeFormDetail(upgradeModal)">
+                                <i class="fa fa-plus"></i>
+                                Upgrade Package
+                            </button>
+                        </div>
+                    </div>
                     <div class="table-responsive">
                         <table id="record-table" [dtOptions]="dtOptions" datatable class="display table table-striped table-hover w-100 table-head-bg-primary" width="100%">
                             <thead>
@@ -38,23 +46,29 @@
                                     <th>User Count</th>
                                     <th>Duration</th>
                                     <th>Status</th>
-                                    <th>Active</th>
                                 </tr>
                             </thead>
                             <tbody *ngIf="myRequestList?.length != 0">
                                 <tr *ngFor="let data of myRequestList ">
                                     <td [hidden]="true">{{ data._id }}</td>
-                                    <td>{{ data.supcriptionType }}</td>
-                                    <td>{{ data.package }}</td>
+                                    <td *ngIf="data.subscriptionType == 'ADD_USER'">User Request</td>
+                                    <td *ngIf="data.subscriptionType == 'RENEW'">Package Request</td>
+                                    <td>{{ data.package.name }}</td>
                                     <td>{{ data.userCount }}</td>
-                                    <td>{{ data.duration }}</td>
-                                    <td>{{ data.status }}</td>
-                                    <td>{{ data.active }}</td>
+                                    <td *ngIf="data.duration; else emptyDuration">{{ durationList | Filterpipe: data.duration }}</td>
+                                    <ng-template #emptyDuration>
+                                        <td>-</td>
+                                    </ng-template>
+                                    <td>
+                                        <span class="badge badge-pill badge-success" *ngIf="data.status == 2">Accepted</span>
+                                        <span class="badge badge-pill badge-warning" *ngIf="data.status == 1">Pending</span>
+                                        <span class="badge badge-pill badge-danger" *ngIf="data.status == 0">Rejected</span>
+                                    </td>
                                 </tr>
                             </tbody>
                             <tbody *ngIf="myRequestList?.length == 0">
                                 <tr>
-                                    <td colspan="7" class="no-data-available text-center">No matching records found</td>
+                                    <td colspan="6" class="no-data-available text-center">No matching records found</td>
                                 </tr>
                                 <tbody>
                         </table>
@@ -93,8 +107,10 @@
                     </div>
                     <div class="col-md-6" *ngIf="hideduration">
                         <div class="form-group form-group-default dropdown">
-                            <label class="text-primary">License Duration</label>
-                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [clearable]="false" formControlName="duration" placeholder="Duration" [items]="durationList" bindLabel="text" placeholder="License type" bindValue="value"></ng-select>
+                            <label class="text-primary">License Duration<span style="all: initial;
+                                font-family: unset;
+                                font-size: small;"> (up to {{ mysubDetails?.expireAt | date:'MMM d, y' }})</span></label>
+                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [clearable]="false" formControlName="duration" placeholder="License duration" [items]="durationList" bindLabel="text" bindValue="value"></ng-select>
                             <error-label [control]="uf.duration"></error-label>
                         </div>
                     </div>
@@ -107,9 +123,16 @@
                     </div> -->
                     <div *ngIf="hidden" class="col-md-6">
                         <div class="form-group form-group-default">
-                            <label class="text-primary">Custom user</label>
-                            <input id="requestUser" digitOnly formControlName="userCount" placeholder="Enter the number of user you want " type="text" class="form-control floating-input input-border-bottom pl-1 pr-1" minlength="1" maxlength="3" />
+                            <label class="text-primary">Current Custom user</label>
+                            <input [readonly]="true" id="requestUser" digitOnly formControlName="userCount" placeholder="Enter the number of user you want " type="number" class="form-control floating-input input-border-bottom pl-1 pr-1" minlength="1" maxlength="3" />
                             <error-label [control]="uf.userCount"></error-label>
+                        </div>
+                    </div>
+                    <div class="col-md-6" *ngIf="hideAdduser">
+                        <div class="form-group form-group-default dropdown">
+                            <label class="text-primary">Add user</label>
+                            <input id="requestUser" digitOnly formControlName="adduser" placeholder="Enter the additional number of user you want " type="number" class="form-control floating-input input-border-bottom pl-1 pr-1" minlength="1" maxlength="3" />
+                            <error-label [control]="uf.adduser"></error-label>
                         </div>
                     </div>
                     <!-- <div class="col-md-6">

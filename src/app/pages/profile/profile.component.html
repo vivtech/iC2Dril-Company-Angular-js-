@@ -23,38 +23,42 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-
             <div class="card card-with-nav">
                 <div class="card-header">
                     <div class="row row-nav-line">
                         <ul class="nav nav-tabs nav-line nav-color-secondary" role="tablist">
                             <li class="nav-item">
-                                <a class="nav-link " [ngClass]="{ active: !passwordVisible,  show: !passwordVisible }" data-toggle="tab" (click)="togglePassword()" role="tab" aria-selected="false">
+                                <a class="nav-link " [ngClass]="{ active: profileVisible,  show: profileVisible }" data-toggle="tab" (click)="togglePassword(1)" role="tab" aria-selected="false">
                                 Profile</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" [ngClass]="{ active: passwordVisible,  show: passwordVisible }" data-toggle="tab" (click)="togglePassword()" role="tab" aria-selected="false">Change Password</a>
+                                <a class="nav-link" [ngClass]="{ active: passwordVisible,  show: passwordVisible }" data-toggle="tab" (click)="togglePassword(2)" role="tab" aria-selected="false">Change Password</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" [ngClass]="{ active: subVisible,  show: subVisible }" data-toggle="tab" (click)="togglePassword(3)" role="tab" aria-selected="false">Subscription</a>
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div class="card-body ">
                     <div class="tab-content">
-                        <div class="tab-pane fade " [ngClass]="{ active: !passwordVisible,  show: !passwordVisible }" id="profile-tab" role="tabpanel" aria-labelledby="pills-home-tab-nobd">
+                        <div class="tab-pane fade " [ngClass]="{ active: profileVisible,  show: profileVisible }" id="profile-tab" role="tabpanel" aria-labelledby="pills-home-tab-nobd">
                             <form class="row" id="profileForm" enctype="multipart/form-data" [formGroup]="profileForm" (ngSubmit)="onProfileSubmit()">
                                 <div class="col-md-5 offset-md-2">
-                                    <div class="row mt-3">
-                                        <div class="col-md-2">
+                                    <div class="row mt-3" style="margin-bottom: 2rem !important;">
+                                        <div class="col-md-12" style="display: flex;">
                                             <div *ngIf="filePreviewPath == null" class="avatar-sm">
-                                                <img src="{{ user.profilePic | baseURL }}" alt="Profile" class="avatar-img rounded-circle">
+                                                <img src="{{ user.profilePic | baseURL }}" onError="this.src='../assets/img/icons8-user-male-52.png';" alt="Profile" class="avatar-img rounded-circle">
                                             </div>
                                             <div *ngIf="filePreviewPath" class="avatar-sm">
                                                 <img src={{filePreviewPath}} alt="Profile" class="avatar-img rounded-circle">
                                             </div>
-                                        </div>
-                                        <div class="col-md-10" style="align-items: center;display: flex;">
+                                            <!-- </div>
+                                        <div class="col-md-10" style="align-items: center;display: flex;"> -->
                                             <input type="file" accept="image/*" [hidden]="true" id="file" (change)="onFileSelected($event)">
-                                            <label for="file" style="color: #520701 !important;font-weight: 600; cursor: pointer;">
+                                            <label for="file" style="color: #520701 !important;font-weight: 600;
+                                            cursor: pointer;align-items: center;margin-left: 45px;
+                                            display: inline-flex;">
                                                 Change profile image<br>
                                                 <small *ngIf="imageError" style="color: red !important;">please choose image
                                                 </small>
@@ -89,42 +93,27 @@
                                                         <input type="text" formControlName="phone" [attr.maxlength]="validator.phone.max" class="form-control digit-only" digitOnly>
                                                     </div>
                                                 </div>
-                                                <error-label [control]="f.phone"></error-label>
-                                                <error-label [control]="f.tel"></error-label>
+                                                <label class="error" *ngIf="((submitted || f.tel.touched  || f.tel.dirty) && f.tel.errors) || ((submitted || f.phone.touched  || f.phone.dirty) && f.phone.errors)">
+                                                    Please enter a value
+                                                </label>
                                             </div>
+                                        </div>
+                                        <div class="text-center mt-3 mb-3 col-md-12">
+                                            <app-submit-button [submitted]="submitted">Update Profile</app-submit-button>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4 ">
-                                    <div class="row mt-3">
-                                        <!-- <div class="fileinput fileinput-new" data-provides="fileinput">
-                                            <div class="fileinput-new img-thumbnail" style="width: 166px; height: auto;">
-                                                <img src="{{ empty($profile->profile_pic) ? avatar($profile->name) : asset($profile->profile_pic) }}" data-src="{{ empty($profile->profile_pic) ? avatar($profile->name) : asset($profile->profile_pic) }}" data-trigger="fileinput" alt="Profile Pic">
-                                            </div>
-                                            <div class="fileinput-preview fileinput-exists img-thumbnail" data-trigger="fileinput" style="max-width: 166px; max-height: auto;"></div>
-                                            <div>
-                                                <span class="btn btn-outline-secondary btn-file d-none">
-                                                        {{-- <span class="fileinput-new">Select image</span>
-                                                <span class="fileinput-exists">Change</span> --}}
-                                                <input type="file" name="profile_pic" accept="image/jpeg,image/png,image/webp">
-                                                </span>
-                                                {{-- <a href="#" class="btn btn-outline-secondary fileinput-exists" data-dismiss="fileinput">Remove</a> --}}
-                                            </div>
-                                        </div> -->
-                                    </div>
-
-                                </div>
-                                <div class="col-md-3 offset-md-2">
+                                <!-- <div class="col-md-3 offset-md-2">
                                     <div class="text-right mt-3 mb-3">
                                         <app-submit-button [submitted]="submitted">Update Profile</app-submit-button>
                                     </div>
-                                </div>
+                                </div> -->
                             </form>
 
                         </div>
                         <div class="tab-pane fade" [ngClass]="{ active: passwordVisible,  show: passwordVisible }" id="password-tab" role="tabpanel" aria-labelledby="pills-home-tab-nobd">
                             <div class="row">
-                                <form class="col-md-4 offset-md-4" id="confirmPasswordForm" [formGroup]="confirmPasswordForm" (ngSubmit)="onPasswordSubmit()">
+                                <form class="col-md-4 offset-md-2" id="confirmPasswordForm" [formGroup]="confirmPasswordForm" (ngSubmit)="onPasswordSubmit()">
                                     <div class="row mt-3">
                                         <div class="col-md-12">
                                             <div class="form-group form-group-default">
@@ -163,6 +152,63 @@
                                         </div>
                                     </div>
                                 </form>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" [ngClass]="{ active: subVisible,  show: subVisible }" id="password-tab" role="tabpanel" aria-labelledby="pills-home-tab-nobd">
+                            <div class="row">
+                                <div class="col-md-5 offset-md-2">
+                                    <div class="row mt-3">
+                                        <div class="col-md-4">
+                                            Company Name
+                                        </div>
+                                        <div class="col-md-8 sub-text">
+                                            {{ mysubDetails?.name }}
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-md-4">
+                                            <label>Contact Name</label>
+                                        </div>
+                                        <div class="col-md-8 sub-text">
+                                            {{ mysubDetails?.contactName }}
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-md-4">
+                                            <label>Email</label>
+                                        </div>
+                                        <div class="col-md-8 sub-text">
+                                            {{ mysubDetails?.email }}
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-md-4">
+                                            <label>Package Name</label>
+                                        </div>
+                                        <div class="col-md-8 sub-text">
+                                            {{ mysubDetails?.package?.name }}
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-md-4">
+                                            <label>Total User Count</label>
+                                        </div>
+                                        <div class="col-md-8 sub-text">
+                                            {{ mysubDetails?.userCount }}
+                                        </div>
+                                    </div>
+                                    <div class="row mt-3">
+                                        <div class="col-md-4">
+                                            <label>Expiry At</label>
+                                        </div>
+                                        <div class="col-md-8 sub-text">
+                                            {{ mysubDetails?.expireAt | date :'mediumDate' }}
+                                        </div>
+                                    </div>
+                                    <div class="text-center mt-3 mb-3 col-md-12">
+                                        <app-submit-button [routerLink]="['/upgrade/package']" routerLinkActive="router-link-active">Upgrade now</app-submit-button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

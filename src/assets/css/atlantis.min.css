@@ -17952,3 +17952,7 @@ body[data-background-color=dark] .board {
 .error-cont .show-password {
     top: 38%;
 }
+
+.ps--active-y>.ps__rail-y {
+    display: none !important;
+}

@@ -426,8 +426,10 @@ export class ListComponent implements OnInit, OnDestroy {
                 } else if (data === 'projectFlter') {
                     this.rigFilter = '';
                 } else if (data === 'projectSelect') {
+                    this.editForm.controls.well.reset();
+                    this.editForm.controls.projectUsers.reset();
+                    // this.f.projectUsers.setValue([]);
                     this.wellOptionData = [...result.data];
-                    // this.f.well.setValue(result.data[0] ? result.data[0]._id : null);
                 }
                 this.refreshTable();
             });
@@ -447,9 +449,11 @@ export class ListComponent implements OnInit, OnDestroy {
             console.log('meetinguser', response.data);
             const meetingProjectUsers = response.data.currentProject;
             const meetingRigUsers = response.data.currentRig;
-            const otherrig = meetingProjectUsers.map(v => ({...v, type: 'otherrig'}));
-            const currentrig = meetingRigUsers.map(v => ({...v, type: 'currentrig'}));
-            this.meetingProjectUsers = [...otherrig, ...currentrig];
+            const meetingManager = response.data.currentmanager;
+            const otherrig = meetingProjectUsers.map(v => ({...v, type: 'other rig'}));
+            const currentrig = meetingRigUsers.map(v => ({...v, type: 'current rig'}));
+            const currentmanager = meetingManager.map(v => ({...v, type: 'current manager'}));
+            this.meetingProjectUsers = [...otherrig, ...currentrig, ...currentmanager];
             if (this.editing) {
                 if (this.meetingProjectUsers.length !== 0) {
                     const result = this.filterUser(this.meetingProjectUsers);

@@ -168,6 +168,11 @@ export class RigListComponent implements OnInit {
         });
     }
 
+    changeProject(event) {
+        // console.log('event', event);
+        this.editForm.controls.fieldName.setValue(event.fieldName);
+    }
+
 
     get f(): any { return this.editForm.controls; }
 

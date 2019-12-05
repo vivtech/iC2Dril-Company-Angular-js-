@@ -60,6 +60,9 @@ export class ListComponent implements OnInit {
     hideConfirm: boolean = true;
     hourStep = 1;
     minuteStep = 15;
+    projectName = '';
+    rigName = '';
+
 
     constructor(private commonService: CommonService,
                 private apiService: ProjectCameraService,
@@ -237,6 +240,8 @@ export class ListComponent implements OnInit {
             this.modalService.open(editModal, {
                 size: 'lg'
             });
+            this.projectName = this.requestDetail.project.name;
+            this.rigName = this.requestDetail.well.name;
             // tslint:disable-next-line: forin
             const userId = [];
             for (const i in this.requestDetail.users) {

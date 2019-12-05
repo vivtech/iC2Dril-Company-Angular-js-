@@ -78,7 +78,7 @@
                                         <div class="col-md-4" style="margin-top: 10px;margin-bottom: 10px;" *ngFor="let attende of users">
                                             <div class="row">
                                                 <div class="col-sm-4 ">
-                                                    <img src={{attende.profilePic | baseURL}} alt="Profile" class="avatar-img rounded-circle">
+                                                    <img [src]="attende.profilePic | baseURL" onError="this.src='../assets/img/icons8-user-male-52.png';" alt="Profile" class="avatar-img rounded-circle">
                                                 </div>
                                                 <div class="col-sm-8 attendename p-0">{{ attende.name }}</div>
                                             </div>

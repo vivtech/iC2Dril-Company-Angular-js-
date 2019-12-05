@@ -15,7 +15,7 @@ export class PackageService {  public packageList: BehaviorSubject<Package[]>;
     }
 
     create(fields): any {
-        return this.http.post<any>(`${environment.apiUrl}/package`, fields)
+        return this.http.post<any>(`${environment.apiUrl}/package/request`, fields)
             .pipe(map(response => {
                 return response;
             }

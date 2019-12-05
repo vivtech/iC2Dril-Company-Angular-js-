@@ -24,17 +24,17 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">
+                <!-- <div class="card-header">
                     <div class="d-flex align-items-center">
                         <h4 class="page-title">Rig location list</h4>
                         <button class="btn btn-primary btn-round ml-auto" id="addModalOpen" (click)="createData(editModal)">
-                                    <i class="fa fa-plus"></i>
-                                    &nbsp;&nbsp;&nbsp;Add Rig Location
-                                </button>
+                            <i class="fa fa-plus"></i>
+                            &nbsp;&nbsp;&nbsp;Add Rig Location
+                        </button>
                     </div>
-                </div>
+                </div> -->
                 <div class="card-body">
-                    <div class="row p-2 filter-cont mb-4">
+                    <div class="row p-2 filter-cont">
                         <div class="col-md-3 pl-0">
                             <div class="form-group pt-0">
                                 <label>Project</label>
@@ -47,6 +47,13 @@
                                 <ng-select (change)="refreshTable()" class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [(ngModel)]="statusFilter" [clearable]="false" [items]="statusFilterData" bindLabel="name" bindValue="id"></ng-select>
                             </div>
                         </div>
+                        <div class="ml-auto">
+                            <button class="btn btn-primary btn-round" id="addModalOpen" (click)="createData(editModal)">
+                                <i class="fa fa-plus"></i>
+                                &nbsp;&nbsp;&nbsp;Add Rig Location
+                            </button>
+                        </div>
+
                     </div>
                     <div class="table-responsive">
                         <table id="record-table" [dtOptions]="dtOptions" datatable class="display table table-striped table-hover w-100 table-head-bg-primary" width="100%">
@@ -100,10 +107,14 @@
 <!-- Edit Modal -->
 <ng-template #editModal let-modal>
     <div class="modal-header">
-        <h4 class="modal-title">{{ editing ? "Edit" : "Add" }} Rig Location</h4>
+        <h4 class="modal-title">{{ editing ? "Edit" : "Add" }} Rig Location <br>
+            <span class="info" *ngIf="people.length == 0 && projectOptionData.length == 0"><i class="fa fa-info-circle" aria-hidden="true"></i> There is no project & rig please add one</span>
+            <span class="info" *ngIf="people.length == 0 && projectOptionData.length !== 0"><i class="fa fa-info-circle" aria-hidden="true"></i> There is no rig please add one</span>
+            <span class="info" *ngIf="people.length !== 0 && projectOptionData.length == 0"><i class="fa fa-info-circle" aria-hidden="true"></i> There is no project please add one</span>
+        </h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-                <span aria-hidden="true">&times;</span>
-              </button>
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
     <div class="modal-body">
         <form class="row form" *ngIf="requestDetail" id="editForm" [formGroup]="editForm" (ngSubmit)="updateRequest()">
@@ -120,7 +131,7 @@
                     <div class="col-sm-6" [hidden]="editing">
                         <div class="form-group form-group-default dropdown">
                             <label class="text-primary">Select Project</label>
-                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [items]="projectOptionData" formControlName="data" [clearable]="false" bindLabel="name" bindValue="_id" placeholder="Select project">
+                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" (change)="changeProject($event)" [items]="projectOptionData" formControlName="data" [clearable]="false" bindLabel="name" bindValue="_id" placeholder="Select project">
                             </ng-select>
                             <error-label [control]="f.data"></error-label>
                         </div>
@@ -135,14 +146,14 @@
                     <div class="col-sm-6">
                         <div class="form-group form-group-default dropdown">
                             <label class="text-primary">Select Rig Manager</label>
-                            <ng-select [items]="people" [multiple]="false" [closeOnSelect]="false" placeholder="Select user" bindLabel="name" bindValue="_id" formControlName="manager">
+                            <ng-select [items]="people" [multiple]="false" [closeOnSelect]="false" placeholder="Select rig manager" bindLabel="name" bindValue="_id" formControlName="manager">
                                 <ng-template ng-label-tmp let-item="item" let-clear="clear">
-                                    <span class="ng-value-label"><img [src]="item.profilePic | baseURL" width="20px" height="20px"> {{item.name}}</span>
+                                    <span class="ng-value-label"><img [src]="item.profilePic | baseURL" onError="this.src='../assets/img/icons8-user-male-52.png';" width="20px" height="20px"> {{item.name}}</span>
                                     <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">×</span>
                                 </ng-template>
 
                                 <ng-template ng-option-tmp let-item="item">
-                                    <img [src]="item.profilePic | baseURL" width="20px" height="20px">&nbsp;<span style="position: absolute;
+                                    <img [src]="item.profilePic | baseURL" onError="this.src='../assets/img/icons8-user-male-52.png';" width="20px" height="20px">&nbsp;<span style="position: absolute;
                                     top: 3px;">{{item.name}}</span>
                                 </ng-template>
                             </ng-select>

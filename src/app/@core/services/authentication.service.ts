@@ -4,6 +4,7 @@ import { User } from '../models/user.model';
 import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
 @Injectable({
     providedIn: 'root'
@@ -14,7 +15,8 @@ export class AuthenticationService {
     private currentUserToken: BehaviorSubject<string>;
     public currentUser: Observable<User>;
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient,
+                private router: Router) {
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('companyUser')));
         this.currentUserToken = new BehaviorSubject<string>(localStorage.getItem('companyToken'));
         this.currentUser = this.currentUserSubject.asObservable();
@@ -52,13 +54,32 @@ export class AuthenticationService {
         return this.http.put<any>(`${environment.apiUrl}/profile`, profileUpdate)
             .pipe(map(response => {
                 console.log(response.data);
+                const result = response.data;
                 if ( response.status === 'success' ) {
                     localStorage.setItem('companyUser', JSON.stringify(response.data.user));
                     this.currentUserSubject.next(response.data.user);
+                    setTimeout(() => {
+                        // tslint:disable-next-line: triple-equals
+                        if (result.oldemail != result.user.email) {
+                            console.log('Email not same');
+                            this.logout();
+                            this.router.navigate(['/login']);
+                        }
+                    }, 500);
                 }
 
                 return response;
             }));
+    }
+
+    getSubscriptions(companyId) {
+        return this.http.get<any>(`${environment.apiUrl}/packagedetails`)
+        .pipe(map(response => {
+            if (response.code === 200) {
+                console.log(response.data.data);
+            }
+            return response;
+        }));
     }
 
     changePassword(passwordField) {

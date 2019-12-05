@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ProfileService } from 'src/app/@core/services/profile.service';
 import { AuthenticationService } from 'src/app/@core/services/authentication.service';
 import { User } from 'src/app/@core/models/user.model';
 import { environment } from 'src/environments/environment';
@@ -23,6 +22,8 @@ export class ProfileComponent implements OnInit {
 
     title = 'Profile';
     passwordVisible = false;
+    profileVisible = true;
+    subVisible = false;
     CurrentpasswordHidden = true;
     NewpasswordHidden = true;
     ConfirmpasswordHidden = true;
@@ -38,10 +39,10 @@ export class ProfileComponent implements OnInit {
     imageError = false;
     selectedFile: any;
     countryList: Observable<Country[]>;
+    mysubDetails: any;
 
     constructor(
               private commonService: CommonService,
-              private profileService: ProfileService,
               private authenticationService: AuthenticationService,
               private formBuilder: FormBuilder,
               private formService: FormService,
@@ -49,6 +50,7 @@ export class ProfileComponent implements OnInit {
               public sanitizer: DomSanitizer) { }
 
     ngOnInit() {
+        this.getMySubscription();
         const data = this.commonService.getRequestFormData().subscribe();
         this.countryList = this.commonService.getCountryList();
         this.user = this.authenticationService.currentUserValue;
@@ -86,12 +88,27 @@ export class ProfileComponent implements OnInit {
 
     get pf(): any { return this.confirmPasswordForm.controls; }
 
-    togglePassword() {
+    togglePassword(value) {
         this.submitted = false;
-        if ( !this.passwordVisible ) {
-            this.confirmPasswordForm.reset();
+        this.confirmPasswordForm.reset();
+        switch (value) {
+            case 1:
+                this.profileVisible = true;
+                this.subVisible = false;
+                this.passwordVisible = false;
+                break;
+            case 2:
+                this.profileVisible = false;
+                this.subVisible = false;
+                this.passwordVisible = true;
+                break;
+            case 3:
+                this.subVisible = true;
+                this.passwordVisible = false;
+                this.profileVisible = false;
+                break;
+
         }
-        this.passwordVisible = !this.passwordVisible;
     }
 
     toggleVisible(value) {
@@ -108,8 +125,12 @@ export class ProfileComponent implements OnInit {
         }
     }
 
-    profileImage() {
-
+    getMySubscription() {
+        const userId = localStorage.getItem('companyId');
+        this.authenticationService.getSubscriptions(userId).subscribe(mySub => {
+            // console.log('My Subs', mySub);
+            this.mysubDetails = mySub.data.company;
+        });
     }
 
     onFileSelected(event) {
@@ -144,7 +165,7 @@ export class ProfileComponent implements OnInit {
             this.submitted = false;
             return false;
         }
-        var formData = new FormData();
+        const formData = new FormData();
         for (const key in currentData) {
             if (key === 'profilePic') {
                 console.log('key', key);

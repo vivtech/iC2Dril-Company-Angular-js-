@@ -10,7 +10,8 @@ export class DashboardComponent implements OnInit {
   constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
-      console.log('route', this.route)
+      const anyType: any = 'any type';
+      console.log('stringType',  anyType.toUpperCase());
   }
 
 }

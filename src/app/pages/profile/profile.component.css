@@ -13,6 +13,19 @@ form .form-group.dropdown {
 }
 
 .avatar-img {
-    width: 115%;
-    height: 115%;
+    width: 160%;
+    height: 160%;
+    bottom: 10px;
+    position: relative;
+    bottom: 10px;
+}
+
+img.avatar-img.rounded-circle {
+    border: 2px solid;
+}
+
+.sub-text {
+    color: #444;
+    font-size: 14px;
+    font-weight: 600;
 }

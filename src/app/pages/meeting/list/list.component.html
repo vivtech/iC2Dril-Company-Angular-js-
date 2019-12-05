@@ -18,7 +18,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">
+                <!-- <div class="card-header">
                     <div class="d-flex align-items-center">
                         <h4 class="page-title">Meeting List</h4>
                         <button [hidden]="permission == 'notcreate'" class="btn btn-primary btn-round ml-auto" id="addModalOpen" (click)="createData(createModal)">
@@ -26,7 +26,7 @@
                             Add Meeting
                         </button>
                     </div>
-                </div>
+                </div> -->
                 <div class="card-body">
                     <div class="row p-2 filter-cont mb-4">
                         <div class="col-md-3 pl-0">
@@ -54,6 +54,12 @@
                                 <label>Active</label>
                                 <ng-select (change)="refreshTable()" class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [(ngModel)]="statusFilter" [clearable]="false" [items]="statusFilterData" bindLabel="name" bindValue="id"></ng-select>
                             </div>
+                        </div>
+                        <div class="ml-auto">
+                            <button [hidden]="permission == 'notcreate'" class="btn btn-primary btn-round" id="addModalOpen" (click)="createData(createModal)">
+                                <i class="fa fa-plus"></i>
+                                Add Meeting
+                            </button>
                         </div>
                         <!-- <div class="col-md-3 pl-0">
                             <div class="form-group pt-0">
@@ -223,7 +229,7 @@
                                     <div class="col-md-4" style="margin-top: 10px;margin-bottom: 10px;" *ngFor="let attende of modelData.attenders">
                                         <div class="row">
                                             <div class="col-sm-4 ">
-                                                <img src="{{attende.profilePic | baseURL}}" alt="Profile" class="avatar-img rounded-circle">
+                                                <img src="{{attende.profilePic | baseURL}}" onError="this.src='../assets/img/icons8-user-male-52.png';" alt="Profile" class="avatar-img rounded-circle">
                                             </div>
                                             <div class="col-sm-8 attendename p-0">{{ attende.name }}</div>
                                         </div>
@@ -326,11 +332,11 @@
                                     {{item.type | uppercase}}
                                 </ng-template>
                                 <ng-template ng-label-tmp let-item="item" let-clear="clear">
-                                    <span class="ng-value-label"><img [src]="item.profilePic | baseURL" width="20px" height="20px">&nbsp;&nbsp;{{item.name}}</span>
+                                    <span class="ng-value-label"><img [src]="item.profilePic | baseURL" onError="this.src='../assets/img/icons8-user-male-52.png';" width="20px" height="20px">&nbsp;&nbsp;{{item.name}}</span>
                                     <span class="ng-value-icon right" (click)="clear(item)" aria-hidden="true">&nbsp;&nbsp;×</span>
                                 </ng-template>
                                 <ng-template ng-option-tmp let-item="item" let-item$="item$" let-index="index">
-                                    <img [src]="item.profilePic | baseURL" width="20px" height="20px">&nbsp;
+                                    <img [src]="item.profilePic | baseURL" onError="this.src='../assets/img/icons8-user-male-52.png';" width="20px" height="20px">&nbsp;
                                     <span style="position: absolute;
                                     top: 3px;">{{item.name}}</span>
                                 </ng-template>

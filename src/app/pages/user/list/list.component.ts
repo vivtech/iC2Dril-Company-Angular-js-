@@ -236,13 +236,22 @@ export class ListComponent implements OnInit, OnDestroy {
 
     onchange(event) {
         console.log('onchange', event);
-        if (event.name === 'Other User') {
-            this.hidden = true;
-            const validators = [Validators.required];
-            this.editForm.addControl('meetingAccess', new FormControl(null, validators));
+        if (this.editing) {
+            if (event.name === 'Other User') {
+                this.hidden = true;
+                const validators = [Validators.required];
+                this.editForm.addControl('meetingAccess', new FormControl(null, validators));
+            } else {
+                this.hidden = false;
+                this.editForm.removeControl('meetingAccess');
+            }
         } else {
-            this.hidden = false;
-            this.editForm.removeControl('meetingAccess');
+            this.editForm.addControl('meetingAccess', new FormControl());
+            if (event.name === 'Other User') {
+                this.editForm.controls.meetingAccess.setValue(0);
+            } else {
+                this.editForm.controls.meetingAccess.setValue(1);
+            }
         }
     }
 

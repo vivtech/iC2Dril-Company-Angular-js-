@@ -2,7 +2,7 @@
     <a class="dropdown-toggle profile-pic" data-toggle="dropdown" aria-expanded="false">
         <!-- <ngx-avatar *ngIf="profileImage == null" name={{user.name}} bgColor="#520701"></ngx-avatar> -->
         <div class="avatar-sm">
-            <img src="{{user.profilePic | baseURL}}" alt="..." class="avatar-img rounded-circle">
+            <img src="{{user.profilePic | baseURL}}" onError="this.src='../assets/img/guest.png';" alt="..." class="avatar-img rounded-circle">
         </div>
     </a>
     <ul class="dropdown-menu dropdown-user animated fadeIn" [ngClass]="{'show': visibility}">
@@ -10,7 +10,7 @@
             <li>
                 <div class="user-box">
                     <!-- <ngx-avatar [cornerRadius]="5" [round]="false" *ngIf="profileImage == null" name={{user.name}} bgColor="#520701"></ngx-avatar> -->
-                    <div class="avatar-lg"><img src="{{user.profilePic | baseURL}}" alt="image profile" class="avatar-img rounded"></div>
+                    <div class="avatar-lg"><img src="{{user.profilePic | baseURL}}" onError="this.src='../assets/img/icons8-user-male-52.png';" alt="image profile" class="avatar-img rounded"></div>
                     <div class="u-text">
                         <h4>{{user.name}}</h4>
                         <p class="text-muted">{{ user.email }}</p>

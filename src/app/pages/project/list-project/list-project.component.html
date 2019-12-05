@@ -24,23 +24,27 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">
+                <!-- <div class="card-header">
                     <div class="d-flex align-items-center">
                         <h4 class="page-title">Project List</h4>
                         <a class="btn btn-primary btn-round ml-auto" routerLink="/project/create">
                             <i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;Create Project
                         </a>
                     </div>
-                </div>
+                </div> -->
                 <div class="card-body">
-                    <div class="row p-2 filter-cont mb-4">
+                    <div class="row p-2 filter-cont">
 
                         <div class="col-md-3 pl-0">
                             <div class="form-group pt-0">
                                 <label>Status</label>
                                 <ng-select (change)="refreshTable()" class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [(ngModel)]="statusFilter" [clearable]="false" [items]="statusFilterData" bindLabel="name" bindValue="id"></ng-select>
-
                             </div>
+                        </div>
+                        <div class="ml-auto">
+                            <a class="btn btn-primary btn-round" routerLink="/project/create">
+                                <i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;Create Project
+                            </a>
                         </div>
 
                     </div>
@@ -62,7 +66,7 @@
                             </thead>
                             <tbody *ngIf="dataList?.length != 0">
                                 <tr *ngFor="let data of dataList">
-                                    <td><a (click)="view(data._id)">{{ data.name | capitalize }}</a></td>
+                                    <td><a (click)="view(data._id)">{{ data.name }}</a></td>
                                     <td>{{ data.blockName }}</td>
                                     <td>{{ data.fieldName }}</td>
                                     <td>{{ fieldEnvData | Filterpipe:data.fieldEnv }}</td>
