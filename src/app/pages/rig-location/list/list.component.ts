@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
 import { first } from 'rxjs/operators';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -24,8 +24,8 @@ import { UserService } from 'src/app/@core/services/user.service';
     styleUrls: ['./list.component.css']
 })
 export class RigListComponent implements OnInit {
-
     @ViewChild(DataTableDirective, {static: false})
+    @ViewChild('modalbtn', {static: false}) modalbtn: ElementRef<HTMLElement>;
     datatableElement: DataTableDirective;
 
     statusFilterData = [{id: '', name: 'All'}, {id: 1, name: 'Active'}, {id: 0, name: 'Inactive'}];
@@ -91,6 +91,7 @@ export class RigListComponent implements OnInit {
             }
             this.people = array;
         });
+
         const that = this;
         this.dtOptions = {
             dom:    `<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>"

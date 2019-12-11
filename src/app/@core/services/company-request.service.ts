@@ -67,7 +67,13 @@ export class CompanyRequestService {
     }
 
     getLatestNotify(): any {
-        return this.http.get<any>(`${environment.apiUrl}/notification/list`, {}).pipe(map(response => {
+        return this.http.get<any>(`${environment.apiUrl}/notification/list`).pipe(map(response => {
+            return response;
+        }));
+    }
+
+    getLatestNotifyCount(): any {
+        return this.http.get<any>(`${environment.apiUrl}/notification/count`).pipe(map(response => {
             return response;
         }));
     }

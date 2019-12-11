@@ -1,7 +1,7 @@
 <li class="nav-item dropdown hidden-caret" [ngClass]="{'show': visibility}">
     <a class="nav-link dropdown-toggle" (click)="getNotification()" id="messageDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="fa fa-bell"></i>
-        <!-- <span class="notification">4</span> -->
+        <span class="notification">{{ notificationCount }}</span>
     </a>
     <ul class="dropdown-menu messages-notif-box animated fadeIn" aria-labelledby="messageDropdown" [ngClass]="{'show': visibility}">
         <li>
@@ -32,7 +32,7 @@
             </div>
             <ng-template #notFound>
                 <div class="notfound-content">
-                    Notification not found
+                    No new notifications
                 </div>
             </ng-template>
         </li>

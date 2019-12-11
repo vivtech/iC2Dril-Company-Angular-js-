@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 export class NotificationDropdownComponent implements OnInit {
     visibility = false;
     notification = [];
+    notificationCount: number;
     constructor(private eref: ElementRef,
                 private notService: CompanyRequestService,
                 private route: Router) { }
@@ -31,10 +32,12 @@ export class NotificationDropdownComponent implements OnInit {
     }
 
     getNotification() {
-        this.notService.getLatestNotify().subscribe(arg => {
-            this.notification = arg.data;
-            // const map = arg.data.map(res => res);
-            // this.notification = map.slice(0, 4);
+        this.notService.getLatestNotifyCount().subscribe(count => {
+            this.notificationCount = count.data.count;
+            console.log('count', count);
+        });
+        this.notService.getLatestNotify().subscribe(notificationlist => {
+            this.notification = notificationlist.data;
             console.log('result', this.notification);
         });
     }

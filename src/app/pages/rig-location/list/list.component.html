@@ -48,7 +48,7 @@
                             </div>
                         </div>
                         <div class="ml-auto">
-                            <button class="btn btn-primary btn-round" id="addModalOpen" (click)="createData(editModal)">
+                            <button class="btn btn-primary btn-round" *ngIf="people.length != 0 && projectOptionData.length != 0" #modalbtn id="addModalOpen" (click)="createData(editModal)">
                                 <i class="fa fa-plus"></i>
                                 &nbsp;&nbsp;&nbsp;Add Rig Location
                             </button>
@@ -108,9 +108,9 @@
 <ng-template #editModal let-modal>
     <div class="modal-header">
         <h4 class="modal-title">{{ editing ? "Edit" : "Add" }} Rig Location <br>
-            <span class="info" *ngIf="people.length == 0 && projectOptionData.length == 0"><i class="fa fa-info-circle" aria-hidden="true"></i> There is no project & rig please add one</span>
+            <!-- <span class="info" *ngIf="people.length == 0 && projectOptionData.length == 0"><i class="fa fa-info-circle" aria-hidden="true"></i> There is no project & rig please add one</span>
             <span class="info" *ngIf="people.length == 0 && projectOptionData.length !== 0"><i class="fa fa-info-circle" aria-hidden="true"></i> There is no rig please add one</span>
-            <span class="info" *ngIf="people.length !== 0 && projectOptionData.length == 0"><i class="fa fa-info-circle" aria-hidden="true"></i> There is no project please add one</span>
+            <span class="info" *ngIf="people.length !== 0 && projectOptionData.length == 0"><i class="fa fa-info-circle" aria-hidden="true"></i> There is no project please add one</span> -->
         </h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
             <span aria-hidden="true">&times;</span>

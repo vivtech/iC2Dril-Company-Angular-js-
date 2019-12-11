@@ -63,6 +63,15 @@ export class CommonService {
             }));
         }
 
+    getDashboardData() {
+        // console.log("enter");
+        return this.http.get<any>(`${environment.apiUrl}/dashboard`, {})
+        .pipe(map(response => {
+            console.log(response);
+            return response;
+        }));
+    }
+
     getCountryList(): Observable<Country[]> {
         return this.countryList.asObservable();
     }

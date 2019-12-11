@@ -38,7 +38,7 @@
                             <div class="row">
                                 <div class="col-5">
                                     <div class="icon-big text-center">
-                                        <i class="fas fa-list text-danger"></i>
+                                        <i class="fas fa-list text-primary"></i>
                                     </div>
                                 </div>
                                 <div class="col-7 col-stats">
@@ -46,7 +46,7 @@
                                         <a routerLink="/project/list" class="">
                                             <p class="card-category">Projects</p>
                                         </a>
-                                        <h4 class="card-title"></h4>
+                                        <h4 class="card-title">{{dashboard?.projectCount}}</h4>
                                     </div>
                                 </div>
                             </div>
@@ -59,7 +59,7 @@
                             <div class="row">
                                 <div class="col-5">
                                     <div class="icon-big text-center">
-                                        <i class="fas fa-map-marker-alt text-primary1"></i>
+                                        <i class="fas fa-map-marker-alt text-primary"></i>
                                     </div>
                                 </div>
                                 <div class="col-7 col-stats">
@@ -67,7 +67,7 @@
                                         <a routerLink="/riglocation/list" class="">
                                             <p class="card-category">Rig Location</p>
                                         </a>
-                                        <h4 class="card-title"></h4>
+                                        <h4 class="card-title">{{dashboard?.wellCount}}</h4>
                                     </div>
                                 </div>
                             </div>
@@ -80,7 +80,7 @@
                             <div class="row">
                                 <div class="col-5">
                                     <div class="icon-big text-center">
-                                        <i class="fas fa-video text-success"></i>
+                                        <i class="fas fa-video text-primary"></i>
                                     </div>
                                 </div>
                                 <div class="col-7 col-stats">
@@ -88,7 +88,7 @@
                                         <a routerLink="/camera/list">
                                             <p class="card-category">Cameras</p>
                                         </a>
-                                        <h4 class="card-title"></h4>
+                                        <h4 class="card-title">{{dashboard?.cameraCount}}</h4>
                                     </div>
                                 </div>
                             </div>
@@ -101,15 +101,15 @@
                             <div class="row">
                                 <div class="col-5">
                                     <div class="icon-big text-center">
-                                        <i class="fas fa-calendar-alt text-primary"></i>
+                                        <i class="fas fa-user text-primary"></i>
                                     </div>
                                 </div>
                                 <div class="col-7 col-stats">
                                     <div class="numbers">
-                                        <a routerLink="/meeting/list">
-                                            <p class="card-category">Meetings</p>
+                                        <a routerLink="/user/list">
+                                            <p class="card-category">Users</p>
                                         </a>
-                                        <h4 class="card-title"></h4>
+                                        <h4 class="card-title">{{dashboard?.userCount}}</h4>
                                     </div>
                                 </div>
                             </div>
@@ -137,6 +137,50 @@
                         </div>
                     </div>
                 </div> -->
+            </div>
+            <div class="row row-card-no-pd mt--2">
+                <div class="col-sm-6 col-md-3">
+                    <div class="card card-stats card-round">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-5">
+                                    <div class="icon-big text-center">
+                                        <i class="fas fa-handshake text-primary"></i>
+                                    </div>
+                                </div>
+                                <div class="col-7 col-stats">
+                                    <div class="numbers">
+                                        <a routerLink="/meeting/list">
+                                            <p class="card-category">Today Meetings</p>
+                                        </a>
+                                        <h4 class="card-title">{{dashboard?.todayMeeting}}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-3">
+                    <div class="card card-stats card-round">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-5">
+                                    <div class="icon-big text-center">
+                                        <i class="fas fa-calendar-alt text-primary"></i>
+                                    </div>
+                                </div>
+                                <div class="col-7 col-stats">
+                                    <div class="numbers">
+                                        <a routerLink="/meeting/list">
+                                            <p class="card-category">Future Meetings</p>
+                                        </a>
+                                        <h4 class="card-title">{{dashboard?.upcomingMeeting}}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>
