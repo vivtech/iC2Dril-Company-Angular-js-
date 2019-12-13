@@ -6379,7 +6379,7 @@ label.error {
 }
 
 .navbar .navbar-nav .notification {
-    position: absolute;
+    /* position: absolute;
     background-color: #31ce36;
     text-align: center;
     border-radius: 10px;
@@ -6391,7 +6391,20 @@ label.error {
     line-height: 17px;
     top: 3px;
     right: 3px;
-    letter-spacing: -1px
+    letter-spacing: -1px */
+    position: absolute;
+    background-color: #ff0000;
+    text-align: center;
+    border-radius: 10px;
+    min-width: 20px;
+    height: 20px;
+    font-size: 10px;
+    font-weight: 600;
+    color: #fff;
+    line-height: 19px;
+    top: 0px;
+    right: 0px;
+    letter-spacing: 0px;
 }
 
 .navbar-header {

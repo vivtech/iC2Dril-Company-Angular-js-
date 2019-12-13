@@ -181,7 +181,7 @@ export class ProfileComponent implements OnInit {
             data => {
                 if (data.status === 'success') {
                     console.log(data);
-                    this.toastr.error('', data.message);
+                    this.toastr.success('', data.message);
                     window.scroll(0, 0);
                 } else {
                     this.validationError = data.message;
@@ -221,7 +221,7 @@ export class ProfileComponent implements OnInit {
                 if (data.status === 'success') {
                     console.log(data);
                     this.confirmPasswordForm.reset();
-                    this.toastr.error('', data.message);
+                    this.toastr.success('', data.message);
                     window.scroll(0, 0);
                 } else {
                     // this.validationError = data.message;

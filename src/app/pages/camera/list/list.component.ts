@@ -308,7 +308,7 @@ export class ListComponent implements OnInit {
                 data => {
                     if (data.status === 'success') {
                         console.log(data);
-                        this.toastr.error('', data.message);
+                        this.toastr.success('', data.message);
                         this.modalService.dismissAll();
                         this.editForm.reset();
                         this.selectedPeople = [];
@@ -338,7 +338,7 @@ export class ListComponent implements OnInit {
                 data => {
                     if (data.status === 'success') {
                         console.log(data);
-                        this.toastr.error('', data.message);
+                        this.toastr.success('', data.message);
                         this.modalService.dismissAll();
                         this.editForm.reset();
                         this.selectedPeople = [];

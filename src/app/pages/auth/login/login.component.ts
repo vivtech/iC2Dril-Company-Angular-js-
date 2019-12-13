@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit {
 
     onSubmit() {
 
-        //this.toastr.error('Hello world!', 'Toastr fun!');
+        //this.toastr.success('Hello world!', 'Toastr fun!');
         console.log("hi")
         this.error = false
         this.submitted = true;

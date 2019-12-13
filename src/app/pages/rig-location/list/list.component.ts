@@ -64,7 +64,6 @@ export class RigListComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.toastr.warning('', 'There is no rig please add one !');
         this.route.params.subscribe(params => {
             console.log('route', params.data);
             const projectId = params.data;
@@ -72,26 +71,43 @@ export class RigListComponent implements OnInit {
                 this.projectFilter = projectId;
             }
         });
-        this.projectService.getAll().subscribe(response => {
-            console.log('AllProject', response.data);
-            const allProjects = response.data;
-            this.projectFilterData = [{_id: '', name: 'All'}, ...allProjects];
-            this.projectOptionData = [...allProjects];
-            // if (this.projectOptionData.length === 0) {
-            //     this.toastr.warning('', 'There is no rig please add one !');
-            // }
+        const promise1 = new Promise((resolve, reject) => {
+            this.projectService.getAll().subscribe(response => {
+                console.log('AllProject', response.data);
+                const allProjects = response.data;
+                this.projectFilterData = [{_id: '', name: 'All'}, ...allProjects];
+                this.projectOptionData = [...allProjects];
+                resolve(this.projectOptionData);
+                // if (this.projectOptionData.length === 0) {
+                //     this.toastr.warning('', 'There is no rig please add one !');
+                // }
+            });
         });
-        this.service.getUserByType('MANAGER').subscribe(users => {
-            console.log('userList', users.data);
-            const array = [];
-            // tslint:disable-next-line: forin
-            for (const i in users.data) {
-                array.push({name: users.data[i].name,
-                     _id: users.data[i]._id,
-                    profilePic: users.data[i].profilePic,
-                    designation: users.data[i].designation});
+        const promise2 = new Promise((resolve, reject) => {
+            this.service.getUserByType('MANAGER').subscribe(users => {
+                console.log('userList', users.data);
+                const array = [];
+                // tslint:disable-next-line: forin
+                for (const i in users.data) {
+                    array.push({name: users.data[i].name,
+                        _id: users.data[i]._id,
+                        profilePic: users.data[i].profilePic,
+                        designation: users.data[i].designation});
+                }
+                this.people = array;
+                resolve(array);
+            });
+        });
+
+        Promise.all([promise1, promise2]).then((values) => {
+            console.log('promisesValue', values);
+            const projectArray: any = values[0];
+            const rigArray: any = values[1];
+            if (projectArray.length === 0) {
+                this.toastr.warning('There is no project please add one !');
+            } else if (rigArray.length === 0) {
+                this.toastr.warning('There is no rig please add one !');
             }
-            this.people = array;
         });
 
         const that = this;
@@ -244,7 +260,7 @@ export class RigListComponent implements OnInit {
                 data => {
                     if (data.status === 'success') {
                         console.log(data);
-                        this.toastr.error('', data.message);
+                        this.toastr.success('', data.message);
                         this.modalService.dismissAll();
                         this.editForm.reset();
                         this.refreshTable();
@@ -272,7 +288,7 @@ export class RigListComponent implements OnInit {
                 data => {
                     if (data.status === 'success') {
                         console.log(data);
-                        this.toastr.error('', data.message);
+                        this.toastr.success('', data.message);
                         this.modalService.dismissAll();
                         this.editForm.reset();
                         this.refreshTable();

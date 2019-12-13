@@ -66,15 +66,16 @@ export class CompanyRequestService {
         return this.companyRequestList.asObservable();
     }
 
-    getLatestNotify(): any {
-        return this.http.get<any>(`${environment.apiUrl}/notification/list`).pipe(map(response => {
-            return response;
-        }));
-    }
-
-    getLatestNotifyCount(): any {
+    getNotificationWithCount(): any {
         return this.http.get<any>(`${environment.apiUrl}/notification/count`).pipe(map(response => {
             return response;
         }));
     }
+
+    UpdateNotifiStatus(data): any {
+        return this.http.put<any>(`${environment.apiUrl}/notification/status`, data).pipe(map(response => {
+            return response;
+        }));
+    }
+
 }

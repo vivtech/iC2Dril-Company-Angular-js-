@@ -124,7 +124,7 @@ export class AddProjectComponent implements OnInit {
         console.log('value', params);
         this.service.create(params).subscribe(res => {
           this.submitted = false;
-          this.toastr.error('', res.message);
+          this.toastr.success('', res.message);
           this.addproductForm.reset();
           console.log('Project create response', res.data._id);
           // var scope = this;
@@ -132,7 +132,7 @@ export class AddProjectComponent implements OnInit {
               this.router.navigate(['/project/list']);
           }, 1500);
 
-        }, (err)=> {
+        }, (err) => {
             this.submitted = false;
             console.log(err);
             if (err.errors.length > 0) {

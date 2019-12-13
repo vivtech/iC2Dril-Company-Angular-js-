@@ -37,7 +37,7 @@ export class ForgotPasswordComponent implements OnInit {
   get f() { return this.forgotPasswordForm.controls; }
 
   onSubmit() {
-    //this.toastr.error('Hello world!', 'Toastr fun!');
+    //this.toastr.success('Hello world!', 'Toastr fun!');
     this.validationError = "";
     this.successMessage = "";
     this.error = false

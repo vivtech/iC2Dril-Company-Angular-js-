@@ -1,5 +1,5 @@
 <li class="nav-item dropdown hidden-caret" [ngClass]="{'show': visibility}">
-    <a class="nav-link dropdown-toggle" (click)="getNotification()" id="messageDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" id="messageDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="fa fa-bell"></i>
         <span class="notification">{{ notificationCount }}</span>
     </a>
@@ -13,7 +13,7 @@
         <li>
             <div *ngIf="notification.length !== 0; else notFound" class="message-notif-scroll scrollbar-outer" [perfectScrollbar]>
                 <div class="notif-center">
-                    <a (click)="redirectTo()" *ngFor="let notify of notification" routerLinkActive="router-link-active">
+                    <a (click)="redirectTo(notify._id)" *ngFor="let notify of notification" routerLinkActive="router-link-active">
                         <div class="notif-img">
                             <i class="fa fa-user notIcon" alt="Img Profile" *ngIf="!notify.profilepic; else showImg"></i>
                             <ng-template #showImg>

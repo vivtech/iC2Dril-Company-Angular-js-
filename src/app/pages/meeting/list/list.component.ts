@@ -639,7 +639,7 @@ export class ListComponent implements OnInit, OnDestroy {
                     data => {
                         if (data.status === 'success') {
                             console.log(data);
-                            this.toastr.error('', data.message);
+                            this.toastr.success('', data.message);
                             this.modalService.dismissAll();
                             this.editForm.reset();
                             this.refreshTable();
@@ -670,7 +670,7 @@ export class ListComponent implements OnInit, OnDestroy {
                 data => {
                     if (data.status === 'success') {
                         console.log(data);
-                        this.toastr.error('', data.message);
+                        this.toastr.success('', data.message);
                         this.modalService.dismissAll();
                         this.editForm.reset();
                         this.refreshTable();

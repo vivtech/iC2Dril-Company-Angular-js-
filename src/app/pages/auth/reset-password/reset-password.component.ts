@@ -69,7 +69,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
 
     onSubmit() {
         console.log(this.f.password.errors);
-        // this.toastr.error('Hello world!', 'Toastr fun!');
+        // this.toastr.success('Hello world!', 'Toastr fun!');
         this.validationError = '';
         this.successMessage = '';
         this.error = false;
