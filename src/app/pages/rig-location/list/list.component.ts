@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { first } from 'rxjs/operators';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
@@ -6,11 +6,9 @@ import { FormService } from 'src/app/@core/services/form-validation.service';
 import { environment } from 'src/environments/environment';
 import { CommonService } from 'src/app/@core/services/common.service';
 import { Country } from 'src/app/@core/models/country.model';
-import { Package } from 'src/app/@core/models/package.model';
 import { DataTableDirective } from 'angular-datatables';
 import { ToastrService } from 'ngx-toastr';
 import { DeleteModalComponent } from 'src/app/@theme/components/modals/delete-modal/delete-modal.component';
-import { CountryService } from 'src/app/@core/services/country.service';
 import { ProjectWellService } from 'src/app/@core/services/project-well.service';
 import { ProjectService } from 'src/app/@core/services/project.service';
 import { ProjectWell } from 'src/app/@core/models/project.model';
@@ -66,6 +64,7 @@ export class RigListComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.toastr.warning('', 'There is no rig please add one !');
         this.route.params.subscribe(params => {
             console.log('route', params.data);
             const projectId = params.data;
@@ -78,6 +77,9 @@ export class RigListComponent implements OnInit {
             const allProjects = response.data;
             this.projectFilterData = [{_id: '', name: 'All'}, ...allProjects];
             this.projectOptionData = [...allProjects];
+            // if (this.projectOptionData.length === 0) {
+            //     this.toastr.warning('', 'There is no rig please add one !');
+            // }
         });
         this.service.getUserByType('MANAGER').subscribe(users => {
             console.log('userList', users.data);

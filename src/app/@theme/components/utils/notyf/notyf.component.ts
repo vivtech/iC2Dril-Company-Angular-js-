@@ -6,15 +6,15 @@ import {
     transition,
     trigger,
   } from '@angular/animations';
-  import { Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { Toast, ToastrService, ToastPackage, IndividualConfig } from 'ngx-toastr';
-  
-  
-  @Component({
+
+
+@Component({
+    // tslint:disable-next-line: component-selector
     selector: '[notyf-toast-component]',
     styles: [],
     template: `
-    
       <div class="notyf__toast notyf__toast--success notyf__toast">
         <div class="notyf__wrapper">
           <div class="notyf__icon">
@@ -92,9 +92,9 @@ import { Toast, ToastrService, ToastPackage, IndividualConfig } from 'ngx-toastr
       protected toastrService: ToastrService,
       public toastPackage: ToastPackage,
     ) {
-        
+
       super(toastrService, toastPackage);
       this.options = toastPackage.config;
-        console.log(this.options)
+        console.log(this.options);
     }
   }

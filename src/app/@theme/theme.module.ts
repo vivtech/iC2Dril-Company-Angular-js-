@@ -14,7 +14,6 @@ import { MenuItemComponent } from './components/menu/menu-item/menu-item.compone
 import { GuestComponent } from './layouts/guest/guest.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { LogoutComponent } from './components/modals/logout/logout.component';
-import { ToastrModule } from 'ngx-toastr';
 import { NotyfToast } from './components/utils/notyf/notyf.component';
 import { PasswordFieldComponent } from './components/utils/password-field/password-field.component';
 import { ErrorLabelComponent } from './components/utils/error-label/error-label.component';
@@ -66,7 +65,6 @@ const BASE_MODULES = [
     PageScrollModule,
     ReactiveFormsModule,
     FormsModule,
-    ToastrModule,
     NgSelectModule,
     DataTablesModule,
     NgbModule,
@@ -82,18 +80,6 @@ const PIPES = [
     BaseURLPipe
 ];
 
-const NB_THEME_PROVIDERS = [
-    ToastrModule.forRoot({
-        timeOut: 10000,
-        toastComponent: NotyfToast,
-        toastClass: 'notyf',
-        tapToDismiss: true,
-        closeButton: true,
-        positionClass: 'toast-top-right',
-        preventDuplicates: true,
-    }).providers
-];
-
 const ENTRY_COMPONENTS = [
     NotyfToast,
     DeleteModalComponent,
@@ -104,14 +90,7 @@ const ENTRY_COMPONENTS = [
     exports: [...BASE_MODULES, ...COMPONENTS, ...DIRECTIVE, ...PIPES],
     declarations: [...COMPONENTS, ...DIRECTIVE, ...PIPES, LogoutComponent, NotyfToast, PasswordFieldComponent, DataTableComponent, ],
     imports: [...BASE_MODULES],
-    entryComponents: [ ...ENTRY_COMPONENTS ],
+    entryComponents: [ ...ENTRY_COMPONENTS ]
 
 })
-export class ThemeModule {
-    static forRoot(): ModuleWithProviders {
-        return {
-            ngModule: ThemeModule,
-            providers: [...NB_THEME_PROVIDERS],
-        } as ModuleWithProviders;
-    }
-}
+export class ThemeModule { }

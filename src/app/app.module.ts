@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { ThemeModule } from './@theme/theme.module';
 import { CoreModule } from './@core/core.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 
 @NgModule({
@@ -19,8 +20,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
-    ThemeModule.forRoot(),
-    CoreModule
+    ThemeModule,
+    CoreModule,
+    ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

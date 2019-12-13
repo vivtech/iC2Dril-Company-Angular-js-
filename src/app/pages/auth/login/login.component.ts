@@ -8,6 +8,7 @@ import { Route } from '@angular/compiler/src/core';
 import { Router, ActivatedRouteSnapshot, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ValidEmail } from 'src/app/@core/validators/valid-email.validators';
+import { Observable } from 'rxjs';
 
 @Component({
     selector: 'app-login',
@@ -29,7 +30,11 @@ export class LoginComponent implements OnInit {
         private formBuilder: FormBuilder,
         private authenticationService: AuthenticationService,
         private activatedRoute: ActivatedRoute,
-        private toastr: ToastrService) { }
+        private toastr: ToastrService) {
+            const observable = new Observable(() => {
+                console.log('I was called!');
+            });
+        }
 
     ngOnInit() {
 
