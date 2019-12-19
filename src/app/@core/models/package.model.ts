@@ -14,3 +14,7 @@ export interface UpgradePackage {
     status?: number;
     active?: number;
 }
+
+export interface Expiry {
+    expiry?: any;
+}

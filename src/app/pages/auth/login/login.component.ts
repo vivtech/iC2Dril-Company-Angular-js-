@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
     validator = environment.validators;
     returnUrl = '/dashboard';
     error = false;
-    passwordHidden = true
+    passwordHidden = true;
 
 
     constructor(

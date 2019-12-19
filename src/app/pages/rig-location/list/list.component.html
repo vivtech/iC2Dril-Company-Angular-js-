@@ -48,7 +48,7 @@
                             </div>
                         </div>
                         <div class="ml-auto">
-                            <button class="btn btn-primary btn-round" *ngIf="people.length != 0 && projectOptionData.length != 0" #modalbtn id="addModalOpen" (click)="createData(editModal)">
+                            <button class="btn btn-primary btn-round" [hidden]="length" #modalbtn id="addModalOpen" (click)="createData(editModal)">
                                 <i class="fa fa-plus"></i>
                                 &nbsp;&nbsp;&nbsp;Add Rig Location
                             </button>

@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SidebarToggleService } from 'src/app/@core/utils/sidebar-toggle.service';
+import { AuthenticationService } from 'src/app/@core/services/authentication.service';
 
 @Component({
     selector: 'app-header',
@@ -7,17 +8,21 @@ import { SidebarToggleService } from 'src/app/@core/utils/sidebar-toggle.service
     styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-    sidebarToggle: boolean = false;
+    sidebarToggle = false;
+    expiry;
 
-
-    constructor(private sidebarToggleService: SidebarToggleService) { }
+    constructor(private sidebarToggleService: SidebarToggleService,
+                private authService: AuthenticationService) { }
 
     ngOnInit() {
-
+        this.authService.expiryData.subscribe(result => {
+            this.expiry = result;
+            console.log('PackageExpired', result);
+        });
     }
 
     toggleSidebar(){
-        this.sidebarToggle = !this.sidebarToggle
+        this.sidebarToggle = !this.sidebarToggle;
         this.sidebarToggleService.setStatus(this.sidebarToggle);
     }
 

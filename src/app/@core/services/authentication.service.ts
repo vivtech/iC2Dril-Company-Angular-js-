@@ -14,12 +14,16 @@ export class AuthenticationService {
     private currentUserSubject: BehaviorSubject<User>;
     private currentUserToken: BehaviorSubject<string>;
     public currentUser: Observable<User>;
+    private packageExpiry: BehaviorSubject<any>;
+    public expiryData: Observable<any>;
 
     constructor(private http: HttpClient,
                 private router: Router) {
         this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('companyUser')));
         this.currentUserToken = new BehaviorSubject<string>(localStorage.getItem('companyToken'));
         this.currentUser = this.currentUserSubject.asObservable();
+        this.packageExpiry = new BehaviorSubject<any>(false);
+        this.expiryData = this.packageExpiry.asObservable();
     }
 
     public get currentUserValue(): User {
@@ -28,6 +32,10 @@ export class AuthenticationService {
 
     public get userToken(): string {
         return this.currentUserToken.value;
+    }
+
+    public expiryCheck(value) {
+        this.packageExpiry.next(value);
     }
 
     login(email: string, password: string) {

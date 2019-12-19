@@ -23,9 +23,9 @@ import { UserService } from 'src/app/@core/services/user.service';
 })
 export class RigListComponent implements OnInit {
     @ViewChild(DataTableDirective, {static: false})
-    @ViewChild('modalbtn', {static: false}) modalbtn: ElementRef<HTMLElement>;
     datatableElement: DataTableDirective;
-
+    @ViewChild('modalbtn', {static: false}) modalbtn: ElementRef<HTMLElement>;
+    length = true;
     statusFilterData = [{id: '', name: 'All'}, {id: 1, name: 'Active'}, {id: 0, name: 'Inactive'}];
     statusData = [ {id: 1, name: 'Active'}, {id: 0, name: 'Inactive'}];
     statusFilter = '';
@@ -104,9 +104,19 @@ export class RigListComponent implements OnInit {
             const projectArray: any = values[0];
             const rigArray: any = values[1];
             if (projectArray.length === 0) {
-                this.toastr.warning('There is no project please add one !');
+                this.toastr.warning('No project please add one !', `Cant't create Rig Location`, {
+                    timeOut: 5000
+                });
             } else if (rigArray.length === 0) {
-                this.toastr.warning('There is no rig please add one !');
+                this.toastr.warning('No rig manager please add one !', `Cant't create Rig Location`, {
+                    timeOut: 5000
+                });
+            } else {
+                this.length = false;
+                if (this.projectFilter) {
+                    const el: HTMLElement = this.modalbtn.nativeElement;
+                    el.click();
+                }
             }
         });
 

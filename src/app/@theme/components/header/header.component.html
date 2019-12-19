@@ -23,6 +23,12 @@
     <nav class="navbar navbar-header navbar-expand-lg" data-background-color="blue2">
 
         <div class="container-fluid">
+
+            <span [hidden]="!expiry" style="font-weight: 600;
+            color: #fff;
+            position: absolute;
+            left: 30%;
+            top: 30%;">Your account going to expire ! please  <a style="color:#ffad46!important;" [routerLink]="'/upgrade/package'">Upgrade</a></span>
             <!-- <div class="collapse" id="search-nav">
                 <form class="navbar-left navbar-form nav-search mr-md-3">
                     <div class="input-group">
@@ -36,11 +42,11 @@
                 </form>
             </div> -->
             <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
-                <li class="nav-item toggle-nav-search hidden-caret">
+                <!-- <li class="nav-item toggle-nav-search hidden-caret">
                     <a class="nav-link" data-toggle="collapse" href="#search-nav" role="button" aria-expanded="false" aria-controls="search-nav">
                         <i class="fa fa-search"></i>
                     </a>
-                </li>
+                </li> -->
                 <app-notification-dropdown>
 
                 </app-notification-dropdown>
