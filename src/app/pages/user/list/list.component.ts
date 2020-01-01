@@ -66,8 +66,10 @@ export class ListComponent implements OnInit, OnDestroy {
     countryList: Observable<Country[]>;
     packageList: Observable<Package[]>;
     submitted = false;
+    button = false;
     today = new Date();
     editing = false;
+    CheckE = false;
     minDate = {
         year: this.today.getFullYear(),
         month: this.today.getMonth() + 1,
@@ -95,7 +97,6 @@ export class ListComponent implements OnInit, OnDestroy {
             // tslint:disable-next-line: no-shadowed-variable
             .subscribe(data => {
                 this.userTypeList = data.slice();
-                console.log('this.userTypeList', this.userTypeList);
                 const temp = new UserType();
                 temp.name = 'All';
                 temp._id = '';
@@ -132,12 +133,10 @@ export class ListComponent implements OnInit, OnDestroy {
                     column: 'blocked',
                     data: this.blockFilter
                 };
-                console.log(dataTablesParameters);
                 const responseData = this.apiService
                     .getList(dataTablesParameters)
                     .pipe(first())
                     .subscribe(response => {
-                        console.log(response);
                         if (response.code === 200) {
                             this.companyList = response.data.data;
                             callback({
@@ -197,11 +196,7 @@ export class ListComponent implements OnInit, OnDestroy {
                 ]
             ],
             email: [
-                '',
-                [
-                    Validators.required,
-                    ValidEmail
-                ]
+                '',[Validators.required,Validators.email]
             ],
             phone: [
                 '',
@@ -235,7 +230,6 @@ export class ListComponent implements OnInit, OnDestroy {
     }
 
     onchange(event) {
-        console.log('onchange', event);
         if (this.editing) {
             if (event.name === 'Other User') {
                 this.hidden = true;
@@ -255,6 +249,26 @@ export class ListComponent implements OnInit, OnDestroy {
         }
     }
 
+    checkEmailOfUser(email) {        
+        this.apiService.checkEmailUser(email).subscribe(users => {
+                if (users.data._id) {
+                    this.CheckE=true
+                }else{
+                    this.CheckE=false
+                }
+                // const array = [];
+                // tslint:disable-next-line: forin
+                // for (const i in users.data) {
+                //     array.push({name: users.data[i].name,
+                //         _id: users.data[i]._id,
+                //         profilePic: users.data[i].profilePic,
+                //         designation: users.data[i].designation});
+                // }
+                // this.people = array;
+                // resolve(array);
+            });
+
+    }
     statusClass(status) {
         switch (status) {
             case 0:
@@ -285,6 +299,9 @@ export class ListComponent implements OnInit, OnDestroy {
         );
     }
 
+    setsubmit() {
+        this.submitted=false;
+    }
     editDetail(editModal, data) {
         this.apiService.getData(data).subscribe(
             response => {
@@ -339,14 +356,15 @@ export class ListComponent implements OnInit, OnDestroy {
     }
 
     updateRequest() {
-        this.formService.clearCustomError(this.editForm);
         this.submitted = true;
-        this.editForm.markAllAsTouched();
-        console.log(this.editForm.getRawValue());
         if (this.editForm.invalid) {
-            console.log('userForm-notvalid');
-            this.submitted = false;
+        this.formService.clearCustomError(this.editForm);
+        this.editForm.markAllAsTouched();
+            // this.submitted = false;
             return false;
+        }
+        if (this.editForm.valid) {
+            this.button=true;
         }
 
         if ( this.editing ) {
@@ -356,7 +374,6 @@ export class ListComponent implements OnInit, OnDestroy {
                 .subscribe(
                     data => {
                         if (data.status === 'success') {
-                            console.log(data);
                             this.toastr.success('', data.message);
                             this.modalService.dismissAll();
                             this.editForm.reset();
@@ -365,7 +382,7 @@ export class ListComponent implements OnInit, OnDestroy {
                     },
                     error => {
                         this.submitted = false;
-                        console.log(error);
+                         this.button=false;
                         if (error.errors.length > 0) {
                             for (const fieldError of error.errors) {
                                 const check = fieldError.param;
@@ -377,18 +394,17 @@ export class ListComponent implements OnInit, OnDestroy {
                     },
                     () => {
                         this.submitted = false;
+                        this.button=false;
                     }
                 );
         } else {
             const currentData = this.editForm.getRawValue();
-            console.log(currentData);
             this.apiService
             .create(currentData)
             .pipe(first())
             .subscribe(
                 data => {
                     if (data.status === 'success') {
-                        console.log(data);
                         this.toastr.success('', data.message);
                         this.modalService.dismissAll();
                         this.editForm.reset();
@@ -397,7 +413,7 @@ export class ListComponent implements OnInit, OnDestroy {
                 },
                 error => {
                     this.submitted = false;
-                    console.log(error);
+                    this.button=false;
                     if (error.errors.length > 0) {
                         for (const fieldError of error.errors) {
                             const check = fieldError.param;
@@ -409,6 +425,7 @@ export class ListComponent implements OnInit, OnDestroy {
                 },
                 () => {
                     this.submitted = false;
+                    this.button=false;
                 }
             );
         }
@@ -430,7 +447,6 @@ export class ListComponent implements OnInit, OnDestroy {
                 }
             },
             error => {
-                console.log(error);
             }
         );
     }

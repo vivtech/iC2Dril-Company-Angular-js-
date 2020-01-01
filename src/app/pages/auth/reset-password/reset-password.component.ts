@@ -17,6 +17,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
 
     resetPasswordForm: FormGroup;
     submitted = false;
+    button = false;
     validator = environment.validators;
     returnUrl = '/login';
     error = false;
@@ -39,7 +40,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
         });
         this.resetPasswordForm = this.formBuilder.group({
             token: [this.resetToken, [Validators.required]],
-            email: ['', [Validators.required, ValidEmail]],
+            email: ['', [Validators.required, Validators.email]],
             password: ['', [Validators.required,
             Validators.minLength(this.validator.password.min),
             Validators.maxLength(this.validator.password.max), ValidPassword]],
@@ -68,18 +69,21 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
     }
 
     onSubmit() {
-        console.log(this.f.password.errors);
         // this.toastr.success('Hello world!', 'Toastr fun!');
         this.validationError = '';
         this.successMessage = '';
         this.error = false;
         this.submitted = true;
-        this.resetPasswordForm.markAllAsTouched();
 
         // stop here if form is invalid
         if (this.resetPasswordForm.invalid) {
-            this.submitted = false;
+        this.resetPasswordForm.markAllAsTouched();
+            // this.submitted = false;
             return false;
+        }
+        if (this.resetPasswordForm.valid) {
+            
+            this.button = true;
         }
         const fieldValues = this.resetPasswordForm.getRawValue();
         this.authenticationService.resetPasword(fieldValues)
