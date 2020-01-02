@@ -38,8 +38,7 @@
                         <div class="col-md-3 pl-0">
                             <div class="form-group pt-0">
                                 <label>Rig Location</label>
-                                <ng-select (change)="refreshTable()" class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" placeholder="Select project" [notFoundText]="'No wells found'" [(ngModel)]="rigFilter" [clearable]="false" [items]="wellFilterData" bindLabel="name"
-                                    bindValue="_id"></ng-select>
+                                <ng-select (change)="refreshTable()" class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" placeholder="Select project" [notFoundText]="'No wells found'" [(ngModel)]="rigFilter" [clearable]="false" [items]="wellFilterData" bindLabel="name" bindValue="_id"></ng-select>
                             </div>
                         </div>
                         <!-- <div class="col-md-3 pl-0">
@@ -128,20 +127,14 @@
                                 <tr>
                                     <td colspan="7" class="no-data-available text-center">No matching records found</td>
                                 </tr>
-                                <tbody>
-
+                            <tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
-
-
     </div>
 </div>
-
-
-
 <!-- Edit Modal -->
 <ng-template #detailModal let-modal>
     <div class="modal-header">
@@ -159,8 +152,6 @@
                             <label class="text-primary">Title</label>
                             <span class="form-control text-muted">{{ modelData.title }}</span>
                         </div>
-
-
                         <div class="form-group form-group-default">
                             <label class="text-primary">Meeting Details</label>
                             <span *ngIf="modelData.type == 1" class="form-control text-muted">
@@ -192,8 +183,6 @@
                             <label class="text-primary">Duration</label>
                             <span class="form-control text-muted">{{ modelData.duration | minuteSeconds }}</span>
                         </div>
-
-
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group form-group-default">
@@ -212,7 +201,6 @@
                             <label class="text-primary">Created At</label>
                             <span class="form-control text-muted">{{ modelData.createdAt | date :'medium' }}</span>
                         </div> -->
-
                     </div>
                     <div class="col-sm-12">
                         <div class="form-group form-group-default">
@@ -224,7 +212,6 @@
                                 <h4 class="m-0">Attenders</h4>
                             </div>
                             <perfect-scrollbar style="max-height:350px;">
-
                                 <div class="row">
                                     <div class="col-md-4" style="margin-top: 10px;margin-bottom: 10px;" *ngFor="let attende of modelData.attenders">
                                         <div class="row">
@@ -235,7 +222,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </perfect-scrollbar>
                         </div>
                     </div>
@@ -247,13 +233,12 @@
         <button type="button" class="btn btn-outline-dark btn-rounded" (click)="modal.close('Close click')">Close</button>
     </div>
 </ng-template>
-
 <ng-template #createModal let-modal>
     <div class="modal-header">
         <h4 class="modal-title">{{ editing ? "Edit" : "Add" }} Meeting</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-                <span aria-hidden="true">&times;</span>
-              </button>
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
     <div class="modal-body">
         <form class="row form" *ngIf="requestDetail" id="editForm" [formGroup]="editForm" (ngSubmit)="updateRequest()">
@@ -264,15 +249,18 @@
                         <div class="form-group form-group-default">
                             <label class="text-primary">Meeting Title</label>
                             <input type="text" [attr.maxlength]="validator.name.max" formControlName="title" class="form-control" placeholder="Meeting Title">
-                            <error-label [control]="f.title"></error-label>
+                            <div *ngIf="submitted && f.title.errors">
+                                <error-label *ngIf="f.title.errors.required" [control]="f.title"></error-label>
+                            </div>
                         </div>
                     </div>
                     <div class="col-sm-6" [hidden]="editing">
                         <div class="form-group form-group-default dropdown">
                             <label class="text-primary">Select Project</label>
-                            <ng-select (change)="projectOnchange('projectSelect', $event)" class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="project" placeholder="Project" [clearable]="false" [items]="projectOptionData" bindLabel="name"
-                                bindValue="_id"></ng-select>
-                            <error-label [control]="f.project"></error-label>
+                            <ng-select (change)="projectOnchange('projectSelect', $event)" class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="project" placeholder="Project" [clearable]="false" [items]="projectOptionData" bindLabel="name" bindValue="_id"></ng-select>
+                            <div *ngIf="submitted && f.project.errors">
+                                <error-label *ngIf="f.project.errors.required" [control]="f.project"></error-label>
+                            </div>
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -280,35 +268,45 @@
                             <label class="text-primary">Meeting Type</label>
                             <ng-select (change)="meetingTypeOnchange($event)" class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [items]="MeetingType" formControlName="type" [clearable]="false" bindLabel="name" bindValue="id" placeholder="Select Meeting Type">
                             </ng-select>
-                            <error-label [control]="f.type"></error-label>
+                            <div *ngIf="submitted && f.type.errors">
+                                <error-label *ngIf="f.type.errors.required" [control]="f.type"></error-label>
+                            </div>
                         </div>
                     </div>
                     <div class="col-sm-6" [hidden]="editing">
                         <div class="form-group form-group-default dropdown">
                             <label class="text-primary">Select Rig</label>
                             <ng-select (change)="rigOnchange($event)" class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="well" placeholder="Please select project" [clearable]="false" [items]="wellOptionData" bindLabel="name" bindValue="_id"></ng-select>
-                            <error-label [control]="f.well"></error-label>
+                            <div *ngIf="submitted && f.well.errors">
+                                <error-label *ngIf="f.well.errors.required" [control]="f.well"></error-label>
+                            </div>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group form-group-default">
                             <label class="text-primary">Description</label>
                             <input type="text" [attr.maxlength]="validator.notes.max" formControlName="desc" class="form-control" placeholder="Description">
-                            <error-label [control]="f.desc"></error-label>
+                            <div *ngIf="submitted && f.desc.errors">
+                                <error-label *ngIf="f.desc.errors.required" [control]="f.desc"></error-label>
+                            </div>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group form-group-default dropdown">
                             <label class="text-primary">Select Duration</label>
                             <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="duration" placeholder="Select duration" [clearable]="false" [items]="durationOptiondata" bindLabel="name" bindValue="_id"></ng-select>
-                            <error-label [control]="f.duration"></error-label>
+                            <div *ngIf="submitted && f.duration.errors">
+                                <error-label *ngIf="f.duration.errors.required" [control]="f.duration"></error-label>
+                            </div>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group form-group-default dropdown">
                             <label class="text-primary">UTC</label>
                             <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="timezone" placeholder="Select utc" [clearable]="false" [items]="utcOptions" bindLabel="text" bindValue="_id"></ng-select>
-                            <error-label [control]="f.timezone"></error-label>
+                            <div *ngIf="submitted && f.timezone.errors">
+                                <error-label *ngIf="f.timezone.errors.required" [control]="f.timezone"></error-label>
+                            </div>
                         </div>
                     </div>
                     <div class="col-sm-6">
@@ -341,7 +339,9 @@
                                     top: 3px;">{{item.name}}</span>
                                 </ng-template>
                             </ng-select>
-                            <error-label [control]="f.projectUsers"></error-label>
+                            <div *ngIf="submitted && f.projectUsers.errors">
+                                <error-label *ngIf="f.projectUsers.errors.required" [control]="f.projectUsers"></error-label>
+                            </div>
                         </div>
                     </div>
                     <!-- <div class="col-sm-6">
@@ -365,8 +365,10 @@
                     <div class="col-md-6">
                         <div class="form-group form-group-default dropdown">
                             <label class="text-primary">Active</label>
-                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="active" [items]="activeList" bindLabel="name" [clearable]="false" bindValue="id" [class.filled]="f.active.value" placeholder="Status"></ng-select>
-                            <error-label [control]="f.active"></error-label>
+                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="active" [items]="activeList" bindLabel="name" [clearable]="false" bindValue="id" [class.filled]="f.active.value" required placeholder="Status"></ng-select>
+                            <div *ngIf="submitted && f.active.errors">
+                                <error-label *ngIf="f.active.errors.required" [control]="f.active"></error-label>
+                            </div>
                         </div>
                     </div>
                     <div class="col-sm-6" *ngIf="selectdate">
@@ -421,12 +423,10 @@
                     </div>
                 </div>
             </div>
-
-
         </form>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark btn-rounded" (click)="modal.close('Close click')">Close</button>
-        <app-submit-button [submitted]="submitted" (click)="updateRequest()">{{editing? "Update" : "Add" }}</app-submit-button>
+        <button type="button" class="btn btn-outline-dark btn-rounded" (click)="setsubmit()" (click)="modal.close('Close click')">Close</button>
+        <app-submit-button [submitted]="button" (click)="updateRequest()">{{editing? "Update" : "Add" }}</app-submit-button>
     </div>
 </ng-template>

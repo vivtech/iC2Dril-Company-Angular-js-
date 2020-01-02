@@ -68,25 +68,28 @@ export class ListComponent implements OnInit, OnDestroy {
     editForm: FormGroup;
     licenseForm: FormGroup;
     validator = environment.validators;
-    countryList: Observable<Country[]>;
-    packageList: Observable<Package[]>;
+    countryList: Observable < Country[] > ;
+    packageList: Observable < Package[] > ;
     submitted = false;
     today = new Date();
     editing = false;
+    button = false;
     modelData;
     MeetingType = [
         { id: 1, name: 'Occur once' },
         { id: 2, name: 'Daily Meeting' },
         { id: 3, name: 'Weekly Meeting' },
-        { id: 4, name: 'Monthly Meeting' }];
-        dayType = [
-            { id: 0, name: 'Sunday' },
-            { id: 1, name: 'Monday' },
-            { id: 2, name: 'Tuesday' },
-            { id: 3, name: 'Wednesday' },
-            { id: 4, name: 'Thursday' },
-            { id: 5, name: 'Friday' },
-            { id: 6, name: 'Saturday' }];
+        { id: 4, name: 'Monthly Meeting' }
+    ];
+    dayType = [
+        { id: 0, name: 'Sunday' },
+        { id: 1, name: 'Monday' },
+        { id: 2, name: 'Tuesday' },
+        { id: 3, name: 'Wednesday' },
+        { id: 4, name: 'Thursday' },
+        { id: 5, name: 'Friday' },
+        { id: 6, name: 'Saturday' }
+    ];
     projectOptionData: any[];
     wellFilterData: any[];
     rigID: any;
@@ -144,8 +147,8 @@ export class ListComponent implements OnInit, OnDestroy {
     ) {
         modalConfig.backdrop = 'static';
         modalConfig.keyboard = false;
-        config.minDate = {year: this.newDate.getFullYear(), month: this.newDate.getMonth() + 1, day: this.newDate.getDate()};
-        config.maxDate = {year: 2099, month: 12, day: 31};
+        config.minDate = { year: this.newDate.getFullYear(), month: this.newDate.getMonth() + 1, day: this.newDate.getDate() };
+        config.maxDate = { year: 2099, month: 12, day: 31 };
         config.outsideDays = 'hidden';
     }
 
@@ -153,7 +156,7 @@ export class ListComponent implements OnInit, OnDestroy {
         const that = this;
         this.subscription = this.commonService
             .getUserTypeList()
-            .subscribe( data => {
+            .subscribe(data => {
                 this.userTypeList = data.slice();
                 const temp = new UserType();
                 temp.name = 'All';
@@ -165,7 +168,7 @@ export class ListComponent implements OnInit, OnDestroy {
             const allProjects = response.data;
             console.log('AllProject', allProjects);
 
-            this.projectFilterData = [{_id: '', name: 'All'}, ...allProjects];
+            this.projectFilterData = [{ _id: '', name: 'All' }, ...allProjects];
             this.projectOptionData = [...allProjects];
         });
         this.meetService.getUtcOptions().subscribe(utcData => {
@@ -197,7 +200,7 @@ export class ListComponent implements OnInit, OnDestroy {
                     data: this.blockFilter
                 };
                 // tslint:disable-next-line: no-string-literal
-                dataTablesParameters['filter'][2] = {column: 'well', data: this.rigFilter ? this.rigFilter : ''};
+                dataTablesParameters['filter'][2] = { column: 'well', data: this.rigFilter ? this.rigFilter : '' };
                 console.log('data+++', dataTablesParameters);
                 const responseData = this.meetService
                     .getList(dataTablesParameters)
@@ -224,10 +227,9 @@ export class ListComponent implements OnInit, OnDestroy {
                 { data: 'active' },
                 { data: 'createdAt' },
                 // { data: 'status' },
-                { data: 'attenders'}
+                { data: 'attenders' }
             ],
-            columnDefs: [
-                {
+            columnDefs: [{
                     searchable: false,
                     orderable: false,
                     targets: [-1]
@@ -295,12 +297,16 @@ export class ListComponent implements OnInit, OnDestroy {
                     Validators.required
                 ]
             ],
-            duration: [ '', [Validators.required]],
-            timezone: ['', [ Validators.required]],
+            duration: ['', [Validators.required]],
+            timezone: ['', [Validators.required]],
             project: ['', [Validators.required]],
             well: ['', [Validators.required]],
-            attenders: [[]],
-            projectUsers: [[]],
+            attenders: [
+                []
+            ],
+            projectUsers: [
+                []
+            ],
             active: ['', [Validators.required]]
         });
         // const data = this.commonService.getRequestFormData().subscribe();
@@ -311,7 +317,7 @@ export class ListComponent implements OnInit, OnDestroy {
     checkMeetingDate(data: string) {
         console.log('checkMeet', data);
         const cDate = Date.parse(data);
-        const expireDate =  Date.now() < cDate;
+        const expireDate = Date.now() < cDate;
         return expireDate;
     }
 
@@ -320,61 +326,61 @@ export class ListComponent implements OnInit, OnDestroy {
         this.selectdate = false;
         this.selectday = false;
         this.meetService.getData(data).subscribe(response => {
-            console.log('Edit', response);
-            this.requestDetail = response.data;
-            const event = {
-                project: this.requestDetail.project._id,
-                _id: this.requestDetail.well._id
-            };
-            this.rigOnchange(event);
-            this.meetingTypeOnchange({id: this.requestDetail.type});
-            this.editForm.reset();
-            this.minDate = null;
-            this.time = '';
-            this.editing = true;
-            this.f.data.setValidators([Validators.required]);
-            this.f.data.updateValueAndValidity();
-            this.f.project.setValidators(null);
-            this.f.well.setValidators(null);
-            // this.projectOnchange('edit', this.requestDetail.project._id);
-            this.editForm.patchValue({
-                data: this.requestDetail._id,
-                title: this.requestDetail.title,
-                type: this.requestDetail.type,
-                startTime: this.requestDetail.startTime,
-                startDate: this.requestDetail.startDate,
-                duration: this.requestDetail.duration,
-                timezone: this.requestDetail.timezone._id,
-                active: this.requestDetail.active,
-                desc: this.requestDetail.desc,
-                project: this.requestDetail.project._id,
-                well: this.requestDetail.well._id,
-                day: this.requestDetail.day
-            });
-            // tslint:disable-next-line: triple-equals
-            if (this.requestDetail.type == 1 || this.requestDetail.type == 4) {
-                const editDate = new Date(this.requestDetail.startDate);
-                this.minDate = {
-                    year: editDate.getFullYear(),
-                    month: editDate.getMonth() + 1,
-                    day: editDate.getDate()
+                console.log('Edit', response);
+                this.requestDetail = response.data;
+                const event = {
+                    project: this.requestDetail.project._id,
+                    _id: this.requestDetail.well._id
                 };
-            } else {
+                this.rigOnchange(event);
+                this.meetingTypeOnchange({ id: this.requestDetail.type });
+                this.editForm.reset();
+                this.minDate = null;
+                this.time = '';
+                this.editing = true;
+                this.f.data.setValidators([Validators.required]);
+                this.f.data.updateValueAndValidity();
+                this.f.project.setValidators(null);
+                this.f.well.setValidators(null);
+                // this.projectOnchange('edit', this.requestDetail.project._id);
                 this.editForm.patchValue({
-                    startDate: null
+                    data: this.requestDetail._id,
+                    title: this.requestDetail.title,
+                    type: this.requestDetail.type,
+                    startTime: this.requestDetail.startTime,
+                    startDate: this.requestDetail.startDate,
+                    duration: this.requestDetail.duration,
+                    timezone: this.requestDetail.timezone._id,
+                    active: this.requestDetail.active,
+                    desc: this.requestDetail.desc,
+                    project: this.requestDetail.project._id,
+                    well: this.requestDetail.well._id,
+                    day: this.requestDetail.day
                 });
-            }
-            this.modalService.open(createModal, {
-                size: 'lg'
-            });
-            const splitedT = this.requestDetail.startTime.substr(0, this.requestDetail.startTime.indexOf('.'));
-            this.time = splitedT;
-            console.log('minDate', this.requestDetail.startTime.substr(0, this.requestDetail.startTime.indexOf('.')));
+                // tslint:disable-next-line: triple-equals
+                if (this.requestDetail.type == 1 || this.requestDetail.type == 4) {
+                    const editDate = new Date(this.requestDetail.startDate);
+                    this.minDate = {
+                        year: editDate.getFullYear(),
+                        month: editDate.getMonth() + 1,
+                        day: editDate.getDate()
+                    };
+                } else {
+                    this.editForm.patchValue({
+                        startDate: null
+                    });
+                }
+                this.modalService.open(createModal, {
+                    size: 'lg'
+                });
+                const splitedT = this.requestDetail.startTime.substr(0, this.requestDetail.startTime.indexOf('.'));
+                this.time = splitedT;
+                console.log('minDate', this.requestDetail.startTime.substr(0, this.requestDetail.startTime.indexOf('.')));
 
-        },
-        error => {
-            // this.noti
-        }
+            },
+            error => {
+                // this.noti
+            }
         );
     }
 
@@ -420,7 +426,7 @@ export class ListComponent implements OnInit, OnDestroy {
             // tslint:disable-next-line: no-shadowed-variable
             this.wellService.getAll(id).subscribe(result => {
                 console.log('result', result.data);
-                this.wellFilterData = [{_id: '', name: 'All'}, ...result.data];
+                this.wellFilterData = [{ _id: '', name: 'All' }, ...result.data];
                 if (this.rigID !== undefined) {
                     this.rigFilter = this.rigID;
                 } else if (data === 'projectFlter') {
@@ -450,9 +456,9 @@ export class ListComponent implements OnInit, OnDestroy {
             const meetingProjectUsers = response.data.currentProject;
             const meetingRigUsers = response.data.currentRig;
             const meetingManager = response.data.currentmanager;
-            const otherrig = meetingProjectUsers.map(v => ({...v, type: 'other rig'}));
-            const currentrig = meetingRigUsers.map(v => ({...v, type: 'current rig'}));
-            const currentmanager = meetingManager.map(v => ({...v, type: 'current manager'}));
+            const otherrig = meetingProjectUsers.map(v => ({ ...v, type: 'other rig' }));
+            const currentrig = meetingRigUsers.map(v => ({ ...v, type: 'current rig' }));
+            const currentmanager = meetingManager.map(v => ({ ...v, type: 'current manager' }));
             this.meetingProjectUsers = [...otherrig, ...currentrig, ...currentmanager];
             if (this.editing) {
                 if (this.meetingProjectUsers.length !== 0) {
@@ -505,7 +511,7 @@ export class ListComponent implements OnInit, OnDestroy {
             const currenttime = event;
             const currentHour = (currenttime.hour < 9) ? `${0}` + currenttime.hour : currenttime.hour;
             const currentTime = (currenttime.minute < 9) ? `${0}` + currenttime.minute : currenttime.minute;
-            const fullTime  = (currentHour + ':' + currentTime).toString();
+            const fullTime = (currentHour + ':' + currentTime).toString();
             console.log('fullTime', fullTime);
             this.fullTimeFormat = fullTime;
             const newDate = new Date();
@@ -533,16 +539,16 @@ export class ListComponent implements OnInit, OnDestroy {
             this.modelData = data.data;
             switch (this.modelData.type) {
                 case 1:
-                    this.dateFormet =  'medium';
+                    this.dateFormet = 'medium';
                     break;
                 case 2:
-                    this.dateFormet =  'h:mm a';
+                    this.dateFormet = 'h:mm a';
                     break;
                 case 3:
-                    this.dateFormet =  'h:mm a, ';
+                    this.dateFormet = 'h:mm a, ';
                     break;
                 case 4:
-                    this.dateFormet =   'dd, h:mm a';
+                    this.dateFormet = 'dd, h:mm a';
                     break;
             }
             this.modalService.open(detailModal, {
@@ -565,12 +571,15 @@ export class ListComponent implements OnInit, OnDestroy {
         );
     }
 
+    setsubmit() {
+        this.submitted = false;
+    }
+
     updateRequest() {
         // this.formService.clearCustomError(this.editForm);
         this.submitted = true;
-        this.editForm.markAllAsTouched();
+
         const currentData = this.editForm.getRawValue();
-        console.log('currentData', currentData);
         // tslint:disable-next-line: max-line-length
         currentData.attenders = currentData.projectUsers ? currentData.projectUsers : [];
         if (currentData.attenders.length === 0) {
@@ -588,12 +597,10 @@ export class ListComponent implements OnInit, OnDestroy {
             } else if (this.time) {
                 const oldTime = new Date(this.time);
                 // tslint:disable-next-line: max-line-length
-                meetingDate = `${currentData.startDate.year}-${currentData.startDate.month}-${currentData.startDate.day}` + ' ' +  `${oldTime.getHours()}:${oldTime.getMinutes()}`;
+                meetingDate = `${currentData.startDate.year}-${currentData.startDate.month}-${currentData.startDate.day}` + ' ' + `${oldTime.getHours()}:${oldTime.getMinutes()}`;
             }
             this.editForm.addControl('day', new FormControl(null));
-            console.log('meetTypeWithDate', meetingDate);
         } else {
-            console.log('meetTypeWithoutDate');
             const month = 1;
             const cDate = new Date();
             if (this.fullTimeFormat) {
@@ -602,9 +609,8 @@ export class ListComponent implements OnInit, OnDestroy {
             } else if (this.time) {
                 const oldTime = new Date(this.time);
                 // tslint:disable-next-line: max-line-length
-                meetingDate = `${cDate.getFullYear()}-${cDate.getMonth() + month}-${cDate.getDate()}` + ' ' +  `${oldTime.getHours()}:${oldTime.getMinutes()}`;
+                meetingDate = `${cDate.getFullYear()}-${cDate.getMonth() + month}-${cDate.getDate()}` + ' ' + `${oldTime.getHours()}:${oldTime.getMinutes()}`;
             }
-            console.log('Date', meetingDate);
             this.editForm.addControl('day', new FormControl(null));
             this.editForm.addControl('startDate', new FormControl(null));
         }
@@ -623,17 +629,54 @@ export class ListComponent implements OnInit, OnDestroy {
             users: currentData.attenders,
             day: currentData.day
         };
-        console.log('params', params);
-        console.log('form', this.editForm.getRawValue());
+
         if (this.editForm.invalid) {
-            this.submitted = false;
-            console.log('Invalid');
+            // this.submitted = false;
+            this.editForm.markAllAsTouched();
             return false;
         }
 
-        if ( this.editing ) {
+        if (this.editForm.valid) {
+            this.button = true;
+        }
+
+        if (this.editing) {
             this.meetService
                 .updateData(params)
+                .pipe(first())
+                .subscribe(
+                    data => {
+                        if (data.status === 'success') {
+                            console.log(data);
+                            this.toastr.success('', data.message);
+                            this.modalService.dismissAll();
+                            this.editForm.reset();
+                            this.refreshTable();
+                            this.button = false;
+                        }
+                    },
+                    error => {
+                        this.submitted = false;
+                        this.button = false;
+                        console.log(error);
+                        if (error.errors.length > 0) {
+                            for (const fieldError of error.errors) {
+                                const check = fieldError.param;
+                                this.editForm
+                                    .get(check)
+                                    .setErrors({ customError: fieldError.msg });
+                            }
+                        }
+                    },
+                    () => {
+                        this.submitted = false;
+                        this.button = false;
+                    }
+                );
+        } else {
+            // console.log(params);
+            this.meetService
+                .create(params)
                 .pipe(first())
                 .subscribe(
                     data => {
@@ -661,37 +704,6 @@ export class ListComponent implements OnInit, OnDestroy {
                         this.submitted = false;
                     }
                 );
-        } else {
-            // console.log(params);
-            this.meetService
-            .create(params)
-            .pipe(first())
-            .subscribe(
-                data => {
-                    if (data.status === 'success') {
-                        console.log(data);
-                        this.toastr.success('', data.message);
-                        this.modalService.dismissAll();
-                        this.editForm.reset();
-                        this.refreshTable();
-                    }
-                },
-                error => {
-                    this.submitted = false;
-                    console.log(error);
-                    if (error.errors.length > 0) {
-                        for (const fieldError of error.errors) {
-                            const check = fieldError.param;
-                            this.editForm
-                                .get(check)
-                                .setErrors({ customError: fieldError.msg });
-                        }
-                    }
-                },
-                () => {
-                    this.submitted = false;
-                }
-            );
         }
     }
 
@@ -721,13 +733,13 @@ export class ListComponent implements OnInit, OnDestroy {
         // tslint:disable-next-line: triple-equals
         if (active == 0) {
             params = {
-                data : id,
-                status : 1
+                data: id,
+                status: 1
             };
         } else {
             params = {
-                data : id,
-                status : 0
+                data: id,
+                status: 0
             };
         }
         console.log(params);

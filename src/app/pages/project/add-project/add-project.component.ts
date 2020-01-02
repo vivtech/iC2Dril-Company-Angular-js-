@@ -15,43 +15,50 @@ import { FormService } from 'src/app/@core/services/form-validation.service';
     templateUrl: './add-project.component.html',
     styleUrls: ['./add-project.component.css']
 })
+
 export class AddProjectComponent implements OnInit {
     title = 'Create Project';
     submitted = false;
     addproductForm: FormGroup;
     disable = true;
+    button = false;
     UserType: any;
     webUser: any;
     mobileUser: any;
     validator = environment.validators;
-    countryList: Observable<Country[]>;
-    statusData = [ {id: 0, name: 'Inprogress'}, {id: 1, name: 'Completed'}];
+    countryList: Observable < Country[] > ;
+    statusData = [{ id: 0, name: 'Inprogress' }, { id: 1, name: 'Completed' }];
     fieldEnvData = [
-        {id: 1, name: 'Onshore'},
-        {id: 2, name: 'Swamp'},
-        {id: 3, name: 'Offshore'},
-        {id: 4, name: 'Deep Water'}];
+        { id: 1, name: 'Onshore' },
+        { id: 2, name: 'Swamp' },
+        { id: 3, name: 'Offshore' },
+        { id: 4, name: 'Deep Water' }
+    ];
     depthData = [
-        {name: 'ft'},
-        {name: 'm'}];
+        { name: 'ft' },
+        { name: 'm' }
+    ];
     constructor(private fb: FormBuilder,
-                private service: ProjectService,
-                private toastr: ToastrService,
-                private router: Router,
-                private formService: FormService,
-                private commonService: CommonService) {}
+        private service: ProjectService,
+        private toastr: ToastrService,
+        private router: Router,
+        private formService: FormService,
+        private commonService: CommonService) {}
 
     ngOnInit() {
         this.addproductForm = this.fb.group({
             name: ['', [Validators.required,
-                        Validators.minLength(this.validator.name.min),
-                        Validators.maxLength(this.validator.name.max)]],
+                Validators.minLength(this.validator.name.min),
+                Validators.maxLength(this.validator.name.max)
+            ]],
             blockName: ['', [Validators.required,
-                        Validators.minLength(this.validator.name.min),
-                        Validators.maxLength(this.validator.name.max)]],
+                Validators.minLength(this.validator.name.min),
+                Validators.maxLength(this.validator.name.max)
+            ]],
             fieldName: ['', [Validators.required,
-                        Validators.minLength(this.validator.name.min),
-                        Validators.maxLength(this.validator.name.max)]],
+                Validators.minLength(this.validator.name.min),
+                Validators.maxLength(this.validator.name.max)
+            ]],
             fieldEnv: [null, [Validators.required]],
             wellName: ['', [Validators.required]],
             depth: ['', Validators.required],
@@ -99,16 +106,25 @@ export class AddProjectComponent implements OnInit {
         return this.addproductForm.controls;
     }
 
+
+    setsubmit() {
+        this.submitted = false;
+        this.addproductForm.reset();
+    }
+
     submit(value) {
-        this.formService.clearCustomError(this.addproductForm);
-        this.addproductForm.markAllAsTouched();
         this.submitted = true;
         this.disable = false;
         if (this.addproductForm.invalid) {
-            console.log('invalid', this.addproductForm.getRawValue());
             console.log('this.addproductForm-not valid');
-            this.submitted = false;
+            this.formService.clearCustomError(this.addproductForm);
+            this.addproductForm.markAllAsTouched();
+            // this.submitted = false;
             return false;
+        }
+
+        if (this.addproductForm.valid) {
+            this.button = true;
         }
         const params = {
             name: value.name,
@@ -123,22 +139,24 @@ export class AddProjectComponent implements OnInit {
         };
         console.log('value', params);
         this.service.create(params).subscribe(res => {
-          this.submitted = false;
-          this.toastr.success('', res.message);
-          this.addproductForm.reset();
-          console.log('Project create response', res.data._id);
-          // var scope = this;
-          setTimeout(() => {
-              this.router.navigate(['/project/list']);
-          }, 1500);
+            this.submitted = false;
+            this.button = false;
+            this.toastr.success('', res.message);
+            this.addproductForm.reset();
+            console.log('Project create response', res.data._id);
+            // var scope = this;
+            setTimeout(() => {
+                this.router.navigate(['/project/list']);
+            }, 1500);
 
         }, (err) => {
             this.submitted = false;
+            this.button = false;
             console.log(err);
             if (err.errors.length > 0) {
                 for (const fieldError of err.errors) {
                     const check = fieldError.param;
-                    this.addproductForm.get(check).setErrors( { customError : fieldError.msg } ) ;
+                    this.addproductForm.get(check).setErrors({ customError: fieldError.msg });
                 }
             }
         });

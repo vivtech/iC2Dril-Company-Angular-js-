@@ -22,12 +22,13 @@ import { UserService } from 'src/app/@core/services/user.service';
     styleUrls: ['./list.component.css']
 })
 export class RigListComponent implements OnInit {
-    @ViewChild(DataTableDirective, {static: false})
+    @ViewChild(DataTableDirective, { static: false })
     datatableElement: DataTableDirective;
-    @ViewChild('modalbtn', {static: false}) modalbtn: ElementRef<HTMLElement>;
+    @ViewChild('modalbtn', { static: false }) modalbtn: ElementRef < HTMLElement > ;
     length = true;
-    statusFilterData = [{id: '', name: 'All'}, {id: 1, name: 'Active'}, {id: 0, name: 'Inactive'}];
-    statusData = [ {id: 1, name: 'Active'}, {id: 0, name: 'Inactive'}];
+    button = false;
+    statusFilterData = [{ id: '', name: 'All' }, { id: 1, name: 'Active' }, { id: 0, name: 'Inactive' }];
+    statusData = [{ id: 1, name: 'Active' }, { id: 0, name: 'Inactive' }];
     statusFilter = '';
     editing = false;
     projectFilter = '';
@@ -41,24 +42,24 @@ export class RigListComponent implements OnInit {
     licenseForm: FormGroup;
     validator = environment.validators;
     dataList: ProjectWell[];
-    countryList: Observable<Country[]>;
+    countryList: Observable < Country[] > ;
     submitted = false;
     today = new Date();
-    minDate = {year: this.today.getFullYear(), month: this.today.getMonth() + 1, day: this.today.getDate()};
+    minDate = { year: this.today.getFullYear(), month: this.today.getMonth() + 1, day: this.today.getDate() };
     projectId: any;
     people = [];
 
     constructor(private commonService: CommonService,
-                private projectWellService: ProjectWellService,
-                private modalService: NgbModal,
-                private modalConfig: NgbModalConfig,
-                private formService: FormService,
-                private formBuilder: FormBuilder,
-                private toastr: ToastrService,
-                private router: Router,
-                private route: ActivatedRoute,
-                private projectService: ProjectService,
-                private service: UserService) {
+        private projectWellService: ProjectWellService,
+        private modalService: NgbModal,
+        private modalConfig: NgbModalConfig,
+        private formService: FormService,
+        private formBuilder: FormBuilder,
+        private toastr: ToastrService,
+        private router: Router,
+        private route: ActivatedRoute,
+        private projectService: ProjectService,
+        private service: UserService) {
         modalConfig.backdrop = 'static';
         modalConfig.keyboard = false;
     }
@@ -75,7 +76,7 @@ export class RigListComponent implements OnInit {
             this.projectService.getAll().subscribe(response => {
                 console.log('AllProject', response.data);
                 const allProjects = response.data;
-                this.projectFilterData = [{_id: '', name: 'All'}, ...allProjects];
+                this.projectFilterData = [{ _id: '', name: 'All' }, ...allProjects];
                 this.projectOptionData = [...allProjects];
                 resolve(this.projectOptionData);
                 // if (this.projectOptionData.length === 0) {
@@ -89,10 +90,12 @@ export class RigListComponent implements OnInit {
                 const array = [];
                 // tslint:disable-next-line: forin
                 for (const i in users.data) {
-                    array.push({name: users.data[i].name,
+                    array.push({
+                        name: users.data[i].name,
                         _id: users.data[i]._id,
                         profilePic: users.data[i].profilePic,
-                        designation: users.data[i].designation});
+                        designation: users.data[i].designation
+                    });
                 }
                 this.people = array;
                 resolve(array);
@@ -122,71 +125,72 @@ export class RigListComponent implements OnInit {
 
         const that = this;
         this.dtOptions = {
-            dom:    `<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>"
+            dom: `<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>"
                     "<'row'<'col-sm-12'tr>>"
                     "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>`,
-          pagingType: 'simple_numbers',
-          renderer: 'bootstrap',
-          pageLength: 10,
-          serverSide: true,
-          processing: true,
-          ajax: (dataTablesParameters: object, callback) => {
-              // tslint:disable-next-line: no-string-literal
-              dataTablesParameters['filter'] = [];
-              // tslint:disable-next-line: no-string-literal
-              dataTablesParameters['filter'][0] = {column: 'project', data: this.projectFilter};
-              // tslint:disable-next-line: no-string-literal
-              dataTablesParameters['filter'][1] = {column: 'active', data: this.statusFilter};
-              console.log(dataTablesParameters);
-              const responseData = this.projectWellService.getList(dataTablesParameters).pipe(first())
-              .subscribe( response => {
-                  console.log(response);
-                  if ( response.code === 200 ) {
-                    this.dataList = response.data.data;
-                    callback({
-                    recordsTotal: response.data.recordsTotal,
-                    recordsFiltered: response.data.recordsFiltered,
-                    data : []
-                  });
-                  }
-              }
-              );
+            pagingType: 'simple_numbers',
+            renderer: 'bootstrap',
+            pageLength: 10,
+            serverSide: true,
+            processing: true,
+            ajax: (dataTablesParameters: object, callback) => {
+                // tslint:disable-next-line: no-string-literal
+                dataTablesParameters['filter'] = [];
+                // tslint:disable-next-line: no-string-literal
+                dataTablesParameters['filter'][0] = { column: 'project', data: this.projectFilter };
+                // tslint:disable-next-line: no-string-literal
+                dataTablesParameters['filter'][1] = { column: 'active', data: this.statusFilter };
+                console.log(dataTablesParameters);
+                const responseData = this.projectWellService.getList(dataTablesParameters).pipe(first())
+                    .subscribe(response => {
+                        console.log(response);
+                        if (response.code === 200) {
+                            this.dataList = response.data.data;
+                            callback({
+                                recordsTotal: response.data.recordsTotal,
+                                recordsFiltered: response.data.recordsFiltered,
+                                data: []
+                            });
+                        }
+                    });
 
 
-          },
-          columns: [
-                    { data: 'name' },
-                    { data: 'project' },
-                    { data: 'manager' },
-                    { data: 'active' }, { data: '_id' }],
-          columnDefs: [
-            {
-                searchable: false,
-                orderable: false,
-                targets: [-1]
             },
-            {
-                searchable: false,
-                targets: [-2]
-            },
-            {
-                searchable: false,
-                targets: [-3]
-            },
-            {
-                searchable: false,
-                targets: [-4]
-            }
-        ]
+            columns: [
+                { data: 'name' },
+                { data: 'project' },
+                { data: 'manager' },
+                { data: 'active' }, { data: '_id' }
+            ],
+            columnDefs: [{
+                    searchable: false,
+                    orderable: false,
+                    targets: [-1]
+                },
+                {
+                    searchable: false,
+                    targets: [-2]
+                },
+                {
+                    searchable: false,
+                    targets: [-3]
+                },
+                {
+                    searchable: false,
+                    targets: [-4]
+                }
+            ]
         };
 
         this.editForm = this.formBuilder.group({
             data: ['', [Validators.required]],
             fieldName: ['', [Validators.required, Validators.minLength(this.validator.name.min),
-                Validators.maxLength(this.validator.name.max)]],
+                Validators.maxLength(this.validator.name.max)
+            ]],
             rigLocation: ['', [Validators.required]],
             name: ['', [Validators.required, Validators.minLength(this.validator.name.min),
-                    Validators.maxLength(this.validator.name.max)]],
+                Validators.maxLength(this.validator.name.max)
+            ]],
             active: [null, [Validators.required]],
             country: ['', [Validators.required]],
             manager: ['', [Validators.required]],
@@ -209,55 +213,62 @@ export class RigListComponent implements OnInit {
         console.log('edit', data);
         this.editing = true;
         this.projectWellService.getData(data).subscribe(response => {
-            console.log(response);
-            this.requestDetail = response.data.data;
-            this.editForm.reset();
-            this.f.data.setValidators([Validators.required]);
-            this.f.data.updateValueAndValidity();
-            this.editForm.patchValue({
-                data: this.requestDetail._id,
-                fieldName: this.requestDetail.fieldName,
-                rigLocation: this.requestDetail.rigLocation,
-                name: this.requestDetail.name,
-                active: this.requestDetail.active,
-                country: this.requestDetail.country._id,
-                manager: this.requestDetail.manager._id,
-                // project: this.requestDetail.project,
-            });
-            this.modalService.open(editModal, {
-                size: 'lg'
-            });
-        },
-        error => {
-            // this.noti
-        }
+                console.log(response);
+                this.requestDetail = response.data.data;
+                this.editForm.reset();
+                this.f.data.setValidators([Validators.required]);
+                this.f.data.updateValueAndValidity();
+                this.editForm.patchValue({
+                    data: this.requestDetail._id,
+                    fieldName: this.requestDetail.fieldName,
+                    rigLocation: this.requestDetail.rigLocation,
+                    name: this.requestDetail.name,
+                    active: this.requestDetail.active,
+                    country: this.requestDetail.country._id,
+                    manager: this.requestDetail.manager._id,
+                    // project: this.requestDetail.project,
+                });
+                this.modalService.open(editModal, {
+                    size: 'lg'
+                });
+            },
+            error => {
+                // this.noti
+            }
         );
     }
 
     deleteRequest(data) {
 
         this.projectWellService.deleteData(data).subscribe(response => {
-            this.modalService.dismissAll();
-            this.toastr.success('', response.message);
-            this.refreshTable();
-        },
-        error => {
-            this.modalService.dismissAll();
-            // this.noti
-        }
+                this.modalService.dismissAll();
+                this.toastr.success('', response.message);
+                this.refreshTable();
+            },
+            error => {
+                this.modalService.dismissAll();
+                // this.noti
+            }
         );
+    }
+
+    setsubmit() {
+        this.submitted = false;
     }
 
     updateRequest() {
         // this.editForm.controls['data'].setValue(this.projectId);
-        this.formService.clearCustomError(this.editForm);
         this.submitted = true;
-        this.editForm.markAllAsTouched();
-        console.log(this.editForm.getRawValue());
         if (this.editForm.invalid) {
             console.log('this.editForm-not valid');
-            this.submitted = false;
+            // this.submitted = false;
+            this.formService.clearCustomError(this.editForm);
+            this.editForm.markAllAsTouched();
             return false;
+        }
+
+        if (this.editForm.valid) {
+            this.button = true;
         }
 
         if (this.editing) {
@@ -265,59 +276,65 @@ export class RigListComponent implements OnInit {
             const value = this.editForm.getRawValue();
             console.log('this.editForm', this.editForm.getRawValue());
             this.projectWellService.updateData(value)
-            .pipe(first())
-            .subscribe(
-                data => {
-                    if (data.status === 'success') {
-                        console.log(data);
-                        this.toastr.success('', data.message);
-                        this.modalService.dismissAll();
-                        this.editForm.reset();
-                        this.refreshTable();
-                    }
-                },
-                error => {
-                    this.submitted = false;
-                    console.log(error);
-                    if (error.errors.length > 0) {
-                        for (const fieldError of error.errors) {
-                            const check = fieldError.param;
-                            this.editForm.get(check).setErrors( { customError : fieldError.msg } ) ;
+                .pipe(first())
+                .subscribe(
+                    data => {
+                        if (data.status === 'success') {
+                            console.log(data);
+                            this.toastr.success('', data.message);
+                            this.modalService.dismissAll();
+                            this.editForm.reset();
+                            this.refreshTable();
+                            this.button = false;
                         }
-                    }
-                },
-                () => {
-                    this.submitted = false;
-                });
+                    },
+                    error => {
+                        this.submitted = false;
+                        this.button = false;
+                        console.log(error);
+                        if (error.errors.length > 0) {
+                            for (const fieldError of error.errors) {
+                                const check = fieldError.param;
+                                this.editForm.get(check).setErrors({ customError: fieldError.msg });
+                            }
+                        }
+                    },
+                    () => {
+                        this.submitted = false;
+                        this.button = false;
+                    });
         } else {
             const value1 = this.editForm.getRawValue();
             console.log('this.editForm', value1);
             this.projectWellService.create(value1)
-            .pipe(first())
-            .subscribe(
-                data => {
-                    if (data.status === 'success') {
-                        console.log(data);
-                        this.toastr.success('', data.message);
-                        this.modalService.dismissAll();
-                        this.editForm.reset();
-                        this.refreshTable();
-                    }
-
-                },
-                error => {
-                    this.submitted = false;
-                    console.log(error);
-                    if (error.errors.length > 0) {
-                        for (const fieldError of error.errors) {
-                            const check = fieldError.param;
-                            this.editForm.get(check).setErrors( { customError : fieldError.msg } ) ;
+                .pipe(first())
+                .subscribe(
+                    data => {
+                        if (data.status === 'success') {
+                            console.log(data);
+                            this.toastr.success('', data.message);
+                            this.modalService.dismissAll();
+                            this.editForm.reset();
+                            this.refreshTable();
+                            this.button = false;
                         }
-                    }
-                },
-                () => {
-                    this.submitted = false;
-                });
+
+                    },
+                    error => {
+                        this.submitted = false;
+                        this.button = false;
+                        console.log(error);
+                        if (error.errors.length > 0) {
+                            for (const fieldError of error.errors) {
+                                const check = fieldError.param;
+                                this.editForm.get(check).setErrors({ customError: fieldError.msg });
+                            }
+                        }
+                    },
+                    () => {
+                        this.submitted = false;
+                        this.button = false;
+                    });
         }
 
 
@@ -350,9 +367,9 @@ export class RigListComponent implements OnInit {
         const modalRef = this.modalService.open(DeleteModalComponent);
         modalRef.componentInstance.data = data;
         modalRef.result.then((result) => {
-            if (result) {
-                this.deleteRequest(result);
-            }
+                if (result) {
+                    this.deleteRequest(result);
+                }
             },
             (error) => {
                 console.log(error);
@@ -360,7 +377,7 @@ export class RigListComponent implements OnInit {
     }
 
     view(id) {
-        this.router.navigate([]).then(result => {  window.open('riglocation/details/' +  id, '_blank'); });
+        this.router.navigate([]).then(result => { window.open('riglocation/details/' + id, '_blank'); });
         // this.router.navigateByUrl('riglocation/details/' +  id);
     }
 

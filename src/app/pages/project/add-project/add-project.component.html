@@ -33,9 +33,9 @@
                 <div class="card-header">
                     <div class="d-flex align-items-center">
                         <button class="btn btn-primary btn-round ml-auto backbtn" id="addModalOpen" [routerLink]="['/project']">
-                                <i class="fa fa-arrow-left"></i>
-                                <!-- View -->
-                            </button>
+                            <i class="fa fa-arrow-left"></i>
+                            <!-- View -->
+                        </button>
                     </div>
                 </div>
                 <form [formGroup]="addproductForm">
@@ -49,35 +49,45 @@
                                                 <div class="form-group form-group-default">
                                                     <label class="text-primary">Project Name</label>
                                                     <input type="text" formControlName="name" class="form-control" placeholder="Project name">
-                                                    <error-label [control]="f.name"></error-label>
+                                                    <div *ngIf="submitted && f.name.errors">
+                                                        <error-label *ngIf="f.name.errors.required" [control]="f.name"></error-label>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="form-group form-group-default">
                                                     <label class="text-primary">Block Name</label>
                                                     <input type="text" formControlName="blockName" class="form-control" placeholder="Block name">
-                                                    <error-label [control]="f.blockName"></error-label>
+                                                    <div *ngIf="submitted && f.blockName.errors">
+                                                        <error-label *ngIf="f.blockName.errors.required" [control]="f.blockName"></error-label>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="form-group form-group-default">
                                                     <label class="text-primary">Field Name</label>
                                                     <input type="text" name="fieldName" formControlName="fieldName" class="form-control" placeholder="Field name">
-                                                    <error-label [control]="f.fieldName"></error-label>
+                                                    <div *ngIf="submitted && f.fieldName.errors">
+                                                        <error-label *ngIf="f.fieldName.errors.required" [control]="f.fieldName"></error-label>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="form-group form-group-default dropdown">
                                                     <label class="text-primary">Field Environment</label>
                                                     <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="fieldEnv" [items]="fieldEnvData" bindLabel="name" [clearable]="false" bindValue="id" placeholder="Field environment"></ng-select>
-                                                    <error-label [control]="f.fieldEnv"></error-label>
+                                                    <div *ngIf="submitted && f.fieldEnv.errors">
+                                                        <error-label *ngIf="f.fieldEnv.errors.required" [control]="f.fieldEnv"></error-label>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
                                                 <div class="form-group form-group-default">
                                                     <label class="text-primary">Well Name</label>
                                                     <input type="text" name="wellName" formControlName="wellName" class="form-control" placeholder="Well Name">
-                                                    <error-label [control]="f.wellName"></error-label>
+                                                    <div *ngIf="submitted && f.wellName.errors">
+                                                        <error-label *ngIf="f.wellName.errors.required" [control]="f.wellName"></error-label>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
@@ -86,14 +96,18 @@
                                                         <div class="form-group form-group-default">
                                                             <label class="text-primary">Water Depth</label>
                                                             <input type="number" name="depth" formControlName="depth" class="form-control" placeholder="Water depth">
-                                                            <error-label [control]="f.depth"></error-label>
+                                                            <div *ngIf="submitted && f.depth.errors">
+                                                                <error-label *ngIf="f.depth.errors.required" [control]="f.depth"></error-label>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-4">
                                                         <div class="form-group form-group-default dropdown">
                                                             <label class="text-primary">Unit</label>
                                                             <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="depthType" [items]="depthData" bindLabel="name" [clearable]="false" bindValue="name" placeholder="Type"></ng-select>
-                                                            <error-label [control]="f.depthType"></error-label>
+                                                            <div *ngIf="submitted && f.depthType.errors">
+                                                                <error-label *ngIf="f.depthType.errors.required" [control]="f.depthType"></error-label>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -102,7 +116,9 @@
                                                 <div class="form-group form-group-default dropdown">
                                                     <label class="text-primary">Status</label>
                                                     <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="status" [items]="statusData" bindLabel="name" [clearable]="false" bindValue="id" placeholder="Status"></ng-select>
-                                                    <error-label [control]="f.status"></error-label>
+                                                    <div *ngIf="submitted && f.status.errors">
+                                                        <error-label *ngIf="f.status.errors.required" [control]="f.status"></error-label>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="col-sm-6">
@@ -110,7 +126,9 @@
                                                     <label class="text-primary">Country</label>
                                                     <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [items]="countryList | async" formControlName="country" [clearable]="false" bindLabel="name" bindValue="_id" placeholder="Country">
                                                     </ng-select>
-                                                    <error-label [control]="f.country"></error-label>
+                                                    <div *ngIf="submitted && f.country.errors">
+                                                        <error-label *ngIf="f.country.errors.required" [control]="f.country"></error-label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -121,13 +139,12 @@
                     </div>
                     <div class="card-footer">
                         <div class="submit-btn">
-                            <app-submit-button [submitted]="submitted" (click)="submit(addproductForm.value)">Submit</app-submit-button>
+                            <button type="button" style="margin-right: 15px;" class="btn btn-outline-dark btn-rounded" (click)="setsubmit()">Cancel</button>
+                            <app-submit-button [submitted]="button" (click)="submit(addproductForm.value)">Submit</app-submit-button>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
-
-
     </div>
 </div>

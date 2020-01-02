@@ -70,7 +70,7 @@
                                 <tr>
                                     <td colspan="6" class="no-data-available text-center">No matching records found</td>
                                 </tr>
-                                <tbody>
+                            <tbody>
                         </table>
                     </div>
                 </div>
@@ -78,13 +78,12 @@
         </div>
     </div>
 </div>
-
 <ng-template #upgradeModal let-modal>
     <div class="modal-header">
         <h4 class="modal-title">Upgrade Package</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-                <span aria-hidden="true">&times;</span>
-            </button>
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
     <div class="modal-body">
         <form class="row form" id="upgradeForm" [formGroup]="upgradeForm" (ngSubmit)="upgradePackage()">
@@ -100,9 +99,10 @@
                     <div class="col-md-6">
                         <div class="form-group form-group-default dropdown">
                             <label class="text-primary">Subscription Type</label>
-                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" (change)="onchangeType($event)" [clearable]="false" formControlName="subscriptionType" placeholder="Subscription type" [items]="subscriptionList" bindLabel="text" placeholder="License type"
-                                bindValue="value"></ng-select>
-                            <error-label [control]="uf.subscriptionType"></error-label>
+                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" (change)="onchangeType($event)" [clearable]="false" formControlName="subscriptionType" placeholder="Subscription type" [items]="subscriptionList" bindLabel="text" placeholder="License type" bindValue="value"></ng-select>
+                            <div *ngIf="submitted && uf.subscriptionType.errors">
+                                <error-label *ngIf="uf.subscriptionType.errors.required" [control]="uf.subscriptionType"></error-label>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-6" *ngIf="hideduration">
@@ -111,7 +111,9 @@
                                 font-family: unset;
                                 font-size: small;"> (up to {{ mysubDetails?.expireAt | date:'MMM d, y' }})</span></label>
                             <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [clearable]="false" formControlName="duration" placeholder="License duration" [items]="durationList" bindLabel="text" bindValue="value"></ng-select>
-                            <error-label [control]="uf.duration"></error-label>
+                            <div *ngIf="submitted && uf.duration.errors">
+                                <error-label *ngIf="uf.duration.errors.required" [control]="uf.duration"></error-label>
+                            </div>
                         </div>
                     </div>
                     <!-- <div class="col-md-6">
@@ -125,14 +127,18 @@
                         <div class="form-group form-group-default">
                             <label class="text-primary">Current Custom user</label>
                             <input [readonly]="true" id="requestUser" digitOnly formControlName="userCount" placeholder="Enter the number of user you want " type="number" class="form-control floating-input input-border-bottom pl-1 pr-1" minlength="1" maxlength="3" />
-                            <error-label [control]="uf.userCount"></error-label>
+                            <div *ngIf="submitted && uf.userCount.errors">
+                                <error-label *ngIf="uf.userCount.errors.required" [control]="uf.userCount"></error-label>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-6" *ngIf="hideAdduser">
                         <div class="form-group form-group-default dropdown">
                             <label class="text-primary">Add user</label>
                             <input id="requestUser" digitOnly formControlName="adduser" placeholder="Enter the additional number of user you want " type="number" class="form-control floating-input input-border-bottom pl-1 pr-1" minlength="1" maxlength="3" />
-                            <error-label [control]="uf.adduser"></error-label>
+                            <div *ngIf="submitted && uf.adduser.errors">
+                                <error-label *ngIf="uf.adduser.errors.required" [control]="uf.adduser"></error-label>
+                            </div>
                         </div>
                     </div>
                     <!-- <div class="col-md-6">
@@ -147,17 +153,14 @@
                     </div> -->
                 </div>
             </div>
-
-
         </form>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark btn-rounded" (click)="modal.close('Close click')">Close</button>
-        <app-submit-button [submitted]="submitted" (click)="upgradePackage()">Upgrade
+        <button type="button" class="btn btn-outline-dark btn-rounded" (click)="setsubmit()" (click)="modal.close('Close click')">Close</button>
+        <app-submit-button [submitted]="button" (click)="upgradePackage()">Upgrade
         </app-submit-button>
     </div>
 </ng-template>
-
 <!-- <ng-template #addUserModal let-modal>
         <div class="modal-header">
             <h4 class="modal-title">Add User Count</h4>

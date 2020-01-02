@@ -14,9 +14,9 @@ import { ToastrService } from 'ngx-toastr';
 import { AuthenticationService } from 'src/app/@core/services/authentication.service';
 
 @Component({
-  selector: 'app-upgrade-package',
-  templateUrl: './upgrade-package.component.html',
-  styleUrls: ['./upgrade-package.component.css']
+    selector: 'app-upgrade-package',
+    templateUrl: './upgrade-package.component.html',
+    styleUrls: ['./upgrade-package.component.css']
 })
 
 export class UpgradePackageComponent implements OnInit {
@@ -26,14 +26,15 @@ export class UpgradePackageComponent implements OnInit {
     passwordVisible = false;
     hidden = false;
     hideduration = false;
+    button = false;
     upgradeForm: FormGroup;
-    packageList: Observable<Package[]>;
-    currencyList: Observable<Currency[]>;
+    packageList: Observable < Package[] > ;
+    currencyList: Observable < Currency[] > ;
     myRequestList: UpgradePackage[];
     dtOptions: DataTables.Settings = {};
     subscriptionList = [
-        {text: 'Upgrade package', value : 'RENEW'},
-        {text: 'Add user', value : 'ADD_USER'}
+        { text: 'Upgrade package', value: 'RENEW' },
+        { text: 'Add user', value: 'ADD_USER' }
     ];
     durationList = [
         { text: '1 Month', value: 1 },
@@ -73,87 +74,86 @@ export class UpgradePackageComponent implements OnInit {
     };
     mysubDetails: any;
     hideAdduser: boolean = false;
-  constructor(private packageService: PackageService,
-              private modalService: NgbModal,
-              private formBuilder: FormBuilder,
-              private commonService: CommonService,
-              private formService: FormService,
-              private toastr: ToastrService,
-              private authenticationService: AuthenticationService) { }
+    constructor(private packageService: PackageService,
+        private modalService: NgbModal,
+        private formBuilder: FormBuilder,
+        private commonService: CommonService,
+        private formService: FormService,
+        private toastr: ToastrService,
+        private authenticationService: AuthenticationService) {}
 
-  ngOnInit() {
-    this.dtOptions = {
-        dom: `<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>"
+    ngOnInit() {
+        this.dtOptions = {
+            dom: `<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>"
                 "<'row'<'col-sm-12'tr>>"
                 "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>`,
-        pagingType: 'simple_numbers',
-        renderer: 'bootstrap',
-        pageLength: 10,
-        serverSide: true,
-        processing: true,
-        ajax: (dataTablesParameters: object, callback) => {
-            // tslint:disable-next-line: no-string-literal
-            dataTablesParameters['filter'] = [];
-            console.log(dataTablesParameters);
-            const responseData = this.packageService
-                .getPackages(dataTablesParameters)
-                .pipe(first())
-                .subscribe(response => {
-                    console.log(response);
-                    if (response.code === 200) {
-                        this.myRequestList = response.data.data;
-                        callback({
-                            recordsTotal: response.data.recordsTotal,
-                            recordsFiltered: response.data.recordsFiltered,
-                            data: []
-                        });
-                    }
-                });
-        },
-        columns: [
-            { data: 'subscriptionType' },
-            { data: 'package' },
-            { data: 'userCount' },
-            { data: 'duration' },
-            { data: 'status' },
-            { data: '_id' }
-        ],
-        columnDefs: [
-            {
-                searchable: false,
-                orderable: false,
-                targets: [-1]
+            pagingType: 'simple_numbers',
+            renderer: 'bootstrap',
+            pageLength: 10,
+            serverSide: true,
+            processing: true,
+            ajax: (dataTablesParameters: object, callback) => {
+                // tslint:disable-next-line: no-string-literal
+                dataTablesParameters['filter'] = [];
+                console.log(dataTablesParameters);
+                const responseData = this.packageService
+                    .getPackages(dataTablesParameters)
+                    .pipe(first())
+                    .subscribe(response => {
+                        console.log(response);
+                        if (response.code === 200) {
+                            this.myRequestList = response.data.data;
+                            callback({
+                                recordsTotal: response.data.recordsTotal,
+                                recordsFiltered: response.data.recordsFiltered,
+                                data: []
+                            });
+                        }
+                    });
             },
-            {
-                searchable: false,
-                targets: [-2]
-            },
-            {
-                searchable: false,
-                targets: [-3]
-            },
-            {
-                searchable: false,
-                targets: [-4]
-            },
-            {
-                searchable: false,
-                targets: [-5]
-            }
-        ]
-    };
-    this.upgradeForm = this.formBuilder.group({
-        package: [null, this.customValidation.package],
-        // notes: ['', this.customValidation.transactionId],
-        subscriptionType: [null, [Validators.required]],
-    });
-    this.commonService.getRequestFormData().subscribe(res => {
-        this.packageList = this.commonService.getPackageList();
-    });
-    this.commonService.getCurrencyData().subscribe(res => {
-        this.currencyList = this.commonService.getCurrencyList();
-    });
-  }
+            columns: [
+                { data: 'subscriptionType' },
+                { data: 'package' },
+                { data: 'userCount' },
+                { data: 'duration' },
+                { data: 'status' },
+                { data: '_id' }
+            ],
+            columnDefs: [{
+                    searchable: false,
+                    orderable: false,
+                    targets: [-1]
+                },
+                {
+                    searchable: false,
+                    targets: [-2]
+                },
+                {
+                    searchable: false,
+                    targets: [-3]
+                },
+                {
+                    searchable: false,
+                    targets: [-4]
+                },
+                {
+                    searchable: false,
+                    targets: [-5]
+                }
+            ]
+        };
+        this.upgradeForm = this.formBuilder.group({
+            package: [null, this.customValidation.package],
+            // notes: ['', this.customValidation.transactionId],
+            subscriptionType: [null, [Validators.required]],
+        });
+        this.commonService.getRequestFormData().subscribe(res => {
+            this.packageList = this.commonService.getPackageList();
+        });
+        this.commonService.getCurrencyData().subscribe(res => {
+            this.currencyList = this.commonService.getCurrencyList();
+        });
+    }
 
     refreshTable() {
         this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
@@ -199,6 +199,10 @@ export class UpgradePackageComponent implements OnInit {
         }
     }
 
+    setsubmit() {
+        this.submitted = false;
+    }
+
     onchangeType(event) {
         console.log('onchangeType', event);
         // tslint:disable-next-line: triple-equals
@@ -217,15 +221,17 @@ export class UpgradePackageComponent implements OnInit {
     }
 
     upgradePackage() {
-        this.formService.clearCustomError(this.upgradeForm);
         this.submitted = true;
-        this.upgradeForm.markAllAsTouched();
-        console.log(this.upgradeForm.getRawValue());
         if (this.upgradeForm.invalid) {
             console.log('userForm-notvalid');
-            this.submitted = false;
+            this.formService.clearCustomError(this.upgradeForm);
+            this.upgradeForm.markAllAsTouched();
+            // this.submitted = false;
             return false;
-        }  else {
+        } else {
+            if (this.upgradeForm.valid) {
+                this.button = true;
+            }
             const currentData = this.upgradeForm.getRawValue();
             if (currentData.adduser) {
                 currentData.userCount = currentData.adduser;
@@ -233,34 +239,36 @@ export class UpgradePackageComponent implements OnInit {
             }
             console.log('currentData', currentData);
             this.packageService
-            .create(currentData)
-            .pipe(first())
-            .subscribe(
-                data => {
-                    if (data.status === 'success') {
-                        console.log(data);
-                        this.toastr.success('', data.message);
-                        this.modalService.dismissAll();
-                        this.upgradeForm.reset();
-                        this.refreshTable();
-                    }
-                },
-                error => {
-                    this.submitted = false;
-                    console.log(error);
-                    if (error.errors.length > 0) {
-                        for (const fieldError of error.errors) {
-                            const check = fieldError.param;
-                            this.upgradeForm
-                                .get(check)
-                                .setErrors({ customError: fieldError.msg });
+                .create(currentData)
+                .pipe(first())
+                .subscribe(
+                    data => {
+                        if (data.status === 'success') {
+                            console.log(data);
+                            this.toastr.success('', data.message);
+                            this.modalService.dismissAll();
+                            this.upgradeForm.reset();
+                            this.refreshTable();
+                            this.button = false;
                         }
+                    },
+                    error => {
+                        this.submitted = false;
+                        this.button = false;
+                        if (error.errors.length > 0) {
+                            for (const fieldError of error.errors) {
+                                const check = fieldError.param;
+                                this.upgradeForm
+                                    .get(check)
+                                    .setErrors({ customError: fieldError.msg });
+                            }
+                        }
+                    },
+                    () => {
+                        this.submitted = false;
+                        this.button = false;
                     }
-                },
-                () => {
-                    this.submitted = false;
-                }
-            );
+                );
         }
     }
 

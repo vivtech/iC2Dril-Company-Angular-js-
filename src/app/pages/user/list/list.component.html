@@ -36,21 +36,18 @@
                                     <!-- <ng-option [value]="'custom'">Custom</ng-option>
                                     <ng-option *ngFor="let car of cars" [value]="car.id" [disabled]="car.disabled">{{car.name}}</ng-option> -->
                                 </ng-select>
-
                             </div>
                         </div>
                         <div class="col-md-3 pl-0">
                             <div class="form-group pt-0">
                                 <label>Block Type</label>
                                 <ng-select (change)="refreshTable()" class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [(ngModel)]="blockFilter" [clearable]="false" [items]="blockedFilterData" bindLabel="name" bindValue="id"></ng-select>
-
                             </div>
                         </div>
                         <div class="col-md-3 pl-0">
                             <div class="form-group pt-0">
                                 <label>Status</label>
                                 <ng-select (change)="refreshTable()" class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [(ngModel)]="statusFilter" [clearable]="false" [items]="statusFilterData" bindLabel="name" bindValue="id"></ng-select>
-
                             </div>
                         </div>
                         <div class="ml-auto">
@@ -80,16 +77,13 @@
                                     <td>{{ user.userType.name }}</td>
                                     <td>{{ user.email }}</td>
                                     <td> {{ user.tel?.tel }} {{ user.phone }}</td>
-
                                     <td>
                                         <span class="badge badge-pill badge-success" *ngIf="user.active == 1">Active</span>
                                         <span class="badge badge-pill badge-warning" *ngIf="user.active == 0">Inactive</span>
-
                                     </td>
                                     <td>
                                         <span class="badge badge-pill badge-danger" *ngIf="user.blocked == 1">Blocked</span>
                                         <span class="badge badge-pill badge-success" *ngIf="user.blocked == 0">Unblocked</span>
-
                                     </td>
                                     <td [hidden]="permission == 'notcreate'">
                                         <div class="btn-group datatable-dropdown" *ngIf="user.userType.adminType==0">
@@ -101,7 +95,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                     </td>
                                 </tr>
                             </tbody>
@@ -109,19 +102,14 @@
                                 <tr>
                                     <td colspan="7" class="no-data-available text-center">No matching records found</td>
                                 </tr>
-                                <tbody>
-
+                            <tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
-
-
     </div>
 </div>
-
-
 <!-- Edit Modal -->
 <ng-template #editModal let-modal>
     <div class="modal-header">
@@ -144,16 +132,15 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="col-md-6">
                         <div class="form-group form-group-default">
                             <label class="text-primary">Email</label>
-                            <input type="email" formControlName="email" [attr.maxlength]="validator.email.max" class="form-control"  placeholder="Email">
-                             <div *ngIf="submitted && f.email.errors">
+                            <input type="email" formControlName="email" [attr.maxlength]="validator.email.max" class="form-control" placeholder="Email">
+                            <div *ngIf="submitted && f.email.errors">
                                 <error-label *ngIf="f.email.errors.required" [control]="f.email"></error-label>
                                 <error-label *ngIf="f.email.errors.email" [control]="f.email"></error-label>
                             </div>
-                             <!-- <label class="error" *ngIf="CheckE">
+                            <!-- <label class="error" *ngIf="CheckE">
                                 Email Already Exist #box (blur)="checkEmailOfUser(box.value)"
                             </label> -->
                         </div>
@@ -163,7 +150,7 @@
                             <label class="text-primary">Phone Number</label>
                             <div class="row">
                                 <div class="col-md-4">
-                                    <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [clearable]="false" placeholder="Code" formControlName="tel" [items]="countryList | async" bindLabel="tel" bindValue="_id"></ng-select>                                    
+                                    <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [clearable]="false" placeholder="Code" formControlName="tel" [items]="countryList | async" bindLabel="tel" bindValue="_id"></ng-select>
                                 </div>
                                 <div class="col-md-8">
                                     <input type="text" formControlName="phone" placeholder="Phone number" [attr.maxlength]="validator.phone.max" class="form-control" digitOnly>
@@ -186,8 +173,7 @@
                     <div class="col-md-6">
                         <div class="form-group form-group-default dropdown">
                             <label class="text-primary">User Type</label>
-                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="userType" (change)="onchange($event)" [clearable]="false" [items]="userTypeList" bindLabel="name" bindValue="_id" [class.filled]="f.userType.value"
-                                placeholder="User type"></ng-select>
+                            <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" formControlName="userType" (change)="onchange($event)" [clearable]="false" [items]="userTypeList" bindLabel="name" bindValue="_id" [class.filled]="f.userType.value" placeholder="User type"></ng-select>
                             <div *ngIf="submitted && f.userType.errors">
                                 <error-label *ngIf="f.userType.errors.required" [control]="f.userType"></error-label>
                             </div>

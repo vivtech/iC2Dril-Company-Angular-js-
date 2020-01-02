@@ -63,8 +63,8 @@ export class ListComponent implements OnInit, OnDestroy {
     requestDetail: User;
     editForm: FormGroup;
     validator = environment.validators;
-    countryList: Observable<Country[]>;
-    packageList: Observable<Package[]>;
+    countryList: Observable < Country[] > ;
+    packageList: Observable < Package[] > ;
     submitted = false;
     button = false;
     today = new Date();
@@ -157,8 +157,7 @@ export class ListComponent implements OnInit, OnDestroy {
                 { data: 'blocked' },
                 { data: '_id' }
             ],
-            columnDefs: [
-                {
+            columnDefs: [{
                     searchable: false,
                     orderable: false,
                     targets: [-1]
@@ -172,7 +171,7 @@ export class ListComponent implements OnInit, OnDestroy {
                     targets: [-3]
                 },
                 {
-                    targets: [ 4 ],
+                    targets: [4],
                     visible: false,
                     searchable: false
                 },
@@ -196,7 +195,7 @@ export class ListComponent implements OnInit, OnDestroy {
                 ]
             ],
             email: [
-                '',[Validators.required,Validators.email]
+                '', [Validators.required, Validators.email]
             ],
             phone: [
                 '',
@@ -249,24 +248,24 @@ export class ListComponent implements OnInit, OnDestroy {
         }
     }
 
-    checkEmailOfUser(email) {        
+    checkEmailOfUser(email) {
         this.apiService.checkEmailUser(email).subscribe(users => {
-                if (users.data._id) {
-                    this.CheckE=true
-                }else{
-                    this.CheckE=false
-                }
-                // const array = [];
-                // tslint:disable-next-line: forin
-                // for (const i in users.data) {
-                //     array.push({name: users.data[i].name,
-                //         _id: users.data[i]._id,
-                //         profilePic: users.data[i].profilePic,
-                //         designation: users.data[i].designation});
-                // }
-                // this.people = array;
-                // resolve(array);
-            });
+            if (users.data._id) {
+                this.CheckE = true
+            } else {
+                this.CheckE = false
+            }
+            // const array = [];
+            // tslint:disable-next-line: forin
+            // for (const i in users.data) {
+            //     array.push({name: users.data[i].name,
+            //         _id: users.data[i]._id,
+            //         profilePic: users.data[i].profilePic,
+            //         designation: users.data[i].designation});
+            // }
+            // this.people = array;
+            // resolve(array);
+        });
 
     }
     statusClass(status) {
@@ -300,7 +299,7 @@ export class ListComponent implements OnInit, OnDestroy {
     }
 
     setsubmit() {
-        this.submitted=false;
+        this.submitted = false;
     }
     editDetail(editModal, data) {
         this.apiService.getData(data).subscribe(
@@ -358,16 +357,16 @@ export class ListComponent implements OnInit, OnDestroy {
     updateRequest() {
         this.submitted = true;
         if (this.editForm.invalid) {
-        this.formService.clearCustomError(this.editForm);
-        this.editForm.markAllAsTouched();
+            this.formService.clearCustomError(this.editForm);
+            this.editForm.markAllAsTouched();
             // this.submitted = false;
             return false;
         }
         if (this.editForm.valid) {
-            this.button=true;
+            this.button = true;
         }
 
-        if ( this.editing ) {
+        if (this.editing) {
             this.apiService
                 .updateData(this.editForm.getRawValue())
                 .pipe(first())
@@ -382,7 +381,7 @@ export class ListComponent implements OnInit, OnDestroy {
                     },
                     error => {
                         this.submitted = false;
-                         this.button=false;
+                        this.button = false;
                         if (error.errors.length > 0) {
                             for (const fieldError of error.errors) {
                                 const check = fieldError.param;
@@ -394,40 +393,40 @@ export class ListComponent implements OnInit, OnDestroy {
                     },
                     () => {
                         this.submitted = false;
-                        this.button=false;
+                        this.button = false;
                     }
                 );
         } else {
             const currentData = this.editForm.getRawValue();
             this.apiService
-            .create(currentData)
-            .pipe(first())
-            .subscribe(
-                data => {
-                    if (data.status === 'success') {
-                        this.toastr.success('', data.message);
-                        this.modalService.dismissAll();
-                        this.editForm.reset();
-                        this.refreshTable();
-                    }
-                },
-                error => {
-                    this.submitted = false;
-                    this.button=false;
-                    if (error.errors.length > 0) {
-                        for (const fieldError of error.errors) {
-                            const check = fieldError.param;
-                            this.editForm
-                                .get(check)
-                                .setErrors({ customError: fieldError.msg });
+                .create(currentData)
+                .pipe(first())
+                .subscribe(
+                    data => {
+                        if (data.status === 'success') {
+                            this.toastr.success('', data.message);
+                            this.modalService.dismissAll();
+                            this.editForm.reset();
+                            this.refreshTable();
                         }
+                    },
+                    error => {
+                        this.submitted = false;
+                        this.button = false;
+                        if (error.errors.length > 0) {
+                            for (const fieldError of error.errors) {
+                                const check = fieldError.param;
+                                this.editForm
+                                    .get(check)
+                                    .setErrors({ customError: fieldError.msg });
+                            }
+                        }
+                    },
+                    () => {
+                        this.submitted = false;
+                        this.button = false;
                     }
-                },
-                () => {
-                    this.submitted = false;
-                    this.button=false;
-                }
-            );
+                );
         }
     }
 
@@ -446,8 +445,7 @@ export class ListComponent implements OnInit, OnDestroy {
                     this.deleteRequest(result);
                 }
             },
-            error => {
-            }
+            error => {}
         );
     }
 
