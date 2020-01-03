@@ -9,22 +9,22 @@ export const environment = {
     adminUrl: 'http://admin.ic2drill.techzarinfo.com',
     ProjectName: 'IC2 Dril',
     validators: {
-        name: {min: 3, max: 75},
-        email: {min: 3, max: 75},
-        company: {min: 3, max: 75},
-        phone: {min: 8, max: 18},
-        password: {min: 8, max: 16},
-        userCount: {minValue: 1, maxValue: 999, min: 1, max: 3},
-        notes: { min: 0, max: 300},
-        countryCode: {min: 1, max: 5},
-        countrySymbol: {min: 1, max: 5},
-        designation: {min: 3, max: 75},
-        camUrl: {min: 3, max: 200},
-        camUsername: {min: 3, max: 75},
-        camPassword: {min: 3, max: 75},
-        transaction: {min: 1, max: 75},
-        amount: {min: 1, max: 15, minValue: 1},
-        invoice: {min: 1, max: 15, values: ['image/png', 'image/jpg', 'image/jpeg', 'application/pdf']}
+        name: { min: 3, max: 75 },
+        email: { min: 3, max: 75 },
+        company: { min: 3, max: 75 },
+        phone: { min: 8, max: 18 },
+        password: { min: 8, max: 16 },
+        userCount: { minValue: 1, maxValue: 999, min: 1, max: 3 },
+        notes: { min: 0, max: 300 },
+        countryCode: { min: 1, max: 5 },
+        countrySymbol: { min: 1, max: 5 },
+        designation: { min: 3, max: 75 },
+        camUrl: { min: 3, max: 200 },
+        camUsername: { min: 3, max: 75 },
+        camPassword: { min: 3, max: 75 },
+        transaction: { min: 1, max: 75 },
+        amount: { min: 1, max: 15, minValue: 1 },
+        invoice: { min: 1, max: 15, values: ['image/png', 'image/jpg', 'image/jpeg', 'application/pdf'] }
     }
 };
 

@@ -10,15 +10,15 @@ import { UserType } from '../models/user-type.model';
     providedIn: 'root'
 })
 export class UserService {
-    public dataList: BehaviorSubject<UserType[]>;
+    public dataList: BehaviorSubject < UserType[] > ;
 
     constructor(private http: HttpClient) {
-        this.dataList = new BehaviorSubject<UserType[]>([]);
+        this.dataList = new BehaviorSubject < UserType[] > ([]);
     }
 
     create(fields): any {
         return this.http
-            .post<any>(`${environment.apiUrl}/user`, fields)
+            .post < any > (`${environment.apiUrl}/user`, fields)
             .pipe(
                 map(response => {
                     return response;
@@ -28,7 +28,7 @@ export class UserService {
 
     getList(dataTablesParameters): any {
         return this.http
-            .post<any>(
+            .post < any > (
                 `${environment.apiUrl}/user/list`,
                 dataTablesParameters
             )
@@ -44,7 +44,7 @@ export class UserService {
     }
 
     getAllUser(): any {
-        return this.http.get<any>( `${environment.apiUrl}/user/list`)
+        return this.http.get < any > (`${environment.apiUrl}/user/list`)
             .pipe(
                 map(response => {
                     if (response.code === 200) {
@@ -57,7 +57,7 @@ export class UserService {
     }
 
     getUserByType(data): any {
-        return this.http.get<any>( `${environment.apiUrl}/user/list?userType=${data}`)
+        return this.http.get < any > (`${environment.apiUrl}/user/list?userType=${data}`)
             .pipe(
                 map(response => {
                     if (response.code === 200) {
@@ -70,7 +70,9 @@ export class UserService {
     }
 
     checkEmailUser(data): any {
-        return this.http.get<any>( `${environment.apiUrl}/checkEmail?email=${data}`)
+        console.log("data", data);
+        return this.http.post < any > (`${environment.apiUrl}/emailcheck/`,
+                data)
             .pipe(
                 map(response => {
                     if (response.code === 200) {
@@ -84,7 +86,7 @@ export class UserService {
 
     updateData(fieldParameters): any {
         return this.http
-            .put<any>(`${environment.apiUrl}/user`, fieldParameters)
+            .put < any > (`${environment.apiUrl}/user`, fieldParameters)
             .pipe(
                 map(response => {
                     if (response.code === 200) {
@@ -96,7 +98,7 @@ export class UserService {
     }
 
     getData(id) {
-        return this.http.get<any>(`${environment.apiUrl}/user/${id}`).pipe(
+        return this.http.get < any > (`${environment.apiUrl}/user/${id}`).pipe(
             map(response => {
                 return response;
             })
@@ -105,7 +107,7 @@ export class UserService {
 
     deleteData(id) {
         return this.http
-            .delete<any>(`${environment.apiUrl}/user/${id}`)
+            .delete < any > (`${environment.apiUrl}/user/${id}`)
             .pipe(
                 map(response => {
                     return response;
@@ -113,7 +115,7 @@ export class UserService {
             );
     }
 
-    getCompanyRequestList(): Observable<UserType[]> {
+    getCompanyRequestList(): Observable < UserType[] > {
         return this.dataList.asObservable();
     }
 }

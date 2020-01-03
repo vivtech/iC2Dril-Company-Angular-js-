@@ -14,9 +14,9 @@ import { Observable } from 'rxjs';
 import { Country } from 'src/app/@core/models/country.model';
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+    selector: 'app-profile',
+    templateUrl: './profile.component.html',
+    styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
 
@@ -37,17 +37,18 @@ export class ProfileComponent implements OnInit {
     validationError = '';
     public filePreviewPath: File = null;
     imageError = false;
+    button = false;
     selectedFile: any;
-    countryList: Observable<Country[]>;
+    countryList: Observable < Country[] > ;
     mysubDetails: any;
 
     constructor(
-              private commonService: CommonService,
-              private authenticationService: AuthenticationService,
-              private formBuilder: FormBuilder,
-              private formService: FormService,
-              private toastr: ToastrService,
-              public sanitizer: DomSanitizer) { }
+        private commonService: CommonService,
+        private authenticationService: AuthenticationService,
+        private formBuilder: FormBuilder,
+        private formService: FormService,
+        private toastr: ToastrService,
+        public sanitizer: DomSanitizer) {}
 
     ngOnInit() {
         this.getMySubscription();
@@ -56,27 +57,33 @@ export class ProfileComponent implements OnInit {
         this.user = this.authenticationService.currentUserValue;
         this.profileForm = this.formBuilder.group({
             name: [this.user.name, [Validators.required, Validators.minLength(this.validator.name.min),
-            Validators.maxLength(this.validator.name.max)]],
+                Validators.maxLength(this.validator.name.max)
+            ]],
             profilePic: [this.user.profilePic],
             email: [this.user.email, [Validators.required, Validators.email, Validators.minLength(this.validator.email.min),
-            Validators.maxLength(this.validator.email.max)]],
+                Validators.maxLength(this.validator.email.max)
+            ]],
             phone: [this.user.phone, [Validators.required, Validators.minLength(this.validator.phone.min),
-            Validators.maxLength(this.validator.phone.max)]],
+                Validators.maxLength(this.validator.phone.max)
+            ]],
             tel: [this.user.tel, [Validators.required]]
         });
 
         this.confirmPasswordForm = this.formBuilder.group({
             currentPassword: [this.user.name, [Validators.required,
-            Validators.minLength(this.validator.password.min),
-            Validators.maxLength(this.validator.password.max)]],
+                Validators.minLength(this.validator.password.min),
+                Validators.maxLength(this.validator.password.max)
+            ]],
 
             password: [this.user.email, [Validators.required,
-            Validators.minLength(this.validator.password.min),
-            Validators.maxLength(this.validator.password.max), ValidPassword]],
+                Validators.minLength(this.validator.password.min),
+                Validators.maxLength(this.validator.password.max), ValidPassword
+            ]],
 
             confirmPassword: [this.user.phone, [Validators.required,
-            Validators.minLength(this.validator.password.min),
-            Validators.maxLength(this.validator.password.max)]]
+                Validators.minLength(this.validator.password.min),
+                Validators.maxLength(this.validator.password.max)
+            ]]
         }, {
             validator: MustMatch('password', 'confirmPassword')
         });
@@ -113,13 +120,13 @@ export class ProfileComponent implements OnInit {
 
     toggleVisible(value) {
         switch (value) {
-            case 'current' :
+            case 'current':
                 this.CurrentpasswordHidden = !this.CurrentpasswordHidden;
                 break;
-            case 'new' :
+            case 'new':
                 this.NewpasswordHidden = !this.NewpasswordHidden;
                 break;
-            case 'confirm' :
+            case 'confirm':
                 this.ConfirmpasswordHidden = !this.ConfirmpasswordHidden;
                 break;
         }
@@ -135,113 +142,122 @@ export class ProfileComponent implements OnInit {
 
     onFileSelected(event) {
         const image = event.target.files[0];
-      //   console.log('event', image);
+        //   console.log('event', image);
         // tslint:disable-next-line: triple-equals
         if (image.type == 'image/png' || image.type == 'image/jpeg') {
-              this.imageError = false;
-              const reader = new FileReader();
-              reader.readAsDataURL(image); // read file as data url
-              this.profileForm.controls.profilePic.setValue(image);
-              console.log('event', this.profileForm.getRawValue());
-              // tslint:disable-next-line: no-shadowed-variable
-              reader.onload = (event: any) => {
-                  this.filePreviewPath = event.target.result;
-              };
-          } else {
-              console.log('File not image');
-              this.imageError = true;
-          }
+            this.imageError = false;
+            const reader = new FileReader();
+            reader.readAsDataURL(image); // read file as data url
+            this.profileForm.controls.profilePic.setValue(image);
+            console.log('event', this.profileForm.getRawValue());
+            // tslint:disable-next-line: no-shadowed-variable
+            reader.onload = (event: any) => {
+                this.filePreviewPath = event.target.result;
+            };
+        } else {
+            console.log('File not image');
+            this.imageError = true;
+        }
     }
 
     onProfileSubmit() {
-        this.formService.clearCustomError(this.profileForm);
-        // this.validationError = '';
-        // this.successMessage = '';
-        // this.error = false;
         this.submitted = true;
-        this.profileForm.markAllAsTouched();
         const currentData = this.profileForm.getRawValue();
         if (this.profileForm.invalid) {
-            this.submitted = false;
+            // this.submitted = false;
+            this.formService.clearCustomError(this.profileForm);
+            this.profileForm.markAllAsTouched();
             return false;
+        }
+
+        if (this.profileForm.valid) {
+            this.button = true;
         }
         const formData = new FormData();
         for (const key in currentData) {
             if (key === 'profilePic') {
-                console.log('key', key);
                 formData.append(key, this.f.profilePic.value);
             } else {
-                console.log('key', key);
                 formData.append(key, currentData[key]);
             }
         }
         this.authenticationService.profileUpdate(formData)
-        .pipe(first())
-        .subscribe(
-            data => {
-                if (data.status === 'success') {
-                    console.log(data);
-                    this.toastr.success('', data.message);
-                    window.scroll(0, 0);
-                } else {
-                    this.validationError = data.message;
-                }
-
-            },
-            error => {
-                this.submitted = false;
-                console.log(error);
-                this.error = true;
-                if (error.errors.length > 0) {
-                    for (const fieldError of error.errors) {
-                        const check = fieldError.param;
-                        // this.profileForm.get(check).setErrors( { customError : fieldError.msg } ) ;
+            .pipe(first())
+            .subscribe(
+                data => {
+                    if (data.status === 'success') {
+                        this.toastr.success('', data.message);
+                        window.scroll(0, 0);
+                        this.button = false;
+                    } else {
+                        this.validationError = data.message;
+                        this.button = false;
                     }
-                }
-                this.validationError = error.message;
-            },
-            () => {
-                this.submitted = false;
-            });
+                },
+                error => {
+                    this.submitted = false;
+                    this.button = false;
+
+                    this.error = true;
+                    if (error.errors.length > 0) {
+                        for (const fieldError of error.errors) {
+                            const check = fieldError.param;
+                            // this.profileForm.get(check).setErrors( { customError : fieldError.msg } ) ;
+                        }
+                    }
+                    this.validationError = error.message;
+                },
+                () => {
+                    this.submitted = false;
+                    this.button = false;
+                });
     }
 
     onPasswordSubmit() {
-        this.formService.clearCustomError(this.confirmPasswordForm);
         this.submitted = true;
-        this.confirmPasswordForm.markAllAsTouched();
         if (this.confirmPasswordForm.invalid) {
-            this.submitted = false;
+            this.formService.clearCustomError(this.confirmPasswordForm);
+            this.confirmPasswordForm.markAllAsTouched();
+            // this.submitted = false;
             return false;
         }
 
+        if (this.confirmPasswordForm.valid) {
+            this.button = true;
+        }
+
         this.authenticationService.changePassword(this.confirmPasswordForm.getRawValue())
-        .pipe(first())
-        .subscribe(
-            data => {
-                if (data.status === 'success') {
-                    console.log(data);
-                    this.confirmPasswordForm.reset();
-                    this.toastr.success('', data.message);
-                    window.scroll(0, 0);
-                } else {
-                    // this.validationError = data.message;
-                }
-            },
-            error => {
-                this.submitted = false;
-                console.log(error);
-                this.error = true;
-                if (error.errors.length > 0) {
-                    for (const fieldError of error.errors) {
-                        const check = fieldError.param;
-                        this.confirmPasswordForm.get(check).setErrors( { customError : fieldError.msg } ) ;
+            .pipe(first())
+            .subscribe(
+                data => {
+                    if (data.status === 'success') {
+                        console.log(data);
+                        this.confirmPasswordForm.reset();
+                        this.toastr.success('', data.message);
+                        window.scroll(0, 0);
+                        this.button = false;
+                    } else {
+                        this.button = false;
+                        // this.validationError = data.message;
                     }
-                }
-                this.validationError = error.message;
-            },
-            () => {
-                this.submitted = false;
-            });
+                },
+                error => {
+                    this.submitted = false;
+                    this.button = false;
+                    console.log(error);
+                    this.error = true;
+                    if (error.errors.length > 0) {
+                        for (const fieldError of error.errors) {
+                            const check = fieldError.param;
+                            this.confirmPasswordForm.get(check).setErrors({ customError: fieldError.msg });
+                        }
+                    }
+                    this.validationError = error.message;
+                },
+                () => {
+                    this.button = false;
+                    this.submitted = false;
+                });
     }
 
 }

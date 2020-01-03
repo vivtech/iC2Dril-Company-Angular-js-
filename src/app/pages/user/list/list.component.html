@@ -135,14 +135,14 @@
                     <div class="col-md-6">
                         <div class="form-group form-group-default">
                             <label class="text-primary">Email</label>
-                            <input type="email" formControlName="email" [attr.maxlength]="validator.email.max" class="form-control" placeholder="Email">
+                            <input type="email" #box (blur)="checkEmailOfUser(box.value)" formControlName="email" [attr.maxlength]="validator.email.max" class="form-control" placeholder="Email">
                             <div *ngIf="submitted && f.email.errors">
                                 <error-label *ngIf="f.email.errors.required" [control]="f.email"></error-label>
                                 <error-label *ngIf="f.email.errors.email" [control]="f.email"></error-label>
                             </div>
-                            <!-- <label class="error" *ngIf="CheckE">
-                                Email Already Exist #box (blur)="checkEmailOfUser(box.value)"
-                            </label> -->
+                            <label class="error" *ngIf="CheckE">
+                                Email Already Exist
+                            </label>
                         </div>
                     </div>
                     <div class="col-md-6">

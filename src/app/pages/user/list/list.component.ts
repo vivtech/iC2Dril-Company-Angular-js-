@@ -248,26 +248,6 @@ export class ListComponent implements OnInit, OnDestroy {
         }
     }
 
-    checkEmailOfUser(email) {
-        this.apiService.checkEmailUser(email).subscribe(users => {
-            if (users.data._id) {
-                this.CheckE = true
-            } else {
-                this.CheckE = false
-            }
-            // const array = [];
-            // tslint:disable-next-line: forin
-            // for (const i in users.data) {
-            //     array.push({name: users.data[i].name,
-            //         _id: users.data[i]._id,
-            //         profilePic: users.data[i].profilePic,
-            //         designation: users.data[i].designation});
-            // }
-            // this.people = array;
-            // resolve(array);
-        });
-
-    }
     statusClass(status) {
         switch (status) {
             case 0:
@@ -354,6 +334,20 @@ export class ListComponent implements OnInit, OnDestroy {
         );
     }
 
+
+    checkEmailOfUser(email) {
+        var obj = {
+            email: email
+        }
+        this.apiService.checkEmailUser(obj).subscribe(users => {
+            if (users.message == 'true') {
+                this.CheckE = true
+            } else {
+                this.CheckE = false
+            }
+        });
+    }
+
     updateRequest() {
         this.submitted = true;
         if (this.editForm.invalid) {
@@ -365,6 +359,11 @@ export class ListComponent implements OnInit, OnDestroy {
         if (this.editForm.valid) {
             this.button = true;
         }
+
+        if (this.CheckE == true) {
+            return false;
+        }
+
 
         if (this.editing) {
             this.apiService
