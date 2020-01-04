@@ -42,6 +42,11 @@ export class SideMenuComponent implements OnInit {
         icon: 'fas fa-cubes',
         link: '/upgrade/package'
     },
+    {
+        label: 'User Details',
+        icon: 'fas fa-cubes',
+        link: '/user/details'
+    },
     // {
     //     label: 'Upgrade',
     //     icon: 'fas fa-cubes',

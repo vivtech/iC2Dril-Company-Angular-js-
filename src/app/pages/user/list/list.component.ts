@@ -139,6 +139,8 @@ export class ListComponent implements OnInit, OnDestroy {
                     .subscribe(response => {
                         if (response.code === 200) {
                             this.companyList = response.data.data;
+                            console.log("response.data-------------------")
+                            console.log(response.data)
                             callback({
                                 recordsTotal: response.data.recordsTotal,
                                 recordsFiltered: response.data.recordsFiltered,

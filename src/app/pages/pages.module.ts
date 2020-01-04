@@ -12,6 +12,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { PackageComponent } from './package/package.component';
 import { CountryComponent } from './country/country.component';
 import { AccountComponent } from './account/account.component';
+import { UserdetailsComponent } from './userdetails/userdetails.component';
 
 const COMPONENETS = [PagesComponent,
                     DashboardComponent,
@@ -27,7 +28,7 @@ const COMPONENETS = [PagesComponent,
                 ];
 
 @NgModule({
-    declarations: [...COMPONENETS ],
+    declarations: [...COMPONENETS, UserdetailsComponent ],
     imports: [
         PagesRoutingModule,
         ThemeModule

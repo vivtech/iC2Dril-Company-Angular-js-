@@ -70,10 +70,21 @@ export class UserService {
     }
 
     checkEmailUser(data): any {
-        console.log("data", data);
-        return this.http.post < any > (`${environment.apiUrl}/emailcheck/`,
-                data)
+        return this.http.post < any > (`${environment.apiUrl}/emailcheck/`,data)
             .pipe(
+                map(response => {
+                    if (response.code === 200) {
+                        console.log(response.data.data);
+                        // this.dataList.next(response.data.data);
+                    }
+                    return response;
+                })
+            );
+    }
+
+    projectDetails(): any {
+        return this.http.get<any>(`${environment.apiUrl}/projectdetails`)
+                .pipe(
                 map(response => {
                     if (response.code === 200) {
                         console.log(response.data.data);

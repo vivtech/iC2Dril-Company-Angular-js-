@@ -13,6 +13,6 @@ const COMPONENTS = [
 
 @NgModule({
   imports: [ThemeModule, UserRoutingModule ],
-  declarations: [...COMPONENTS, ],
+  declarations: [...COMPONENTS ],
 })
 export class UserModule {}

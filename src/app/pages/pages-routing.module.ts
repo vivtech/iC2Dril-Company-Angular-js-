@@ -11,6 +11,7 @@ import { AuthGuard } from '../@core/guards/auth.guard';
 import { AuthRedirect } from '../@core/guards/auth-redirect.guard';
 import { ResetTokenGuard } from '../@core/guards/rest-token-checker.guard';
 import { ProfileComponent } from './profile/profile.component';
+import { UserdetailsComponent } from './userdetails/userdetails.component';
 import { PackageComponent } from './package/package.component';
 import { CountryComponent } from './country/country.component';
 import { AccountComponent } from './account/account.component';
@@ -87,6 +88,10 @@ const routes: Routes = [
             {
                 path: 'profile',
                 component: ProfileComponent
+            },
+            {
+                path: 'user/details',
+                component: UserdetailsComponent
             },
             {
                 path: 'account',
