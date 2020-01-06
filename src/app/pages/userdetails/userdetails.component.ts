@@ -78,6 +78,8 @@ export class UserdetailsComponent implements OnInit {
 					.subscribe(response => {
 						if (response.code === 200) {
 							this.companyList = response.data.cameradetails;
+							console.log("this.companyList")
+							console.log(this.companyList)
 							callback({
 								recordsTotal: response.data.cameradetails.length,
 								recordsFiltered: response.data.cameradetails.length,
@@ -89,7 +91,8 @@ export class UserdetailsComponent implements OnInit {
 			columns: [
 				{ data: 'name' },
 				{ data: 'project' },
-				{ data: 'users' },				
+				{ data: 'users' },		
+				{ data: 'rig' },		
 
 			]
 		};

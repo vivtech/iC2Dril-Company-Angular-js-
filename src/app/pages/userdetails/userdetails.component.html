@@ -25,6 +25,7 @@
                                 <tr>
                                     <th>Camera Name</th>
                                     <th>Project</th>
+                                    <th>Rig Name</th>
                                     <th>User Name</th>
                                 </tr>
                             </thead>
@@ -32,6 +33,7 @@
                                 <tr *ngFor="let user of companyList ">
                                     <td>{{ user.name }}</td>
                                     <td>{{ user.project.name }}</td>
+                                    <td>{{ user.well.name }}</td>
                                     <td>
                                         <span *ngFor="let usertype of user.users ">
                                             {{usertype.name}} - {{usertype.userType.name}}
