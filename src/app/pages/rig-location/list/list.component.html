@@ -117,7 +117,7 @@
                             <label class="text-primary">Rig Name</label>
                             <input type="text" formControlName="name" [attr.maxlength]="validator.name.max" class="form-control" placeholder="Rig name">
                             <div *ngIf="submitted && f.name.errors">
-                                <error-label *ngIf="f.name.errors.required" [control]="f.name"></error-label>
+                                <error-label *ngIf="f.name.errors.required || f.name.errors.minlength" [control]="f.name"></error-label>
                             </div>
                         </div>
                     </div>
@@ -158,12 +158,13 @@
                             </div>
                         </div>
                     </div>
+                    <!-- || f.blockName.errors.minlength -->
                     <div class="col-sm-6">
                         <div class="form-group form-group-default">
                             <label class="text-primary">Field Name</label>
                             <input type="text" formControlName="fieldName" [attr.maxlength]="validator.name.max" class="form-control" placeholder="Field name">
                             <div *ngIf="submitted && f.fieldName.errors">
-                                <error-label *ngIf="f.fieldName.errors.required" [control]="f.fieldName"></error-label>
+                                <error-label *ngIf="f.fieldName.errors.required || f.fieldName.errors.minlength" [control]="f.fieldName"></error-label>
                             </div>
                         </div>
                     </div>

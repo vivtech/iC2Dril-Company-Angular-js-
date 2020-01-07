@@ -115,8 +115,8 @@ export class AddProjectComponent implements OnInit {
     submit(value) {
         this.submitted = true;
         this.disable = false;
+        
         if (this.addproductForm.invalid) {
-            console.log('this.addproductForm-not valid');
             this.formService.clearCustomError(this.addproductForm);
             this.addproductForm.markAllAsTouched();
             // this.submitted = false;

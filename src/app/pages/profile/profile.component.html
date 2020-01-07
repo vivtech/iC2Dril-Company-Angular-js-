@@ -71,7 +71,7 @@
                                                 <label>Name</label>
                                                 <input type="text" [attr.maxlength]="validator.name.max" class="form-control alpha-space" formControlName="name" placeholder="Name">
                                                 <div *ngIf="submitted && f.name.errors">
-                                                    <error-label *ngIf="f.name.errors.required" [control]="f.name"></error-label>
+                                                    <error-label *ngIf="f.name.errors.required || f.name.errors.minlength" [control]="f.name"></error-label>
                                                 </div>
                                             </div>
                                         </div>
@@ -82,7 +82,7 @@
                                                 <label>Email</label>
                                                 <input type="email" class="form-control" formControlName="email" placeholder="Name" value="" [attr.maxlength]="validator.email.max">
                                                 <div *ngIf="submitted && f.email.errors">
-                                                    <error-label *ngIf="f.email.errors.required" [control]="f.email"></error-label>
+                                                    <error-label *ngIf="f.email.errors.required || f.email.errors.minlength" [control]="f.email"></error-label>
                                                 </div>
                                             </div>
                                         </div>
@@ -125,7 +125,7 @@
                                                     <i class="far " (click)="toggleVisible('current')" [ngClass]="{'fa-eye': !CurrentpasswordHidden, 'fa-eye-slash': CurrentpasswordHidden}"></i>
                                                 </div>
                                                 <div *ngIf="submitted && pf.currentPassword.errors">
-                                                    <error-label *ngIf="pf.currentPassword.errors.required" [control]="pf.currentPassword"></error-label>
+                                                    <error-label *ngIf="pf.currentPassword.errors.required || pf.currentPassword.errors.minlength" [control]="pf.currentPassword"></error-label>
                                                 </div>
                                             </div>
                                         </div>
@@ -137,7 +137,7 @@
                                                     <i class="far " (click)="toggleVisible('new')" [ngClass]="{'fa-eye': !NewpasswordHidden, 'fa-eye-slash': NewpasswordHidden}"></i>
                                                 </div>
                                                 <div *ngIf="submitted && pf.password.errors">
-                                                    <error-label *ngIf="pf.password.errors.required" [control]="pf.password"></error-label>
+                                                    <error-label *ngIf="pf.password.errors.required || pf.password.errors.minlength" [control]="pf.password"></error-label>
                                                 </div>
                                             </div>
                                         </div>
@@ -149,7 +149,7 @@
                                                     <i class="far " (click)="toggleVisible('confirm')" [ngClass]="{'fa-eye': !ConfirmpasswordHidden, 'fa-eye-slash': ConfirmpasswordHidden}"></i>
                                                 </div>
                                                 <div *ngIf="submitted && pf.confirmPassword.errors">
-                                                    <error-label *ngIf="pf.confirmPassword.errors.required" [control]="pf.confirmPassword"></error-label>
+                                                    <error-label *ngIf="pf.confirmPassword.errors.required || pf.confirmPassword.errors.minlength" [control]="pf.confirmPassword"></error-label>
                                                 </div>
                                             </div>
                                         </div>

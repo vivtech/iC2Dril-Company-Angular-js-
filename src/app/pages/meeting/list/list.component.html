@@ -250,7 +250,7 @@
                             <label class="text-primary">Meeting Title</label>
                             <input type="text" [attr.maxlength]="validator.name.max" formControlName="title" class="form-control" placeholder="Meeting Title">
                             <div *ngIf="submitted && f.title.errors">
-                                <error-label *ngIf="f.title.errors.required" [control]="f.title"></error-label>
+                                <error-label *ngIf="f.title.errors.required || f.title.errors.minlength" [control]="f.title"></error-label>
                             </div>
                         </div>
                     </div>
@@ -287,7 +287,7 @@
                             <label class="text-primary">Description</label>
                             <input type="text" [attr.maxlength]="validator.notes.max" formControlName="desc" class="form-control" placeholder="Description">
                             <div *ngIf="submitted && f.desc.errors">
-                                <error-label *ngIf="f.desc.errors.required" [control]="f.desc"></error-label>
+                                <error-label *ngIf="f.desc.errors.required || f.desc.errors.minlength" [control]="f.desc"></error-label>
                             </div>
                         </div>
                     </div>

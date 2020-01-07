@@ -50,7 +50,7 @@
                                                     <label class="text-primary">Project Name</label>
                                                     <input type="text" formControlName="name" class="form-control" placeholder="Project name">
                                                     <div *ngIf="submitted && f.name.errors">
-                                                        <error-label *ngIf="f.name.errors.required" [control]="f.name"></error-label>
+                                                        <error-label *ngIf="f.name.errors.required || f.name.errors.minlength" [control]="f.name"></error-label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -59,7 +59,7 @@
                                                     <label class="text-primary">Block Name</label>
                                                     <input type="text" formControlName="blockName" class="form-control" placeholder="Block name">
                                                     <div *ngIf="submitted && f.blockName.errors">
-                                                        <error-label *ngIf="f.blockName.errors.required" [control]="f.blockName"></error-label>
+                                                        <error-label *ngIf="f.blockName.errors.required || f.blockName.errors.minlength" [control]="f.blockName"></error-label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -68,7 +68,7 @@
                                                     <label class="text-primary">Field Name</label>
                                                     <input type="text" name="fieldName" formControlName="fieldName" class="form-control" placeholder="Field name">
                                                     <div *ngIf="submitted && f.fieldName.errors">
-                                                        <error-label *ngIf="f.fieldName.errors.required" [control]="f.fieldName"></error-label>
+                                                        <error-label *ngIf="f.fieldName.errors.required || f.fieldName.errors.minlength" [control]="f.fieldName"></error-label>
                                                     </div>
                                                 </div>
                                             </div>

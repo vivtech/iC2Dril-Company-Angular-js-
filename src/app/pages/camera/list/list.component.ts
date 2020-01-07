@@ -156,8 +156,6 @@ export class ListComponent implements OnInit {
                             });
                         }
                     });
-
-
             },
             columns: [
                 { data: 'name' },

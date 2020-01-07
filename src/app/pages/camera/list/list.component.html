@@ -131,7 +131,7 @@
                                     <label class="text-primary">Name</label>
                                     <input type="text" formControlName="name" [attr.maxlength]="validator.name.max" class="form-control" placeholder="Name">
                                     <div *ngIf="submitted && f.name.errors">
-                                        <error-label *ngIf="f.name.errors.required" [control]="f.name"></error-label>
+                                        <error-label *ngIf="f.name.errors.required || f.name.errors.minlength" [control]="f.name"></error-label>
                                     </div>
                                 </div>
                             </div>
@@ -140,7 +140,7 @@
                                     <label class="text-primary">URL</label>
                                     <input type="text" formControlName="url" [attr.maxlength]="validator.camUrl.max" class="form-control" placeholder="URL">
                                     <div *ngIf="submitted && f.url.errors">
-                                        <error-label *ngIf="f.url.errors.required" [control]="f.url"></error-label>
+                                        <error-label *ngIf="f.url.errors.required || f.url.errors.minlength" [control]="f.url"></error-label>
                                     </div>
                                 </div>
                             </div>
@@ -149,7 +149,7 @@
                                     <label class="text-primary">Username</label>
                                     <input type="text" formControlName="username" [attr.maxlength]="validator.camUsername.max" class="form-control" placeholder="Username">
                                     <div *ngIf="submitted && f.username.errors">
-                                        <error-label *ngIf="f.username.errors.required" [control]="f.username"></error-label>
+                                        <error-label *ngIf="f.username.errors.required || f.username.errors.minlength" [control]="f.username"></error-label>
                                     </div>
                                 </div>
                             </div>
@@ -161,7 +161,7 @@
                                         <i class="far " (click)="togglePassword()" [ngClass]="{'fa-eye': !passwordHidden, 'fa-eye-slash': passwordHidden}"></i>
                                     </div>
                                     <div *ngIf="submitted && f.password.errors">
-                                        <error-label *ngIf="f.password.errors.required" [control]="f.password"></error-label>
+                                        <error-label *ngIf="f.password.errors.required || f.password.errors.minlength" [control]="f.password"></error-label>
                                     </div>
                                 </div>
                             </div>
