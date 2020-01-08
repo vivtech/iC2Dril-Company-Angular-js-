@@ -86,7 +86,7 @@
                                                     <label class="text-primary">Well Name</label>
                                                     <input type="text" name="wellName" formControlName="wellName" class="form-control" placeholder="Well Name">
                                                     <div *ngIf="submitted && f.wellName.errors">
-                                                        <error-label *ngIf="f.wellName.errors.required" [control]="f.wellName"></error-label>
+                                                        <error-label *ngIf="f.wellName.errors.required || f.wellName.errors.minlength" [control]="f.wellName"></error-label>
                                                     </div>
                                                 </div>
                                             </div>

@@ -60,7 +60,10 @@ export class AddProjectComponent implements OnInit {
                 Validators.maxLength(this.validator.name.max)
             ]],
             fieldEnv: [null, [Validators.required]],
-            wellName: ['', [Validators.required]],
+            wellName: ['', [Validators.required,
+            Validators.minLength(this.validator.name.min),
+            Validators.maxLength(this.validator.name.max)
+            ]],
             depth: ['', Validators.required],
             depthType: [null, Validators.required],
             status: [null, [Validators.required]],

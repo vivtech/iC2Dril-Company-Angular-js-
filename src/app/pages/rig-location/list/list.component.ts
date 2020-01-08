@@ -187,7 +187,9 @@ export class RigListComponent implements OnInit {
             fieldName: ['', [Validators.required, Validators.minLength(this.validator.name.min),
                 Validators.maxLength(this.validator.name.max)
             ]],
-            rigLocation: ['', [Validators.required]],
+            rigLocation: ['', [Validators.required, Validators.minLength(this.validator.name.min),
+            Validators.maxLength(this.validator.name.max)
+            ]],
             name: ['', [Validators.required, Validators.minLength(this.validator.name.min),
                 Validators.maxLength(this.validator.name.max)
             ]],

@@ -136,7 +136,7 @@
                             <label class="text-primary">Rig Location</label>
                             <input type="text" formControlName="rigLocation" [attr.maxlength]="validator.name.max" class="form-control" placeholder="Rig Location">
                             <div *ngIf="submitted && f.rigLocation.errors">
-                                <error-label *ngIf="f.rigLocation.errors.required" [control]="f.rigLocation"></error-label>
+                                <error-label *ngIf="f.rigLocation.errors.required || f.rigLocation.errors.minlength" [control]="f.rigLocation"></error-label>
                             </div>
                         </div>
                     </div>

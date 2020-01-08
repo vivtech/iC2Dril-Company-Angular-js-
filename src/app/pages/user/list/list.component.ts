@@ -282,12 +282,14 @@ export class ListComponent implements OnInit, OnDestroy {
 
     setsubmit() {
         this.submitted = false;
+        this.CheckE = false;
     }
     editDetail(editModal, data) {
         this.apiService.getData(data).subscribe(
             response => {
                 this.requestDetail = response.data;
                 this.editForm.reset();
+                this.CheckE = false;
                 if (response.data.userType.name === 'Other User') {
                     this.hidden = true;
                     const validators = [Validators.required];
@@ -342,7 +344,7 @@ export class ListComponent implements OnInit, OnDestroy {
             email: email
         }
         this.apiService.checkEmailUser(obj).subscribe(users => {
-            if (users.message == 'true') {
+            if (users.message == 'true' && !this.editing) {
                 this.CheckE = true
             } else {
                 this.CheckE = false
@@ -378,6 +380,7 @@ export class ListComponent implements OnInit, OnDestroy {
                             this.modalService.dismissAll();
                             this.editForm.reset();
                             this.refreshTable();
+                            this.button = false;
                         }
                     },
                     error => {
@@ -409,6 +412,7 @@ export class ListComponent implements OnInit, OnDestroy {
                             this.modalService.dismissAll();
                             this.editForm.reset();
                             this.refreshTable();
+                            this.button = false;
                         }
                     },
                     error => {
