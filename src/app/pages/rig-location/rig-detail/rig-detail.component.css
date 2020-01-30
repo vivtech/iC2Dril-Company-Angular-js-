@@ -14,3 +14,55 @@ h5 {
 .btn-round {
     color: #fff !important;
 }
+
+
+.avatar-img {
+    width: 50% !important;
+}
+
+.attendename {
+    display: flex;
+    align-items: center;
+    margin-left: -35px;
+}
+
+.form-group-default {
+    margin-bottom: 5px !important;
+}
+
+.scroll-container {
+    position: relative;
+}
+
+.scrollable-content {
+    padding: 16px;
+    margin: 0;
+}
+
+.ng-value.ng-star-inserted {
+    background-color: #810c03 !important;
+}
+
+input.form-control.floating-input.input-border-bottom.pl-1.pr-1.pb-0.pt-0 {
+    margin-top: 29px;
+}
+
+.show-password {
+    position: absolute;
+    right: 35px;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.check-box {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.check {
+    position: relative;
+    top: 2px;
+}
