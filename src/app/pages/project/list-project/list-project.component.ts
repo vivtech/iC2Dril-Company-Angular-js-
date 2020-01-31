@@ -210,7 +210,7 @@ export class ListProjectComponent implements OnInit {
     }
 
     view(id) {
-        this.router.navigate([]).then(result => {  window.open('project/details/' + id, '_blank'); });
+        this.router.navigate([]).then(result => {  window.open('project/details/' + id, '_self'); });
     }
 
     deleteRequest(data) {

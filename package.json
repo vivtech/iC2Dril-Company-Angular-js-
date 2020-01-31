@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve -o",
+    "start": "ng serve -o --port 5000",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -39,7 +39,7 @@
     "zone.js": "~0.9.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.800.0",
+    "@angular-devkit/build-angular": "^0.803.21",
     "@angular/cli": "~8.0.2",
     "@angular/compiler-cli": "~8.0.0",
     "@angular/language-service": "~8.0.0",

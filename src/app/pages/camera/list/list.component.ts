@@ -268,7 +268,7 @@ export class ListComponent implements OnInit {
     }
 
     view(id) {
-        this.router.navigate([]).then(result => { window.open('camera/details/' + id, '_blank'); });
+        this.router.navigate([]).then(result => { window.open('camera/details/' + id, '_self'); });
     }
 
     deleteRequest(data) {

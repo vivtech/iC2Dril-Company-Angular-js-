@@ -12,7 +12,7 @@ export const environment = {
         name: { min: 3, max: 75 },
         email: { min: 3, max: 75 },
         company: { min: 3, max: 75 },
-        phone: { min: 8, max: 18 },
+        phone: { min: 8, max: 15 },
         password: { min: 8, max: 16 },
         userCount: { minValue: 1, maxValue: 999, min: 1, max: 3 },
         notes: { min: 0, max: 300 },

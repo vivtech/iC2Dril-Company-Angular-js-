@@ -166,7 +166,7 @@
                             <label class="text-primary">Designation</label>
                             <input type="text" formControlName="designation" [attr.maxlength]="validator.company.max" class="form-control" placeholder="Designation">
                             <div *ngIf="submitted && f.designation.errors">
-                                <error-label *ngIf="f.designation.errors.required || f.designation.errors.minlength" [control]="f.designation"></error-label>
+                                <error-label *ngIf="f.designation.errors.required" [control]="f.designation"></error-label>
                             </div>
                         </div>
                     </div>

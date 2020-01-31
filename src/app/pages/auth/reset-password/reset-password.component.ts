@@ -67,16 +67,22 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
             break;
         }
     }
-
+    setsubmit() {
+        this.submitted = false;
+       // this.CheckE = false;
+    }
     onSubmit() {
         // this.toastr.success('Hello world!', 'Toastr fun!');
-        this.validationError = '';
-        this.successMessage = '';
-        this.error = false;
+        // this.validationError = '';
+        // this.successMessage = '';
+        // this.error = false;
         this.submitted = true;
 
         // stop here if form is invalid
         if (this.resetPasswordForm.invalid) {
+            this.validationError = '';
+            this.successMessage = '';
+            this.error = false;
         this.resetPasswordForm.markAllAsTouched();
             // this.submitted = false;
             return false;
@@ -104,6 +110,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
                 },
                 error => {
                     this.submitted = false;
+                    this.button = false;
                     console.log(error);
                     this.error = true;
                     if (error.errors.length > 0) {
@@ -116,6 +123,7 @@ export class ResetPasswordComponent implements OnInit, OnDestroy {
                 },
                 () => {
                     this.submitted = false;
+                    this.button = false;
                 });
 
     }

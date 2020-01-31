@@ -67,9 +67,17 @@ export class CompanyRequestService {
     }
 
     getNotificationWithCount(): any {
-        return this.http.get<any>(`${environment.apiUrl}/notification/count`).pipe(map(response => {
+        return this.http.get<any>(`${environment.apiUrl}/notification/count`).pipe(map(response =>  {
+            // if (response.expiring != false) {
+            //     return this.http.get<any>(`${environment.apiUrl}/expirydate/`).pipe(map(response =>  {
+            //         if (response.expiring != false) {
+            //             console.log("printing the expiry date");
+            //         }
+            //         return response;
+            //   }));
+            // }
             return response;
-        }));
+      }));
     }
 
     UpdateNotifiStatus(data): any {

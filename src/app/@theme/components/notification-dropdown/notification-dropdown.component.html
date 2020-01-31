@@ -17,17 +17,21 @@
                         <div class="notif-img">
                             <i class="fa fa-user notIcon" alt="Img Profile" *ngIf="!notify.profilepic; else showImg"></i>
                             <ng-template #showImg>
-                                <img [src]="notify.profilePic" alt="Img Profile">
+                                <img [src]="notify.profilepic" alt="Img Profile">
                             </ng-template>
                         </div>
                         <div class="notif-content">
-                            <span class="subject">{{ notify.title | capitalize }}</span>
+                            <span class="subject">Title: {{ notify.title | capitalize }}</span>
                             <span class="block">
-                                {{ notify.message}}
+                                Message: {{ notify.message}}
+                            </span>
+                            <span class="block">
+                                Type: {{ notify.type}}
                             </span>
                             <!-- <span class="time">5 minutes ago</span> -->
                         </div>
                     </a>
+                    
                 </div>
             </div>
             <ng-template #notFound>
