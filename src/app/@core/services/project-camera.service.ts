@@ -30,7 +30,7 @@ export class ProjectCameraService {
           return this.http.post<any>(`${environment.apiUrl}/camera/list`, dataTablesParameters)
               .pipe(map(response => {
                   if (response.code === 200) {
-                      console.log(response.data.data);
+                      console.log("camera data", response.data.data);
                       this.dataList.next(response.data.data);
                   }
                   return response;

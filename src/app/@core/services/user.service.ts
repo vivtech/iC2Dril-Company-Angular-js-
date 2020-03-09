@@ -82,13 +82,17 @@ export class UserService {
             );
     }
 
-    projectDetails(): any {
-        return this.http.get<any>(`${environment.apiUrl}/projectdetails`)
-                .pipe(
+    projectDetails(dataTablesParameters): any {
+        return this.http
+            .post < any > (
+                `${environment.apiUrl}/projectdetails`,
+                dataTablesParameters
+            )
+            .pipe(
                 map(response => {
                     if (response.code === 200) {
-                        console.log(response.data.data);
-                        // this.dataList.next(response.data.data);
+                        console.log("what data is coming " , response.data.data);
+                        this.dataList.next(response.data.data);
                     }
                     return response;
                 })

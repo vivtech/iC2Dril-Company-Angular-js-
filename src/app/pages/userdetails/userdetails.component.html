@@ -19,30 +19,45 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-body">
+                    <div class="row p-2 filter-cont">
+                        <div class="col-md-3 pl-0">
+                            <div class="form-group pt-0">
+                                <label>Projects</label>
+                                <ng-select class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [(ngModel)]="projectFilter" (change)="projectOnchange('projectFlter', $event)" [clearable]="false" [items]="projectFilterData" bindLabel="name" bindValue="_id"></ng-select>
+                            </div>
+                        </div>
+                        <div class="col-md-3 pl-0">
+                            <div class="form-group pt-0">
+                                <label>Rig Location</label>
+                                <ng-select (change)="refreshTable()" class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" placeholder="Select project" [notFoundText]="'No wells found'" [(ngModel)]="rigFilter" [clearable]="false" [items]="wellFilterData" bindLabel="name" bindValue="_id"></ng-select>
+                            </div>
+                        </div>
+                    </div>
                     <div class="table-responsive">
-                        <table id="record-table" [dtOptions]="dtOptions" datatable class="display table table-striped table-hover w-100 table-head-bg-primary" width="100%">
+                        <table id="record-table" [dtOptions]="dtOptions" datatable class="display table table-striped table-hover w-100 table-head-bg-primary UsrDetail" width="100%">
                             <thead>
                                 <tr>
                                     <th>Camera Name</th>
                                     <th>Project</th>
                                     <th>Rig Name</th>
+                                    <th>Rig Manager</th>
                                     <th>User Name</th>
                                 </tr>
                             </thead>
-                            <tbody *ngIf="companyList?.length != 0">
-                                <tr *ngFor="let user of companyList ">
+                            <tbody *ngIf="dataList?.length != 0">
+                                <tr *ngFor="let user of dataList ">
                                     <td>{{ user.name }}</td>
                                     <td>{{ user.project.name }}</td>
                                     <td>{{ user.well.name }}</td>
+                                    <td>{{ user.well.manager.name }}</td>
                                     <td>
-                                        <span *ngFor="let usertype of user.users ">
-                                          <td>{{usertype.name}}</td>  
-                                            <br>
+                                        <span *ngFor="let usertype of user.users;let last = last" [ngClass]="{ last: last }">                                            
+                                         {{usertype.name}}
                                         </span>
-                                    </td>
+                                    </td> 
                                 </tr>
                             </tbody>
-                            <tbody *ngIf="companyList?.length == 0">
+                            <tbody *ngIf="dataList?.length == 0">
                                 <tr>
                                     <td colspan="7" class="no-data-available text-center">No matching records found</td>
                                 </tr>

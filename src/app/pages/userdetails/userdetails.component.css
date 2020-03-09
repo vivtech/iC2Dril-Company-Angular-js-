@@ -1,0 +1,6 @@
+.UsrDetail span.ng-star-inserted:after {
+    content: ',';
+}
+.UsrDetail span.last.ng-star-inserted:after {
+    content: '.';
+}

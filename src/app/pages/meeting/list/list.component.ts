@@ -573,6 +573,7 @@ export class ListComponent implements OnInit, OnDestroy {
 
     setsubmit() {
         this.submitted = false;
+        this.button = false;
     }
 
     updateRequest() {

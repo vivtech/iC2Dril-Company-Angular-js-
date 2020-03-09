@@ -247,6 +247,10 @@ export class ListComponent implements OnInit, OnDestroy {
             } else {
                 this.editForm.controls.meetingAccess.setValue(1);
             }
+            if(event.name === 'Rig Manager / Engineer'){
+                
+                this.editForm.controls.meetingAccess.setValue(1);
+            }
         }
     }
 
