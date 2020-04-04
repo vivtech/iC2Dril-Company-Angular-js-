@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormService } from 'src/app/@core/services/form-validation.service';
-// import { Country } from '../models/country.model';
+import { ValidEmail } from 'src/app/@core/validators/valid-email.validators';
 // import { Package } from '.'
 
 @Component({
@@ -42,7 +42,7 @@ export class CompanyRequestFormComponent implements OnInit {
             Validators.maxLength(this.validator.name.max)]],
         companyName: ['', [Validators.required, Validators.minLength(this.validator.company.min),
             Validators.maxLength(this.validator.company.max)]],
-        email: ['', [Validators.required, Validators.email, Validators.minLength(this.validator.email.min),
+            email: ['', [Validators.required, ValidEmail, Validators.email, Validators.minLength(this.validator.email.min),
             Validators.maxLength(this.validator.email.max)]],
         phone: ['', [Validators.required, Validators.minLength(this.validator.phone.min),
             Validators.maxLength(this.validator.phone.max)]],
@@ -65,7 +65,9 @@ export class CompanyRequestFormComponent implements OnInit {
     this.error = false;
     this.submitted = true;
     this.requestForm.markAllAsTouched();
-    console.log(this.requestForm.getRawValue());
+    console.log("this.requestForm");
+    console.log(this.requestForm);
+      return false;
     if (this.requestForm.invalid) {
         this.submitted = false;
         return false;

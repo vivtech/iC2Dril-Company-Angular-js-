@@ -139,8 +139,8 @@ export class ListComponent implements OnInit, OnDestroy {
                     .subscribe(response => {
                         if (response.code === 200) {
                             this.companyList = response.data.data;
-                            console.log("response.data-------------------")
-                            console.log(response.data)
+                            
+                            
                             callback({
                                 recordsTotal: response.data.recordsTotal,
                                 recordsFiltered: response.data.recordsFiltered,
@@ -213,14 +213,7 @@ export class ListComponent implements OnInit, OnDestroy {
                     Validators.required
                 ]
             ],
-            designation: [
-                '',
-                [
-                    Validators.required,
-                    Validators.minLength(this.validator.designation.min),
-                    Validators.maxLength(this.validator.designation.max)
-                ]
-            ],
+            designation: [null],
             userType: [null, [Validators.required]],
             active: ['', [Validators.required]],
             block: ['', [Validators.required]]
@@ -349,7 +342,8 @@ export class ListComponent implements OnInit, OnDestroy {
         }
         this.apiService.checkEmailUser(obj).subscribe(users => {
             if (users.message == 'true' && !this.editing) {
-                this.CheckE = true
+                this.CheckE = true;
+                this.submitted = false;
             } else {
                 this.CheckE = false
             }
@@ -358,21 +352,24 @@ export class ListComponent implements OnInit, OnDestroy {
 
     updateRequest() {
         this.submitted = true;
+        
         if (this.editForm.invalid) {
             this.formService.clearCustomError(this.editForm);
             this.editForm.markAllAsTouched();
             // this.submitted = false;
             return false;
         }
+        
         if (this.editForm.valid) {
             this.button = true;
         }
-
+        
         if (this.CheckE == true) {
+            this.submitted = false;
+             this.button = false;
             return false;
         }
-
-
+        
         if (this.editing) {
             this.apiService
                 .updateData(this.editForm.getRawValue())

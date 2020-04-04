@@ -83,30 +83,30 @@ export class ListComponent implements OnInit {
 
     ngOnInit() {
         this.activeRoute.params.subscribe(params => {
-            console.log('from Rig', params);
+            
             const projectId = params;
             if (projectId.data !== undefined) {
                 this.projectFilter = projectId.data;
                 this.f.data.setValue(projectId.data);
-                console.log('route', this.projectFilter);
+                
                 this.projectOnchange('', '');
             }
             if (params.proId !== undefined && params.rigId !== undefined) {
                 this.projectFilter = projectId.proId;
                 this.rigID = projectId.rigId;
-                console.log('route', this.rigID);
+                
                 this.projectOnchange('', '');
             }
         });
         this.projectService.getAll().subscribe(response => {
             const allProjects = response.data;
-            console.log('AllProject', allProjects);
+            
 
             this.projectFilterData = [{ _id: '', name: 'All' }, ...allProjects];
             this.projectOptionData = [...allProjects];
         });
         this.service.getUserByType('OTHER').subscribe(users => {
-            console.log('userList', users.data);
+            
             const array = [];
             // tslint:disable-next-line: forin
             for (const i in users.data) {
@@ -123,7 +123,7 @@ export class ListComponent implements OnInit {
         this.activeRoute.params.subscribe(param => {
             this.wellId = param.data;
             this.projectId = param.project;
-            console.log('project', param.project);
+            
         });
         this.dtOptions = {
             dom: `<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>"
@@ -143,10 +143,10 @@ export class ListComponent implements OnInit {
                 // tslint:disable-next-line: no-string-literal
                 dataTablesParameters['filter'][1] = { column: 'active', data: this.statusFilter };
                 // dataTablesParameters['filter'][1] = {column: 'project', data: this.projectId};
-                console.log(dataTablesParameters);
+                
                 const responseData = this.apiService.getList(dataTablesParameters).pipe(first())
                     .subscribe(response => {
-                        console.log(response);
+                        
                         if (response.code === 200) {
                             this.dataList = response.data.data;
                             callback({
@@ -200,19 +200,19 @@ export class ListComponent implements OnInit {
     }
 
     onAdd(event) {
-        console.log('onAdd', event);
+        
         // this.selectedPeople.push(event);
     }
 
     onRemove(event) {
-        console.log('event', event.value);
+        
         const removed = this.selectedPeople.filter(a => a.name !== event.value.name);
-        console.log('removed', removed);
+        
         // this.selectedPeople = removed;
     }
 
     onClear(event) {
-        console.log('event', event);
+        
         // this.selectedPeople = [];
     }
 
@@ -221,7 +221,7 @@ export class ListComponent implements OnInit {
     editDetail(editModal, data) {
         this.selectedPeople = [];
         this.apiService.getData(data).subscribe(response => {
-                console.log(response);
+                
                 this.requestDetail = response.data;
                 this.editForm.reset();
                 this.editing = true;
@@ -229,6 +229,8 @@ export class ListComponent implements OnInit {
                 this.f.data.updateValueAndValidity();
                 this.hideProRig = true;
                 this.f.project.setValidators(null);
+                this.f.users.setValidators(null);
+
                 // this.projectOnchange('edit', this.requestDetail.project._id);
                 this.editForm.patchValue({
                     data: this.requestDetail._id,
@@ -246,20 +248,15 @@ export class ListComponent implements OnInit {
                 });
                 this.projectName = this.requestDetail.project.name;
                 this.rigName = this.requestDetail.well.name;
-                // tslint:disable-next-line: forin
                 const userId = [];
                 for (const i in this.requestDetail.users) {
-                    // tslint:disable-next-line: triple-equals
-                    console.log('this.people', this.people);
-                    console.log('this.requestDetail.users', this.requestDetail.users);
                     const filter = this.people.filter(a => a._id === this.requestDetail.users[i]._id);
-                    // tslint:disable-next-line: forin
                     for (const f in filter) {
                         userId.push(filter[f]._id);
                     }
                 }
                 this.f.users.setValue(userId);
-                console.log('filter', userId);
+                
             },
             error => {
                 // this.noti
@@ -290,7 +287,9 @@ export class ListComponent implements OnInit {
     }
 
     updateRequest() {
+        
         this.submitted = true;
+
         // const params = {
         //     data: this.editForm.getRawValue().data,
         //     name: this.editForm.getRawValue().name,
@@ -300,8 +299,9 @@ export class ListComponent implements OnInit {
         //     active: this.editForm.getRawValue().active,
         //     users: this.editForm.getRawValue().users
         // };
+
+        
         if (this.editForm.invalid) {
-            console.log('invalid');
             // this.submitted = false;
             this.formService.clearCustomError(this.editForm);
             this.editForm.markAllAsTouched();
@@ -318,7 +318,7 @@ export class ListComponent implements OnInit {
                 .subscribe(
                     data => {
                         if (data.status === 'success') {
-                            console.log(data);
+                            
                             this.toastr.success('', data.message);
                             this.modalService.dismissAll();
                             this.editForm.reset();
@@ -332,7 +332,7 @@ export class ListComponent implements OnInit {
                     error => {
                         this.submitted = false;
                         this.button = false;
-                        console.log(error);
+                        
                         if (error.errors.length > 0) {
                             for (const fieldError of error.errors) {
                                 const check = fieldError.param;
@@ -345,13 +345,13 @@ export class ListComponent implements OnInit {
                         this.button = false;
                     });
         } else {
-            // console.log('params', params);
+            
             this.apiService.create(this.editForm.getRawValue())
                 .pipe(first())
                 .subscribe(
                     data => {
                         if (data.status === 'success') {
-                            console.log(data);
+                            
                             this.toastr.success('', data.message);
                             this.modalService.dismissAll();
                             this.editForm.reset();
@@ -365,7 +365,7 @@ export class ListComponent implements OnInit {
                     error => {
                         this.submitted = false;
                         this.button = false;
-                        console.log(error);
+                        
                         if (error.errors.length > 0) {
                             for (const fieldError of error.errors) {
                                 const check = fieldError.param;
@@ -390,13 +390,13 @@ export class ListComponent implements OnInit {
         if (data !== 'edit') {
             if (this.projectFilter) {
                 id = this.projectFilter;
-                console.log('this.projectFilter', id);
+                
             } else {
                 id = event._id;
-                console.log('event', id);
+                
             }
         } else {
-            console.log('edit-projId', event);
+            
             id = event;
         }
         if (id) {
@@ -425,7 +425,7 @@ export class ListComponent implements OnInit {
     }
 
     onchange(event) {
-        console.log('event', event.target.checked);
+        
         const checked = event.target.checked;
         if (checked) {
             this.hideConfirm = false;
@@ -441,7 +441,7 @@ export class ListComponent implements OnInit {
     }
 
     onConfirmChange(event) {
-        console.log('event', event.target.checked);
+        
         const checked = event.target.checked;
         if (checked) {
             this.f.confirm.setValue(1);
@@ -451,7 +451,7 @@ export class ListComponent implements OnInit {
     }
 
     refreshTable() {
-        console.log('refresh');
+        
         this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
             dtInstance.draw();
         });
@@ -486,7 +486,7 @@ export class ListComponent implements OnInit {
                 }
             },
             (error) => {
-                console.log(error);
+                
             });
     }
 

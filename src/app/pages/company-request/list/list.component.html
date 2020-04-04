@@ -35,15 +35,12 @@
         </div> -->
                 <div class="card-body">
                     <div class="row p-2 filter-cont mb-4">
-
                         <div class="col-md-3 pl-0">
                             <div class="form-group pt-0">
                                 <label>Status</label>
                                 <ng-select (change)="refreshTable()" class="form-control floating-input input-border-bottom pl-1 pr-1 pb-0 pt-0" [(ngModel)]="statusFilter" [items]="statusFilterData" bindLabel="name" bindValue="id"></ng-select>
-
                             </div>
                         </div>
-
                     </div>
                     <div class="table-responsive">
                         <table id="record-table" [dtOptions]="dtOptions" datatable class="display table table-striped table-hover w-100 table-head-bg-primary" width="100%">
@@ -67,7 +64,6 @@
                                         <span class="badge badge-pill badge-success" *ngIf="company.status == 1">Accepted</span>
                                         <span class="badge badge-pill badge-warning" *ngIf="company.status == 0">Pending</span>
                                         <span class="badge badge-pill badge-danger" *ngIf="company.status == 2">Cancelled</span>
-
                                     </td>
                                     <td>
                                         <div class="btn-group datatable-dropdown">
@@ -82,7 +78,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                     </td>
                                 </tr>
                             </tbody>
@@ -90,20 +85,14 @@
                                 <tr>
                                     <td colspan="6" class="no-data-available text-center">No matching records found</td>
                                 </tr>
-                                <tbody>
-
+                            <tbody>
                         </table>
                     </div>
                 </div>
             </div>
         </div>
-
-
     </div>
 </div>
-
-
-
 <ng-template #viewModal let-modal>
     <div class="modal-header">
         <h4 class="modal-title">License Request Detail</h4>
@@ -163,19 +152,14 @@
                             <span class="form-control text-muted">{{ requestDetail.createdAt | date :'medium' }}</span>
                         </div>
                     </div>
-
                 </div>
             </div>
-
-
         </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
     </div>
 </ng-template>
-
-
 <!-- Edit Modal -->
 <ng-template #editModal let-modal>
     <div class="modal-header">
@@ -245,11 +229,8 @@
                             <error-label [control]="f.notes"></error-label>
                         </div>
                     </div>
-
                 </div>
             </div>
-
-
         </form>
     </div>
     <div class="modal-footer">
@@ -257,9 +238,6 @@
         <app-submit-button [submitted]="submitted" (click)="updateRequest()">Submit Request</app-submit-button>
     </div>
 </ng-template>
-
-
-
 <!-- Edit Modal -->
 <ng-template #licenseModal let-modal>
     <div class="modal-header">
@@ -332,14 +310,10 @@
                                 </div>
                             </div>
                             <error-label [control]="lf.licenseDate"></error-label>
-
                         </div>
                     </div>
-
                 </div>
             </div>
-
-
         </form>
     </div>
     <div class="modal-footer">
